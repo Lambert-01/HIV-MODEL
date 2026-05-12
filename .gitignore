@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+ENV/
+
+# pytest
+.pytest_cache/
+pytest-cache-files-*/
+.cache/
+
+# Coverage
+.coverage
+htmlcov/
+coverage.xml
+
+# Outputs (generated at runtime)
+outputs/csv/*.csv
+outputs/figures/*.png
+outputs/reports/*.txt
+outputs/reports/*.pdf
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Flask session / instance
+instance/
+*.sqlite3
+
+# Jupyter
+.ipynb_checkpoints/

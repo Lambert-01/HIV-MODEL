@@ -125,6 +125,29 @@ def scenario_compare():
     return jsonify({"status": "success", "comparisons": comparisons, "curves": curves})
 
 
+@simulation_bp.post("/api/r0")
+def r0_live():
+    """Compute R0 and effective rates from parameters without running the solver."""
+    payload = request.get_json(silent=True) or {}
+    params = payload.get("parameters", {})
+    try:
+        p = {k: float(v) for k, v in params.items()}
+        beta_eff = p["beta0"] * (1.0 - p["u1"]) * (1.0 - p["u2"])
+        tau_eff  = p["tau"]  * (1.0 + p["u3"])
+        rho_eff  = p["rho"]  * (1.0 - p["u4"])
+        r0 = compute_r0(p)
+        return jsonify({
+            "status": "success",
+            "r0": r0,
+            "epidemic_status": epidemic_status(r0),
+            "beta_eff": beta_eff,
+            "tau_eff": tau_eff,
+            "rho_eff": rho_eff,
+        })
+    except Exception as exc:
+        return jsonify({"status": "error", "errors": [str(exc)]}), 400
+
+
 @simulation_bp.post("/api/sensitivity")
 def sensitivity():
     payload = request.get_json(silent=True) or {}

@@ -3,7 +3,7 @@ from copy import deepcopy
 from model.reproduction_number import compute_r0
 
 
-SENSITIVITY_KEYS = ["beta0", "tau", "rho", "eta", "u1", "u2", "u3", "u4"]
+SENSITIVITY_KEYS = ["beta0", "eta", "tau", "delta", "rho", "mu", "u1", "u2", "u3", "u4"]
 
 
 def compute_sensitivity(params, keys=None, epsilon=1e-4):

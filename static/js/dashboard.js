@@ -134,6 +134,8 @@ async function runSimulation() {
   }
 
   setBusy(true);
+  const statusPill = document.getElementById("status-pill");
+  if (statusPill) statusPill.textContent = "Running...";
   try {
     const result = await postJson("/api/simulate", payload);
     lastPayload = payload;
@@ -147,7 +149,6 @@ async function runSimulation() {
     renderInfectedFocus(result);
     renderTreatedAids(result);
     renderPopulation(result);
-    renderPhase(result);
     renderAnimatedPhase(result);
 
     const scenarioData = await postJson("/api/scenario", { base_payload: payload });
@@ -173,6 +174,8 @@ async function runSimulation() {
     showToast(error.message, "error");
   } finally {
     setBusy(false);
+    const statusPill = document.getElementById("status-pill");
+    if (statusPill) statusPill.textContent = "Ready";
   }
 }
 
