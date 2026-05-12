@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}FracHIV-SITA Lab | About{% endblock %}
+{% block content %}
+<div class="content-page">
+  <div class="content-hero">
+    <div class="eyebrow-label"><i class="fa fa-circle-info me-1"></i>About</div>
+    <h1>FracHIV-SITA Lab</h1>
+    <p class="hero-copy">A final-year Applied Mathematics thesis dashboard for fractional-order HIV transmission modelling.</p>
+  </div>
+  <div class="row g-4 mt-2">
+    <div class="col-md-6">
+      <div class="doc-card h-100">
+        <div class="doc-icon"><i class="fa fa-graduation-cap"></i></div>
+        <h5>Thesis Project</h5>
+        <p>This dashboard was built as part of a final-year Applied Mathematics thesis on fractional-order HIV transmission modelling with social behaviour interventions.</p>
+        <p>The model extends classical compartmental epidemiology by incorporating Caputo fractional derivatives, enabling memory-driven dynamics not captured by ordinary ODEs.</p>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="doc-card h-100">
+        <div class="doc-icon icon-gold"><i class="fa fa-code"></i></div>
+        <h5>Technology Stack</h5>
+        <ul class="ov-list">
+          <li><strong>Python / Flask</strong> — backend API and simulation engine</li>
+          <li><strong>NumPy / SciPy</strong> — numerical computation and Gamma function</li>
+          <li><strong>Pandas</strong> — data export</li>
+          <li><strong>Plotly.js</strong> — interactive scientific charts</li>
+          <li><strong>Bootstrap 5</strong> — responsive layout</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="doc-card">
+        <div class="doc-icon icon-green"><i class="fa fa-triangle-exclamation"></i></div>
+        <h5>Disclaimer</h5>
+        <p class="mb-0 text-muted">This dashboard is for academic and educational purposes only. It is not intended for clinical prediction, medical advice, or public health policy decisions. All simulation results are based on a simplified mathematical model.</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

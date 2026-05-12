@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block title %}FracHIV-SITA Lab | Home{% endblock %}
+{% block content %}
+
+<!-- Hero -->
+<section class="hero-section">
+  <div class="hero-bg-glow"></div>
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="row align-items-center min-vh-hero g-5">
+      <div class="col-lg-7">
+        <div class="hero-badges mb-4">
+          <span class="badge-sci">Caputo Derivative</span>
+          <span class="badge-sci">Gamma Function</span>
+          <span class="badge-sci">Mittag-Leffler Memory</span>
+          <span class="badge-sci">Python Engine</span>
+        </div>
+        <h1 class="hero-title">Fractional HIV<br><span class="text-glow-cyan">SITA Simulator</span></h1>
+        <p class="hero-copy">
+          Explore memory effects, treatment dynamics, and social behaviour interventions
+          in a fractional-order HIV transmission model. Built for thesis defense.
+        </p>
+        <div class="hero-actions mt-4">
+          <a class="btn btn-glow btn-lg" href="{{ url_for('dashboard') }}">
+            <i class="fa fa-play me-2"></i>Open Simulator
+          </a>
+          <a class="btn btn-ghost btn-lg" href="{{ url_for('documentation') }}">
+            <i class="fa fa-book me-2"></i>Read Model Notes
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-5 d-none d-lg-flex justify-content-center">
+        <div class="hero-visual">
+          <div class="orbit-ring ring-1"></div>
+          <div class="orbit-ring ring-2"></div>
+          <div class="orbit-ring ring-3"></div>
+          <div class="hero-core">
+            <i class="fa fa-dna fa-3x text-glow-cyan"></i>
+            <span class="hero-core-label">SITA</span>
+          </div>
+          <div class="orbit-dot dot-s">S</div>
+          <div class="orbit-dot dot-i">I</div>
+          <div class="orbit-dot dot-t">T</div>
+          <div class="orbit-dot dot-a">A</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Feature Cards -->
+<section class="features-section py-5">
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3">
+        <div class="feature-card h-100">
+          <div class="feature-icon"><i class="fa fa-chart-line"></i></div>
+          <h5>SITA Model</h5>
+          <p>Four compartments track susceptible, infected, treated, and AIDS-stage populations with fractional memory.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="feature-card h-100">
+          <div class="feature-icon icon-gold"><i class="fa fa-infinity"></i></div>
+          <h5>Fractional Order q</h5>
+          <p>Caputo derivative with order q ∈ (0,1] introduces memory effects absent in ordinary ODE models.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="feature-card h-100">
+          <div class="feature-icon icon-green"><i class="fa fa-shield-halved"></i></div>
+          <h5>Interventions</h5>
+          <p>Four social behaviour controls — awareness, safer behaviour, testing, and adherence — reduce R₀.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="feature-card h-100">
+          <div class="feature-icon icon-red"><i class="fa fa-file-export"></i></div>
+          <h5>Defense Ready</h5>
+          <p>Scenario comparison, sensitivity analysis, memory comparison, and CSV export for thesis presentation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Quick Stats -->
+<section class="stats-section py-4">
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="stats-bar">
+      <div class="stat-item">
+        <span class="stat-num text-glow-cyan">4</span>
+        <span class="stat-label">Compartments</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num text-glow-gold">4</span>
+        <span class="stat-label">Interventions</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num text-glow-cyan">8</span>
+        <span class="stat-label">Scenarios</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num text-glow-gold">10</span>
+        <span class="stat-label">Interactive Charts</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

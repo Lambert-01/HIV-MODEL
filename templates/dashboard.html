@@ -1,0 +1,451 @@
+{% extends "base.html" %}
+{% block title %}FracHIV-SITA Lab | Simulator{% endblock %}
+{% block content %}
+
+<div class="dashboard-shell">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="control-panel" id="controlPanel">
+    <div class="panel-head">
+      <div>
+        <div class="panel-title"><i class="fa fa-sliders me-2"></i>Controls</div>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <span id="status-pill" class="status-pill">Ready</span>
+        <button class="sidebar-toggle-btn d-lg-none" id="sidebarClose"><i class="fa fa-xmark"></i></button>
+      </div>
+    </div>
+
+    <!-- Scenario Preset -->
+    <div class="ctrl-section">
+      <div class="ctrl-section-title"><i class="fa fa-layer-group me-1"></i>Scenario Preset</div>
+      <select id="scenarioSelect" class="ctrl-select"></select>
+      <button class="btn-secondary-ctrl mt-2 w-100" id="applyScenario">
+        <i class="fa fa-wand-magic-sparkles me-1"></i>Apply Preset
+      </button>
+    </div>
+
+    <!-- Initial Conditions -->
+    <div class="ctrl-section">
+      <div class="ctrl-section-title"><i class="fa fa-seedling me-1"></i>Initial Conditions</div>
+      <div class="field-grid">
+        <div class="field-item">
+          <label class="field-label">S₀</label>
+          <input id="S0" type="number" class="ctrl-input" value="10000" min="0">
+        </div>
+        <div class="field-item">
+          <label class="field-label">I₀</label>
+          <input id="I0" type="number" class="ctrl-input" value="150" min="0">
+        </div>
+        <div class="field-item">
+          <label class="field-label">T₀</label>
+          <input id="T0" type="number" class="ctrl-input" value="80" min="0">
+        </div>
+        <div class="field-item">
+          <label class="field-label">A₀</label>
+          <input id="A0" type="number" class="ctrl-input" value="20" min="0">
+        </div>
+        <div class="field-item">
+          <label class="field-label">Years</label>
+          <input id="years" type="number" class="ctrl-input" value="50" min="1">
+        </div>
+        <div class="field-item">
+          <label class="field-label">Step</label>
+          <input id="step" type="number" class="ctrl-input" value="0.1" min="0.01" step="0.01">
+        </div>
+      </div>
+    </div>
+
+    <!-- Fractional Order -->
+    <div class="ctrl-section">
+      <div class="ctrl-section-title"><i class="fa fa-infinity me-1"></i>Fractional Order</div>
+      <div class="slider-row">
+        <span class="slider-label">q</span>
+        <input id="q" type="range" class="ctrl-range" min="0.6" max="1" step="0.01" value="0.95">
+        <span id="qValue" class="slider-val">0.95</span>
+      </div>
+    </div>
+
+    <!-- Biological Parameters -->
+    <div class="ctrl-section">
+      <div class="ctrl-section-title"><i class="fa fa-microscope me-1"></i>Biological Parameters</div>
+      <div class="slider-row">
+        <span class="slider-label">Λ</span>
+        <input id="Lambda" type="range" class="ctrl-range" min="0" max="500" step="1" value="100">
+        <span id="LambdaValue" class="slider-val">100</span>
+      </div>
+      <div class="slider-row">
+        <span class="slider-label">β₀</span>
+        <input id="beta0" type="range" class="ctrl-range" min="0.01" max="1" step="0.01" value="0.30">
+        <span id="beta0Value" class="slider-val">0.30</span>
+      </div>
+      <div class="slider-row">
+        <span class="slider-label">μ</span>
+        <input id="mu" type="range" class="ctrl-range" min="0.001" max="0.10" step="0.001" value="0.02">
+        <span id="muValue" class="slider-val">0.02</span>
+      </div>
+      <div class="slider-row">
+        <span class="slider-label">τ</span>
+        <input id="tau" type="range" class="ctrl-range" min="0.01" max="1" step="0.01" value="0.20">
+        <span id="tauValue" class="slider-val">0.20</span>
+      </div>
+      <div class="slider-row">
+        <span class="slider-label">δ</span>
+        <input id="delta" type="range" class="ctrl-range" min="0.01" max="1" step="0.01" value="0.10">
+        <span id="deltaValue" class="slider-val">0.10</span>
+      </div>
+      <div class="slider-row">
+        <span class="slider-label">ρ</span>
+        <input id="rho" type="range" class="ctrl-range" min="0.01" max="1" step="0.01" value="0.03">
+        <span id="rhoValue" class="slider-val">0.03</span>
+      </div>
+      <div class="slider-row">
+        <span class="slider-label">η</span>
+        <input id="eta" type="range" class="ctrl-range" min="0" max="1" step="0.01" value="0.10">
+        <span id="etaValue" class="slider-val">0.10</span>
+      </div>
+      <div class="slider-row">
+        <span class="slider-label">d</span>
+        <input id="d" type="range" class="ctrl-range" min="0.01" max="1" step="0.01" value="0.33">
+        <span id="dValue" class="slider-val">0.33</span>
+      </div>
+    </div>
+
+    <!-- Interventions -->
+    <div class="ctrl-section">
+      <div class="ctrl-section-title"><i class="fa fa-shield-halved me-1"></i>Social Interventions</div>
+      <div class="slider-row">
+        <span class="slider-label u1-color">u₁</span>
+        <input id="u1" type="range" class="ctrl-range range-u1" min="0" max="1" step="0.01" value="0.40">
+        <span id="u1Value" class="slider-val">0.40</span>
+      </div>
+      <div class="slider-label-hint">Awareness &amp; Education</div>
+      <div class="slider-row">
+        <span class="slider-label u2-color">u₂</span>
+        <input id="u2" type="range" class="ctrl-range range-u2" min="0" max="1" step="0.01" value="0.50">
+        <span id="u2Value" class="slider-val">0.50</span>
+      </div>
+      <div class="slider-label-hint">Safer Sexual Behaviour</div>
+      <div class="slider-row">
+        <span class="slider-label u3-color">u₃</span>
+        <input id="u3" type="range" class="ctrl-range range-u3" min="0" max="1" step="0.01" value="0.60">
+        <span id="u3Value" class="slider-val">0.60</span>
+      </div>
+      <div class="slider-label-hint">Testing &amp; Treatment-Seeking</div>
+      <div class="slider-row">
+        <span class="slider-label u4-color">u₄</span>
+        <input id="u4" type="range" class="ctrl-range range-u4" min="0" max="1" step="0.01" value="0.70">
+        <span id="u4Value" class="slider-val">0.70</span>
+      </div>
+      <div class="slider-label-hint">Treatment Adherence</div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="ctrl-section">
+      <button class="btn-run w-100" id="runSimulation">
+        <i class="fa fa-play me-2"></i>Run Simulation
+      </button>
+      <button class="btn-reset w-100 mt-2" id="resetDefaults">
+        <i class="fa fa-rotate-left me-2"></i>Reset Defaults
+      </button>
+    </div>
+  </aside>
+
+  <!-- ── MAIN CONTENT ── -->
+  <section class="dashboard-main">
+
+    <!-- Lab Header -->
+    <div class="lab-header">
+      <div>
+        <div class="eyebrow-label"><i class="fa fa-atom me-1"></i>Fractional SITA Model · Social Behaviour Interventions</div>
+        <h1 class="lab-title">Scientific Simulation Lab</h1>
+      </div>
+      <div class="d-flex gap-2 align-items-center flex-wrap">
+        <button class="btn-ghost-sm d-lg-none" id="sidebarOpen"><i class="fa fa-sliders me-1"></i>Controls</button>
+        <button class="btn-ghost-sm" id="downloadCsv"><i class="fa fa-download me-1"></i>CSV</button>
+        <button class="btn-ghost-sm" id="downloadParams"><i class="fa fa-file-code me-1"></i>JSON</button>
+      </div>
+    </div>
+
+    <!-- Metric Cards -->
+    <div class="metric-grid">
+      <div class="metric-card" id="mc-r0">
+        <div class="mc-icon"><i class="fa fa-chart-simple"></i></div>
+        <div class="mc-body">
+          <span class="mc-label">R₀</span>
+          <strong class="mc-value" id="cardR0">--</strong>
+        </div>
+      </div>
+      <div class="metric-card" id="mc-status">
+        <div class="mc-icon"><i class="fa fa-circle-dot"></i></div>
+        <div class="mc-body">
+          <span class="mc-label">Epidemic Status</span>
+          <strong class="mc-value" id="cardStatus">--</strong>
+        </div>
+      </div>
+      <div class="metric-card" id="mc-peak">
+        <div class="mc-icon"><i class="fa fa-arrow-trend-up"></i></div>
+        <div class="mc-body">
+          <span class="mc-label">Peak Infected</span>
+          <strong class="mc-value" id="cardPeak">--</strong>
+        </div>
+      </div>
+      <div class="metric-card" id="mc-timepeak">
+        <div class="mc-icon"><i class="fa fa-clock"></i></div>
+        <div class="mc-body">
+          <span class="mc-label">Time of Peak</span>
+          <strong class="mc-value" id="cardTimePeak">--</strong>
+        </div>
+      </div>
+      <div class="metric-card" id="mc-finalt">
+        <div class="mc-icon"><i class="fa fa-pills"></i></div>
+        <div class="mc-body">
+          <span class="mc-label">Final Treated</span>
+          <strong class="mc-value" id="cardFinalT">--</strong>
+        </div>
+      </div>
+      <div class="metric-card" id="mc-q">
+        <div class="mc-icon"><i class="fa fa-infinity"></i></div>
+        <div class="mc-body">
+          <span class="mc-label">Memory Order q</span>
+          <strong class="mc-value" id="cardQ">--</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs-bar">
+      <button class="tab-btn active" data-tab="simulator"><i class="fa fa-chart-area me-1"></i>Simulator</button>
+      <button class="tab-btn" data-tab="scenarios"><i class="fa fa-layer-group me-1"></i>Scenarios</button>
+      <button class="tab-btn" data-tab="sensitivity"><i class="fa fa-magnifying-glass-chart me-1"></i>Sensitivity</button>
+      <button class="tab-btn" data-tab="memory"><i class="fa fa-wave-square me-1"></i>Memory Effect</button>
+      <button class="tab-btn" data-tab="export"><i class="fa fa-file-export me-1"></i>Export</button>
+      <button class="tab-btn" data-tab="overview"><i class="fa fa-circle-info me-1"></i>Overview</button>
+    </div>
+
+    <!-- ── TAB: SIMULATOR ── -->
+    <div class="tab-panel active" id="tab-simulator">
+      <div class="chart-card chart-large mb-3">
+        <div class="chart-card-title"><i class="fa fa-chart-line me-2"></i>SITA Compartment Time Series</div>
+        <div id="mainChart" class="chart-body"></div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6 col-xl-4">
+          <div class="chart-card h-100">
+            <div class="chart-card-title"><i class="fa fa-gauge me-2"></i>R₀ Gauge</div>
+            <div id="r0Gauge" class="chart-body"></div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+          <div class="chart-card h-100">
+            <div class="chart-card-title"><i class="fa fa-shield-halved me-2"></i>Intervention Levels</div>
+            <div id="interventionChart" class="chart-body"></div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+          <div class="chart-card h-100">
+            <div class="chart-card-title"><i class="fa fa-virus me-2"></i>Infected Focus</div>
+            <div id="infectedChart" class="chart-body"></div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+          <div class="chart-card h-100">
+            <div class="chart-card-title"><i class="fa fa-pills me-2"></i>Treated vs AIDS</div>
+            <div id="treatedAidsChart" class="chart-body"></div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+          <div class="chart-card h-100">
+            <div class="chart-card-title"><i class="fa fa-people-group me-2"></i>Total Population N(t)</div>
+            <div id="populationChart" class="chart-body"></div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+          <div class="chart-card h-100">
+            <div class="chart-card-title"><i class="fa fa-circle-nodes me-2"></i>Phase: I(t) vs T(t)</div>
+            <div id="phaseChart" class="chart-body"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results Table -->
+      <div class="chart-card mt-3">
+        <div class="chart-card-title"><i class="fa fa-table me-2"></i>Final State Summary</div>
+        <div class="table-responsive p-2">
+          <table class="sci-table" id="resultsTable">
+            <thead><tr><th>Compartment</th><th>Final Value</th><th>Peak</th></tr></thead>
+            <tbody id="resultsTableBody"><tr><td colspan="3" class="text-center text-muted">Run simulation to see results</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: SCENARIOS ── -->
+    <div class="tab-panel" id="tab-scenarios">
+      <div class="scenario-presets mb-3">
+        <span class="preset-label">Quick Run:</span>
+        <button class="btn-preset" data-scenario="no_intervention">No Intervention</button>
+        <button class="btn-preset" data-scenario="awareness_only">Awareness Only</button>
+        <button class="btn-preset" data-scenario="safer_behaviour">Safer Behaviour</button>
+        <button class="btn-preset" data-scenario="testing_boost">Testing Boost</button>
+        <button class="btn-preset" data-scenario="adherence_support">Adherence Support</button>
+        <button class="btn-preset active" data-scenario="combined_intervention">Combined</button>
+        <button class="btn-preset" data-scenario="ordinary_model">q=1 Ordinary</button>
+        <button class="btn-preset" data-scenario="high_memory">High Memory</button>
+      </div>
+      <div class="chart-card chart-large mb-3">
+        <div class="chart-card-title"><i class="fa fa-chart-line me-2"></i>Scenario Comparison: I(t)</div>
+        <div id="scenarioChart" class="chart-body"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-card-title"><i class="fa fa-table me-2"></i>Scenario Comparison Table</div>
+        <div class="table-responsive p-2">
+          <table class="sci-table" id="scenarioTable">
+            <thead><tr><th>Scenario</th><th>R₀</th><th>Peak I</th><th>Final I</th><th>Final A</th><th>Final T</th></tr></thead>
+            <tbody><tr><td colspan="6" class="text-center text-muted">Run simulation to compare scenarios</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: SENSITIVITY ── -->
+    <div class="tab-panel" id="tab-sensitivity">
+      <div class="chart-card chart-large mb-3">
+        <div class="chart-card-title"><i class="fa fa-magnifying-glass-chart me-2"></i>Normalized R₀ Sensitivity Indices</div>
+        <div id="sensitivityChart" class="chart-body"></div>
+      </div>
+      <div class="row g-3" id="sensitivityRank"></div>
+      <div class="chart-card mt-3">
+        <div class="chart-card-title"><i class="fa fa-circle-info me-2"></i>Interpretation</div>
+        <div class="p-3">
+          <p class="text-muted mb-1"><span class="badge-danger-sm">Positive index</span> — increasing this parameter increases R₀ (worsens epidemic).</p>
+          <p class="text-muted mb-0"><span class="badge-success-sm">Negative index</span> — increasing this parameter decreases R₀ (controls epidemic).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: MEMORY EFFECT ── -->
+    <div class="tab-panel" id="tab-memory">
+      <div class="memory-info-bar mb-3">
+        <i class="fa fa-circle-info me-2 text-glow-cyan"></i>
+        Comparing infected curve I(t) across fractional orders q = 1.00, 0.95, 0.85, 0.75.
+        Lower q introduces stronger memory effects and slower epidemic dynamics.
+      </div>
+      <div class="chart-card chart-large mb-3">
+        <div class="chart-card-title"><i class="fa fa-wave-square me-2"></i>Memory Effect: I(t) for Different q Values</div>
+        <div id="memoryChart" class="chart-body"></div>
+      </div>
+      <div class="chart-card chart-large">
+        <div class="chart-card-title"><i class="fa fa-cube me-2"></i>R₀ Surface: f(u₁, u₂)</div>
+        <div id="surfaceChart" class="chart-body"></div>
+      </div>
+    </div>
+
+    <!-- ── TAB: EXPORT ── -->
+    <div class="tab-panel" id="tab-export">
+      <div class="row g-3">
+        <div class="col-md-6 col-lg-3">
+          <div class="export-card">
+            <div class="export-icon"><i class="fa fa-file-csv"></i></div>
+            <h5>Simulation CSV</h5>
+            <p>Download time-series data for S, I, T, A, N as a CSV file.</p>
+            <button class="btn-run w-100" id="exportCsvBtn"><i class="fa fa-download me-2"></i>Download CSV</button>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="export-card">
+            <div class="export-icon icon-gold"><i class="fa fa-file-code"></i></div>
+            <h5>Parameters JSON</h5>
+            <p>Export current simulation parameters as a JSON file for reproducibility.</p>
+            <button class="btn-secondary-ctrl w-100" id="exportJsonBtn"><i class="fa fa-download me-2"></i>Download JSON</button>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="export-card">
+            <div class="export-icon icon-green"><i class="fa fa-image"></i></div>
+            <h5>Graph PNG</h5>
+            <p>Use the Plotly camera icon on any chart to export it as a PNG image.</p>
+            <div class="export-hint"><i class="fa fa-circle-info me-1"></i>Use the 📷 icon on each chart</div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="export-card">
+            <div class="export-icon icon-red"><i class="fa fa-file-lines"></i></div>
+            <h5>Scenario Report</h5>
+            <p>Generate a text summary of all scenario comparison results.</p>
+            <button class="btn-ghost-sm w-100" id="exportReportBtn"><i class="fa fa-download me-2"></i>Download Report</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: OVERVIEW ── -->
+    <div class="tab-panel" id="tab-overview">
+      <div class="row g-3">
+        <div class="col-md-6 col-lg-4">
+          <div class="overview-card h-100">
+            <div class="ov-icon"><i class="fa fa-people-group"></i></div>
+            <h5>SITA Compartments</h5>
+            <p><strong class="text-glow-cyan">S(t)</strong> — Susceptible individuals at risk of infection.</p>
+            <p><strong class="text-danger-glow">I(t)</strong> — Infected, untreated individuals who can transmit.</p>
+            <p><strong class="text-success-glow">T(t)</strong> — Treated individuals with reduced transmission (η).</p>
+            <p><strong class="text-gold-glow">A(t)</strong> — AIDS-stage individuals with high mortality (d).</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="overview-card h-100">
+            <div class="ov-icon icon-gold"><i class="fa fa-infinity"></i></div>
+            <h5>Caputo Fractional Derivative</h5>
+            <p>The Caputo derivative of order q ∈ (0,1] generalises the ordinary derivative. When q = 1, the model reduces to the standard ODE system.</p>
+            <p>For q &lt; 1, the system retains memory of past states via the Gamma function weighting, producing the Mittag-Leffler relaxation behaviour.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="overview-card h-100">
+            <div class="ov-icon icon-green"><i class="fa fa-shield-halved"></i></div>
+            <h5>Social Interventions</h5>
+            <p><strong class="text-glow-cyan">u₁</strong> — Awareness &amp; education reduces effective β₀.</p>
+            <p><strong class="text-gold-glow">u₂</strong> — Safer behaviour / condom use reduces β₀.</p>
+            <p><strong class="text-success-glow">u₃</strong> — Testing boosts treatment rate τ.</p>
+            <p><strong class="text-danger-glow">u₄</strong> — Adherence reduces progression rate ρ.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="overview-card h-100">
+            <div class="ov-icon icon-red"><i class="fa fa-chart-simple"></i></div>
+            <h5>Basic Reproduction Number R₀</h5>
+            <p>R₀ measures average secondary infections from one case in a fully susceptible population.</p>
+            <ul class="ov-list">
+              <li><span class="badge-success-sm">R₀ &lt; 1</span> — Epidemic controlled</li>
+              <li><span class="badge-warning-sm">R₀ = 1</span> — Threshold / endemic</li>
+              <li><span class="badge-danger-sm">R₀ &gt; 1</span> — Epidemic persistent</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="overview-card h-100">
+            <div class="ov-icon"><i class="fa fa-function"></i></div>
+            <h5>Gamma &amp; Mittag-Leffler</h5>
+            <p>The Gamma function Γ(q+1) normalises the fractional step weights in the Caputo solver.</p>
+            <p>The Mittag-Leffler function E_q(−λt^q) describes the fractional relaxation, generalising the exponential e^(−λt) of ordinary models.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="overview-card h-100">
+            <div class="ov-icon icon-gold"><i class="fa fa-magnifying-glass-chart"></i></div>
+            <h5>Sensitivity Analysis</h5>
+            <p>Normalised sensitivity index of R₀ with respect to parameter p:</p>
+            <div class="math-block">Γ_p^R₀ = (∂R₀/∂p) · (p/R₀)</div>
+            <p>Positive index → parameter increases R₀. Negative → reduces R₀. Used to rank intervention effectiveness.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

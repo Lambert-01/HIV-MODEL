@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}FracHIV-SITA Lab | Documentation{% endblock %}
+{% block content %}
+<div class="content-page">
+  <div class="content-hero">
+    <div class="eyebrow-label"><i class="fa fa-book me-1"></i>Model Documentation</div>
+    <h1>FracHIV-SITA Model</h1>
+    <p class="hero-copy">Mathematical foundations of the fractional-order HIV SITA model with social behaviour interventions.</p>
+  </div>
+
+  <div class="row g-4 mt-2">
+    <div class="col-md-6 col-lg-4">
+      <div class="doc-card h-100">
+        <div class="doc-icon"><i class="fa fa-people-group"></i></div>
+        <h5>SITA Compartments</h5>
+        <p>The model tracks four populations: <strong>S</strong> (susceptible), <strong>I</strong> (infected), <strong>T</strong> (treated), <strong>A</strong> (AIDS). The force of infection λ = β_eff(I + ηT)/N drives transitions from S to I.</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="doc-card h-100">
+        <div class="doc-icon icon-gold"><i class="fa fa-infinity"></i></div>
+        <h5>Fractional Order q</h5>
+        <p>The Caputo derivative of order q ∈ (0,1] introduces memory. The solver uses a fractional Euler scheme with Gamma-weighted history. q = 1 recovers the ordinary ODE model.</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="doc-card h-100">
+        <div class="doc-icon icon-green"><i class="fa fa-chart-simple"></i></div>
+        <h5>Reproduction Number R₀</h5>
+        <p>R₀ = (β_eff / (τ_eff + δ + μ)) × (1 + ητ_eff / (ρ_eff + μ)). Values below 1 indicate disease-free stability. Values above 1 indicate endemic persistence.</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="doc-card h-100">
+        <div class="doc-icon icon-red"><i class="fa fa-shield-halved"></i></div>
+        <h5>Interventions</h5>
+        <p>β_eff = β₀(1−u₁)(1−u₂) reduces transmission. τ_eff = τ(1+u₃) boosts treatment uptake. ρ_eff = ρ(1−u₄) reduces AIDS progression. All u_i ∈ [0,1].</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="doc-card h-100">
+        <div class="doc-icon"><i class="fa fa-magnifying-glass-chart"></i></div>
+        <h5>Sensitivity Analysis</h5>
+        <p>Normalised sensitivity indices rank which parameters most strongly increase or decrease R₀. Positive index → worsens epidemic. Negative index → controls epidemic.</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="doc-card h-100">
+        <div class="doc-icon icon-gold"><i class="fa fa-file-export"></i></div>
+        <h5>Export &amp; Reproducibility</h5>
+        <p>CSV export provides full time-series data. JSON export saves all parameters. Plotly charts support PNG export. All results are reproducible from the parameter set.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="doc-card mt-4">
+    <h5><i class="fa fa-list-ol me-2"></i>Parameter Reference</h5>
+    <div class="table-responsive">
+      <table class="sci-table">
+        <thead><tr><th>Symbol</th><th>Description</th><th>Default</th><th>Range</th></tr></thead>
+        <tbody>
+          <tr><td>Λ</td><td>Recruitment rate</td><td>100</td><td>≥ 0</td></tr>
+          <tr><td>β₀</td><td>Baseline transmission rate</td><td>0.30</td><td>≥ 0</td></tr>
+          <tr><td>μ</td><td>Natural death rate</td><td>0.02</td><td>≥ 0</td></tr>
+          <tr><td>τ</td><td>Treatment rate</td><td>0.20</td><td>≥ 0</td></tr>
+          <tr><td>δ</td><td>Progression rate I→A</td><td>0.10</td><td>≥ 0</td></tr>
+          <tr><td>ρ</td><td>Progression rate T→A</td><td>0.03</td><td>≥ 0</td></tr>
+          <tr><td>η</td><td>Relative infectivity of T</td><td>0.10</td><td>[0,1]</td></tr>
+          <tr><td>d</td><td>AIDS-induced death rate</td><td>0.33</td><td>≥ 0</td></tr>
+          <tr><td>q</td><td>Fractional order</td><td>0.95</td><td>(0,1]</td></tr>
+          <tr><td>u₁–u₄</td><td>Intervention levels</td><td>0.4–0.7</td><td>[0,1]</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
