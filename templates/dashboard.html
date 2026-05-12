@@ -215,16 +215,23 @@
 
     <!-- Tabs -->
     <div class="tabs-bar">
-      <button class="tab-btn active" data-tab="simulator"><i class="fa fa-chart-area me-1"></i>Simulator</button>
-      <button class="tab-btn" data-tab="scenarios"><i class="fa fa-layer-group me-1"></i>Scenarios</button>
+      <button class="tab-btn active" data-tab="baseline"><i class="fa fa-chart-area me-1"></i>Baseline Simulation</button>
+      <button class="tab-btn" data-tab="parameters"><i class="fa fa-sliders me-1"></i>Model Parameters</button>
+      <button class="tab-btn" data-tab="interventions"><i class="fa fa-shield-halved me-1"></i>Intervention Controls</button>
+      <button class="tab-btn" data-tab="r0"><i class="fa fa-gauge me-1"></i>R0 &amp; Stability</button>
+      <button class="tab-btn" data-tab="scenario-explorer"><i class="fa fa-flask-vial me-1"></i>Scenario Explorer</button>
+      <button class="tab-btn" data-tab="scenario-comparison"><i class="fa fa-layer-group me-1"></i>Scenario Comparison</button>
+      <button class="tab-btn" data-tab="phase"><i class="fa fa-circle-nodes me-1"></i>Phase Analysis</button>
       <button class="tab-btn" data-tab="sensitivity"><i class="fa fa-magnifying-glass-chart me-1"></i>Sensitivity</button>
       <button class="tab-btn" data-tab="memory"><i class="fa fa-wave-square me-1"></i>Memory Effect</button>
+      <button class="tab-btn" data-tab="surface"><i class="fa fa-grip me-1"></i>Surfaces &amp; Heatmaps</button>
       <button class="tab-btn" data-tab="export"><i class="fa fa-file-export me-1"></i>Export</button>
       <button class="tab-btn" data-tab="overview"><i class="fa fa-circle-info me-1"></i>Overview</button>
+      <button class="tab-btn" data-tab="about-thesis"><i class="fa fa-graduation-cap me-1"></i>About Thesis</button>
     </div>
 
-    <!-- ── TAB: SIMULATOR ── -->
-    <div class="tab-panel active" id="tab-simulator">
+    <!-- ── TAB: BASELINE SIMULATION ── -->
+    <div class="tab-panel active" id="tab-baseline">
       <div class="chart-card chart-large mb-3">
         <div class="chart-card-title"><i class="fa fa-chart-line me-2"></i>SITA Compartment Time Series</div>
         <div id="mainChart" class="chart-body"></div>
@@ -268,6 +275,21 @@
         </div>
       </div>
 
+      <div class="row g-3 mt-1">
+        <div class="col-lg-6">
+          <div class="chart-card h-100">
+            <div class="chart-card-title"><i class="fa fa-layer-group me-2"></i>Stacked Population Composition</div>
+            <div id="stackedChart" class="chart-body"></div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="chart-card h-100">
+            <div class="chart-card-title"><i class="fa fa-percent me-2"></i>Normalized Population Percentages</div>
+            <div id="percentageChart" class="chart-body"></div>
+          </div>
+        </div>
+      </div>
+
       <!-- Results Table -->
       <div class="chart-card mt-3">
         <div class="chart-card-title"><i class="fa fa-table me-2"></i>Final State Summary</div>
@@ -278,10 +300,100 @@
           </table>
         </div>
       </div>
+
+      <div class="chart-card mt-3">
+        <div class="chart-card-title"><i class="fa fa-comment-dots me-2"></i>Baseline Interpretation</div>
+        <div class="p-3 text-muted" id="baselineInterpretation">Run simulation to generate interpretation.</div>
+      </div>
     </div>
 
-    <!-- ── TAB: SCENARIOS ── -->
-    <div class="tab-panel" id="tab-scenarios">
+    <!-- ── TAB: MODEL PARAMETERS ── -->
+    <div class="tab-panel" id="tab-parameters">
+      <div class="row g-3">
+        <div class="col-lg-4">
+          <div class="overview-card h-100">
+            <div class="ov-icon"><i class="fa fa-users"></i></div>
+            <h5>Initial Population</h5>
+            <p>S0, I0, T0 and A0 define the starting population state.</p>
+            <div class="math-block">N0 = <span id="n0Value">--</span></div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="overview-card h-100">
+            <div class="ov-icon icon-gold"><i class="fa fa-gears"></i></div>
+            <h5>Simulation Settings</h5>
+            <p>Solver: ABM-type predictor-corrector method for Caputo fractional differential equations.</p>
+            <div class="math-block">q = <span id="paramQValue">--</span>, years = <span id="paramYearsValue">--</span>, h = <span id="paramStepValue">--</span></div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="overview-card h-100">
+            <div class="ov-icon icon-green"><i class="fa fa-infinity"></i></div>
+            <h5>Memory Interpretation</h5>
+            <p id="memoryModeText">Adjust q to see ordinary versus fractional memory dynamics.</p>
+          </div>
+        </div>
+      </div>
+      <div class="chart-card mt-3">
+        <div class="chart-card-title"><i class="fa fa-table me-2"></i>Current Parameter Snapshot</div>
+        <div class="table-responsive p-2"><table class="sci-table" id="parameterSnapshotTable"></table></div>
+      </div>
+    </div>
+
+    <!-- ── TAB: INTERVENTION CONTROLS ── -->
+    <div class="tab-panel" id="tab-interventions">
+      <div class="row g-3">
+        <div class="col-lg-8">
+          <div class="chart-card h-100">
+            <div class="chart-card-title"><i class="fa fa-shield-halved me-2"></i>Current Intervention Strengths</div>
+            <div id="interventionDetailChart" class="chart-body"></div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="overview-card h-100">
+            <div class="ov-icon icon-green"><i class="fa fa-calculator"></i></div>
+            <h5>Live Effective Rates</h5>
+            <div class="math-block">beta_eff = <span id="betaEffLive">--</span></div>
+            <div class="math-block">tau_eff = <span id="tauEffLive">--</span></div>
+            <div class="math-block">rho_eff = <span id="rhoEffLive">--</span></div>
+            <p id="interventionMeaningText">Move intervention sliders to see how behaviour modifies the mathematical rates.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: R0 AND STABILITY ── -->
+    <div class="tab-panel" id="tab-r0">
+      <div class="row g-3">
+        <div class="col-lg-5">
+          <div class="chart-card h-100">
+            <div class="chart-card-title"><i class="fa fa-gauge me-2"></i>R0 Gauge</div>
+            <div id="r0GaugeDetail" class="chart-body"></div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="overview-card h-100">
+            <div class="ov-icon icon-red"><i class="fa fa-chart-simple"></i></div>
+            <h5>Reproduction Number and Stability</h5>
+            <div class="math-block">R0 = beta_eff / (tau_eff + delta + mu) * (1 + eta*tau_eff / (rho_eff + mu))</div>
+            <p id="stabilityText">Run simulation to compute stability interpretation.</p>
+            <div class="row g-2 mt-2" id="effectiveRateCards"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: SCENARIO EXPLORER ── -->
+    <div class="tab-panel" id="tab-scenario-explorer">
+      <div class="memory-info-bar mb-3">
+        <i class="fa fa-circle-info me-2 text-glow-cyan"></i>
+        Each scenario lists intervention values, effective rates, R0, simulated outcomes, and interpretation.
+      </div>
+      <div class="row g-3" id="scenarioExplorerCards"></div>
+    </div>
+
+    <!-- ── TAB: SCENARIO COMPARISON ── -->
+    <div class="tab-panel" id="tab-scenario-comparison">
       <div class="scenario-presets mb-3">
         <span class="preset-label">Quick Run:</span>
         <button class="btn-preset" data-scenario="no_intervention">No Intervention</button>
@@ -293,10 +405,33 @@
         <button class="btn-preset" data-scenario="ordinary_model">q=1 Ordinary</button>
         <button class="btn-preset" data-scenario="high_memory">High Memory</button>
       </div>
-      <div class="chart-card chart-large mb-3">
-        <div class="chart-card-title"><i class="fa fa-chart-line me-2"></i>Scenario Comparison: I(t)</div>
-        <div id="scenarioChart" class="chart-body"></div>
+      <div class="row g-3 mb-3">
+        <div class="col-lg-6">
+          <div class="chart-card h-100">
+            <div class="chart-card-title"><i class="fa fa-chart-line me-2"></i>Scenario Comparison: I(t)</div>
+            <div id="scenarioChart" class="chart-body"></div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="chart-card h-100">
+            <div class="chart-card-title"><i class="fa fa-chart-line me-2"></i>Scenario Comparison: A(t)</div>
+            <div id="scenarioAidsChart" class="chart-body"></div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="chart-card h-100">
+            <div class="chart-card-title"><i class="fa fa-chart-simple me-2"></i>R0 by Scenario</div>
+            <div id="scenarioR0Chart" class="chart-body"></div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="chart-card h-100">
+            <div class="chart-card-title"><i class="fa fa-chart-pie me-2"></i>Scenario Radar</div>
+            <div id="scenarioRadarChart" class="chart-body"></div>
+          </div>
+        </div>
       </div>
+      <div class="memory-info-bar mb-3" id="bestScenarioText">Run simulation to identify the strongest scenarios.</div>
       <div class="chart-card">
         <div class="chart-card-title"><i class="fa fa-table me-2"></i>Scenario Comparison Table</div>
         <div class="table-responsive p-2">
@@ -305,6 +440,20 @@
             <tbody><tr><td colspan="6" class="text-center text-muted">Run simulation to compare scenarios</td></tr></tbody>
           </table>
         </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: PHASE ANALYSIS ── -->
+    <div class="tab-panel" id="tab-phase">
+      <div class="memory-info-bar mb-3">
+        <i class="fa fa-circle-nodes me-2 text-glow-cyan"></i>
+        Time-series graphs show values over time; phase plots show relationships between compartments.
+      </div>
+      <div class="row g-3">
+        <div class="col-lg-6"><div class="chart-card"><div class="chart-card-title">I(t) vs T(t)</div><div id="phaseITChart" class="chart-body"></div></div></div>
+        <div class="col-lg-6"><div class="chart-card"><div class="chart-card-title">I(t) vs A(t)</div><div id="phaseIAChart" class="chart-body"></div></div></div>
+        <div class="col-lg-6"><div class="chart-card"><div class="chart-card-title">S(t) vs I(t)</div><div id="phaseSIChart" class="chart-body"></div></div></div>
+        <div class="col-lg-6"><div class="chart-card"><div class="chart-card-title">T(t) vs A(t)</div><div id="phaseTAChart" class="chart-body"></div></div></div>
       </div>
     </div>
 
@@ -335,9 +484,28 @@
         <div class="chart-card-title"><i class="fa fa-wave-square me-2"></i>Memory Effect: I(t) for Different q Values</div>
         <div id="memoryChart" class="chart-body"></div>
       </div>
-      <div class="chart-card chart-large">
-        <div class="chart-card-title"><i class="fa fa-cube me-2"></i>R₀ Surface: f(u₁, u₂)</div>
+      <div class="row g-3">
+        <div class="col-lg-4"><div class="chart-card"><div class="chart-card-title">T(t) for Different q</div><div id="memoryTChart" class="chart-body"></div></div></div>
+        <div class="col-lg-4"><div class="chart-card"><div class="chart-card-title">A(t) for Different q</div><div id="memoryAChart" class="chart-body"></div></div></div>
+        <div class="col-lg-4"><div class="chart-card"><div class="chart-card-title">I-T Phase for Different q</div><div id="memoryPhaseChart" class="chart-body"></div></div></div>
+      </div>
+    </div>
+
+    <!-- ── TAB: SURFACES AND HEATMAPS ── -->
+    <div class="tab-panel" id="tab-surface">
+      <div class="memory-info-bar mb-3">
+        <i class="fa fa-cube me-2 text-glow-cyan"></i>
+        Surfaces and heatmaps show intervention combinations that move R0 and final outcomes below control thresholds.
+      </div>
+      <div class="chart-card chart-large mb-3">
+        <div class="chart-card-title"><i class="fa fa-cube me-2"></i>R0 Surface: f(u1, u2)</div>
         <div id="surfaceChart" class="chart-body"></div>
+      </div>
+      <div class="row g-3">
+        <div class="col-lg-6"><div class="chart-card"><div class="chart-card-title">R0 Heatmap: f(u1, u2)</div><div id="r0HeatmapChart" class="chart-body"></div></div></div>
+        <div class="col-lg-6"><div class="chart-card"><div class="chart-card-title">Final Infected Heatmap: f(u1, u2)</div><div id="finalInfectedHeatmapChart" class="chart-body"></div></div></div>
+        <div class="col-lg-6"><div class="chart-card"><div class="chart-card-title">Final AIDS Heatmap: f(u3, u4)</div><div id="finalAidsHeatmapChart" class="chart-body"></div></div></div>
+        <div class="col-lg-6"><div class="chart-card"><div class="chart-card-title">R0 Intervention Waterfall</div><div id="waterfallChart" class="chart-body"></div></div></div>
       </div>
     </div>
 
@@ -376,11 +544,52 @@
             <button class="btn-ghost-sm w-100" id="exportReportBtn"><i class="fa fa-download me-2"></i>Download Report</button>
           </div>
         </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="export-card">
+            <div class="export-icon icon-green"><i class="fa fa-table"></i></div>
+            <h5>Scenario CSV</h5>
+            <p>Download scenario comparison rows for Chapter 6 tables.</p>
+            <button class="btn-secondary-ctrl w-100" id="exportScenarioCsvBtn"><i class="fa fa-download me-2"></i>Download Scenario CSV</button>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="export-card">
+            <div class="export-icon icon-gold"><i class="fa fa-chart-simple"></i></div>
+            <h5>Sensitivity CSV</h5>
+            <p>Download normalized R0 sensitivity indices.</p>
+            <button class="btn-secondary-ctrl w-100" id="exportSensitivityCsvBtn"><i class="fa fa-download me-2"></i>Download Sensitivity CSV</button>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="export-card">
+            <div class="export-icon"><i class="fa fa-copy"></i></div>
+            <h5>Copy Thesis Text</h5>
+            <p>Generate concise academic interpretation for the current result.</p>
+            <button class="btn-ghost-sm w-100" id="copyThesisTextBtn"><i class="fa fa-copy me-2"></i>Copy Text</button>
+          </div>
+        </div>
+      </div>
+      <div class="chart-card mt-3">
+        <div class="chart-card-title"><i class="fa fa-pen me-2"></i>Generated Thesis Interpretation</div>
+        <div class="p-3 text-muted" id="thesisTextBox">Run simulation to generate thesis-ready text.</div>
       </div>
     </div>
 
     <!-- ── TAB: OVERVIEW ── -->
     <div class="tab-panel" id="tab-overview">
+      <div class="chart-card mb-3">
+        <div class="chart-card-title"><i class="fa fa-diagram-project me-2"></i>SITA Flow Diagram</div>
+        <div class="sita-flow">
+          <div class="flow-entry">Lambda</div>
+          <div class="flow-node s-node">S<br><span>Susceptible</span></div>
+          <div class="flow-arrow">lambda(t)S</div>
+          <div class="flow-node i-node">I<br><span>Infected</span></div>
+          <div class="flow-arrow">tau(1+u3)I</div>
+          <div class="flow-node t-node">T<br><span>Treated</span></div>
+          <div class="flow-node a-node">A<br><span>AIDS</span></div>
+          <div class="flow-note">I -> A: delta I<br>T -> A: rho(1-u4)T<br>Deaths: mu and mu+d</div>
+        </div>
+      </div>
       <div class="row g-3">
         <div class="col-md-6 col-lg-4">
           <div class="overview-card h-100">
@@ -439,6 +648,16 @@
             <p>Positive index → parameter increases R₀. Negative → reduces R₀. Used to rank intervention effectiveness.</p>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: ABOUT THESIS ── -->
+    <div class="tab-panel" id="tab-about-thesis">
+      <div class="overview-card">
+        <div class="ov-icon icon-gold"><i class="fa fa-graduation-cap"></i></div>
+        <h5>Applied Mathematics Thesis Dashboard</h5>
+        <p>FracHIV-SITA Lab is an interactive computational environment for simulating the fractional-order SITA HIV transmission model with social behaviour interventions.</p>
+        <p>It supports the methodology and results chapters by presenting parameter configuration, intervention impact, R0 threshold behaviour, phase dynamics, fractional memory effects, sensitivity ranking, scenario comparison, and exportable thesis outputs.</p>
       </div>
     </div>
 

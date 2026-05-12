@@ -913,12 +913,13 @@ q=1.00,\quad q=0.95,\quad q=0.85,\quad q=0.75.
 This shows how memory effects influence HIV transmission dynamics.
 
 \section{Python Dashboard Architecture}
-The dashboard is developed using Python and Streamlit. It contains the following layers:
+The dashboard is developed using Python, Flask, HTML, CSS, JavaScript, and Plotly. It contains the following layers:
 \begin{enumerate}
   \item \textbf{Model layer}: implements the fractional SITA equations.
   \item \textbf{Numerical solver layer}: implements the fractional predictor-corrector method.
   \item \textbf{Analysis layer}: computes $\Rzero$, sensitivity indices, peak infection, and final states.
-  \item \textbf{User interface layer}: provides sliders, scenario selectors, graphs, interpretation cards, and export tools.
+  \item \textbf{API layer}: exposes simulation, scenario comparison, sensitivity analysis, reproduction-number, and export endpoints.
+  \item \textbf{User interface layer}: provides sliders, scenario selectors, graphs, interpretation cards, and export tools using HTML, CSS, JavaScript, and Plotly.
 \end{enumerate}
 
 \section{Dashboard Features}
@@ -939,32 +940,45 @@ The dashboard is developed using Python and Streamlit. It contains the following
 fractional_hiv_thesis_dashboard/
 |
 ├── app.py
+├── config.py
 ├── requirements.txt
 ├── README.md
 |
 ├── model/
-|   ├── fractional_sita.py
-|   ├── parameters.py
-|   └── reproduction_number.py
-|
-├── solvers/
-|   └── fractional_abm_solver.py
-|
-├── analysis/
-|   ├── sensitivity.py
+|   ├── fractional_sita_model.py
+|   ├── fractional_solver.py
+|   ├── reproduction_number.py
 |   ├── scenarios.py
-|   └── summary_statistics.py
+|   ├── sensitivity.py
+|   └── validation.py
 |
-├── visuals/
-|   ├── plots.py
-|   └── dashboard_cards.py
+├── routes/
+|   ├── simulation_routes.py
+|   ├── export_routes.py
+|   └── health_routes.py
+|
+├── templates/
+|   ├── base.html
+|   ├── index.html
+|   ├── dashboard.html
+|   ├── documentation.html
+|   └── about.html
+|
+├── static/
+|   ├── css/
+|   ├── js/
+|   ├── assets/
+|   └── vendor/
 |
 ├── data/
-|   └── baseline_parameters.csv
+|   ├── baseline_parameters.json
+|   ├── scenario_presets.json
+|   └── sample_outputs.csv
 |
 └── outputs/
+    ├── csv/
     ├── figures/
-    └── simulation_results/
+    └── reports/
 \end{lstlisting}
 
 \section{Chapter Summary}

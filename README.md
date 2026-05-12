@@ -13,13 +13,13 @@ Open `http://127.0.0.1:5000/dashboard`.
 
 ## Main Features
 
-- **Fractional-order SITA simulation** with Adams-Bashforth-Moulton predictor-corrector solver (O(h²) accuracy)
+- **Fractional-order SITA simulation** with an Adams-Bashforth-Moulton-type predictor-corrector method for Caputo fractional differential equations
 - **Social behaviour interventions** for awareness, safer behaviour, testing, and adherence
 - **R₀ calculation** with intervention effects
 - **Time-series plots** for S(t), I(t), T(t), A(t), N(t)
 - **Animated phase plot** (I vs T) with moving marker showing epidemic progression
 - **R₀ Gauge** with color-coded epidemic status
-- **Scenario comparison** across 7 preset intervention strategies
+- **Scenario comparison** across no-intervention, single-intervention, combined, ordinary-model, and high-memory strategies
 - **Sensitivity analysis** with normalized indices
 - **Memory effect comparison** across fractional orders (q = 1.0, 0.95, 0.85, 0.75)
 - **R₀ surface visualization** as function of (u₁, u₂)
@@ -28,10 +28,20 @@ Open `http://127.0.0.1:5000/dashboard`.
 
 ## Key Enhancements
 
-1. **ABM Predictor-Corrector Solver**: Upgraded from Euler method for better accuracy
-2. **Animated Phase Plot**: Moving marker shows I-T trajectory over time
-3. **Parallel Simulations**: q-comparison runs in parallel for faster results
-4. **Enhanced Documentation**: Full mathematical formulas and equations
+1. **ABM-Type Predictor-Corrector Solver**: Improved over a simple fractional Euler approximation; numerical accuracy depends on step size, fractional order, and solution smoothness.
+2. **Research Modules**: Parameters, interventions, R0/stability, baseline results, scenarios, phase analysis, memory effects, sensitivity, surfaces, heatmaps, and exports.
+3. **Thesis-Ready Interpretation**: Automatic stability text, scenario interpretation, and copyable results text.
+4. **Enhanced Documentation**: Mathematical formulas, API endpoints, and usage guidance.
+
+## Defense Notes
+
+The dashboard currently uses CDN links for Bootstrap, Font Awesome, Google Fonts, and Plotly. For an offline defense, download those assets into `static/vendor/` and update `templates/base.html` to load local files.
+
+## Test
+
+```powershell
+python -m pytest tests -p no:cacheprovider
+```
 
 ## Model Parameters
 

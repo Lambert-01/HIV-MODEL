@@ -32,6 +32,7 @@ function syncSliderLabels() {
     const label = document.getElementById(`${id}Value`);
     if (label) label.textContent = val(id).toFixed(id === "Lambda" ? 0 : 2);
   });
+  updateLivePanels();
 }
 
 function applyScenario(key) {
@@ -92,6 +93,86 @@ function updateResultsTable(result) {
     </tr>`).join("");
 }
 
+function effectiveRates(params) {
+  return {
+    beta_eff: params.beta0 * (1 - params.u1) * (1 - params.u2),
+    tau_eff: params.tau * (1 + params.u3),
+    rho_eff: params.rho * (1 - params.u4)
+  };
+}
+
+function localR0(params) {
+  const e = effectiveRates(params);
+  return (e.beta_eff / (e.tau_eff + params.delta + params.mu)) *
+    (1 + (params.eta * e.tau_eff) / (e.rho_eff + params.mu));
+}
+
+function updateLivePanels() {
+  const payload = buildPayload();
+  const p = payload.parameters;
+  const rates = effectiveRates(p);
+  const n0 = payload.initial_conditions.S0 + payload.initial_conditions.I0 + payload.initial_conditions.T0 + payload.initial_conditions.A0;
+
+  const set = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
+  set("n0Value", n0.toFixed(0));
+  set("paramQValue", p.q.toFixed(2));
+  set("paramYearsValue", payload.simulation.years.toFixed(1));
+  set("paramStepValue", payload.simulation.step.toFixed(2));
+  set("betaEffLive", rates.beta_eff.toFixed(5));
+  set("tauEffLive", rates.tau_eff.toFixed(5));
+  set("rhoEffLive", rates.rho_eff.toFixed(5));
+
+  const memory = document.getElementById("memoryModeText");
+  if (memory) {
+    memory.textContent = p.q === 1
+      ? "Classical ordinary model: no fractional memory effect."
+      : "Fractional-order model: past states influence present dynamics.";
+  }
+
+  const meaning = document.getElementById("interventionMeaningText");
+  if (meaning) {
+    meaning.textContent = `u1=${interventionLabel(p.u1)}, u2=${interventionLabel(p.u2)}, u3=${interventionLabel(p.u3)}, u4=${interventionLabel(p.u4)}.`;
+  }
+
+  const table = document.getElementById("parameterSnapshotTable");
+  if (table) {
+    const rows = [
+      ["Lambda", p.Lambda, "Recruitment rate"],
+      ["beta0", p.beta0, "Baseline transmission"],
+      ["mu", p.mu, "Natural mortality"],
+      ["tau", p.tau, "Treatment initiation"],
+      ["delta", p.delta, "I to AIDS progression"],
+      ["rho", p.rho, "T to AIDS progression"],
+      ["eta", p.eta, "Treated infectiousness"],
+      ["d", p.d, "AIDS mortality"],
+      ["q", p.q, "Fractional order"]
+    ];
+    table.innerHTML = `<thead><tr><th>Parameter</th><th>Value</th><th>Meaning</th></tr></thead><tbody>${rows.map((row) => `<tr><td>${row[0]}</td><td>${Number(row[1]).toFixed(row[0] === "Lambda" ? 0 : 3)}</td><td>${row[2]}</td></tr>`).join("")}</tbody>`;
+  }
+}
+
+function updateInterpretation(result) {
+  const s = result.summary;
+  const text = `The infected population reaches a peak of ${s.peak_infected.toFixed(0)} at t=${s.time_peak.toFixed(1)} years. Final values are I=${s.final_infected.toFixed(0)}, T=${s.final_treated.toFixed(0)}, and A=${s.final_aids.toFixed(0)}. ${result.stability_text}`;
+  const baseline = document.getElementById("baselineInterpretation");
+  if (baseline) baseline.textContent = text;
+  const thesis = document.getElementById("thesisTextBox");
+  if (thesis) {
+    thesis.textContent = `Under the selected parameter configuration, the fractional-order SITA model produced R0 = ${result.r0.toFixed(3)}, indicating a ${result.epidemic_status.toLowerCase()} epidemic status. The simulation shows peak infected population ${s.peak_infected.toFixed(0)} at ${s.time_peak.toFixed(1)} years and final infected population ${s.final_infected.toFixed(0)}. These results support interpretation of intervention-adjusted transmission, treatment uptake, AIDS progression, and fractional memory effects.`;
+  }
+  const stability = document.getElementById("stabilityText");
+  if (stability) stability.textContent = result.stability_text;
+  const cards = document.getElementById("effectiveRateCards");
+  if (cards) {
+    cards.innerHTML = [
+      ["beta_eff", result.effective_rates.beta_eff],
+      ["tau_eff", result.effective_rates.tau_eff],
+      ["rho_eff", result.effective_rates.rho_eff],
+      ["R0", result.r0]
+    ].map(([name, value]) => `<div class="col-sm-6"><div class="sensitivity-rank-card"><h6>${name}</h6><p>${Number(value).toFixed(5)}</p></div></div>`).join("");
+  }
+}
+
 function renderScenarioTable(rows) {
   const table = document.getElementById("scenarioTable");
   if (!table) return;
@@ -108,6 +189,27 @@ function renderScenarioTable(rows) {
           <td>${row.final_treated.toFixed(0)}</td>
         </tr>`).join("")}
     </tbody>`;
+}
+
+function renderScenarioExplorer(data) {
+  const box = document.getElementById("scenarioExplorerCards");
+  if (!box) return;
+  box.innerHTML = data.comparisons.map((row) => `
+    <div class="col-md-6 col-xl-4">
+      <div class="overview-card h-100">
+        <div class="ov-icon ${row.r0 < 1 ? "icon-green" : row.r0 > 1.02 ? "icon-red" : "icon-gold"}"><i class="fa fa-flask"></i></div>
+        <h5>${row.name}</h5>
+        <p><strong>u:</strong> (${row.u1.toFixed(2)}, ${row.u2.toFixed(2)}, ${row.u3.toFixed(2)}, ${row.u4.toFixed(2)})</p>
+        <div class="math-block">beta_eff=${row.beta_eff.toFixed(4)}<br>tau_eff=${row.tau_eff.toFixed(4)}<br>rho_eff=${row.rho_eff.toFixed(4)}<br>R0=${row.r0.toFixed(3)}</div>
+        <p>Peak I=${row.peak_infected.toFixed(0)} at t=${row.time_peak.toFixed(1)}; final I=${row.final_infected.toFixed(0)}, T=${row.final_treated.toFixed(0)}, A=${row.final_aids.toFixed(0)}.</p>
+        <p>${row.interpretation}</p>
+      </div>
+    </div>
+  `).join("");
+  const best = document.getElementById("bestScenarioText");
+  if (best && data.best?.lowest_r0) {
+    best.textContent = `Lowest R0: ${data.best.lowest_r0.name} (${data.best.lowest_r0.r0.toFixed(3)}). Lowest final infected: ${data.best.lowest_final_infected.name}. Lowest final AIDS: ${data.best.lowest_final_aids.name}.`;
+  }
 }
 
 function renderSensitivityRank(values) {
@@ -145,16 +247,28 @@ async function runSimulation() {
     updateResultsTable(result);
     renderMainChart(result);
     renderGauge(result.r0, result.epidemic_status);
+    renderGaugeInto("r0GaugeDetail", result.r0, result.epidemic_status);
     renderInterventions(result.parameters);
+    renderInterventionsInto("interventionDetailChart", result.parameters);
     renderInfectedFocus(result);
     renderTreatedAids(result);
     renderPopulation(result);
+    renderStackedAndPercentage(result);
     renderAnimatedPhase(result);
+    renderPhaseVariant("phaseITChart", result, "I", "T", "I(t)", "T(t)");
+    renderPhaseVariant("phaseIAChart", result, "I", "A", "I(t)", "A(t)");
+    renderPhaseVariant("phaseSIChart", result, "S", "I", "S(t)", "I(t)");
+    renderPhaseVariant("phaseTAChart", result, "T", "A", "T(t)", "A(t)");
+    updateInterpretation(result);
 
     const scenarioData = await postJson("/api/scenario", { base_payload: payload });
     lastScenarioData = scenarioData;
     renderScenarioChart(scenarioData);
+    renderScenarioAidsChart(scenarioData);
+    renderScenarioR0Chart(scenarioData.comparisons);
+    renderScenarioRadar(scenarioData.comparisons);
     renderScenarioTable(scenarioData.comparisons);
+    renderScenarioExplorer(scenarioData);
 
     const sensitivity = await postJson("/api/sensitivity", { parameters: payload.parameters });
     renderSensitivityChart(sensitivity.sensitivity);
@@ -167,7 +281,9 @@ async function runSimulation() {
       return await postJson("/api/simulate", mp);
     })).then(results => memoryResults.push(...results));
     renderMemoryChart(memoryResults);
+    renderMemoryExtraCharts(memoryResults);
     renderSurface(payload.parameters);
+    renderHeatmapsAndWaterfall(payload.parameters, result);
 
     showToast(`Simulation complete. R₀ = ${result.r0.toFixed(3)} — ${result.epidemic_status}`, "success");
   } catch (error) {
@@ -176,6 +292,27 @@ async function runSimulation() {
     setBusy(false);
     const statusPill = document.getElementById("status-pill");
     if (statusPill) statusPill.textContent = "Ready";
+  }
+}
+
+async function downloadEndpoint(url, payload, filename, contentType = "text/plain") {
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!response.ok) throw new Error("Export failed.");
+    const blob = await response.blob();
+    const objectUrl = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = objectUrl;
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(objectUrl);
+    showToast(`${filename} downloaded.`, "success");
+  } catch (e) {
+    showToast(e.message, "error");
   }
 }
 
@@ -235,6 +372,28 @@ function downloadReport() {
   showToast("Report downloaded.", "success");
 }
 
+function downloadServerReport() {
+  downloadEndpoint("/api/export/report", lastPayload || buildPayload(), "fractional_hiv_report.txt");
+}
+
+function downloadScenarioCsv() {
+  downloadEndpoint("/api/export/scenarios.csv", { base_payload: lastPayload || buildPayload() }, "fractional_hiv_scenarios.csv", "text/csv");
+}
+
+function downloadSensitivityCsv() {
+  downloadEndpoint("/api/export/sensitivity.csv", lastPayload || buildPayload(), "fractional_hiv_sensitivity.csv", "text/csv");
+}
+
+async function copyThesisText() {
+  const text = document.getElementById("thesisTextBox")?.textContent || "";
+  if (!text || text.includes("Run simulation")) {
+    showToast("Run simulation first.", "error");
+    return;
+  }
+  await navigator.clipboard.writeText(text);
+  showToast("Thesis text copied.", "success");
+}
+
 async function loadScenarios() {
   const data = await getJson("/api/scenarios");
   scenarioPresets = data.scenarios;
@@ -261,7 +420,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("downloadParams")?.addEventListener("click", downloadParams);
   document.getElementById("exportCsvBtn")?.addEventListener("click", downloadCsv);
   document.getElementById("exportJsonBtn")?.addEventListener("click", downloadParams);
-  document.getElementById("exportReportBtn")?.addEventListener("click", downloadReport);
+  document.getElementById("exportReportBtn")?.addEventListener("click", downloadServerReport);
+  document.getElementById("exportScenarioCsvBtn")?.addEventListener("click", downloadScenarioCsv);
+  document.getElementById("exportSensitivityCsvBtn")?.addEventListener("click", downloadSensitivityCsv);
+  document.getElementById("copyThesisTextBtn")?.addEventListener("click", copyThesisText);
 
   // Scenario preset buttons
   document.querySelectorAll(".btn-preset").forEach((btn) => {

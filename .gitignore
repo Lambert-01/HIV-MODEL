@@ -32,6 +32,10 @@ outputs/figures/*.png
 outputs/reports/*.txt
 outputs/reports/*.pdf
 
+# Download/extraction leftovers for local vendor assets
+fontawesome.zip
+temp_fontawesome/
+
 # IDE
 .vscode/
 .idea/
