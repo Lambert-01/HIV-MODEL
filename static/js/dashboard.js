@@ -183,6 +183,37 @@ function updateInterpretation(result) {
   }
   const stability = document.getElementById("stabilityText");
   if (stability) stability.textContent = result.stability_text;
+  const dfe = document.getElementById("dfeText");
+  if (dfe && result.disease_free_equilibrium) {
+    const e0 = result.disease_free_equilibrium;
+    const distance = Math.hypot(
+      result.summary.final_susceptible - e0.S,
+      result.summary.final_infected,
+      result.summary.final_treated,
+      result.summary.final_aids
+    );
+    dfe.innerHTML = `Current E0 = (${e0.S.toFixed(2)}, 0, 0, 0).<br>Final-state distance from E0: ${distance.toFixed(2)}.`;
+  }
+  const eigenPanel = document.getElementById("stabilityEigenPanel");
+  if (eigenPanel && result.fractional_stability) {
+    const details = result.fractional_stability;
+    eigenPanel.innerHTML = `
+      <table class="table table-dark table-sm align-middle mb-2">
+        <thead><tr><th>Eigenvalue</th><th>|arg(lambda)|</th><th>q*pi/2</th><th>Check</th></tr></thead>
+        <tbody>
+          ${details.eigenvalues.map((row) => {
+            const imag = Math.abs(row.imag) < 1e-10 ? "" : `${row.imag >= 0 ? "+" : "-"}${Math.abs(row.imag).toFixed(4)}i`;
+            return `<tr>
+              <td>${row.real.toFixed(4)}${imag}</td>
+              <td>${row.argument.toFixed(4)}</td>
+              <td>${row.threshold.toFixed(4)}</td>
+              <td style="color:${row.passes ? 'var(--success)' : 'var(--danger)'}">${row.passes ? "Pass" : "Fail"}</td>
+            </tr>`;
+          }).join("")}
+        </tbody>
+      </table>
+      <p class="mb-0">${details.stable ? "Both eigenvalues satisfy the fractional local stability criterion." : "At least one eigenvalue fails the fractional local stability criterion."}</p>`;
+  }
   const cards = document.getElementById("effectiveRateCards");
   if (cards) {
     cards.innerHTML = [
@@ -234,19 +265,25 @@ function renderScenarioExplorer(data) {
 }
 
 function renderSensitivityRank(values) {
-  const box = document.getElementById("sensitivityRank");
-  if (!box) return;
-  box.innerHTML = values.slice(0, 4).map((item) => `
-    <div class="col-md-6 col-lg-3">
-      <div class="sensitivity-rank-card">
-        <h6 style="color:${item.sensitivity >= 0 ? 'var(--danger)' : 'var(--success)'}">${item.parameter}</h6>
-        <p>${item.sensitivity >= 0 ? "Increases" : "Reduces"} R₀</p>
-        <p style="font-family:'JetBrains Mono',monospace;font-size:0.9rem;color:var(--text-main);margin-top:6px">
-          Index: ${item.sensitivity.toFixed(4)}
-        </p>
-      </div>
-    </div>`).join("");
-}
+   const box = document.getElementById("sensitivityRank");
+   if (!box) return;
+   box.innerHTML = values.slice(0, 4).map((item) => {
+     const isPos = item.sensitivity >= 0;
+     return `
+     <div class="col-md-6 col-lg-3">
+       <div class="sensitivity-rank-card">
+         <h6 style="color:${isPos ? 'var(--danger)' : 'var(--success)'}">${item.parameter}</h6>
+         <span class="rank-index ${isPos ? 'positive-rank' : 'negative-rank'}">
+           ${isPos ? '↑ POSITIVE' : '↓ NEGATIVE'}
+         </span>
+         <p>${isPos ? "Increases" : "Reduces"} R₀</p>
+         <p style="font-family:'JetBrains Mono',monospace;font-size:0.9rem;color:var(--text-main);margin-top:6px">
+           Index: ${item.sensitivity.toFixed(4)}
+         </p>
+       </div>
+     </div>`;
+   }).join("");
+ }
 
 async function runSimulation() {
   const payload = buildPayload();

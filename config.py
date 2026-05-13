@@ -8,4 +8,5 @@ CSV_DIR = OUTPUT_DIR / "csv"
 FIGURE_DIR = OUTPUT_DIR / "figures"
 REPORT_DIR = OUTPUT_DIR / "reports"
 
-MAX_STEPS = 2500
+MAX_STEPS = 5000
+DOWNSAMPLE_TARGET = 400   # max points sent to browser per series

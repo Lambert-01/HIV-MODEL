@@ -215,19 +215,38 @@
 
     <!-- Tabs -->
     <div class="tabs-bar">
-      <button class="tab-btn active" data-tab="baseline"><i class="fa fa-chart-area me-1"></i>Baseline Simulation</button>
-      <button class="tab-btn" data-tab="parameters"><i class="fa fa-sliders me-1"></i>Model Parameters</button>
-      <button class="tab-btn" data-tab="interventions"><i class="fa fa-shield-halved me-1"></i>Intervention Controls</button>
-      <button class="tab-btn" data-tab="r0"><i class="fa fa-gauge me-1"></i>R0 &amp; Stability</button>
-      <button class="tab-btn" data-tab="scenario-explorer"><i class="fa fa-flask-vial me-1"></i>Scenario Explorer</button>
-      <button class="tab-btn" data-tab="scenario-comparison"><i class="fa fa-layer-group me-1"></i>Scenario Comparison</button>
-      <button class="tab-btn" data-tab="phase"><i class="fa fa-circle-nodes me-1"></i>Phase Analysis</button>
-      <button class="tab-btn" data-tab="sensitivity"><i class="fa fa-magnifying-glass-chart me-1"></i>Sensitivity</button>
-      <button class="tab-btn" data-tab="memory"><i class="fa fa-wave-square me-1"></i>Memory Effect</button>
-      <button class="tab-btn" data-tab="surface"><i class="fa fa-grip me-1"></i>Surfaces &amp; Heatmaps</button>
+      <button class="tab-btn active" data-tab="baseline"><i class="fa fa-chart-area me-1"></i>Baseline</button>
+      <button class="tab-btn" data-tab="parameters"><i class="fa fa-sliders me-1"></i>Parameters</button>
+      <button class="tab-btn" data-tab="interventions"><i class="fa fa-shield-halved me-1"></i>Interventions</button>
+      <button class="tab-btn" data-tab="r0"><i class="fa fa-gauge me-1"></i>R&#8320; &amp; Stability</button>
+
+      <!-- Results group -->
+      <div class="tab-group-dropdown">
+        <button class="tab-btn tab-group-trigger" id="resultsGroupBtn">
+          <i class="fa fa-flask-vial me-1"></i>Results <i class="fa fa-chevron-down ms-1" style="font-size:0.7em"></i>
+        </button>
+        <div class="tab-group-menu" id="resultsGroupMenu">
+          <button class="tab-btn" data-tab="scenario-explorer"><i class="fa fa-flask-vial me-1"></i>Scenario Explorer</button>
+          <button class="tab-btn" data-tab="scenario-comparison"><i class="fa fa-layer-group me-1"></i>Scenario Comparison</button>
+          <button class="tab-btn" data-tab="phase"><i class="fa fa-circle-nodes me-1"></i>Phase Analysis</button>
+        </div>
+      </div>
+
+      <!-- Analysis group -->
+      <div class="tab-group-dropdown">
+        <button class="tab-btn tab-group-trigger" id="analysisGroupBtn">
+          <i class="fa fa-magnifying-glass-chart me-1"></i>Analysis <i class="fa fa-chevron-down ms-1" style="font-size:0.7em"></i>
+        </button>
+        <div class="tab-group-menu" id="analysisGroupMenu">
+          <button class="tab-btn" data-tab="sensitivity"><i class="fa fa-magnifying-glass-chart me-1"></i>Sensitivity</button>
+          <button class="tab-btn" data-tab="memory"><i class="fa fa-wave-square me-1"></i>Memory Effect</button>
+          <button class="tab-btn" data-tab="surface"><i class="fa fa-grip me-1"></i>Surfaces &amp; Heatmaps</button>
+        </div>
+      </div>
+
       <button class="tab-btn" data-tab="export"><i class="fa fa-file-export me-1"></i>Export</button>
       <button class="tab-btn" data-tab="overview"><i class="fa fa-circle-info me-1"></i>Overview</button>
-      <button class="tab-btn" data-tab="about-thesis"><i class="fa fa-graduation-cap me-1"></i>About Thesis</button>
+      <button class="tab-btn" data-tab="about-thesis"><i class="fa fa-graduation-cap me-1"></i>Thesis</button>
     </div>
 
     <!-- ── TAB: BASELINE SIMULATION ── -->
@@ -323,7 +342,7 @@
             <div class="ov-icon"><i class="fa fa-users"></i></div>
             <h5>Initial Population</h5>
             <p>S0, I0, T0 and A0 define the starting population state.</p>
-            <div class="math-block">N0 = <span id="n0Value">--</span></div>
+            <div class="math-block">\(N_0 = \) <span id="n0Value">--</span></div>
           </div>
         </div>
         <div class="col-lg-4">
@@ -331,7 +350,7 @@
             <div class="ov-icon icon-gold"><i class="fa fa-gears"></i></div>
             <h5>Simulation Settings</h5>
             <p>Solver: ABM-type predictor-corrector method for Caputo fractional differential equations.</p>
-            <div class="math-block">q = <span id="paramQValue">--</span>, years = <span id="paramYearsValue">--</span>, h = <span id="paramStepValue">--</span></div>
+            <div class="math-block">\(q = \) <span id="paramQValue">--</span>, \(\text{years} = \) <span id="paramYearsValue">--</span>, \(h = \) <span id="paramStepValue">--</span></div>
           </div>
         </div>
         <div class="col-lg-4">
@@ -370,17 +389,17 @@
           <div class="overview-card h-100">
             <div class="ov-icon icon-green"><i class="fa fa-calculator"></i></div>
             <h5>Live Effective Rates</h5>
-            <div class="math-block">beta_eff = <span id="betaEffLive">--</span></div>
-            <div class="math-block">tau_eff = <span id="tauEffLive">--</span></div>
-            <div class="math-block">rho_eff = <span id="rhoEffLive">--</span></div>
+            <div class="math-block">\(\beta_{\text{eff}} = \) <span id="betaEffLive">--</span></div>
+            <div class="math-block">\(\tau_{\text{eff}} = \) <span id="tauEffLive">--</span></div>
+            <div class="math-block">\(\rho_{\text{eff}} = \) <span id="rhoEffLive">--</span></div>
             <p id="interventionMeaningText">Move intervention sliders to see how behaviour modifies the mathematical rates.</p>
           </div>
         </div>
       </div>
       <div class="intervention-formula-grid mt-3">
-        <div class="formula-card"><span>Transmission</span><strong>beta_eff = beta0(1-u1)(1-u2)</strong><p>Awareness and safer behaviour reduce infection pressure.</p></div>
-        <div class="formula-card"><span>Treatment Uptake</span><strong>tau_eff = tau(1+u3)</strong><p>Testing and treatment-seeking move infected people into treatment faster.</p></div>
-        <div class="formula-card"><span>AIDS Progression</span><strong>rho_eff = rho(1-u4)</strong><p>Adherence reduces movement from treatment to AIDS.</p></div>
+        <div class="formula-card"><span>Transmission</span><strong>\(\beta_{\text{eff}} = \beta_0(1-u_1)(1-u_2)\)</strong><p>Awareness and safer behaviour reduce infection pressure.</p></div>
+        <div class="formula-card"><span>Treatment Uptake</span><strong>\(\tau_{\text{eff}} = \tau(1+u_3)\)</strong><p>Testing and treatment-seeking move infected people into treatment faster.</p></div>
+        <div class="formula-card"><span>AIDS Progression</span><strong>\(\rho_{\text{eff}} = \rho(1-u_4)\)</strong><p>Adherence reduces movement from treatment to AIDS.</p></div>
       </div>
     </div>
 
@@ -397,9 +416,25 @@
           <div class="overview-card h-100">
             <div class="ov-icon icon-red"><i class="fa fa-chart-simple"></i></div>
             <h5>Reproduction Number and Stability</h5>
-            <div class="math-block">R0 = beta_eff / (tau_eff + delta + mu) * (1 + eta*tau_eff / (rho_eff + mu))</div>
+            <div class="math-block">\(\mathcal{R}_0 = \dfrac{\beta_{\text{eff}}}{\tau_{\text{eff}}+\delta+\mu}\left(1+\dfrac{\eta\,\tau_{\text{eff}}}{\rho_{\text{eff}}+\mu}\right)\)</div>
             <p id="stabilityText">Run simulation to compute stability interpretation.</p>
             <div class="row g-2 mt-2" id="effectiveRateCards"></div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="overview-card h-100">
+            <div class="ov-icon icon-green"><i class="fa fa-seedling"></i></div>
+            <h5>Disease-Free Equilibrium</h5>
+            <div class="math-block">E0 = (Lambda/mu, 0, 0, 0)</div>
+            <p id="dfeText">Run simulation to compute the current disease-free equilibrium.</p>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="overview-card h-100">
+            <div class="ov-icon icon-gold"><i class="fa fa-function"></i></div>
+            <h5>Fractional Stability Criterion</h5>
+            <div class="math-block">|arg(lambda_i)| &gt; q*pi/2</div>
+            <div id="stabilityEigenPanel" class="small-table-wrap">Run simulation to check eigenvalue arguments.</div>
           </div>
         </div>
       </div>
@@ -479,28 +514,40 @@
       </div>
     </div>
 
-    <!-- ── TAB: SENSITIVITY ── -->
-    <div class="tab-panel" id="tab-sensitivity">
-      <div class="chart-card chart-large mb-3">
-        <div class="chart-card-title"><i class="fa fa-magnifying-glass-chart me-2"></i>Normalized R₀ Sensitivity Indices</div>
-        <div id="sensitivityChart" class="chart-body"></div>
-      </div>
-      <div class="row g-3" id="sensitivityRank"></div>
-      <div class="chart-card mt-3">
-        <div class="chart-card-title"><i class="fa fa-circle-info me-2"></i>Interpretation</div>
-        <div class="p-3">
-          <p class="text-muted mb-1"><span class="badge-danger-sm">Positive index</span> — increasing this parameter increases R₀ (worsens epidemic).</p>
-          <p class="text-muted mb-0"><span class="badge-success-sm">Negative index</span> — increasing this parameter decreases R₀ (controls epidemic).</p>
-        </div>
-      </div>
-    </div>
+<!-- ── TAB: SENSITIVITY ── -->
+     <div class="tab-panel" id="tab-sensitivity">
+       <div class="memory-info-bar mb-3">
+         <i class="fa fa-function me-2 text-glow-cyan"></i>
+         Normalized sensitivity index: Upsilon_p^R0 = (partial R0 / partial p) * (p / R0).
+         Positive values increase R0; negative values reduce R0.
+       </div>
+       <div class="chart-card chart-large mb-3">
+         <div class="chart-card-title"><i class="fa fa-magnifying-glass-chart me-2"></i>Normalized R₀ Sensitivity Indices</div>
+         <div id="sensitivityChart" class="chart-body"></div>
+       </div>
+       <div class="row g-3" id="sensitivityRank"></div>
+       <div class="interpretation-box mt-3">
+         <div class="int-header">
+           <i class="fa fa-circle-info"></i>
+           <h6>Sensitivity Index Interpretation</h6>
+         </div>
+         <div class="interpretation-row">
+           <span class="int-badge positive">Positive Index</span>
+           <p class="int-text">Increasing this parameter <strong>increases R₀</strong> and <strong>worsens</strong> the epidemic spread.</p>
+         </div>
+         <div class="interpretation-row">
+           <span class="int-badge negative">Negative Index</span>
+           <p class="int-text">Increasing this parameter <strong>decreases R₀</strong> and helps <strong>control</strong> the epidemic.</p>
+         </div>
+       </div>
+     </div>
 
     <!-- ── TAB: MEMORY EFFECT ── -->
     <div class="tab-panel" id="tab-memory">
       <div class="memory-info-bar mb-3">
         <i class="fa fa-circle-info me-2 text-glow-cyan"></i>
-        Comparing infected curve I(t) across fractional orders q = 1.00, 0.95, 0.85, 0.75.
-        Lower q introduces stronger memory effects and slower epidemic dynamics.
+        Comparing SITA compartment dynamics across thesis fractional orders q = 1.00, 0.95, 0.85, 0.75.
+        Lower q introduces stronger memory effects and changes infection, treatment, and AIDS progression trajectories.
       </div>
       <div class="chart-card chart-large mb-3">
         <div class="chart-card-title"><i class="fa fa-wave-square me-2"></i>Memory Effect: I(t) for Different q Values</div>
@@ -510,6 +557,7 @@
         <div class="col-lg-4"><div class="chart-card"><div class="chart-card-title">T(t) for Different q</div><div id="memoryTChart" class="chart-body"></div></div></div>
         <div class="col-lg-4"><div class="chart-card"><div class="chart-card-title">A(t) for Different q</div><div id="memoryAChart" class="chart-body"></div></div></div>
         <div class="col-lg-4"><div class="chart-card"><div class="chart-card-title">I-T Phase for Different q</div><div id="memoryPhaseChart" class="chart-body"></div></div></div>
+        <div class="col-12"><div class="chart-card"><div class="chart-card-title">Mittag-Leffler Memory Kernel vs Exponential Decay</div><div id="mittagChart" class="chart-body"></div></div></div>
       </div>
     </div>
 
@@ -601,15 +649,68 @@
     <div class="tab-panel" id="tab-overview">
       <div class="chart-card mb-3">
         <div class="chart-card-title"><i class="fa fa-diagram-project me-2"></i>SITA Flow Diagram</div>
-        <div class="sita-flow">
-          <div class="flow-entry">Lambda</div>
-          <div class="flow-node s-node">S<br><span>Susceptible</span></div>
-          <div class="flow-arrow">lambda(t)S</div>
-          <div class="flow-node i-node">I<br><span>Infected</span></div>
-          <div class="flow-arrow">tau(1+u3)I</div>
-          <div class="flow-node t-node">T<br><span>Treated</span></div>
-          <div class="flow-node a-node">A<br><span>AIDS</span></div>
-          <div class="flow-note">I -> A: delta I<br>T -> A: rho(1-u4)T<br>Deaths: mu and mu+d</div>
+        <div class="p-3">
+          <svg viewBox="0 0 820 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:260px;font-family:'Inter',sans-serif;">
+            <defs>
+              <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#00d4ff"/>
+              </marker>
+              <marker id="arr-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#ef476f"/>
+              </marker>
+            </defs>
+            <!-- Compartment boxes -->
+            <!-- S -->
+            <rect x="30" y="90" width="110" height="60" rx="10" fill="rgba(0,212,255,0.10)" stroke="#00d4ff" stroke-width="1.5"/>
+            <text x="85" y="116" text-anchor="middle" fill="#00d4ff" font-size="18" font-weight="800">S</text>
+            <text x="85" y="136" text-anchor="middle" fill="#94a3b8" font-size="10">Susceptible</text>
+            <!-- I -->
+            <rect x="240" y="90" width="110" height="60" rx="10" fill="rgba(239,71,111,0.08)" stroke="#ef476f" stroke-width="1.5"/>
+            <text x="295" y="116" text-anchor="middle" fill="#ef476f" font-size="18" font-weight="800">I</text>
+            <text x="295" y="136" text-anchor="middle" fill="#94a3b8" font-size="10">Infected</text>
+            <!-- T -->
+            <rect x="450" y="90" width="110" height="60" rx="10" fill="rgba(6,214,160,0.08)" stroke="#06d6a0" stroke-width="1.5"/>
+            <text x="505" y="116" text-anchor="middle" fill="#06d6a0" font-size="18" font-weight="800">T</text>
+            <text x="505" y="136" text-anchor="middle" fill="#94a3b8" font-size="10">Treated</text>
+            <!-- A -->
+            <rect x="660" y="90" width="110" height="60" rx="10" fill="rgba(255,209,102,0.08)" stroke="#ffd166" stroke-width="1.5"/>
+            <text x="715" y="116" text-anchor="middle" fill="#ffd166" font-size="18" font-weight="800">A</text>
+            <text x="715" y="136" text-anchor="middle" fill="#94a3b8" font-size="10">AIDS</text>
+
+            <!-- Lambda entry arrow -->
+            <line x1="0" y1="120" x2="28" y2="120" stroke="#ffd166" stroke-width="1.5" marker-end="url(#arr)"/>
+            <text x="-2" y="113" fill="#ffd166" font-size="9" font-weight="700">Λ</text>
+
+            <!-- S -> I -->
+            <line x1="140" y1="120" x2="238" y2="120" stroke="#00d4ff" stroke-width="1.5" marker-end="url(#arr)"/>
+            <text x="189" y="113" text-anchor="middle" fill="#94a3b8" font-size="9">λ(t)S</text>
+
+            <!-- I -> T -->
+            <line x1="350" y1="120" x2="448" y2="120" stroke="#00d4ff" stroke-width="1.5" marker-end="url(#arr)"/>
+            <text x="399" y="113" text-anchor="middle" fill="#94a3b8" font-size="9">τ(1+u₃)I</text>
+
+            <!-- I -> A (curved down) -->
+            <path d="M295,150 Q295,210 660,210 Q700,210 715,152" fill="none" stroke="#ef476f" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-red)"/>
+            <text x="490" y="225" text-anchor="middle" fill="#ef476f" font-size="9">δI</text>
+
+            <!-- T -> A -->
+            <line x1="560" y1="120" x2="658" y2="120" stroke="#00d4ff" stroke-width="1.5" marker-end="url(#arr)"/>
+            <text x="609" y="113" text-anchor="middle" fill="#94a3b8" font-size="9">ρ(1−u₄)T</text>
+
+            <!-- Death arrows (down) -->
+            <line x1="85" y1="150" x2="85" y2="185" stroke="#ef476f" stroke-width="1" marker-end="url(#arr-red)"/>
+            <text x="90" y="198" fill="#ef476f" font-size="8">μ</text>
+            <line x1="295" y1="150" x2="295" y2="185" stroke="#ef476f" stroke-width="1" marker-end="url(#arr-red)"/>
+            <text x="300" y="198" fill="#ef476f" font-size="8">μ</text>
+            <line x1="505" y1="150" x2="505" y2="185" stroke="#ef476f" stroke-width="1" marker-end="url(#arr-red)"/>
+            <text x="510" y="198" fill="#ef476f" font-size="8">μ</text>
+            <line x1="715" y1="150" x2="715" y2="185" stroke="#ef476f" stroke-width="1" marker-end="url(#arr-red)"/>
+            <text x="720" y="198" fill="#ef476f" font-size="8">μ+d</text>
+
+            <!-- Legend -->
+            <text x="30" y="248" fill="#94a3b8" font-size="9">λ(t) = β₀(1−u₁)(1−u₂)(I+ηT)/N</text>
+            <text x="340" y="248" fill="#94a3b8" font-size="9">u₁: awareness · u₂: safer behaviour · u₃: testing · u₄: adherence</text>
+          </svg>
         </div>
       </div>
       <div class="row g-3">
@@ -666,7 +767,7 @@
             <div class="ov-icon icon-gold"><i class="fa fa-magnifying-glass-chart"></i></div>
             <h5>Sensitivity Analysis</h5>
             <p>Normalised sensitivity index of R₀ with respect to parameter p:</p>
-            <div class="math-block">Γ_p^R₀ = (∂R₀/∂p) · (p/R₀)</div>
+            <div class="math-block">\(\Upsilon_p^{\mathcal{R}_0} = \dfrac{\partial \mathcal{R}_0}{\partial p}\cdot\dfrac{p}{\mathcal{R}_0}\)</div>
             <p>Positive index → parameter increases R₀. Negative → reduces R₀. Used to rank intervention effectiveness.</p>
           </div>
         </div>

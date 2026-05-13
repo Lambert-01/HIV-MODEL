@@ -3,7 +3,14 @@ from flask import Blueprint, jsonify, request
 
 from model.fractional_sita_model import sita_rhs
 from model.fractional_solver import fractional_abm_solver
-from model.reproduction_number import compute_effective_rates, compute_r0, epidemic_status, stability_interpretation
+from model.reproduction_number import (
+    compute_effective_rates,
+    compute_r0,
+    disease_free_equilibrium,
+    epidemic_status,
+    stability_details,
+    stability_interpretation,
+)
 from model.scenarios import SCENARIOS
 from model.sensitivity import compute_sensitivity
 from model.validation import coerce_payload, validate_payload
@@ -31,6 +38,8 @@ def run_engine(payload):
     peak_index = int(np.argmax(I))
     r0 = float(compute_r0(params))
     rates = compute_effective_rates(params)
+    dfe = disease_free_equilibrium(params)
+    fractional_stability = stability_details(params)
     bounded_limit = float(params["Lambda"] / params["mu"]) if params["mu"] > 0 else None
     bounded_ok = bool(bounded_limit is None or np.nanmax(N) <= bounded_limit * 1.05)
 
@@ -39,6 +48,8 @@ def run_engine(payload):
         "r0": r0,
         "epidemic_status": epidemic_status(r0),
         "effective_rates": rates,
+        "disease_free_equilibrium": dfe,
+        "fractional_stability": fractional_stability,
         "stability_text": stability_interpretation(r0),
         "summary": {
             "peak_infected": float(I[peak_index]),

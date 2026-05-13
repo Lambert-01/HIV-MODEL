@@ -189,7 +189,8 @@ function renderTreatedAids(result) {
 }
 
 function renderPopulation(result) {
-  safePlotlyReact("populationChart", [{
+  const t = result.time_series.time;
+  const traces = [{
     x: result.time_series.time,
     y: result.time_series.N,
     name: "N(t)",
@@ -197,7 +198,18 @@ function renderPopulation(result) {
     fill: "tozeroy",
     fillcolor: "rgba(0,212,255,0.07)",
     line: { color: "#00d4ff", width: 2.5 }
-  }], layout({ yaxis: { ...plotLayout.yaxis, title: "Total Population" } }), plotConfig);
+  }];
+  if (Number.isFinite(result.summary?.bounded_limit)) {
+    traces.push({
+      x: [t[0], t[t.length - 1]],
+      y: [result.summary.bounded_limit, result.summary.bounded_limit],
+      name: "Feasible bound Lambda/mu",
+      mode: "lines",
+      line: { color: "#ffd166", width: 2, dash: "dash" },
+      hovertemplate: "Lambda/mu = %{y:.2f}<extra>Boundedness</extra>"
+    });
+  }
+  safePlotlyReact("populationChart", traces, layout({ yaxis: { ...plotLayout.yaxis, title: "Total Population" } }), plotConfig);
 }
 
 function renderStackedAndPercentage(result) {
@@ -307,6 +319,9 @@ function renderPhaseVariant(chartId, result, xKey, yKey, xLabel, yLabel) {
   const x = result.time_series[xKey];
   const y = result.time_series[yKey];
   const t = result.time_series.time;
+  const e0 = result.disease_free_equilibrium || { S: 0, I: 0, T: 0, A: 0 };
+  const dfeX = e0[xKey] ?? 0;
+  const dfeY = e0[yKey] ?? 0;
   safePlotlyReact(chartId, [{
     x,
     y,
@@ -322,6 +337,15 @@ function renderPhaseVariant(chartId, result, xKey, yKey, xLabel, yLabel) {
     customdata: t,
     hovertemplate: "Time: %{customdata:.2f}<br>" + xLabel + ": %{x:.2f}<br>" + yLabel + ": %{y:.2f}<extra></extra>",
     name: `${xLabel} vs ${yLabel}`
+  }, {
+    x: [dfeX],
+    y: [dfeY],
+    mode: "markers+text",
+    marker: { color: "#ffd166", size: 11, symbol: "diamond", line: { color: "#07111f", width: 1 } },
+    text: ["E0"],
+    textposition: "top center",
+    name: "Disease-free equilibrium",
+    hovertemplate: "E0<br>" + xLabel + ": %{x:.2f}<br>" + yLabel + ": %{y:.2f}<extra></extra>"
   }], layout({
     xaxis: { ...plotLayout.xaxis, title: xLabel },
     yaxis: { ...plotLayout.yaxis, title: yLabel },
@@ -402,6 +426,15 @@ function renderVectorFieldPhase(chartId, result, params) {
       textposition: ["top center", "top center", "bottom center"],
       marker: { color: ["#00d4ff", "#ffd166", "#ef476f"], size: [9, 11, 9], line: { color: "#07111f", width: 1 } },
       name: "Key points"
+    },
+    {
+      x: [0],
+      y: [0],
+      mode: "markers+text",
+      text: ["E0"],
+      textposition: "bottom right",
+      marker: { color: "#ffd166", size: 12, symbol: "diamond", line: { color: "#07111f", width: 1 } },
+      name: "Disease-free equilibrium"
     }
   ], layout({
     xaxis: { ...plotLayout.xaxis, title: "I(t) Infected", range: [xmin, xmax], zeroline: true, zerolinecolor: "rgba(255,255,255,0.28)" },
@@ -542,6 +575,55 @@ function renderMemoryExtraCharts(results) {
       hovermode: "closest"
     }), plotConfig);
   }
+  renderMittagLefflerChart(results[0]?.parameters || {});
+}
+
+function gammaLanczos(z) {
+  const p = [
+    676.5203681218851,
+    -1259.1392167224028,
+    771.32342877765313,
+    -176.61502916214059,
+    12.507343278686905,
+    -0.13857109526572012,
+    9.9843695780195716e-6,
+    1.5056327351493116e-7
+  ];
+  if (z < 0.5) return Math.PI / (Math.sin(Math.PI * z) * gammaLanczos(1 - z));
+  z -= 1;
+  let x = 0.99999999999980993;
+  for (let i = 0; i < p.length; i++) x += p[i] / (z + i + 1);
+  const t = z + p.length - 0.5;
+  return Math.sqrt(2 * Math.PI) * Math.pow(t, z + 0.5) * Math.exp(-t) * x;
+}
+
+function mittagLeffler(q, z) {
+  let sum = 0;
+  for (let k = 0; k < 55; k++) {
+    const term = Math.pow(z, k) / gammaLanczos(q * k + 1);
+    sum += term;
+    if (Math.abs(term) < 1e-9) break;
+  }
+  return Number.isFinite(sum) ? sum : null;
+}
+
+function renderMittagLefflerChart(params) {
+  if (!document.getElementById("mittagChart")) return;
+  const mu = Number(params.mu || 0.02);
+  const t = Array.from({ length: 101 }, (_, i) => i * 0.5);
+  const qValues = [1.0, 0.95, 0.85, 0.75];
+  const colors = ["#00d4ff", "#06d6a0", "#ffd166", "#ef476f"];
+  const traces = qValues.map((q, i) => ({
+    x: t,
+    y: t.map((value) => q === 1 ? Math.exp(-mu * value) : mittagLeffler(q, -mu * Math.pow(value, q))),
+    mode: "lines",
+    name: q === 1 ? "exp(-mu t), q=1" : `E_q(-mu t^q), q=${q.toFixed(2)}`,
+    line: { width: 2.4, color: colors[i] }
+  }));
+  safePlotlyReact("mittagChart", traces, layout({
+    yaxis: { ...plotLayout.yaxis, title: "Memory kernel", range: [0, 1.05] },
+    xaxis: { ...plotLayout.xaxis, title: "Time (years)" }
+  }), plotConfig);
 }
 
 function renderSurface(params) {

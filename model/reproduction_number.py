@@ -1,3 +1,6 @@
+import cmath
+
+
 def compute_effective_rates(params):
     beta_eff = params["beta0"] * (1.0 - params["u1"]) * (1.0 - params["u2"])
     tau_eff = params["tau"] * (1.0 + params["u3"])
@@ -45,3 +48,57 @@ def stability_interpretation(r0):
         "The infection may persist because each infected individual generates "
         "more than one secondary infection on average."
     )
+
+
+def disease_free_equilibrium(params):
+    susceptible = params["Lambda"] / params["mu"] if params["mu"] > 0 else float("inf")
+    return {
+        "S": susceptible,
+        "I": 0.0,
+        "T": 0.0,
+        "A": 0.0,
+    }
+
+
+def stability_details(params):
+    rates = compute_effective_rates(params)
+    beta_eff = rates["beta_eff"]
+    tau_eff = rates["tau_eff"]
+    rho_eff = rates["rho_eff"]
+    q = params["q"]
+
+    a = beta_eff - (tau_eff + params["delta"] + params["mu"])
+    b = params["eta"] * beta_eff
+    c = tau_eff
+    d = -(rho_eff + params["mu"])
+
+    trace = a + d
+    determinant = a * d - b * c
+    discriminant = trace * trace - 4.0 * determinant
+    root = cmath.sqrt(discriminant)
+    eigenvalues = [(trace + root) / 2.0, (trace - root) / 2.0]
+    threshold = q * 3.141592653589793 / 2.0
+
+    rows = []
+    stable = True
+    for value in eigenvalues:
+        argument = abs(cmath.phase(value))
+        passes = argument > threshold
+        stable = stable and passes
+        rows.append(
+            {
+                "real": value.real,
+                "imag": value.imag,
+                "argument": argument,
+                "threshold": threshold,
+                "passes": passes,
+            }
+        )
+
+    return {
+        "criterion": "|arg(lambda_i)| > q*pi/2",
+        "q": q,
+        "threshold": threshold,
+        "stable": stable,
+        "eigenvalues": rows,
+    }

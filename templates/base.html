@@ -8,6 +8,15 @@
   <!-- Bootstrap 5 -->
   <link href="{{ url_for('static', filename='vendor/bootstrap/5.3.3/dist/css/bootstrap.min.css') }}" rel="stylesheet">
 
+  <!-- Font Awesome 6 (CDN — real webfonts) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
+
+  <!-- KaTeX (math rendering) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});"></script>
+
    <!-- Plotly -->
    <script src="{{ url_for('static', filename='vendor/plotly/2.35.2/plotly.min.js') }}"></script>
 
@@ -66,6 +75,8 @@
   </nav>
 
   <main>
+    <!-- Mobile sidebar backdrop -->
+    <div id="sidebarBackdrop" class="sidebar-backdrop"></div>
     {% block content %}{% endblock %}
   </main>
 
