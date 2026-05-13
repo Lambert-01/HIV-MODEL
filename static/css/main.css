@@ -18,6 +18,76 @@
   --radius: 12px;
 }
 
+/* Lightweight local icon fallback. This avoids broken Font Awesome webfont
+   requests while keeping the existing template icon classes readable. */
+.fa,
+.fas {
+  display: inline-block;
+  min-width: 1em;
+  text-align: center;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.fa-3x { font-size: 3em; }
+.fa::before,
+.fas::before { content: "•"; }
+.fa-dna::before { content: "∿"; }
+.fa-bars::before { content: "☰"; }
+.fa-house::before { content: "⌂"; }
+.fa-flask::before,
+.fa-flask-vial::before { content: "⚗"; }
+.fa-book::before { content: "□"; }
+.fa-circle-info::before { content: "i"; }
+.fa-play::before { content: "▶"; }
+.fa-xmark::before { content: "×"; }
+.fa-rotate-left::before { content: "↺"; }
+.fa-download::before,
+.fa-file-export::before { content: "⇩"; }
+.fa-copy::before { content: "⧉"; }
+.fa-chart-line::before,
+.fa-arrow-trend-up::before,
+.fa-magnifying-glass-chart::before { content: "⌁"; }
+.fa-chart-area::before,
+.fa-layer-group::before { content: "▰"; }
+.fa-chart-pie::before,
+.fa-gauge::before { content: "◔"; }
+.fa-chart-simple::before { content: "▥"; }
+.fa-sliders::before { content: "≡"; }
+.fa-calculator::before { content: "#"; }
+.fa-table::before { content: "▦"; }
+.fa-people-group::before,
+.fa-users::before { content: "◉"; }
+.fa-shield-halved::before { content: "◈"; }
+.fa-virus::before { content: "✣"; }
+.fa-pills::before { content: "●"; }
+.fa-wave-square::before { content: "∿"; }
+.fa-infinity::before { content: "∞"; }
+.fa-atom::before { content: "⊙"; }
+.fa-gears::before { content: "⚙"; }
+.fa-graduation-cap::before { content: "△"; }
+.fa-file-code::before,
+.fa-code::before { content: "</>"; }
+.fa-file-csv::before,
+.fa-file-lines::before { content: "CSV"; font-size: 0.72em; }
+.fa-comment-dots::before { content: "..."; }
+.fa-function::before { content: "ƒ"; }
+.fa-seedling::before { content: "⌁"; }
+.fa-pen::before { content: "✎"; }
+.fa-percent::before { content: "%"; }
+.fa-triangle-exclamation::before { content: "!"; }
+.fa-circle-nodes::before,
+.fa-diagram-project::before { content: "⟡"; }
+.fa-circle-dot::before { content: "⊙"; }
+.fa-circle-check::before { content: "✓"; }
+.fa-circle-xmark::before { content: "×"; }
+.fa-cube::before { content: "◇"; }
+.fa-grip::before { content: "⋮"; }
+.fa-microscope::before { content: "⌕"; }
+.fa-image::before { content: "▧"; }
+.fa-wand-magic-sparkles::before { content: "✦"; }
+
 *, *::before, *::after { box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }

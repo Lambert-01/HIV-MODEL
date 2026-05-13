@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, Response, render_template, request
 
 from routes.export_routes import export_bp
 from routes.health_routes import health_bp
@@ -30,6 +30,10 @@ def create_app():
     @app.get("/about")
     def about():
         return render_template("about.html")
+
+    @app.get("/favicon.ico")
+    def favicon():
+        return Response(status=204)
 
     return app
 

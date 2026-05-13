@@ -10,9 +10,7 @@ document.addEventListener("click", (event) => {
     panel.classList.add("active");
     window.dispatchEvent(new Event("resize"));
     setTimeout(() => {
-      document.querySelectorAll(".js-plotly-plot").forEach((chart) => {
-        if (window.Plotly) Plotly.Plots.resize(chart);
-      });
+      if (typeof flushPendingPlots === "function") flushPendingPlots();
     }, 80);
   }
 });

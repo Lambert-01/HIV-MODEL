@@ -282,6 +282,23 @@ async function runSimulation() {
     renderPhaseVariant("phaseTAChart", result, "T", "A", "T(t)", "A(t)");
     updateInterpretation(result);
 
+    if (typeof flushPendingPlots === "function") flushPendingPlots();
+    showToast(`Core simulation ready. R₀ = ${result.r0.toFixed(3)} — ${result.epidemic_status}`, "success");
+    runSecondaryAnalyses(payload, result);
+  } catch (error) {
+    showToast(error.message, "error");
+  } finally {
+    setBusy(false);
+    const statusPill = document.getElementById("status-pill");
+    if (statusPill && statusPill.textContent === "Running...") statusPill.textContent = "Ready";
+  }
+}
+
+async function runSecondaryAnalyses(payload, result) {
+  const statusPill = document.getElementById("status-pill");
+  if (statusPill) statusPill.textContent = "Updating comparisons...";
+
+  try {
     const scenarioData = await postJson("/api/scenario", { base_payload: payload });
     lastScenarioData = scenarioData;
     renderScenarioChart(scenarioData);
@@ -295,23 +312,20 @@ async function runSimulation() {
     renderSensitivityChart(sensitivity.sensitivity);
     renderSensitivityRank(sensitivity.sensitivity);
 
-    const memoryResults = [];
-    await Promise.all([1, 0.95, 0.85, 0.75].map(async (q) => {
+    const memoryResults = await Promise.all([1, 0.95, 0.85, 0.75].map(async (q) => {
       const mp = JSON.parse(JSON.stringify(payload));
       mp.parameters.q = q;
       return await postJson("/api/simulate", mp);
-    })).then(results => memoryResults.push(...results));
+    }));
     renderMemoryChart(memoryResults);
     renderMemoryExtraCharts(memoryResults);
     renderSurface(payload.parameters);
     renderHeatmapsAndWaterfall(payload.parameters, result);
-
-    showToast(`Simulation complete. R₀ = ${result.r0.toFixed(3)} — ${result.epidemic_status}`, "success");
+    if (typeof flushPendingPlots === "function") flushPendingPlots();
+    showToast("Comparison, sensitivity, memory, and surface charts updated.", "success");
   } catch (error) {
-    showToast(error.message, "error");
+    showToast(`Secondary analysis issue: ${error.message}`, "error");
   } finally {
-    setBusy(false);
-    const statusPill = document.getElementById("status-pill");
     if (statusPill) statusPill.textContent = "Ready";
   }
 }

@@ -23,13 +23,49 @@ const plotConfig = {
   toImageButtonOptions: { format: "png", scale: 3 }
 };
 
+const pendingPlots = {};
+
+function isPlotTargetVisible(chartId) {
+  const element = document.getElementById(chartId);
+  if (!element) return false;
+  const box = element.getBoundingClientRect();
+  return element.offsetParent !== null && box.width > 40 && box.height > 40;
+}
+
+function safePlotlyReact(chartId, traces, chartLayout, config = plotConfig) {
+  const element = document.getElementById(chartId);
+  if (!element || !window.Plotly) return Promise.resolve();
+
+  pendingPlots[chartId] = { traces, chartLayout, config };
+  if (!isPlotTargetVisible(chartId)) return Promise.resolve();
+
+  const plot = pendingPlots[chartId];
+  delete pendingPlots[chartId];
+  return Plotly.react(chartId, plot.traces, plot.chartLayout, plot.config);
+}
+
+function flushPendingPlots() {
+  Object.keys(pendingPlots).forEach((chartId) => {
+    if (!isPlotTargetVisible(chartId)) return;
+    const plot = pendingPlots[chartId];
+    delete pendingPlots[chartId];
+    Plotly.react(chartId, plot.traces, plot.chartLayout, plot.config);
+  });
+
+  document.querySelectorAll(".js-plotly-plot").forEach((chart) => {
+    if (chart.offsetParent !== null && window.Plotly) {
+      Plotly.Plots.resize(chart);
+    }
+  });
+}
+
 function layout(overrides = {}) {
   return Object.assign({}, plotLayout, overrides);
 }
 
 function renderMainChart(result) {
   const t = result.time_series.time;
-  Plotly.react("mainChart", [
+  safePlotlyReact("mainChart", [
     { x: t, y: result.time_series.S, name: "S(t) Susceptible", mode: "lines", line: { color: "#00d4ff", width: 2.5 } },
     { x: t, y: result.time_series.I, name: "I(t) Infected",    mode: "lines", line: { color: "#ef476f", width: 2.5 } },
     { x: t, y: result.time_series.T, name: "T(t) Treated",     mode: "lines", line: { color: "#06d6a0", width: 2.5 } },
@@ -40,7 +76,7 @@ function renderMainChart(result) {
 function renderGauge(r0, status) {
   const maxVal = Math.max(3, r0 + 0.5);
   const barColor = r0 < 1 ? "#06d6a0" : r0 <= 1.02 ? "#fca311" : "#ef476f";
-  Plotly.react("r0Gauge", [{
+  safePlotlyReact("r0Gauge", [{
     type: "indicator",
     mode: "gauge+number+delta",
     value: r0,
@@ -66,7 +102,7 @@ function renderGaugeInto(chartId, r0, status) {
   if (!document.getElementById(chartId)) return;
   const maxVal = Math.max(3, r0 + 0.5);
   const barColor = r0 < 1 ? "#06d6a0" : r0 <= 1.02 ? "#fca311" : "#ef476f";
-  Plotly.react(chartId, [{
+  safePlotlyReact(chartId, [{
     type: "indicator",
     mode: "gauge+number+delta",
     value: r0,
@@ -89,7 +125,7 @@ function renderGaugeInto(chartId, r0, status) {
 }
 
 function renderInterventions(params) {
-  Plotly.react("interventionChart", [{
+  safePlotlyReact("interventionChart", [{
     x: ["u₁ Awareness", "u₂ Safer", "u₃ Testing", "u₄ Adherence"],
     y: [params.u1, params.u2, params.u3, params.u4],
     type: "bar",
@@ -108,7 +144,7 @@ function renderInterventions(params) {
 
 function renderInterventionsInto(chartId, params) {
   if (!document.getElementById(chartId)) return;
-  Plotly.react(chartId, [{
+  safePlotlyReact(chartId, [{
     x: ["u1", "u2", "u3", "u4"],
     y: [params.u1, params.u2, params.u3, params.u4],
     type: "bar",
@@ -132,7 +168,7 @@ function interventionLabel(value) {
 function renderInfectedFocus(result) {
   const t = result.time_series.time;
   const I = result.time_series.I;
-  Plotly.react("infectedChart", [
+  safePlotlyReact("infectedChart", [
     { x: t, y: I, name: "I(t)", mode: "lines", line: { color: "#ef476f", width: 2.5 } },
     {
       x: [result.summary.time_peak],
@@ -146,14 +182,14 @@ function renderInfectedFocus(result) {
 
 function renderTreatedAids(result) {
   const t = result.time_series.time;
-  Plotly.react("treatedAidsChart", [
+  safePlotlyReact("treatedAidsChart", [
     { x: t, y: result.time_series.T, name: "T(t) Treated", mode: "lines", line: { color: "#06d6a0", width: 2.5 } },
     { x: t, y: result.time_series.A, name: "A(t) AIDS",    mode: "lines", line: { color: "#ffd166", width: 2.5 } }
   ], layout({ yaxis: { ...plotLayout.yaxis, title: "Population" } }), plotConfig);
 }
 
 function renderPopulation(result) {
-  Plotly.react("populationChart", [{
+  safePlotlyReact("populationChart", [{
     x: result.time_series.time,
     y: result.time_series.N,
     name: "N(t)",
@@ -172,7 +208,7 @@ function renderStackedAndPercentage(result) {
     { key: "T", color: "#06d6a0", name: "T(t)" },
     { key: "A", color: "#ffd166", name: "A(t)" }
   ];
-  Plotly.react("stackedChart", traces.map((item) => ({
+  safePlotlyReact("stackedChart", traces.map((item) => ({
     x: t,
     y: result.time_series[item.key],
     stackgroup: "one",
@@ -181,7 +217,7 @@ function renderStackedAndPercentage(result) {
     line: { color: item.color, width: 1.5 }
   })), layout({ yaxis: { ...plotLayout.yaxis, title: "Population" } }), plotConfig);
 
-  Plotly.react("percentageChart", traces.map((item) => ({
+  safePlotlyReact("percentageChart", traces.map((item) => ({
     x: t,
     y: result.time_series[item.key].map((v, i) => result.time_series.N[i] ? 100 * v / result.time_series.N[i] : 0),
     mode: "lines",
@@ -191,7 +227,7 @@ function renderStackedAndPercentage(result) {
 }
 
 function renderPhase(result) {
-  Plotly.react("phaseChart", [{
+  safePlotlyReact("phaseChart", [{
     x: result.time_series.I,
     y: result.time_series.T,
     mode: "lines+markers",
@@ -211,11 +247,12 @@ function renderPhase(result) {
   }), plotConfig);
 }
 
+let phaseAnimationTimer = null;
+
 function renderAnimatedPhase(result) {
   const t = result.time_series.time;
   const maxIdx = t.length - 1;
-  
-  Plotly.newPlot("phaseChart", [{
+  const traces = [{
     x: result.time_series.I,
     y: result.time_series.T,
     mode: "lines",
@@ -230,17 +267,26 @@ function renderAnimatedPhase(result) {
     textposition: "top center",
     textfont: { color: "#ffd166", size: 11 },
     name: "Current position"
-  }], layout({
+  }];
+  const phaseLayout = layout({
     xaxis: { ...plotLayout.xaxis, title: "I(t) Infected" },
     yaxis: { ...plotLayout.yaxis, title: "T(t) Treated" },
     hovermode: "closest"
-  }), plotConfig);
+  });
+
+  if (phaseAnimationTimer) clearInterval(phaseAnimationTimer);
+  if (!isPlotTargetVisible("phaseChart")) {
+    safePlotlyReact("phaseChart", traces, phaseLayout, plotConfig);
+    return;
+  }
+  
+  Plotly.newPlot("phaseChart", traces, phaseLayout, plotConfig);
   
   let idx = 0;
-  const interval = setInterval(() => {
+  phaseAnimationTimer = setInterval(() => {
     idx++;
     if (idx >= maxIdx) {
-      clearInterval(interval);
+      clearInterval(phaseAnimationTimer);
       Plotly.update("phaseChart", {
         x: [[result.time_series.I[maxIdx]]],
         y: [[result.time_series.T[maxIdx]]],
@@ -261,7 +307,7 @@ function renderPhaseVariant(chartId, result, xKey, yKey, xLabel, yLabel) {
   const x = result.time_series[xKey];
   const y = result.time_series[yKey];
   const t = result.time_series.time;
-  Plotly.react(chartId, [{
+  safePlotlyReact(chartId, [{
     x,
     y,
     mode: "lines+markers",
@@ -331,7 +377,7 @@ function renderVectorFieldPhase(chartId, result, params) {
   }
 
   const peakIndex = Ivals.indexOf(Math.max(...Ivals));
-  Plotly.react(chartId, [
+  safePlotlyReact(chartId, [
     {
       x: vx,
       y: vy,
@@ -374,7 +420,7 @@ function renderScenarioChart(data) {
     name: curve.name,
     line: { width: 2.5, color: colors[i % colors.length] }
   }));
-  Plotly.react("scenarioChart", traces, layout({
+  safePlotlyReact("scenarioChart", traces, layout({
     yaxis: { ...plotLayout.yaxis, title: "Infected I(t)" }
   }), plotConfig);
 }
@@ -389,14 +435,14 @@ function renderScenarioAidsChart(data) {
     name: curve.name,
     line: { width: 2.5, color: colors[i % colors.length] }
   }));
-  Plotly.react("scenarioAidsChart", traces, layout({
+  safePlotlyReact("scenarioAidsChart", traces, layout({
     yaxis: { ...plotLayout.yaxis, title: "AIDS A(t)" }
   }), plotConfig);
 }
 
 function renderScenarioR0Chart(comparisons) {
   if (!document.getElementById("scenarioR0Chart")) return;
-  Plotly.react("scenarioR0Chart", [{
+  safePlotlyReact("scenarioR0Chart", [{
     x: comparisons.map((row) => row.name),
     y: comparisons.map((row) => row.r0),
     type: "bar",
@@ -430,7 +476,7 @@ function renderScenarioRadar(comparisons) {
     fill: "toself",
     name: row.name
   }));
-  Plotly.react("scenarioRadarChart", traces, {
+  safePlotlyReact("scenarioRadarChart", traces, {
     ...plotLayout,
     polar: { radialaxis: { visible: true, range: [0, 1], color: "#94a3b8" }, bgcolor: "rgba(0,0,0,0)" },
     margin: { t: 20, r: 35, b: 30, l: 35 }
@@ -438,7 +484,7 @@ function renderScenarioRadar(comparisons) {
 }
 
 function renderSensitivityChart(values) {
-  Plotly.react("sensitivityChart", [{
+  safePlotlyReact("sensitivityChart", [{
     x: values.map((item) => item.parameter),
     y: values.map((item) => item.sensitivity),
     type: "bar",
@@ -464,7 +510,7 @@ function renderMemoryChart(results) {
     name: `q = ${result.parameters.q.toFixed(2)}`,
     line: { width: 2.5, color: colors[i] }
   }));
-  Plotly.react("memoryChart", traces, layout({
+  safePlotlyReact("memoryChart", traces, layout({
     yaxis: { ...plotLayout.yaxis, title: "Infected I(t)" }
   }), plotConfig);
 }
@@ -473,7 +519,7 @@ function renderMemoryExtraCharts(results) {
   const colors = ["#00d4ff", "#06d6a0", "#ffd166", "#ef476f"];
   const build = (key, chartId, title) => {
     if (!document.getElementById(chartId)) return;
-    Plotly.react(chartId, results.map((result, i) => ({
+    safePlotlyReact(chartId, results.map((result, i) => ({
       x: result.time_series.time,
       y: result.time_series[key],
       mode: "lines",
@@ -484,7 +530,7 @@ function renderMemoryExtraCharts(results) {
   build("T", "memoryTChart", "Treated T(t)");
   build("A", "memoryAChart", "AIDS A(t)");
   if (document.getElementById("memoryPhaseChart")) {
-    Plotly.react("memoryPhaseChart", results.map((result, i) => ({
+    safePlotlyReact("memoryPhaseChart", results.map((result, i) => ({
       x: result.time_series.I,
       y: result.time_series.T,
       mode: "lines",
@@ -507,7 +553,7 @@ function renderSurface(params) {
     return (betaEff / (tauEff + params.delta + params.mu)) *
            (1 + (params.eta * tauEff) / (rhoEff + params.mu));
   }));
-  Plotly.react("surfaceChart", [{
+  safePlotlyReact("surfaceChart", [{
     x: axis, y: axis, z,
     type: "surface",
     colorscale: "Viridis",
@@ -537,7 +583,7 @@ function renderHeatmapsAndWaterfall(params, result) {
   const axis = Array.from({ length: 21 }, (_, i) => i / 20);
   const r0Z = axis.map((u2) => axis.map((u1) => computeR0FromParams(params, { u1, u2 })));
   if (document.getElementById("r0HeatmapChart")) {
-    Plotly.react("r0HeatmapChart", [{
+    safePlotlyReact("r0HeatmapChart", [{
       x: axis, y: axis, z: r0Z, type: "heatmap", colorscale: "Viridis",
       contours: { coloring: "heatmap", showlabels: true }
     }], layout({
@@ -550,7 +596,7 @@ function renderHeatmapsAndWaterfall(params, result) {
     const baseFinal = result.summary.final_infected;
     const baseR0 = Math.max(result.r0, 1e-9);
     const z = r0Z.map((row) => row.map((r0) => baseFinal * (r0 / baseR0)));
-    Plotly.react("finalInfectedHeatmapChart", [{
+    safePlotlyReact("finalInfectedHeatmapChart", [{
       x: axis, y: axis, z, type: "heatmap", colorscale: "RdYlGn", reversescale: true
     }], layout({
       xaxis: { ...plotLayout.xaxis, title: "u1 Awareness" },
@@ -561,7 +607,7 @@ function renderHeatmapsAndWaterfall(params, result) {
   if (document.getElementById("finalAidsHeatmapChart")) {
     const baseFinalA = result.summary.final_aids;
     const z = axis.map((u4) => axis.map((u3) => baseFinalA * (1 - 0.35 * u3) * (1 - 0.55 * u4)));
-    Plotly.react("finalAidsHeatmapChart", [{
+    safePlotlyReact("finalAidsHeatmapChart", [{
       x: axis, y: axis, z, type: "heatmap", colorscale: "RdYlGn", reversescale: true
     }], layout({
       xaxis: { ...plotLayout.xaxis, title: "u3 Testing" },
@@ -575,7 +621,7 @@ function renderHeatmapsAndWaterfall(params, result) {
     const afterU2 = computeR0FromParams(params, { u1: params.u1, u2: params.u2, u3: 0, u4: 0 });
     const afterU3 = computeR0FromParams(params, { u1: params.u1, u2: params.u2, u3: params.u3, u4: 0 });
     const final = computeR0FromParams(params);
-    Plotly.react("waterfallChart", [{
+    safePlotlyReact("waterfallChart", [{
       type: "waterfall",
       x: ["Baseline", "Awareness", "Safer", "Testing", "Adherence", "Final"],
       y: [base, afterU1 - base, afterU2 - afterU1, afterU3 - afterU2, final - afterU3, final],

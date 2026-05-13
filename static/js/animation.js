@@ -4,10 +4,17 @@ function setBusy(isBusy) {
   const pill = document.getElementById("status-pill");
   if (overlay) overlay.classList.toggle("d-none", !isBusy);
   if (pill) {
-    pill.textContent = isBusy ? "Running" : "Ready";
+    if (isBusy) {
+      pill.textContent = "Running";
+    } else if (pill.textContent === "Running" || pill.textContent === "Running...") {
+      pill.textContent = "Ready";
+    }
     pill.classList.toggle("running", isBusy);
   }
 }
+
+window.addEventListener("error", () => setBusy(false));
+window.addEventListener("unhandledrejection", () => setBusy(false));
 
 /* ── Toast Notifications ── */
 function showToast(message, type = "success") {
