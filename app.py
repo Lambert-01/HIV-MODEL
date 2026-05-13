@@ -1,4 +1,5 @@
 from flask import Flask, Response, render_template, request
+import os
 
 from routes.export_routes import export_bp
 from routes.health_routes import health_bp
@@ -35,8 +36,17 @@ def create_app():
     def favicon():
         return Response(status=204)
 
+    # Ensure output directories exist
+    os.makedirs('outputs/csv', exist_ok=True)
+    os.makedirs('outputs/figures', exist_ok=True)
+    os.makedirs('outputs/reports', exist_ok=True)
+
     return app
 
 
+app = create_app()
+
+
 if __name__ == "__main__":
-    create_app().run(debug=True, use_reloader=False, host="127.0.0.1", port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=False, use_reloader=False, host="0.0.0.0", port=port)
