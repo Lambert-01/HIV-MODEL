@@ -1,3 +1,27 @@
+/* ── Sidebar accordion ── */
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".ctrl-section-title[data-accordion]").forEach((title) => {
+    title.addEventListener("click", () => {
+      title.closest(".ctrl-section").classList.toggle("open");
+    });
+  });
+});
+
+/* ── Skeleton helpers ── */
+function showSkeleton(tabName) {
+  const sk = document.getElementById(`tab-${tabName}-skeleton`);
+  const ct = document.getElementById(`tab-${tabName}-content`);
+  if (sk) sk.style.display = "flex";
+  if (ct) ct.style.display = "none";
+}
+
+function hideSkeleton(tabName) {
+  const sk = document.getElementById(`tab-${tabName}-skeleton`);
+  const ct = document.getElementById(`tab-${tabName}-content`);
+  if (sk) sk.style.display = "none";
+  if (ct) ct.style.display = "block";
+}
+
 /* ── Tab group dropdowns ── */
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".tab-group-trigger").forEach((trigger) => {
@@ -52,6 +76,16 @@ document.addEventListener("click", (event) => {
     setTimeout(() => {
       if (typeof flushPendingPlots === "function") flushPendingPlots();
     }, 80);
+    // Dynamic page title
+    const titleMap = {
+      baseline: "Baseline Simulation", parameters: "Model Parameters",
+      interventions: "Interventions", r0: "R\u2080 & Stability",
+      "scenario-explorer": "Scenario Explorer", "scenario-comparison": "Scenario Comparison",
+      phase: "Phase Analysis", sensitivity: "Sensitivity",
+      memory: "Memory Effect", surface: "Surfaces & Heatmaps",
+      export: "Export", overview: "Overview", "about-thesis": "About Thesis"
+    };
+    document.title = `FracHIV-SITA Lab | ${titleMap[tab.dataset.tab] || tab.dataset.tab}`;
     // Lazy-load secondary tab data on first open
     const lazyTabs = ["scenario-comparison", "scenario-explorer", "sensitivity", "memory", "surface", "phase"];
     if (lazyTabs.includes(tab.dataset.tab) && typeof loadTabData === "function") {

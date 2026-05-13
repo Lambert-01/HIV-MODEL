@@ -53,6 +53,8 @@ function resetDefaults() {
   showToast("Parameters reset to defaults.", "success");
 }
 
+let lastPeakInfected = null;
+
 function updateCards(result) {
   const r0 = result.r0;
   const status = result.epidemic_status.toLowerCase();
@@ -64,6 +66,30 @@ function updateCards(result) {
   animateValue(document.getElementById("cardFinalT"), result.summary.final_treated, 0);
   document.getElementById("cardQ").textContent = result.summary.memory_order.toFixed(2);
 
+  // Trend indicator on Peak Infected
+  const peakEl = document.getElementById("cardPeak");
+  if (peakEl && lastPeakInfected !== null) {
+    const diff = result.summary.peak_infected - lastPeakInfected;
+    const existing = peakEl.parentElement.querySelector(".mc-trend");
+    if (existing) existing.remove();
+    const trend = document.createElement("span");
+    trend.className = `mc-trend ${diff > 1 ? "up" : diff < -1 ? "down" : "flat"}`;
+    trend.textContent = diff > 1 ? `\u25b2 ${diff.toFixed(0)}` : diff < -1 ? `\u25bc ${Math.abs(diff).toFixed(0)}` : "\u2014 stable";
+    peakEl.insertAdjacentElement("afterend", trend);
+  }
+  lastPeakInfected = result.summary.peak_infected;
+
+  // Memory badge on q card
+  const qEl = document.getElementById("cardQ");
+  if (qEl) {
+    const existing = qEl.parentElement.querySelector(".mc-badge");
+    if (existing) existing.remove();
+    const badge = document.createElement("span");
+    badge.className = `mc-badge ${result.summary.memory_order < 1 ? "memory" : "ordinary"}`;
+    badge.textContent = result.summary.memory_order < 1 ? "Memory" : "Ordinary";
+    qEl.insertAdjacentElement("afterend", badge);
+  }
+
   // Color the R0 and status cards
   ["mc-r0", "mc-status"].forEach((id) => {
     const card = document.getElementById(id);
@@ -72,6 +98,29 @@ function updateCards(result) {
       card.classList.add(status);
     }
   });
+
+  // Update R0 tab result cards
+  const Lambda = result.parameters.Lambda;
+  const mu = result.parameters.mu;
+  const q = result.parameters.q;
+  const dfeVal = mu > 0 ? (Lambda / mu).toFixed(1) : "\u221e";
+  const threshold = ((q * Math.PI) / 2).toFixed(4);
+
+  const dfeValueEl = document.getElementById("dfeValue");
+  if (dfeValueEl) dfeValueEl.textContent = `E\u2080 = (${dfeVal}, 0, 0, 0)`;
+  const dfeTextEl = document.getElementById("dfeText");
+  if (dfeTextEl) dfeTextEl.textContent = `\u039b/\u03bc = ${Lambda}/${mu} = ${dfeVal}. The susceptible population converges to this value when the epidemic is controlled.`;
+
+  const stabEl = document.getElementById("stabilityThresholdText");
+  if (stabEl) stabEl.textContent = `For q = ${q.toFixed(2)}, the stability threshold is q\u03c0/2 = ${threshold} rad. All eigenvalue arguments must exceed this value for the DFE to be locally asymptotically stable.`;
+
+  const boundEl = document.getElementById("boundValue");
+  if (boundEl) boundEl.textContent = `N(t) \u2264 \u039b/\u03bc = ${dfeVal}`;
+  const boundTextEl = document.getElementById("boundText");
+  if (boundTextEl) {
+    const ok = result.summary.bounded_ok;
+    boundTextEl.textContent = `Feasible region: \u03a9 = {(S,I,T,A) \u2208 \u211d\u2074\u208a : N(t) \u2264 ${dfeVal}}. Current simulation: ${ok ? "\u2713 within bound" : "\u26a0 check parameters"}.`;
+  }
 }
 
 function updateResultsTable(result) {
