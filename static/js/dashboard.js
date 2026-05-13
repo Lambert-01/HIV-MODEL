@@ -149,6 +149,27 @@ function updateLivePanels() {
     ];
     table.innerHTML = `<thead><tr><th>Parameter</th><th>Value</th><th>Meaning</th></tr></thead><tbody>${rows.map((row) => `<tr><td>${row[0]}</td><td>${Number(row[1]).toFixed(row[0] === "Lambda" ? 0 : 3)}</td><td>${row[2]}</td></tr>`).join("")}</tbody>`;
   }
+
+  const chips = document.getElementById("parameterQuickCards");
+  if (chips) {
+    const r0 = localR0(p);
+    const items = [
+      ["Initial total N0", n0, "S0 + I0 + T0 + A0"],
+      ["Fractional order q", p.q, p.q === 1 ? "ordinary model" : "memory model"],
+      ["R0 now", r0, r0 < 1 ? "controlled" : r0 <= 1.02 ? "threshold" : "persistent"],
+      ["Simulation steps", Math.floor(payload.simulation.years / payload.simulation.step) + 1, "time grid size"],
+      ["beta_eff", rates.beta_eff, "effective transmission"],
+      ["tau_eff", rates.tau_eff, "effective treatment uptake"],
+      ["rho_eff", rates.rho_eff, "effective T-to-AIDS progression"]
+    ];
+    chips.innerHTML = items.map(([label, value, note]) => `
+      <div class="parameter-chip">
+        <span>${label}</span>
+        <strong>${Number(value).toFixed(label.includes("steps") || label.includes("N0") ? 0 : 4)}</strong>
+        <em>${note}</em>
+      </div>
+    `).join("");
+  }
 }
 
 function updateInterpretation(result) {
@@ -255,7 +276,7 @@ async function runSimulation() {
     renderPopulation(result);
     renderStackedAndPercentage(result);
     renderAnimatedPhase(result);
-    renderPhaseVariant("phaseITChart", result, "I", "T", "I(t)", "T(t)");
+    renderVectorFieldPhase("phaseITChart", result, result.parameters);
     renderPhaseVariant("phaseIAChart", result, "I", "A", "I(t)", "A(t)");
     renderPhaseVariant("phaseSIChart", result, "S", "I", "S(t)", "I(t)");
     renderPhaseVariant("phaseTAChart", result, "T", "A", "T(t)", "A(t)");

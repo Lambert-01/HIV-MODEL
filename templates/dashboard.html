@@ -309,6 +309,14 @@
 
     <!-- ── TAB: MODEL PARAMETERS ── -->
     <div class="tab-panel" id="tab-parameters">
+      <div class="parameter-hero mb-3">
+        <div>
+          <div class="eyebrow-label"><i class="fa fa-sliders me-1"></i>Configuration Control Room</div>
+          <h5>Model Parameters and Initial Conditions</h5>
+          <p>These values define the biological assumptions, starting population, fractional memory setting, and numerical simulation horizon.</p>
+        </div>
+        <div class="parameter-hero-badge">ABM-Type Caputo Solver</div>
+      </div>
       <div class="row g-3">
         <div class="col-lg-4">
           <div class="overview-card h-100">
@@ -338,10 +346,19 @@
         <div class="chart-card-title"><i class="fa fa-table me-2"></i>Current Parameter Snapshot</div>
         <div class="table-responsive p-2"><table class="sci-table" id="parameterSnapshotTable"></table></div>
       </div>
+      <div class="parameter-card-grid mt-3" id="parameterQuickCards"></div>
     </div>
 
     <!-- ── TAB: INTERVENTION CONTROLS ── -->
     <div class="tab-panel" id="tab-interventions">
+      <div class="parameter-hero mb-3">
+        <div>
+          <div class="eyebrow-label"><i class="fa fa-shield-halved me-1"></i>Social Behaviour Control Panel</div>
+          <h5>Intervention Effects on Mathematical Rates</h5>
+          <p>Move the sidebar intervention sliders and this panel updates the intervention strength, qualitative label, and effective rates before simulation.</p>
+        </div>
+        <div class="parameter-hero-badge">0 none -> 1 maximum</div>
+      </div>
       <div class="row g-3">
         <div class="col-lg-8">
           <div class="chart-card h-100">
@@ -359,6 +376,11 @@
             <p id="interventionMeaningText">Move intervention sliders to see how behaviour modifies the mathematical rates.</p>
           </div>
         </div>
+      </div>
+      <div class="intervention-formula-grid mt-3">
+        <div class="formula-card"><span>Transmission</span><strong>beta_eff = beta0(1-u1)(1-u2)</strong><p>Awareness and safer behaviour reduce infection pressure.</p></div>
+        <div class="formula-card"><span>Treatment Uptake</span><strong>tau_eff = tau(1+u3)</strong><p>Testing and treatment-seeking move infected people into treatment faster.</p></div>
+        <div class="formula-card"><span>AIDS Progression</span><strong>rho_eff = rho(1-u4)</strong><p>Adherence reduces movement from treatment to AIDS.</p></div>
       </div>
     </div>
 

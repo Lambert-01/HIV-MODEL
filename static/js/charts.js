@@ -283,6 +283,88 @@ function renderPhaseVariant(chartId, result, xKey, yKey, xLabel, yLabel) {
   }), plotConfig);
 }
 
+function sitaDerivativeForPhase(S, I, T, A, params) {
+  const N = Math.max(S + I + T + A, 1e-9);
+  const betaEff = params.beta0 * (1 - params.u1) * (1 - params.u2);
+  const lambdaForce = betaEff * (I + params.eta * T) / N;
+  const tauEff = params.tau * (1 + params.u3);
+  const rhoEff = params.rho * (1 - params.u4);
+  return {
+    dS: params.Lambda - lambdaForce * S - params.mu * S,
+    dI: lambdaForce * S - (tauEff + params.delta + params.mu) * I,
+    dT: tauEff * I - (rhoEff + params.mu) * T,
+    dA: params.delta * I + rhoEff * T - (params.mu + params.d) * A
+  };
+}
+
+function renderVectorFieldPhase(chartId, result, params) {
+  if (!document.getElementById(chartId)) return;
+
+  const Ivals = result.time_series.I;
+  const Tvals = result.time_series.T;
+  const Sbar = result.time_series.S.reduce((a, b) => a + b, 0) / result.time_series.S.length;
+  const Abar = result.time_series.A.reduce((a, b) => a + b, 0) / result.time_series.A.length;
+  const xmin = Math.max(0, Math.min(...Ivals) * 0.75);
+  const xmax = Math.max(...Ivals) * 1.2 + 1;
+  const ymin = Math.max(0, Math.min(...Tvals) * 0.75);
+  const ymax = Math.max(...Tvals) * 1.2 + 1;
+  const nx = 24;
+  const ny = 18;
+  const dx = (xmax - xmin) / Math.max(nx - 1, 1);
+  const dy = (ymax - ymin) / Math.max(ny - 1, 1);
+  const seg = 0.28 * Math.min(dx, dy || dx);
+  const vx = [];
+  const vy = [];
+
+  for (let a = 0; a < nx; a++) {
+    for (let b = 0; b < ny; b++) {
+      const I = xmin + a * dx;
+      const T = ymin + b * dy;
+      const d = sitaDerivativeForPhase(Sbar, I, T, Abar, params);
+      const mag = Math.hypot(d.dI, d.dT);
+      if (!Number.isFinite(mag) || mag === 0) continue;
+      const ux = d.dI / mag;
+      const uy = d.dT / mag;
+      vx.push(I - ux * seg, I + ux * seg, null);
+      vy.push(T - uy * seg, T + uy * seg, null);
+    }
+  }
+
+  const peakIndex = Ivals.indexOf(Math.max(...Ivals));
+  Plotly.react(chartId, [
+    {
+      x: vx,
+      y: vy,
+      mode: "lines",
+      name: "Direction field",
+      line: { color: "rgba(148,163,184,0.58)", width: 1 },
+      hoverinfo: "skip"
+    },
+    {
+      x: Ivals,
+      y: Tvals,
+      mode: "lines",
+      name: "I-T trajectory",
+      line: { color: "#31d843", width: 3 },
+      hovertemplate: "I(t): %{x:.2f}<br>T(t): %{y:.2f}<extra>trajectory</extra>"
+    },
+    {
+      x: [Ivals[0], Ivals[peakIndex], Ivals[Ivals.length - 1]],
+      y: [Tvals[0], Tvals[peakIndex], Tvals[Tvals.length - 1]],
+      mode: "markers+text",
+      text: ["start", "peak I", "end"],
+      textposition: ["top center", "top center", "bottom center"],
+      marker: { color: ["#00d4ff", "#ffd166", "#ef476f"], size: [9, 11, 9], line: { color: "#07111f", width: 1 } },
+      name: "Key points"
+    }
+  ], layout({
+    xaxis: { ...plotLayout.xaxis, title: "I(t) Infected", range: [xmin, xmax], zeroline: true, zerolinecolor: "rgba(255,255,255,0.28)" },
+    yaxis: { ...plotLayout.yaxis, title: "T(t) Treated", range: [ymin, ymax], zeroline: true, zerolinecolor: "rgba(255,255,255,0.28)" },
+    hovermode: "closest",
+    legend: { orientation: "h", y: -0.2 }
+  }), plotConfig);
+}
+
 function renderScenarioChart(data) {
   const colors = ["#00d4ff", "#ef476f", "#06d6a0", "#ffd166", "#a78bfa", "#fb923c", "#38bdf8", "#f472b6"];
   const traces = Object.values(data.curves).map((curve, i) => ({

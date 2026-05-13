@@ -579,6 +579,92 @@
   margin: 10px 0;
 }
 
+/* ── Professional Parameter/Intervention Panels ── */
+.parameter-hero {
+  align-items: center;
+  background:
+    linear-gradient(135deg, rgba(0, 212, 255, 0.10), rgba(255, 209, 102, 0.05)),
+    var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  gap: 18px;
+  justify-content: space-between;
+  padding: 22px;
+}
+
+.parameter-hero h5 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 0 0 4px;
+}
+
+.parameter-hero p {
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 780px;
+}
+
+.parameter-hero-badge {
+  background: rgba(0, 212, 255, 0.12);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 999px;
+  color: var(--primary);
+  flex-shrink: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 9px 14px;
+}
+
+.parameter-card-grid,
+.intervention-formula-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+
+.parameter-chip,
+.formula-card {
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.parameter-chip span,
+.formula-card span {
+  color: var(--text-muted);
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.parameter-chip strong,
+.formula-card strong {
+  color: var(--text-main);
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.05rem;
+  margin-top: 6px;
+}
+
+.parameter-chip em {
+  color: var(--secondary);
+  display: block;
+  font-size: 0.72rem;
+  font-style: normal;
+  margin-top: 4px;
+}
+
+.formula-card p {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  margin: 8px 0 0;
+}
+
 /* ── SITA Flow Diagram ── */
 .sita-flow {
   align-items: center;
