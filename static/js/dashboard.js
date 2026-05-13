@@ -1,6 +1,6 @@
 const DEFAULTS = {
   S0: 10000, I0: 150, T0: 80, A0: 20,
-  years: 50, step: 0.1,
+  years: 50, step: 0.2,
   q: 0.95,
   Lambda: 100, beta0: 0.30, mu: 0.02, tau: 0.20,
   delta: 0.10, rho: 0.03, eta: 0.10, d: 0.33,
@@ -285,6 +285,9 @@ function renderSensitivityRank(values) {
    }).join("");
  }
 
+// Track which tabs have been loaded for the current simulation
+const tabLoaded = {};
+
 async function runSimulation() {
   const payload = buildPayload();
   const errors = validatePayload(payload);
@@ -292,6 +295,9 @@ async function runSimulation() {
     showToast(errors[0], "error");
     return;
   }
+
+  // Reset lazy-load flags so secondary tabs re-run with new params
+  Object.keys(tabLoaded).forEach((k) => delete tabLoaded[k]);
 
   setBusy(true);
   const statusPill = document.getElementById("status-pill");
@@ -320,48 +326,64 @@ async function runSimulation() {
     updateInterpretation(result);
 
     if (typeof flushPendingPlots === "function") flushPendingPlots();
-    showToast(`Core simulation ready. R₀ = ${result.r0.toFixed(3)} — ${result.epidemic_status}`, "success");
-    runSecondaryAnalyses(payload, result);
+    showToast(`Simulation ready. R\u2080 = ${result.r0.toFixed(3)} \u2014 ${result.epidemic_status}`, "success");
   } catch (error) {
     showToast(error.message, "error");
   } finally {
     setBusy(false);
-    const statusPill = document.getElementById("status-pill");
     if (statusPill && statusPill.textContent === "Running...") statusPill.textContent = "Ready";
   }
 }
 
-async function runSecondaryAnalyses(payload, result) {
+// Called when a secondary tab is first opened after a simulation
+async function loadTabData(tabName) {
+  if (!lastPayload || tabLoaded[tabName]) return;
+  tabLoaded[tabName] = true;
+
   const statusPill = document.getElementById("status-pill");
-  if (statusPill) statusPill.textContent = "Updating comparisons...";
+  if (statusPill) statusPill.textContent = "Loading...";
 
   try {
-    const scenarioData = await postJson("/api/scenario", { base_payload: payload });
-    lastScenarioData = scenarioData;
-    renderScenarioChart(scenarioData);
-    renderScenarioAidsChart(scenarioData);
-    renderScenarioR0Chart(scenarioData.comparisons);
-    renderScenarioRadar(scenarioData.comparisons);
-    renderScenarioTable(scenarioData.comparisons);
-    renderScenarioExplorer(scenarioData);
-
-    const sensitivity = await postJson("/api/sensitivity", { parameters: payload.parameters });
-    renderSensitivityChart(sensitivity.sensitivity);
-    renderSensitivityRank(sensitivity.sensitivity);
-
-    const memoryResults = await Promise.all([1, 0.95, 0.85, 0.75].map(async (q) => {
-      const mp = JSON.parse(JSON.stringify(payload));
-      mp.parameters.q = q;
-      return await postJson("/api/simulate", mp);
-    }));
-    renderMemoryChart(memoryResults);
-    renderMemoryExtraCharts(memoryResults);
-    renderSurface(payload.parameters);
-    renderHeatmapsAndWaterfall(payload.parameters, result);
+    if (tabName === "scenario-comparison" || tabName === "scenario-explorer") {
+      if (!tabLoaded["_scenario"] ) {
+        tabLoaded["_scenario"] = true;
+        const scenarioData = await postJson("/api/scenario", { base_payload: lastPayload });
+        lastScenarioData = scenarioData;
+        renderScenarioChart(scenarioData);
+        renderScenarioAidsChart(scenarioData);
+        renderScenarioR0Chart(scenarioData.comparisons);
+        renderScenarioRadar(scenarioData.comparisons);
+        renderScenarioTable(scenarioData.comparisons);
+        renderScenarioExplorer(scenarioData);
+      }
+    } else if (tabName === "sensitivity") {
+      const sensitivity = await postJson("/api/sensitivity", { parameters: lastPayload.parameters });
+      renderSensitivityChart(sensitivity.sensitivity);
+      renderSensitivityRank(sensitivity.sensitivity);
+    } else if (tabName === "memory") {
+      const memoryResults = await Promise.all([1, 0.95, 0.85, 0.75].map(async (q) => {
+        const mp = JSON.parse(JSON.stringify(lastPayload));
+        mp.parameters.q = q;
+        return await postJson("/api/simulate", mp);
+      }));
+      renderMemoryChart(memoryResults);
+      renderMemoryExtraCharts(memoryResults);
+    } else if (tabName === "surface") {
+      renderSurface(lastPayload.parameters);
+      renderHeatmapsAndWaterfall(lastPayload.parameters, lastResult);
+    } else if (tabName === "phase") {
+      if (lastResult) {
+        renderVectorFieldPhase("phaseITChart", lastResult, lastResult.parameters);
+        renderPhaseVariant("phaseIAChart", lastResult, "I", "A", "I(t)", "A(t)");
+        renderPhaseVariant("phaseSIChart", lastResult, "S", "I", "S(t)", "I(t)");
+        renderPhaseVariant("phaseTAChart", lastResult, "T", "A", "T(t)", "A(t)");
+      }
+    }
     if (typeof flushPendingPlots === "function") flushPendingPlots();
-    showToast("Comparison, sensitivity, memory, and surface charts updated.", "success");
   } catch (error) {
-    showToast(`Secondary analysis issue: ${error.message}`, "error");
+    showToast(`${tabName}: ${error.message}`, "error");
+    delete tabLoaded[tabName];
+    if (tabName === "scenario-comparison" || tabName === "scenario-explorer") delete tabLoaded["_scenario"];
   } finally {
     if (statusPill) statusPill.textContent = "Ready";
   }

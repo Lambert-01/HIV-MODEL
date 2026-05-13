@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ── Tab switching ── */
 document.addEventListener("click", (event) => {
   const tab = event.target.closest(".tab-btn");
-  if (!tab) return;
+  if (!tab || !tab.dataset.tab) return;
   document.querySelectorAll(".tab-btn").forEach((t) => t.classList.remove("active"));
   document.querySelectorAll(".tab-panel").forEach((p) => p.classList.remove("active"));
   tab.classList.add("active");
@@ -52,6 +52,11 @@ document.addEventListener("click", (event) => {
     setTimeout(() => {
       if (typeof flushPendingPlots === "function") flushPendingPlots();
     }, 80);
+    // Lazy-load secondary tab data on first open
+    const lazyTabs = ["scenario-comparison", "scenario-explorer", "sensitivity", "memory", "surface", "phase"];
+    if (lazyTabs.includes(tab.dataset.tab) && typeof loadTabData === "function") {
+      loadTabData(tab.dataset.tab);
+    }
   }
 });
 
