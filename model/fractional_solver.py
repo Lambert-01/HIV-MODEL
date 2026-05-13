@@ -80,25 +80,21 @@ def fractional_abm_solver(rhs, y0, t_grid, q, params):
     for k in range(1, n):
         # ── Predictor (Adams-Bashforth) ──────────────────────────────────────
         # b_j^(k) = (k-j)^q - (k-j-1)^q  for j = 0, …, k-1
-        sum_pred = np.zeros(len(y0), dtype=float)
-        for j in range(k):
-            w = (k - j) ** q - (k - j - 1) ** q
-            sum_pred += w * rhs_values[j]
+        history = np.arange(k, 0, -1, dtype=float)
+        pred_weights = history**q - (history - 1.0) ** q
+        sum_pred = pred_weights @ rhs_values[:k]
         y_pred = y[0] + (h ** q / gamma_q) * sum_pred
         y_pred = np.maximum(np.nan_to_num(y_pred, nan=0.0, posinf=1e12, neginf=0.0), 0.0)
 
         # ── Corrector (Adams-Moulton) ─────────────────────────────────────────
         # a_j^(k) for j = 0, …, k-1  (history weights)
         # a_k^(k) = 1  (current predicted value weight)
-        sum_corr = np.zeros(len(y0), dtype=float)
-        for j in range(k):
-            if j == 0:
-                w = (k - 1) ** (q + 1) - (k - 1 - q) * k ** q
-            elif j == k:
-                w = 1.0
-            else:
-                w = (k - j + 1) ** (q + 1) + (k - j - 1) ** (q + 1) - 2 * (k - j) ** (q + 1)
-            sum_corr += w * rhs_values[j]
+        corr_weights = np.empty(k, dtype=float)
+        corr_weights[0] = (k - 1) ** (q + 1) - (k - 1 - q) * k**q
+        if k > 1:
+            m = np.arange(k - 1, 0, -1, dtype=float)
+            corr_weights[1:] = (m + 1.0) ** (q + 1) + (m - 1.0) ** (q + 1) - 2.0 * m ** (q + 1)
+        sum_corr = corr_weights @ rhs_values[:k]
 
         rhs_pred = rhs(t_grid[k], y_pred, params)
         y[k] = y[0] + (h ** q / gamma_q1) * (rhs_pred + sum_corr)

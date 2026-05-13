@@ -35,6 +35,7 @@ outputs/reports/*.pdf
 # Download/extraction leftovers for local vendor assets
 fontawesome.zip
 temp_fontawesome/
+*.zip
 
 # IDE
 .vscode/

@@ -35,7 +35,7 @@ Open `http://127.0.0.1:5000/dashboard`.
 
 ## Defense Notes
 
-The dashboard currently uses CDN links for Bootstrap, Font Awesome, Google Fonts, and Plotly. For an offline defense, download those assets into `static/vendor/` and update `templates/base.html` to load local files.
+All static assets (Bootstrap, Font Awesome, Google Fonts, Plotly) are now hosted locally in `static/vendor/` for offline use. The dashboard loads these local files directly from `templates/base.html`.
 
 ## Test
 

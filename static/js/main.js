@@ -9,6 +9,11 @@ document.addEventListener("click", (event) => {
   if (panel) {
     panel.classList.add("active");
     window.dispatchEvent(new Event("resize"));
+    setTimeout(() => {
+      document.querySelectorAll(".js-plotly-plot").forEach((chart) => {
+        if (window.Plotly) Plotly.Plots.resize(chart);
+      });
+    }, 80);
   }
 });
 
@@ -18,12 +23,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeBtn = document.getElementById("sidebarClose");
   const panel = document.getElementById("controlPanel");
 
-  openBtn?.addEventListener("click", () => panel?.classList.add("open"));
-  closeBtn?.addEventListener("click", () => panel?.classList.remove("open"));
+  openBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    panel?.classList.add("open");
+  });
+  closeBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    panel?.classList.remove("open");
+  });
 
   // Close sidebar when clicking outside on mobile
   document.addEventListener("click", (e) => {
-    if (panel?.classList.contains("open") && !panel.contains(e.target) && e.target !== openBtn) {
+    if (panel?.classList.contains("open") && !panel.contains(e.target) && !openBtn?.contains(e.target)) {
       panel.classList.remove("open");
     }
   });
