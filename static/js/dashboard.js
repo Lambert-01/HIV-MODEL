@@ -392,9 +392,12 @@ async function loadTabData(tabName) {
   const statusPill = document.getElementById("status-pill");
   if (statusPill) statusPill.textContent = "Loading...";
 
+  // Show skeleton for tabs that have one
+  if (typeof showSkeleton === "function") showSkeleton(tabName);
+
   try {
     if (tabName === "scenario-comparison" || tabName === "scenario-explorer") {
-      if (!tabLoaded["_scenario"] ) {
+      if (!tabLoaded["_scenario"]) {
         tabLoaded["_scenario"] = true;
         const scenarioData = await postJson("/api/scenario", { base_payload: lastPayload });
         lastScenarioData = scenarioData;
@@ -405,10 +408,15 @@ async function loadTabData(tabName) {
         renderScenarioTable(scenarioData.comparisons);
         renderScenarioExplorer(scenarioData);
       }
+      if (typeof hideSkeleton === "function") {
+        hideSkeleton("scenario-explorer");
+        hideSkeleton("scenario-comparison");
+      }
     } else if (tabName === "sensitivity") {
       const sensitivity = await postJson("/api/sensitivity", { parameters: lastPayload.parameters });
       renderSensitivityChart(sensitivity.sensitivity);
       renderSensitivityRank(sensitivity.sensitivity);
+      if (typeof hideSkeleton === "function") hideSkeleton("sensitivity");
     } else if (tabName === "memory") {
       const memoryResults = await Promise.all([1, 0.95, 0.85, 0.75].map(async (q) => {
         const mp = JSON.parse(JSON.stringify(lastPayload));
@@ -417,6 +425,7 @@ async function loadTabData(tabName) {
       }));
       renderMemoryChart(memoryResults);
       renderMemoryExtraCharts(memoryResults);
+      if (typeof hideSkeleton === "function") hideSkeleton("memory");
     } else if (tabName === "surface") {
       renderSurface(lastPayload.parameters);
       renderHeatmapsAndWaterfall(lastPayload.parameters, lastResult);
@@ -433,6 +442,7 @@ async function loadTabData(tabName) {
     showToast(`${tabName}: ${error.message}`, "error");
     delete tabLoaded[tabName];
     if (tabName === "scenario-comparison" || tabName === "scenario-explorer") delete tabLoaded["_scenario"];
+    if (typeof showSkeleton === "function") showSkeleton(tabName); // keep skeleton on error
   } finally {
     if (statusPill) statusPill.textContent = "Ready";
   }
@@ -459,6 +469,15 @@ async function downloadEndpoint(url, payload, filename, contentType = "text/plai
   }
 }
 
+function flashExportBtn(btnId) {
+  const btn = document.getElementById(btnId);
+  if (!btn) return;
+  const orig = btn.innerHTML;
+  btn.innerHTML = '<i class="fa fa-circle-check me-2"></i>Downloaded!';
+  btn.classList.add("btn-export-ok");
+  setTimeout(() => { btn.innerHTML = orig; btn.classList.remove("btn-export-ok"); }, 2000);
+}
+
 async function downloadCsv() {
   const payload = lastPayload || buildPayload();
   try {
@@ -471,14 +490,11 @@ async function downloadCsv() {
     const blob = await response.blob();
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
-    link.href = url;
-    link.download = "fractional_hiv_simulation.csv";
-    link.click();
+    link.href = url; link.download = "fractional_hiv_simulation.csv"; link.click();
     URL.revokeObjectURL(url);
+    flashExportBtn("exportCsvBtn");
     showToast("CSV downloaded.", "success");
-  } catch (e) {
-    showToast(e.message, "error");
-  }
+  } catch (e) { showToast(e.message, "error"); }
 }
 
 function downloadParams() {
@@ -562,10 +578,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("downloadCsv")?.addEventListener("click", downloadCsv);
   document.getElementById("downloadParams")?.addEventListener("click", downloadParams);
   document.getElementById("exportCsvBtn")?.addEventListener("click", downloadCsv);
-  document.getElementById("exportJsonBtn")?.addEventListener("click", downloadParams);
-  document.getElementById("exportReportBtn")?.addEventListener("click", downloadServerReport);
-  document.getElementById("exportScenarioCsvBtn")?.addEventListener("click", downloadScenarioCsv);
-  document.getElementById("exportSensitivityCsvBtn")?.addEventListener("click", downloadSensitivityCsv);
+  document.getElementById("exportJsonBtn")?.addEventListener("click", () => { downloadParams(); flashExportBtn("exportJsonBtn"); });
+  document.getElementById("exportReportBtn")?.addEventListener("click", () => { downloadServerReport(); flashExportBtn("exportReportBtn"); });
+  document.getElementById("exportScenarioCsvBtn")?.addEventListener("click", () => { downloadScenarioCsv(); flashExportBtn("exportScenarioCsvBtn"); });
+  document.getElementById("exportSensitivityCsvBtn")?.addEventListener("click", () => { downloadSensitivityCsv(); flashExportBtn("exportSensitivityCsvBtn"); });
   document.getElementById("copyThesisTextBtn")?.addEventListener("click", copyThesisText);
 
   // Scenario preset buttons
