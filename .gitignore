@@ -9,6 +9,15 @@ dist/
 build/
 .eggs/
 
+# Keep vendored frontend build files needed in production
+!static/vendor/bootstrap/
+!static/vendor/bootstrap/5.3.3/
+!static/vendor/bootstrap/5.3.3/dist/
+!static/vendor/bootstrap/5.3.3/dist/css/
+!static/vendor/bootstrap/5.3.3/dist/css/bootstrap.min.css
+!static/vendor/bootstrap/5.3.3/dist/js/
+!static/vendor/bootstrap/5.3.3/dist/js/bootstrap.bundle.min.js
+
 # Virtual environments
 venv/
 .venv/
