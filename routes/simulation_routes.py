@@ -1,6 +1,7 @@
 import numpy as np
 from flask import Blueprint, jsonify, request
 
+from config import DOWNSAMPLE_TARGET
 from model.fractional_sita_model import sita_rhs
 from model.fractional_solver import fractional_abm_solver
 from model.reproduction_number import (
@@ -19,7 +20,16 @@ from model.validation import coerce_payload, validate_payload
 simulation_bp = Blueprint("simulation", __name__)
 
 
-def run_engine(payload):
+def _downsample(arr, target=DOWNSAMPLE_TARGET):
+    """Return at most `target` evenly-spaced elements from arr."""
+    n = len(arr)
+    if n <= target:
+        return arr
+    idx = np.round(np.linspace(0, n - 1, target)).astype(int)
+    return arr[idx]
+
+
+def run_engine(payload, downsample=True):
     errors = validate_payload(payload)
     if errors:
         return None, errors
@@ -43,6 +53,16 @@ def run_engine(payload):
     bounded_limit = float(params["Lambda"] / params["mu"]) if params["mu"] > 0 else None
     bounded_ok = bool(bounded_limit is None or np.nanmax(N) <= bounded_limit * 1.05)
 
+    # Downsample for browser transfer — keeps peak point
+    if downsample:
+        keep = np.round(np.linspace(0, len(t_grid) - 1, DOWNSAMPLE_TARGET)).astype(int)
+        if peak_index not in keep:
+            keep = np.sort(np.append(keep, peak_index))
+        t_out = t_grid[keep]
+        S_out, I_out, T_out, A_out, N_out = S[keep], I[keep], T[keep], A[keep], N[keep]
+    else:
+        t_out, S_out, I_out, T_out, A_out, N_out = t_grid, S, I, T, A, N
+
     result = {
         "status": "success",
         "r0": r0,
@@ -64,12 +84,12 @@ def run_engine(payload):
             "bounded_ok": bounded_ok,
         },
         "time_series": {
-            "time": t_grid.round(6).tolist(),
-            "S": S.round(6).tolist(),
-            "I": I.round(6).tolist(),
-            "T": T.round(6).tolist(),
-            "A": A.round(6).tolist(),
-            "N": N.round(6).tolist(),
+            "time": t_out.round(4).tolist(),
+            "S": S_out.round(4).tolist(),
+            "I": I_out.round(4).tolist(),
+            "T": T_out.round(4).tolist(),
+            "A": A_out.round(4).tolist(),
+            "N": N_out.round(4).tolist(),
         },
         "parameters": params,
         "initial_conditions": initial,
@@ -134,15 +154,14 @@ def r0_live():
 @simulation_bp.post("/api/scenario")
 def scenario_compare():
     payload = request.get_json(silent=True) or {}
+    # Default: only the 8 scenarios shown in the comparison tab buttons
     selected = payload.get("scenarios") or [
         "no_intervention",
         "awareness_only",
         "safer_behaviour",
         "testing_boost",
         "adherence_support",
-        "combined_moderate",
         "combined_intervention",
-        "strong_combined",
         "ordinary_model",
         "high_memory",
     ]
@@ -162,7 +181,7 @@ def scenario_compare():
         scenario_payload["parameters"].update(
             {k: v for k, v in SCENARIOS[key].items() if k in {"q", "u1", "u2", "u3", "u4"}}
         )
-        result, errors = run_engine(scenario_payload)
+        result, errors = run_engine(scenario_payload, downsample=True)
         if errors:
             return jsonify({"status": "error", "errors": errors}), 400
 
@@ -188,9 +207,7 @@ def scenario_compare():
             "final_treated": summary["final_treated"],
         }
         comparison["interpretation"] = scenario_interpretation(key, comparison)
-        comparisons.append(
-            comparison
-        )
+        comparisons.append(comparison)
         curves[key] = {
             "name": SCENARIOS[key]["name"],
             "time": result["time_series"]["time"],
