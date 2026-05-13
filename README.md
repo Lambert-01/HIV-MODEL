@@ -2,7 +2,7 @@
 
 A Flask-based fractional-order HIV SITA simulation dashboard for an Applied Mathematics final-year thesis.
 
-## Run
+## Run Locally
 
 ```powershell
 pip install -r requirements.txt
@@ -10,6 +10,17 @@ python app.py
 ```
 
 Open `http://127.0.0.1:5000/dashboard`.
+
+## Deploy to Render.com (Free Tier)
+
+This project is configured for easy deployment to Render.com:
+
+1. Fork or clone this repository.
+2. Sign up at [render.com](https://render.com).
+3. Create a new Web Service.
+4. Connect your GitHub repository.
+5. Render will automatically detect the `render.yaml` file and configure the service.
+6. The service will be available at your Render subdomain.
 
 ## Main Features
 
@@ -32,10 +43,8 @@ Open `http://127.0.0.1:5000/dashboard`.
 2. **Research Modules**: Parameters, interventions, R0/stability, baseline results, scenarios, phase analysis, memory effects, sensitivity, surfaces, heatmaps, and exports.
 3. **Thesis-Ready Interpretation**: Automatic stability text, scenario interpretation, and copyable results text.
 4. **Enhanced Documentation**: Mathematical formulas, API endpoints, and usage guidance.
-
-## Defense Notes
-
-All static assets (Bootstrap, Font Awesome, Google Fonts, Plotly) are now hosted locally in `static/vendor/` for offline use. The dashboard loads these local files directly from `templates/base.html`.
+5. **Offline Ready**: All static assets (Bootstrap, Font Awesome, Google Fonts, Plotly) are hosted locally in `static/vendor/` for offline use.
+6. **Deployment Ready**: Configured for free deployment on Render.com.
 
 ## Test
 
