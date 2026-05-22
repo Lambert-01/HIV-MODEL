@@ -946,10 +946,15 @@
 }
 
 .parameter-card-grid,
-.intervention-formula-grid {
+.intervention-formula-grid,
+.demo-step-grid {
   display: grid;
   gap: 12px;
   grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+
+.demo-step-grid {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
 .parameter-chip,

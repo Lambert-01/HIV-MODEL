@@ -842,75 +842,109 @@ This chapter presented the equivalent integral form, existence and uniqueness, p
 %% ============================================================
 
 \section{Research Design}
-This thesis uses a mathematical and computational research design. The mathematical part formulates and analyses a fractional-order SITA model. The computational part implements a numerical solver and an interactive dashboard to explore intervention scenarios and memory effects.
+This thesis uses a mathematical and computational research design. The mathematical component formulates and analyses the fractional-order SITA model as presented in Chapters~3 and~4. The computational component implements a fractional numerical solver and an interactive web-based dashboard to explore intervention scenarios, memory effects, sensitivity analysis, and epidemic trajectories.
+
+The research proceeds in two parallel streams. The analytical stream establishes the theoretical properties of the model: positivity, boundedness, disease-free equilibrium, basic reproduction number, and fractional stability. The computational stream translates these results into a working simulation environment that allows parameter exploration and visual verification of the analytical findings.
 
 \section{Model Development Procedure}
 The model development follows these steps:
 \begin{enumerate}
-  \item Define the SITA compartments.
-  \item Introduce social behaviour interventions.
-  \item Replace ordinary derivatives with Caputo fractional derivatives.
-  \item Derive the force of infection and transition terms.
-  \item Analyse positivity, boundedness, equilibrium, reproduction number, and stability.
-  \item Implement the numerical method and dashboard.
+  \item Define the four SITA compartments: susceptible $S(t)$, infected $I(t)$, treated $T(t)$, and AIDS-stage $A(t)$.
+  \item Introduce four social behaviour intervention functions $u_1, u_2, u_3, u_4 \in [0,1]$.
+  \item Replace ordinary derivatives with the Caputo fractional derivative of order $q$, $0 < q \leq 1$.
+  \item Derive the effective transmission rate $\beff$, force of infection $\lambda(t)$, effective treatment uptake $\taueff$, and effective AIDS progression rate $\rhoeff$.
+  \item Analyse positivity, boundedness, disease-free equilibrium, basic reproduction number $\Rzero$, and fractional-order local stability.
+  \item Implement the fractional Adams--Bashforth--Moulton predictor-corrector solver in Python.
+  \item Build the interactive Flask dashboard with API endpoints, Plotly visualisations, and export tools.
 \end{enumerate}
 
 \section{Fractional Numerical Scheme}
-The numerical solution of the fractional-order system is obtained using a predictor-corrector method, commonly known as the fractional Adams--Bashforth--Moulton method \citep{Diethelm2002,Diethelm2010}. This method is suitable for Caputo fractional differential equations.
+The numerical solution of the fractional-order SITA system is obtained using the fractional Adams--Bashforth--Moulton (ABM) predictor-corrector method \citep{Diethelm2002,Diethelm2010}. This method is well suited for Caputo fractional differential equations because it approximates the convolution integral that defines the Caputo derivative, thereby capturing the memory effect that all previous time steps contribute to the current state.
 
-For a general fractional system
+For a general Caputo fractional system
 \[
-\CaputoD{t}{q}y(t)=f(t,y(t)),\qquad y(0)=y_0,
+\CaputoD{t}{q}y(t)=f(t,y(t)),\qquad y(0)=y_0,\qquad 0<q\leq1,
 \]
-the integral form is
+the equivalent Volterra integral form is
 \[
-y(t)=y_0+\frac{1}{\Gamma(q)}\int_0^t (t-s)^{q-1}f(s,y(s))ds.
+y(t)=y_0+\frac{1}{\Gamma(q)}\int_0^t (t-s)^{q-1}f(s,y(s))\,ds.
 \]
-Let $t_n=nh$ for $n=0,1,\ldots,N$. A predictor value may be written as
+Let $t_n=nh$ for $n=0,1,\ldots,M$, where $h>0$ is the fixed step size.
+
+\subsection{Predictor Step (Adams--Bashforth)}
+The predictor approximation at step $n+1$ is
 \begin{equation}
-y_{n+1}^{p}=y_0+\frac{h^q}{\Gamma(q+1)}\sum_{j=0}^{n}b_{j,n+1}f(t_j,y_j),
+y_{n+1}^{P}=y_0+\frac{h^q}{\Gamma(q+1)}\sum_{j=0}^{n}b_{j,n+1}\,f(t_j,y_j),
+\label{eq:abm_predictor}
 \end{equation}
-where
+where the predictor weights are
 \begin{equation}
-b_{j,n+1}=(n+1-j)^q-(n-j)^q.
+b_{j,n+1}=(n+1-j)^q-(n-j)^q, \qquad j=0,1,\ldots,n.
+\label{eq:predictor_weights}
 \end{equation}
-The corrector step is expressed as
+
+\subsection{Corrector Step (Adams--Moulton)}
+The corrector step uses the predicted value $y_{n+1}^{P}$ to improve the approximation:
 \begin{equation}
-y_{n+1}=y_0+\frac{h^q}{\Gamma(q+2)}\left[f(t_{n+1},y_{n+1}^{p})+\sum_{j=0}^{n}a_{j,n+1}f(t_j,y_j)\right],
+y_{n+1}=y_0+\frac{h^q}{\Gamma(q+2)}\left[f\bigl(t_{n+1},y_{n+1}^{P}\bigr)+\sum_{j=0}^{n}a_{j,n+1}\,f(t_j,y_j)\right],
+\label{eq:abm_corrector}
 \end{equation}
-where $a_{j,n+1}$ are correction weights derived from the fractional memory kernel. This method captures the fact that all previous time steps contribute to the current state.
+where the corrector weights $a_{j,n+1}$ are derived from the fractional memory kernel:
+\begin{equation}
+a_{j,n+1}=
+\begin{cases}
+(n-1)^{q+1}-(n-1-q)\,n^q, & j=0,\\[4pt]
+(n-j+2)^{q+1}+(n-j)^{q+1}-2(n-j+1)^{q+1}, & 1\leq j\leq n,\\[4pt]
+1, & j=n+1.
+\end{cases}
+\label{eq:corrector_weights}
+\end{equation}
+
+\begin{remarkbox}[title={Numerical Accuracy Note}]
+The ABM method provides improved accuracy over a simple fractional Euler scheme. The order of convergence depends on the step size $h$, the fractional order $q$, and the smoothness of the solution. For the simulations in this thesis, a default step size of $h=0.2$ years is used, which balances computational efficiency with numerical accuracy. Smaller step sizes improve accuracy but increase computation time due to the $O(M^2)$ memory accumulation in the corrector weights. Non-negativity constraints are applied at each step to ensure biological consistency.
+\end{remarkbox}
 
 \section{Simulation Scenarios}
+Eight simulation scenarios are defined to examine the effect of social behaviour interventions and fractional memory on HIV dynamics. Each scenario specifies values for the intervention controls $u_1, u_2, u_3, u_4$ and the fractional order $q$. The biological parameters $\Lambda, \mu, \beta_0, \tau, \delta, \rho, \eta, d$ are held at their baseline values across all scenarios.
+
 \begin{scenariobox}[title={Scenario 1 --- No Intervention}]
-$u_1=u_2=u_3=u_4=0$. This represents the baseline fractional model without behavioural interventions.
+$u_1=u_2=u_3=u_4=0$, $q=0.95$. This represents the baseline fractional model without any social behaviour intervention. It provides the reference trajectory against which all other scenarios are compared.
 \end{scenariobox}
 
-\begin{scenariobox}[title={Scenario 2 --- Awareness Intervention}]
-$u_1>0$ while other interventions remain low. This examines the effect of awareness and education on transmission.
+\begin{scenariobox}[title={Scenario 2 --- Awareness Only}]
+$u_1=0.7$, $u_2=u_3=u_4=0$, $q=0.95$. Awareness and education reduce the effective transmission rate to $\beff=\beta_0(1-0.7)=0.3\beta_0$. This examines the isolated effect of awareness campaigns on HIV transmission.
 \end{scenariobox}
 
-\begin{scenariobox}[title={Scenario 3 --- Safer Sexual Behaviour Intervention}]
-$u_2>0$. This examines the effect of condom use and safer behaviour on transmission.
+\begin{scenariobox}[title={Scenario 3 --- Safer Sexual Behaviour Only}]
+$u_2=0.7$, $u_1=u_3=u_4=0$, $q=0.95$. Safer behaviour reduces the effective transmission rate to $\beff=\beta_0(1-0.7)=0.3\beta_0$. This examines the isolated effect of condom use and safer sexual behaviour.
 \end{scenariobox}
 
-\begin{scenariobox}[title={Scenario 4 --- Testing and Treatment-Seeking Intervention}]
-$u_3>0$. This examines how improved testing and treatment-seeking move individuals from $I$ to $T$.
+\begin{scenariobox}[title={Scenario 4 --- Testing and Treatment-Seeking Only}]
+$u_3=0.7$, $u_1=u_2=u_4=0$, $q=0.95$. Testing intervention increases the effective treatment uptake rate to $\taueff=\tau(1+0.7)=1.7\tau$. This examines how improved testing and treatment-seeking accelerates movement from $I$ to $T$.
 \end{scenariobox}
 
-\begin{scenariobox}[title={Scenario 5 --- Treatment Adherence Intervention}]
-$u_4>0$. This examines the effect of adherence support on reducing progression from treatment to AIDS.
+\begin{scenariobox}[title={Scenario 5 --- Treatment Adherence Only}]
+$u_4=0.8$, $u_1=u_2=u_3=0$, $q=0.95$. Adherence support reduces the effective AIDS progression rate to $\rhoeff=\rho(1-0.8)=0.2\rho$. This examines the isolated effect of adherence on reducing progression from treatment to AIDS.
 \end{scenariobox}
 
 \begin{scenariobox}[title={Scenario 6 --- Combined Intervention}]
-$u_1,u_2,u_3,u_4>0$. This represents a combined social behaviour intervention strategy.
+$u_1=0.7$, $u_2=0.7$, $u_3=0.6$, $u_4=0.8$, $q=0.95$. All four interventions are applied simultaneously. This represents a comprehensive social behaviour strategy and is expected to produce the strongest reduction in $\Rzero$.
+\end{scenariobox}
+
+\begin{scenariobox}[title={Scenario 7 --- Ordinary Model ($q=1$)}]
+$u_1=u_2=u_3=u_4=0.5$, $q=1.00$. Setting $q=1$ removes the fractional memory effect and reduces the model to a classical ordinary differential equation system. This scenario allows direct comparison between the fractional and ordinary models under the same intervention levels.
+\end{scenariobox}
+
+\begin{scenariobox}[title={Scenario 8 --- High Memory Effect ($q=0.75$)}]
+$u_1=u_2=u_3=u_4=0.4$, $q=0.75$. A lower fractional order introduces stronger memory effects. This scenario examines how a longer memory horizon influences the epidemic trajectory compared with the default $q=0.95$.
 \end{scenariobox}
 
 \section{Fractional-Order Comparison}
-The simulations compare different values of $q$, such as
+To isolate the effect of the fractional order on epidemic dynamics, the model is simulated at four values of $q$ under identical initial conditions and parameter values:
 \[
 q=1.00,\quad q=0.95,\quad q=0.85,\quad q=0.75.
 \]
-This shows how memory effects influence HIV transmission dynamics.
+When $q=1$, the model reduces to the classical ordinary differential equation system and the Mittag-Leffler function $E_q(-\mu t^q)$ reduces to the exponential $e^{-\mu t}$. As $q$ decreases below 1, the power-law memory kernel in the Caputo derivative becomes more pronounced, slowing the rate of change and producing trajectories that differ from the ordinary model. The memory comparison is visualised in the dashboard Memory Effect tab, which plots $I(t)$, $T(t)$, $A(t)$, and the I--T phase trajectory for all four values of $q$ simultaneously, together with a Mittag-Leffler versus exponential decay comparison chart.
 
 \section{Python Dashboard Architecture}
 The dashboard is developed using Python, Flask, HTML, CSS, JavaScript, and Plotly. It contains the following layers:

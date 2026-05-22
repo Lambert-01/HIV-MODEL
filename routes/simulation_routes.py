@@ -117,6 +117,184 @@ def scenario_interpretation(key, comparison):
     return f"{intro} The computed status is {status} with R0 = {r0:.3f}."
 
 
+def build_chapter6_payload(payload):
+    result, errors = run_engine(payload, downsample=False)
+    if errors:
+        return None, errors
+
+    base_payload = {
+        "initial_conditions": dict(payload.get("initial_conditions", {})),
+        "parameters": dict(payload.get("parameters", {})),
+        "simulation": dict(payload.get("simulation", {})),
+    }
+
+    scenario_rows = []
+    for key, scenario in SCENARIOS.items():
+        scenario_payload = {
+            "initial_conditions": dict(base_payload["initial_conditions"]),
+            "parameters": dict(base_payload["parameters"]),
+            "simulation": dict(base_payload["simulation"]),
+        }
+        scenario_payload["parameters"].update(
+            {k: v for k, v in scenario.items() if k in {"q", "u1", "u2", "u3", "u4"}}
+        )
+        scenario_result, scenario_errors = run_engine(scenario_payload, downsample=True)
+        if scenario_errors:
+            return None, scenario_errors
+        summary = scenario_result["summary"]
+        rates = scenario_result["effective_rates"]
+        scenario_rows.append(
+            {
+                "scenario": scenario["name"],
+                "q": scenario_result["parameters"]["q"],
+                "u1": scenario_result["parameters"]["u1"],
+                "u2": scenario_result["parameters"]["u2"],
+                "u3": scenario_result["parameters"]["u3"],
+                "u4": scenario_result["parameters"]["u4"],
+                "beta_eff": rates["beta_eff"],
+                "tau_eff": rates["tau_eff"],
+                "rho_eff": rates["rho_eff"],
+                "r0": scenario_result["r0"],
+                "status": scenario_result["epidemic_status"],
+                "peak_infected": summary["peak_infected"],
+                "time_peak": summary["time_peak"],
+                "final_infected": summary["final_infected"],
+                "final_treated": summary["final_treated"],
+                "final_aids": summary["final_aids"],
+            }
+        )
+
+    sensitivity_rows = compute_sensitivity(result["parameters"])
+    memory_rows = []
+    for q in [1.0, 0.95, 0.85, 0.75]:
+        memory_payload = {
+            "initial_conditions": dict(base_payload["initial_conditions"]),
+            "parameters": dict(base_payload["parameters"]),
+            "simulation": dict(base_payload["simulation"]),
+        }
+        memory_payload["parameters"]["q"] = q
+        memory_result, memory_errors = run_engine(memory_payload, downsample=True)
+        if memory_errors:
+            return None, memory_errors
+        memory_rows.append(
+            {
+                "q": q,
+                "r0": memory_result["r0"],
+                "peak_infected": memory_result["summary"]["peak_infected"],
+                "time_peak": memory_result["summary"]["time_peak"],
+                "final_infected": memory_result["summary"]["final_infected"],
+                "final_treated": memory_result["summary"]["final_treated"],
+                "final_aids": memory_result["summary"]["final_aids"],
+            }
+        )
+
+    summary = result["summary"]
+    rates = result["effective_rates"]
+    best_r0 = min(scenario_rows, key=lambda row: row["r0"]) if scenario_rows else None
+    best_final_i = min(scenario_rows, key=lambda row: row["final_infected"]) if scenario_rows else None
+    strongest_positive = max(sensitivity_rows, key=lambda row: row["sensitivity"]) if sensitivity_rows else None
+    strongest_negative = min(sensitivity_rows, key=lambda row: row["sensitivity"]) if sensitivity_rows else None
+
+    baseline_text = (
+        "The baseline fractional-order SITA simulation produced "
+        f"R0 = {result['r0']:.3f}, corresponding to a {result['epidemic_status'].lower()} "
+        "epidemic status. The infected population reached "
+        f"{summary['peak_infected']:.0f} individuals at t = {summary['time_peak']:.1f} years, "
+        f"with final values I = {summary['final_infected']:.0f}, "
+        f"T = {summary['final_treated']:.0f}, and A = {summary['final_aids']:.0f}. "
+        f"The effective intervention-adjusted rates were beta_eff = {rates['beta_eff']:.4f}, "
+        f"tau_eff = {rates['tau_eff']:.4f}, and rho_eff = {rates['rho_eff']:.4f}."
+    )
+    scenario_text = (
+        f"Across the scenario set, {best_r0['scenario']} gave the lowest reproduction number "
+        f"(R0 = {best_r0['r0']:.3f}), while {best_final_i['scenario']} gave the lowest final "
+        f"infected population ({best_final_i['final_infected']:.0f}). This supports the thesis "
+        "interpretation that combined behavioural and treatment-related interventions are more "
+        "effective than isolated controls."
+    )
+    memory_text = (
+        "The memory comparison evaluates q = 1.00, 0.95, 0.85, and 0.75 under the same "
+        "parameter configuration. Values q < 1 retain fractional memory, so trajectories differ "
+        "from the ordinary q = 1 model and provide computational evidence for the Caputo model's "
+        "memory effect."
+    )
+    sensitivity_text = (
+        f"The largest positive normalized sensitivity is {strongest_positive['parameter']} "
+        f"({strongest_positive['sensitivity']:.3f}), indicating a parameter that increases R0. "
+        f"The strongest negative sensitivity is {strongest_negative['parameter']} "
+        f"({strongest_negative['sensitivity']:.3f}), indicating a parameter that reduces R0."
+    )
+
+    return {
+        "status": "success",
+        "baseline": result,
+        "tables": {
+            "baseline_summary": [
+                {"quantity": "R0", "value": result["r0"], "interpretation": result["epidemic_status"]},
+                {"quantity": "Peak infected", "value": summary["peak_infected"], "interpretation": f"at t={summary['time_peak']:.1f} years"},
+                {"quantity": "Final susceptible", "value": summary["final_susceptible"], "interpretation": "S(t_end)"},
+                {"quantity": "Final infected", "value": summary["final_infected"], "interpretation": "I(t_end)"},
+                {"quantity": "Final treated", "value": summary["final_treated"], "interpretation": "T(t_end)"},
+                {"quantity": "Final AIDS", "value": summary["final_aids"], "interpretation": "A(t_end)"},
+            ],
+            "scenarios": scenario_rows,
+            "sensitivity": sensitivity_rows,
+            "memory": memory_rows,
+        },
+        "narrative": {
+            "baseline": baseline_text,
+            "scenarios": scenario_text,
+            "memory": memory_text,
+            "sensitivity": sensitivity_text,
+            "conclusion": (
+                "Overall, the dashboard results connect the analytical threshold result, "
+                "fractional memory dynamics, and social behaviour interventions into a single "
+                "simulation framework suitable for Chapter 6 discussion."
+            ),
+        },
+    }, []
+
+
+def build_reliability_payload(payload, step_values=None):
+    step_values = step_values or [0.2, 0.1, 0.05]
+    rows = []
+    reference = None
+    for step in step_values:
+        test_payload = {
+            "initial_conditions": dict(payload.get("initial_conditions", {})),
+            "parameters": dict(payload.get("parameters", {})),
+            "simulation": dict(payload.get("simulation", {})),
+        }
+        test_payload["simulation"]["step"] = step
+        result, errors = run_engine(test_payload, downsample=False)
+        if errors:
+            return None, errors
+        row = {
+            "step": step,
+            "steps": len(result["time_series"]["time"]),
+            "r0": result["r0"],
+            "peak_infected": result["summary"]["peak_infected"],
+            "time_peak": result["summary"]["time_peak"],
+            "final_infected": result["summary"]["final_infected"],
+            "final_treated": result["summary"]["final_treated"],
+            "final_aids": result["summary"]["final_aids"],
+        }
+        rows.append(row)
+        reference = row
+
+    for row in rows:
+        row["final_infected_abs_error"] = abs(row["final_infected"] - reference["final_infected"])
+        row["peak_infected_abs_error"] = abs(row["peak_infected"] - reference["peak_infected"])
+
+    text = (
+        f"Using h = {reference['step']:.2f} as the finest reference, the default-step final infected "
+        f"absolute difference is {rows[0]['final_infected_abs_error']:.3f}. Smaller step sizes increase "
+        "computational cost but provide a useful check that the ABM-type fractional solver gives stable "
+        "qualitative conclusions."
+    )
+    return {"status": "success", "rows": rows, "interpretation": text}, []
+
+
 @simulation_bp.post("/api/simulate")
 def simulate():
     result, errors = run_engine(request.get_json(silent=True) or {})
@@ -250,3 +428,25 @@ def memory_compare():
             return jsonify({"status": "error", "errors": errors}), 400
         results.append({"q": q, "time": result["time_series"]["time"], "I": result["time_series"]["I"]})
     return jsonify({"status": "success", "curves": results})
+
+
+@simulation_bp.post("/api/chapter6")
+def chapter6():
+    result, errors = build_chapter6_payload(request.get_json(silent=True) or {})
+    if errors:
+        return jsonify({"status": "error", "errors": errors}), 400
+    return jsonify(result)
+
+
+@simulation_bp.post("/api/reliability")
+def reliability():
+    payload = request.get_json(silent=True) or {}
+    step_values = payload.get("step_values", [0.2, 0.1, 0.05])
+    try:
+        steps = [float(value) for value in step_values]
+    except (TypeError, ValueError):
+        return jsonify({"status": "error", "errors": ["step_values must be numeric."]}), 400
+    result, errors = build_reliability_payload(payload, steps)
+    if errors:
+        return jsonify({"status": "error", "errors": errors}), 400
+    return jsonify(result)

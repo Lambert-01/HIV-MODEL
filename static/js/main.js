@@ -83,11 +83,12 @@ document.addEventListener("click", (event) => {
       "scenario-explorer": "Scenario Explorer", "scenario-comparison": "Scenario Comparison",
       phase: "Phase Analysis", sensitivity: "Sensitivity",
       memory: "Memory Effect", surface: "Surfaces & Heatmaps",
-      export: "Export", overview: "Overview", "about-thesis": "About Thesis"
+      export: "Export", chapter6: "Chapter 6 Results", reliability: "Numerical Reliability",
+      demo: "Defense Demo", overview: "Overview", "about-thesis": "About Thesis"
     };
     document.title = `FracHIV-SITA Lab | ${titleMap[tab.dataset.tab] || tab.dataset.tab}`;
     // Lazy-load secondary tab data on first open
-    const lazyTabs = ["scenario-comparison", "scenario-explorer", "sensitivity", "memory", "surface", "phase"];
+    const lazyTabs = ["scenario-comparison", "scenario-explorer", "sensitivity", "memory", "surface", "phase", "chapter6", "reliability"];
     if (lazyTabs.includes(tab.dataset.tab) && typeof loadTabData === "function") {
       loadTabData(tab.dataset.tab);
     }

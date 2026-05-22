@@ -12,6 +12,8 @@ let scenarioPresets = {};
 let lastPayload = null;
 let lastResult = null;
 let lastScenarioData = null;
+let lastChapter6Data = null;
+let lastReliabilityData = null;
 
 function val(id) { return Number(document.getElementById(id).value); }
 
@@ -334,6 +336,74 @@ function renderSensitivityRank(values) {
    }).join("");
  }
 
+function formatNumber(value, digits = 3) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return value;
+  return Math.abs(number) >= 100 ? number.toFixed(1) : number.toFixed(digits);
+}
+
+function renderGenericTable(tableId, rows, columns) {
+  const table = document.getElementById(tableId);
+  if (!table) return;
+  if (!rows?.length) {
+    table.innerHTML = `<tbody><tr><td class="text-center text-muted">No rows available</td></tr></tbody>`;
+    return;
+  }
+  table.innerHTML = `
+    <thead><tr>${columns.map((col) => `<th>${col.label}</th>`).join("")}</tr></thead>
+    <tbody>
+      ${rows.map((row) => `
+        <tr>${columns.map((col) => `<td>${col.format ? col.format(row[col.key], row) : formatNumber(row[col.key])}</td>`).join("")}</tr>
+      `).join("")}
+    </tbody>`;
+}
+
+function renderChapter6(data) {
+  lastChapter6Data = data;
+  const set = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
+  set("chapter6BaselineText", data.narrative.baseline);
+  set("chapter6ScenarioText", data.narrative.scenarios);
+  set("chapter6MemoryText", data.narrative.memory);
+  set("chapter6SensitivityText", data.narrative.sensitivity);
+
+  renderGenericTable("chapter6BaselineTable", data.tables.baseline_summary, [
+    { key: "quantity", label: "Quantity", format: (v) => v },
+    { key: "value", label: "Value" },
+    { key: "interpretation", label: "Interpretation", format: (v) => v }
+  ]);
+  renderGenericTable("chapter6ScenarioTable", data.tables.scenarios, [
+    { key: "scenario", label: "Scenario", format: (v) => v },
+    { key: "q", label: "q", format: (v) => Number(v).toFixed(2) },
+    { key: "r0", label: "R0" },
+    { key: "peak_infected", label: "Peak I", format: (v) => Number(v).toFixed(0) },
+    { key: "final_infected", label: "Final I", format: (v) => Number(v).toFixed(0) },
+    { key: "final_treated", label: "Final T", format: (v) => Number(v).toFixed(0) },
+    { key: "final_aids", label: "Final A", format: (v) => Number(v).toFixed(0) }
+  ]);
+  renderGenericTable("chapter6MemoryTable", data.tables.memory, [
+    { key: "q", label: "q", format: (v) => Number(v).toFixed(2) },
+    { key: "peak_infected", label: "Peak I", format: (v) => Number(v).toFixed(0) },
+    { key: "time_peak", label: "Time Peak" },
+    { key: "final_infected", label: "Final I", format: (v) => Number(v).toFixed(0) },
+    { key: "final_treated", label: "Final T", format: (v) => Number(v).toFixed(0) },
+    { key: "final_aids", label: "Final A", format: (v) => Number(v).toFixed(0) }
+  ]);
+}
+
+function renderReliability(data) {
+  lastReliabilityData = data;
+  const text = document.getElementById("reliabilityText");
+  if (text) text.textContent = data.interpretation;
+  renderGenericTable("reliabilityTable", data.rows, [
+    { key: "step", label: "h", format: (v) => Number(v).toFixed(2) },
+    { key: "steps", label: "Grid", format: (v) => Number(v).toFixed(0) },
+    { key: "peak_infected", label: "Peak I", format: (v) => Number(v).toFixed(1) },
+    { key: "final_infected", label: "Final I", format: (v) => Number(v).toFixed(1) },
+    { key: "final_infected_abs_error", label: "|Delta Final I|" }
+  ]);
+  if (typeof renderReliabilityChart === "function") renderReliabilityChart(data.rows);
+}
+
 // Track which tabs have been loaded for the current simulation
 const tabLoaded = {};
 
@@ -429,6 +499,14 @@ async function loadTabData(tabName) {
     } else if (tabName === "surface") {
       renderSurface(lastPayload.parameters);
       renderHeatmapsAndWaterfall(lastPayload.parameters, lastResult);
+    } else if (tabName === "chapter6") {
+      const chapter6 = await postJson("/api/chapter6", lastPayload);
+      renderChapter6(chapter6);
+      if (typeof hideSkeleton === "function") hideSkeleton("chapter6");
+    } else if (tabName === "reliability") {
+      const reliability = await postJson("/api/reliability", { ...lastPayload, step_values: [0.2, 0.1, 0.05] });
+      renderReliability(reliability);
+      if (typeof hideSkeleton === "function") hideSkeleton("reliability");
     } else if (tabName === "phase") {
       if (lastResult) {
         renderVectorFieldPhase("phaseITChart", lastResult, lastResult.parameters);
@@ -543,6 +621,18 @@ function downloadSensitivityCsv() {
   downloadEndpoint("/api/export/sensitivity.csv", lastPayload || buildPayload(), "fractional_hiv_sensitivity.csv", "text/csv");
 }
 
+function downloadChapter6Text() {
+  downloadEndpoint("/api/export/chapter6.txt", lastPayload || buildPayload(), "chapter6_results_text.txt", "text/plain");
+}
+
+function downloadThesisTables() {
+  downloadEndpoint("/api/export/thesis-tables.csv", lastPayload || buildPayload(), "chapter6_thesis_tables.csv", "text/csv");
+}
+
+function downloadReliabilityCsv() {
+  downloadEndpoint("/api/export/reliability.csv", { ...(lastPayload || buildPayload()), step_values: [0.2, 0.1, 0.05] }, "numerical_reliability.csv", "text/csv");
+}
+
 async function copyThesisText() {
   const text = document.getElementById("thesisTextBox")?.textContent || "";
   if (!text || text.includes("Run simulation")) {
@@ -583,6 +673,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("exportScenarioCsvBtn")?.addEventListener("click", () => { downloadScenarioCsv(); flashExportBtn("exportScenarioCsvBtn"); });
   document.getElementById("exportSensitivityCsvBtn")?.addEventListener("click", () => { downloadSensitivityCsv(); flashExportBtn("exportSensitivityCsvBtn"); });
   document.getElementById("copyThesisTextBtn")?.addEventListener("click", copyThesisText);
+  document.getElementById("downloadChapter6Text")?.addEventListener("click", downloadChapter6Text);
+  document.getElementById("downloadThesisTables")?.addEventListener("click", downloadThesisTables);
+  document.getElementById("downloadReliabilityCsv")?.addEventListener("click", downloadReliabilityCsv);
 
   // Scenario preset buttons
   document.querySelectorAll(".btn-preset").forEach((btn) => {

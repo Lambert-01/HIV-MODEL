@@ -626,6 +626,35 @@ function renderMittagLefflerChart(params) {
   }), plotConfig);
 }
 
+function renderReliabilityChart(rows) {
+  if (!document.getElementById("reliabilityChart")) return;
+  const x = rows.map((row) => `h=${Number(row.step).toFixed(2)}`);
+  safePlotlyReact("reliabilityChart", [
+    {
+      x,
+      y: rows.map((row) => row.final_infected),
+      name: "Final infected",
+      type: "bar",
+      marker: { color: "#ef476f" },
+      text: rows.map((row) => Number(row.final_infected).toFixed(1)),
+      textposition: "outside"
+    },
+    {
+      x,
+      y: rows.map((row) => row.peak_infected),
+      name: "Peak infected",
+      type: "bar",
+      marker: { color: "#ffd166" },
+      text: rows.map((row) => Number(row.peak_infected).toFixed(1)),
+      textposition: "outside"
+    }
+  ], layout({
+    barmode: "group",
+    yaxis: { ...plotLayout.yaxis, title: "Population" },
+    xaxis: { ...plotLayout.xaxis, title: "Time step" }
+  }), plotConfig);
+}
+
 function renderSurface(params) {
   const axis = Array.from({ length: 21 }, (_, i) => i / 20);
   const z = axis.map((u2) => axis.map((u1) => {

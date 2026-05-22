@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <!-- Fractional Order — always open, most important -->>
+    <!-- Fractional Order - always open, most important -->
     <div class="ctrl-section open">
       <div class="ctrl-section-title" data-accordion>
         <span><i class="fa fa-infinity me-1"></i>Fractional Order</span>
@@ -222,6 +222,9 @@
       </div>
 
       <button class="tab-btn" data-tab="export"><i class="fa fa-file-export me-1"></i>Export</button>
+      <button class="tab-btn" data-tab="chapter6"><i class="fa fa-file-lines me-1"></i>Chapter 6</button>
+      <button class="tab-btn" data-tab="reliability"><i class="fa fa-ruler-combined me-1"></i>Reliability</button>
+      <button class="tab-btn" data-tab="demo"><i class="fa fa-person-chalkboard me-1"></i>Defense Demo</button>
       <button class="tab-btn" data-tab="overview"><i class="fa fa-circle-info me-1"></i>Overview</button>
       <button class="tab-btn" data-tab="about-thesis"><i class="fa fa-graduation-cap me-1"></i>Thesis</button>
     </div>
@@ -645,6 +648,87 @@
       <div class="chart-card mt-3">
         <div class="chart-card-title"><i class="fa fa-pen me-2"></i>Generated Thesis Interpretation</div>
         <div class="p-3 text-muted" id="thesisTextBox">Run simulation to generate thesis-ready text.</div>
+      </div>
+    </div>
+
+    <!-- ── TAB: CHAPTER 6 RESULTS ── -->
+    <div class="tab-panel" id="tab-chapter6">
+      <div class="parameter-hero mb-3">
+        <div>
+          <div class="eyebrow-label"><i class="fa fa-file-lines me-1"></i>Thesis Writing Support</div>
+          <h5>Chapter 6 Results Generator</h5>
+          <p>Generates baseline, scenario, memory-effect, and sensitivity text from the current simulation settings.</p>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+          <button class="btn-secondary-ctrl" id="downloadChapter6Text"><i class="fa fa-download me-2"></i>Text</button>
+          <button class="btn-secondary-ctrl" id="downloadThesisTables"><i class="fa fa-table me-2"></i>Tables</button>
+        </div>
+      </div>
+      <div id="tab-chapter6-skeleton" class="skeleton-wrap">
+        <div class="skeleton-line" style="height:180px"></div>
+        <div class="skeleton-line mt-3" style="height:260px"></div>
+      </div>
+      <div id="tab-chapter6-content" style="display:none">
+        <div class="row g-3">
+          <div class="col-lg-6"><div class="overview-card h-100"><h5>Baseline Simulation</h5><p id="chapter6BaselineText"></p></div></div>
+          <div class="col-lg-6"><div class="overview-card h-100"><h5>Scenario Comparison</h5><p id="chapter6ScenarioText"></p></div></div>
+          <div class="col-lg-6"><div class="overview-card h-100"><h5>Memory Effect</h5><p id="chapter6MemoryText"></p></div></div>
+          <div class="col-lg-6"><div class="overview-card h-100"><h5>Sensitivity Analysis</h5><p id="chapter6SensitivityText"></p></div></div>
+        </div>
+        <div class="chart-card mt-3">
+          <div class="chart-card-title"><i class="fa fa-table me-2"></i>Baseline Summary Table</div>
+          <div class="table-responsive p-2"><table class="sci-table" id="chapter6BaselineTable"></table></div>
+        </div>
+        <div class="chart-card mt-3">
+          <div class="chart-card-title"><i class="fa fa-layer-group me-2"></i>Scenario Table for Thesis</div>
+          <div class="table-responsive p-2"><table class="sci-table" id="chapter6ScenarioTable"></table></div>
+        </div>
+        <div class="chart-card mt-3">
+          <div class="chart-card-title"><i class="fa fa-wave-square me-2"></i>Memory Comparison Table</div>
+          <div class="table-responsive p-2"><table class="sci-table" id="chapter6MemoryTable"></table></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: NUMERICAL RELIABILITY ── -->
+    <div class="tab-panel" id="tab-reliability">
+      <div class="parameter-hero mb-3">
+        <div>
+          <div class="eyebrow-label"><i class="fa fa-ruler-combined me-1"></i>Numerical Method Check</div>
+          <h5>Step-Size Reliability Comparison</h5>
+          <p>Compares the ABM-type fractional solver using h = 0.20, 0.10, and 0.05 to support the methodology chapter.</p>
+        </div>
+        <button class="btn-secondary-ctrl" id="downloadReliabilityCsv"><i class="fa fa-download me-2"></i>CSV</button>
+      </div>
+      <div id="tab-reliability-skeleton" class="skeleton-wrap">
+        <div class="skeleton-line" style="height:300px"></div>
+      </div>
+      <div id="tab-reliability-content" style="display:none">
+        <div class="memory-info-bar mb-3" id="reliabilityText">Run simulation to compare step sizes.</div>
+        <div class="row g-3">
+          <div class="col-lg-7"><div class="chart-card h-100"><div class="chart-card-title">Final Outcomes by Step Size</div><div id="reliabilityChart" class="chart-body"></div></div></div>
+          <div class="col-lg-5"><div class="chart-card h-100"><div class="chart-card-title">Reliability Table</div><div class="table-responsive p-2"><table class="sci-table" id="reliabilityTable"></table></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: DEFENSE DEMO ── -->
+    <div class="tab-panel" id="tab-demo">
+      <div class="parameter-hero mb-3">
+        <div>
+          <div class="eyebrow-label"><i class="fa fa-person-chalkboard me-1"></i>Presentation Flow</div>
+          <h5>Defense Demo Mode</h5>
+          <p>A compact walkthrough for explaining the problem, mathematics, simulation, interventions, and conclusion.</p>
+        </div>
+        <div class="parameter-hero-badge">Use during presentation</div>
+      </div>
+      <div class="demo-step-grid">
+        <div class="overview-card"><div class="ov-icon"><i class="fa fa-circle-question"></i></div><h5>1. Problem</h5><p>HIV transmission is shaped by biology, social behaviour, testing, treatment uptake, and adherence.</p></div>
+        <div class="overview-card"><div class="ov-icon icon-gold"><i class="fa fa-infinity"></i></div><h5>2. Fractional Model</h5><p>The Caputo derivative introduces memory, so past behaviour and treatment patterns affect present dynamics.</p></div>
+        <div class="overview-card"><div class="ov-icon icon-red"><i class="fa fa-chart-simple"></i></div><h5>3. Threshold</h5><p>R0 summarizes whether the selected parameters imply control, threshold behaviour, or persistence.</p></div>
+        <div class="overview-card"><div class="ov-icon icon-green"><i class="fa fa-shield-halved"></i></div><h5>4. Interventions</h5><p>u1 and u2 reduce transmission, u3 increases treatment uptake, and u4 reduces AIDS progression.</p></div>
+        <div class="overview-card"><div class="ov-icon"><i class="fa fa-wave-square"></i></div><h5>5. Memory Effect</h5><p>Comparing q values shows how fractional memory changes infected, treated, and AIDS trajectories.</p></div>
+        <div class="overview-card"><div class="ov-icon icon-gold"><i class="fa fa-check"></i></div><h5>6. Conclusion</h5><p>The dashboard connects mathematical analysis with computational evidence for thesis discussion.</p></div>
       </div>
     </div>
 

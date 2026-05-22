@@ -4,6 +4,8 @@ import pandas as pd
 from flask import Blueprint, Response, jsonify, request
 
 from model.sensitivity import compute_sensitivity
+from routes.simulation_routes import build_chapter6_payload
+from routes.simulation_routes import build_reliability_payload
 from routes.simulation_routes import scenario_compare
 from routes.simulation_routes import run_engine
 
@@ -115,4 +117,78 @@ def export_report():
         "\n".join(lines),
         mimetype="text/plain",
         headers={"Content-Disposition": "attachment; filename=fractional_hiv_report.txt"},
+    )
+
+
+@export_bp.post("/api/export/chapter6.txt")
+def export_chapter6_text():
+    result, errors = build_chapter6_payload(request.get_json(silent=True) or {})
+    if errors:
+        return jsonify({"status": "error", "errors": errors}), 400
+
+    narrative = result["narrative"]
+    lines = [
+        "Chapter 6 Draft Results Text",
+        "=" * 28,
+        "",
+        "Baseline simulation",
+        narrative["baseline"],
+        "",
+        "Scenario comparison",
+        narrative["scenarios"],
+        "",
+        "Memory effect",
+        narrative["memory"],
+        "",
+        "Sensitivity analysis",
+        narrative["sensitivity"],
+        "",
+        "Conclusion",
+        narrative["conclusion"],
+    ]
+    return Response(
+        "\n\n".join(lines),
+        mimetype="text/plain",
+        headers={"Content-Disposition": "attachment; filename=chapter6_results_text.txt"},
+    )
+
+
+@export_bp.post("/api/export/thesis-tables.csv")
+def export_thesis_tables_csv():
+    result, errors = build_chapter6_payload(request.get_json(silent=True) or {})
+    if errors:
+        return jsonify({"status": "error", "errors": errors}), 400
+
+    buffer = io.StringIO()
+    for name, rows in result["tables"].items():
+        buffer.write(f"[{name}]\n")
+        pd.DataFrame(rows).to_csv(buffer, index=False)
+        buffer.write("\n")
+
+    return Response(
+        buffer.getvalue(),
+        mimetype="text/csv",
+        headers={"Content-Disposition": "attachment; filename=chapter6_thesis_tables.csv"},
+    )
+
+
+@export_bp.post("/api/export/reliability.csv")
+def export_reliability_csv():
+    payload = request.get_json(silent=True) or {}
+    step_values = payload.get("step_values", [0.2, 0.1, 0.05])
+    try:
+        steps = [float(value) for value in step_values]
+    except (TypeError, ValueError):
+        return jsonify({"status": "error", "errors": ["step_values must be numeric."]}), 400
+
+    result, errors = build_reliability_payload(payload, steps)
+    if errors:
+        return jsonify({"status": "error", "errors": errors}), 400
+
+    buffer = io.StringIO()
+    pd.DataFrame(result["rows"]).to_csv(buffer, index=False)
+    return Response(
+        buffer.getvalue(),
+        mimetype="text/csv",
+        headers={"Content-Disposition": "attachment; filename=numerical_reliability.csv"},
     )
