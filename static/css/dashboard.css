@@ -957,6 +957,59 @@
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
+.chapter6-map {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.chapter6-map-item {
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.chapter6-map-item span {
+  color: var(--secondary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.chapter6-map-item strong {
+  color: var(--text-main);
+  display: block;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+.chapter6-map-item em {
+  color: var(--text-muted);
+  display: block;
+  font-size: 0.76rem;
+  font-style: normal;
+  margin-top: 4px;
+}
+
+.screenshot-checklist {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  padding: 16px;
+}
+
+.screenshot-checklist span {
+  background: rgba(6, 214, 160, 0.08);
+  border: 1px solid rgba(6, 214, 160, 0.22);
+  border-radius: 8px;
+  color: var(--text-main);
+  font-size: 0.84rem;
+  font-weight: 700;
+  padding: 10px 12px;
+}
+
 .parameter-chip,
 .formula-card {
   background: rgba(255, 255, 255, 0.055);

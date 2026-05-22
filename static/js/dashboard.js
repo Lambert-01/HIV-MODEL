@@ -363,8 +363,12 @@ function renderChapter6(data) {
   const set = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
   set("chapter6BaselineText", data.narrative.baseline);
   set("chapter6ScenarioText", data.narrative.scenarios);
+  set("chapter6SingleText", data.narrative.single_interventions);
+  set("chapter6CombinedText", data.narrative.combined_intervention);
   set("chapter6MemoryText", data.narrative.memory);
   set("chapter6SensitivityText", data.narrative.sensitivity);
+  set("chapter6DashboardText", data.narrative.dashboard_demo);
+  set("chapter6PublicHealthText", data.narrative.public_health);
 
   renderGenericTable("chapter6BaselineTable", data.tables.baseline_summary, [
     { key: "quantity", label: "Quantity", format: (v) => v },
@@ -380,6 +384,18 @@ function renderChapter6(data) {
     { key: "final_treated", label: "Final T", format: (v) => Number(v).toFixed(0) },
     { key: "final_aids", label: "Final A", format: (v) => Number(v).toFixed(0) }
   ]);
+  const interventionColumns = [
+    { key: "scenario", label: "Intervention", format: (v) => v },
+    { key: "u1", label: "u1", format: (v) => Number(v).toFixed(2) },
+    { key: "u2", label: "u2", format: (v) => Number(v).toFixed(2) },
+    { key: "u3", label: "u3", format: (v) => Number(v).toFixed(2) },
+    { key: "u4", label: "u4", format: (v) => Number(v).toFixed(2) },
+    { key: "r0", label: "R0" },
+    { key: "final_infected", label: "Final I", format: (v) => Number(v).toFixed(0) },
+    { key: "final_aids", label: "Final A", format: (v) => Number(v).toFixed(0) }
+  ];
+  renderGenericTable("chapter6SingleTable", data.tables.single_interventions, interventionColumns);
+  renderGenericTable("chapter6CombinedTable", data.tables.combined_interventions, interventionColumns);
   renderGenericTable("chapter6MemoryTable", data.tables.memory, [
     { key: "q", label: "q", format: (v) => Number(v).toFixed(2) },
     { key: "peak_infected", label: "Peak I", format: (v) => Number(v).toFixed(0) },

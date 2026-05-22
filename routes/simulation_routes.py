@@ -145,6 +145,7 @@ def build_chapter6_payload(payload):
         rates = scenario_result["effective_rates"]
         scenario_rows.append(
             {
+                "key": key,
                 "scenario": scenario["name"],
                 "q": scenario_result["parameters"]["q"],
                 "u1": scenario_result["parameters"]["u1"],
@@ -188,6 +189,11 @@ def build_chapter6_payload(payload):
             }
         )
 
+    single_keys = {"awareness_only", "safer_behaviour", "testing_boost", "adherence_support"}
+    combined_keys = {"combined_intervention", "combined_moderate", "strong_combined"}
+    single_rows = [row for row in scenario_rows if row["key"] in single_keys]
+    combined_rows = [row for row in scenario_rows if row["key"] in combined_keys]
+
     summary = result["summary"]
     rates = result["effective_rates"]
     best_r0 = min(scenario_rows, key=lambda row: row["r0"]) if scenario_rows else None
@@ -212,6 +218,19 @@ def build_chapter6_payload(payload):
         "interpretation that combined behavioural and treatment-related interventions are more "
         "effective than isolated controls."
     )
+    best_single = min(single_rows, key=lambda row: row["r0"]) if single_rows else None
+    best_combined = min(combined_rows, key=lambda row: row["r0"]) if combined_rows else None
+    single_text = (
+        f"Among the single-intervention experiments, {best_single['scenario']} produced the lowest "
+        f"R0 value ({best_single['r0']:.3f}). This section allows awareness, safer behaviour, testing, "
+        "and adherence to be compared independently before combining the controls."
+    )
+    combined_text = (
+        f"The strongest combined strategy was {best_combined['scenario']}, with R0 = "
+        f"{best_combined['r0']:.3f} and final infected population "
+        f"{best_combined['final_infected']:.0f}. This demonstrates the value of applying multiple "
+        "behavioural and treatment-support interventions together."
+    )
     memory_text = (
         "The memory comparison evaluates q = 1.00, 0.95, 0.85, and 0.75 under the same "
         "parameter configuration. Values q < 1 retain fractional memory, so trajectories differ "
@@ -223,6 +242,17 @@ def build_chapter6_payload(payload):
         f"({strongest_positive['sensitivity']:.3f}), indicating a parameter that increases R0. "
         f"The strongest negative sensitivity is {strongest_negative['parameter']} "
         f"({strongest_negative['sensitivity']:.3f}), indicating a parameter that reduces R0."
+    )
+    dashboard_text = (
+        "The dashboard demonstration should include screenshots of the Baseline, Memory Effect, "
+        "Scenario Comparison, Sensitivity, and Chapter 6 tabs. These figures show that the model "
+        "is not only formulated mathematically but also implemented as an interactive simulation tool."
+    )
+    public_health_text = (
+        "In public-health terms, lower transmission rates reduce new infections, faster testing and "
+        "treatment uptake move infected individuals into care earlier, and improved adherence reduces "
+        "progression to AIDS. The simulations should be interpreted as academic scenario evidence, not "
+        "clinical or policy prediction."
     )
 
     return {
@@ -238,14 +268,20 @@ def build_chapter6_payload(payload):
                 {"quantity": "Final AIDS", "value": summary["final_aids"], "interpretation": "A(t_end)"},
             ],
             "scenarios": scenario_rows,
+            "single_interventions": single_rows,
+            "combined_interventions": combined_rows,
             "sensitivity": sensitivity_rows,
             "memory": memory_rows,
         },
         "narrative": {
             "baseline": baseline_text,
             "scenarios": scenario_text,
+            "single_interventions": single_text,
+            "combined_intervention": combined_text,
             "memory": memory_text,
             "sensitivity": sensitivity_text,
+            "dashboard_demo": dashboard_text,
+            "public_health": public_health_text,
             "conclusion": (
                 "Overall, the dashboard results connect the analytical threshold result, "
                 "fractional memory dynamics, and social behaviour interventions into a single "
