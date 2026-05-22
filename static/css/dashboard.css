@@ -542,6 +542,52 @@
 
 .chart-large .chart-body { min-height: 420px; }
 
+.chart-body .js-plotly-plot,
+.chart-body .plot-container {
+  width: 100%;
+}
+
+.chart-card .modebar {
+  background: rgba(7, 17, 31, 0.92) !important;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.chart-card .modebar-btn svg path {
+  fill: #e2e8f0 !important;
+}
+
+.chart-card .modebar-btn:hover {
+  background: rgba(0, 212, 255, 0.16) !important;
+}
+
+#baselineInterpretation,
+#thesisTextBox,
+#stabilityText,
+#dfeText,
+#boundText,
+#stabilityThresholdText,
+#interventionMeaningText,
+#memoryModeText,
+#reliabilityText {
+  color: #e2e8f0 !important;
+  font-size: 0.94rem;
+  line-height: 1.75;
+}
+
+#baselineInterpretation,
+#thesisTextBox {
+  background: rgba(0, 212, 255, 0.055);
+  border-left: 3px solid var(--primary);
+  border-radius: 8px;
+}
+
+#baselineInterpretation strong,
+#thesisTextBox strong {
+  color: var(--secondary);
+}
+
 /* ── Sensitivity Interpretation Box ── */
 .interpretation-box {
   background: linear-gradient(135deg, rgba(255, 209, 102, 0.06), rgba(0, 212, 255, 0.06));

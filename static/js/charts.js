@@ -1,24 +1,55 @@
 const plotLayout = {
   paper_bgcolor: "rgba(0,0,0,0)",
   plot_bgcolor: "rgba(0,0,0,0)",
-  font: { color: "#f8fafc", family: "Inter, sans-serif", size: 12 },
-  margin: { t: 20, r: 16, b: 48, l: 60 },
+  font: { color: "#f8fafc", family: "Inter, sans-serif", size: 13 },
+  margin: { t: 28, r: 28, b: 58, l: 70 },
   xaxis: {
-    gridcolor: "rgba(255,255,255,0.06)",
-    zerolinecolor: "rgba(255,255,255,0.1)",
-    title: { text: "Time (years)", font: { size: 11 } }
+    gridcolor: "rgba(148,163,184,0.16)",
+    zerolinecolor: "rgba(248,250,252,0.22)",
+    linecolor: "rgba(148,163,184,0.35)",
+    tickcolor: "rgba(148,163,184,0.45)",
+    tickfont: { color: "#e2e8f0", size: 12 },
+    title: { text: "Time (years)", font: { size: 13, color: "#f8fafc" } },
+    showspikes: true,
+    spikemode: "across",
+    spikecolor: "rgba(248,250,252,0.45)",
+    spikethickness: 1
   },
   yaxis: {
-    gridcolor: "rgba(255,255,255,0.06)",
-    zerolinecolor: "rgba(255,255,255,0.1)"
+    gridcolor: "rgba(148,163,184,0.16)",
+    zerolinecolor: "rgba(248,250,252,0.22)",
+    linecolor: "rgba(148,163,184,0.35)",
+    tickcolor: "rgba(148,163,184,0.45)",
+    tickfont: { color: "#e2e8f0", size: 12 },
+    separatethousands: true,
+    rangemode: "tozero",
+    showspikes: true,
+    spikemode: "across",
+    spikecolor: "rgba(248,250,252,0.45)",
+    spikethickness: 1
   },
-  legend: { orientation: "h", y: -0.18, font: { size: 11 } },
-  hovermode: "x unified"
+  legend: {
+    orientation: "h",
+    y: -0.2,
+    x: 0,
+    font: { size: 12, color: "#f8fafc" },
+    bgcolor: "rgba(7,17,31,0.72)",
+    bordercolor: "rgba(148,163,184,0.18)",
+    borderwidth: 1
+  },
+  hovermode: "x unified",
+  hoverlabel: {
+    bgcolor: "#07111f",
+    bordercolor: "rgba(0,212,255,0.55)",
+    font: { color: "#f8fafc", family: "Inter, sans-serif", size: 13 }
+  },
+  transition: { duration: 450, easing: "cubic-in-out" }
 };
 
 const plotConfig = {
   responsive: true,
   displaylogo: false,
+  scrollZoom: true,
   modeBarButtonsToRemove: ["select2d", "lasso2d"],
   toImageButtonOptions: { format: "png", scale: 3 }
 };
@@ -41,7 +72,14 @@ function safePlotlyReact(chartId, traces, chartLayout, config = plotConfig) {
 
   const plot = pendingPlots[chartId];
   delete pendingPlots[chartId];
-  return Plotly.react(chartId, plot.traces, plot.chartLayout, plot.config);
+  return Plotly.react(chartId, plot.traces, plot.chartLayout, plot.config).then(() => {
+    if (element.classList.contains("plot-ready")) return;
+    element.classList.add("plot-ready");
+    element.animate(
+      [{ opacity: 0, transform: "translateY(8px)" }, { opacity: 1, transform: "translateY(0)" }],
+      { duration: 420, easing: "ease-out" }
+    );
+  });
 }
 
 function flushPendingPlots() {
@@ -60,17 +98,93 @@ function flushPendingPlots() {
 }
 
 function layout(overrides = {}) {
-  return Object.assign({}, plotLayout, overrides);
+  return {
+    ...plotLayout,
+    ...overrides,
+    xaxis: { ...plotLayout.xaxis, ...(overrides.xaxis || {}) },
+    yaxis: { ...plotLayout.yaxis, ...(overrides.yaxis || {}) },
+    legend: { ...plotLayout.legend, ...(overrides.legend || {}) },
+    hoverlabel: { ...plotLayout.hoverlabel, ...(overrides.hoverlabel || {}) }
+  };
+}
+
+function compactNumber(value) {
+  const abs = Math.abs(Number(value));
+  if (abs >= 1000) return `${(value / 1000).toFixed(abs >= 10000 ? 0 : 1)}k`;
+  if (abs >= 100) return Number(value).toFixed(0);
+  if (abs >= 10) return Number(value).toFixed(1);
+  return Number(value).toFixed(2);
+}
+
+function lineTrace(x, y, name, color, extra = {}) {
+  return {
+    x,
+    y,
+    name,
+    mode: "lines",
+    line: { color, width: 3, shape: "spline", smoothing: 0.45 },
+    hovertemplate: `<b>${name}</b><br>Time: %{x:.2f} years<br>Population: %{y:,.3f}<extra></extra>`,
+    ...extra
+  };
 }
 
 function renderMainChart(result) {
   const t = result.time_series.time;
-  safePlotlyReact("mainChart", [
-    { x: t, y: result.time_series.S, name: "S(t) Susceptible", mode: "lines", line: { color: "#00d4ff", width: 2.5 } },
-    { x: t, y: result.time_series.I, name: "I(t) Infected",    mode: "lines", line: { color: "#ef476f", width: 2.5 } },
-    { x: t, y: result.time_series.T, name: "T(t) Treated",     mode: "lines", line: { color: "#06d6a0", width: 2.5 } },
-    { x: t, y: result.time_series.A, name: "A(t) AIDS",        mode: "lines", line: { color: "#ffd166", width: 2.5 } }
-  ], layout({ yaxis: { ...plotLayout.yaxis, title: "Population" } }), plotConfig);
+  const series = [
+    { key: "S", label: "S(t) Susceptible", color: "#00d4ff" },
+    { key: "I", label: "I(t) Infected", color: "#ef476f" },
+    { key: "T", label: "T(t) Treated", color: "#06d6a0" },
+    { key: "A", label: "A(t) AIDS", color: "#ffd166" }
+  ];
+  const peakI = result.summary.peak_infected;
+  const timePeak = result.summary.time_peak;
+  const traces = series.map((item) => lineTrace(t, result.time_series[item.key], item.label, item.color));
+  traces.push({
+    x: [timePeak],
+    y: [peakI],
+    name: "Peak I",
+    mode: "markers+text",
+    marker: { color: "#f8fafc", size: 11, symbol: "diamond", line: { color: "#ef476f", width: 2 } },
+    text: [`Peak I: ${compactNumber(peakI)}`],
+    textposition: "top right",
+    textfont: { color: "#f8fafc", size: 12 },
+    hovertemplate: "<b>Peak infected</b><br>Time: %{x:.2f} years<br>I: %{y:,.3f}<extra></extra>"
+  });
+  const lastIndex = t.length - 1;
+  const annotations = series.map((item, index) => ({
+    x: t[lastIndex],
+    y: result.time_series[item.key][lastIndex],
+    text: `${item.key}: ${compactNumber(result.time_series[item.key][lastIndex])}`,
+    showarrow: true,
+    arrowhead: 2,
+    ax: 34,
+    ay: index % 2 === 0 ? -18 : 18,
+    font: { color: item.color, size: 12 },
+    arrowcolor: item.color,
+    bgcolor: "rgba(7,17,31,0.82)",
+    bordercolor: item.color,
+    borderpad: 4
+  }));
+  safePlotlyReact("mainChart", traces, layout({
+    margin: { t: 30, r: 110, b: 62, l: 72 },
+    yaxis: { title: "Population", tickformat: "~s" },
+    annotations,
+    updatemenus: [{
+      type: "buttons",
+      direction: "right",
+      x: 1,
+      xanchor: "right",
+      y: 1.14,
+      yanchor: "top",
+      bgcolor: "rgba(7,17,31,0.88)",
+      bordercolor: "rgba(0,212,255,0.35)",
+      font: { color: "#f8fafc", size: 11 },
+      buttons: [
+        { label: "Linear", method: "relayout", args: [{ "yaxis.type": "linear", "yaxis.title.text": "Population" }] },
+        { label: "Log", method: "relayout", args: [{ "yaxis.type": "log", "yaxis.title.text": "Population (log scale)" }] }
+      ]
+    }]
+  }), plotConfig);
 }
 
 function renderGauge(r0, status) {

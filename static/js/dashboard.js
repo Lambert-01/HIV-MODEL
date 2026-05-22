@@ -225,12 +225,18 @@ function updateLivePanels() {
 
 function updateInterpretation(result) {
   const s = result.summary;
-  const text = `The infected population reaches a peak of ${s.peak_infected.toFixed(0)} at t=${s.time_peak.toFixed(1)} years. Final values are I=${s.final_infected.toFixed(0)}, T=${s.final_treated.toFixed(0)}, and A=${s.final_aids.toFixed(0)}. ${result.stability_text}`;
+  const text = `
+    The infected population reaches a peak of <strong>${s.peak_infected.toFixed(0)}</strong>
+    at <strong>t=${s.time_peak.toFixed(1)} years</strong>. Final values are
+    <strong>I=${s.final_infected.toFixed(0)}</strong>,
+    <strong>T=${s.final_treated.toFixed(0)}</strong>, and
+    <strong>A=${s.final_aids.toFixed(0)}</strong>. ${result.stability_text}
+  `;
   const baseline = document.getElementById("baselineInterpretation");
-  if (baseline) baseline.textContent = text;
+  if (baseline) baseline.innerHTML = text;
   const thesis = document.getElementById("thesisTextBox");
   if (thesis) {
-    thesis.textContent = `Under the selected parameter configuration, the fractional-order SITA model produced R0 = ${result.r0.toFixed(3)}, indicating a ${result.epidemic_status.toLowerCase()} epidemic status. The simulation shows peak infected population ${s.peak_infected.toFixed(0)} at ${s.time_peak.toFixed(1)} years and final infected population ${s.final_infected.toFixed(0)}. These results support interpretation of intervention-adjusted transmission, treatment uptake, AIDS progression, and fractional memory effects.`;
+    thesis.innerHTML = `Under the selected parameter configuration, the fractional-order SITA model produced <strong>R0 = ${result.r0.toFixed(3)}</strong>, indicating a <strong>${result.epidemic_status.toLowerCase()}</strong> epidemic status. The simulation shows peak infected population <strong>${s.peak_infected.toFixed(0)}</strong> at <strong>${s.time_peak.toFixed(1)} years</strong> and final infected population <strong>${s.final_infected.toFixed(0)}</strong>. These results support interpretation of intervention-adjusted transmission, treatment uptake, AIDS progression, and fractional memory effects.`;
   }
   const stability = document.getElementById("stabilityText");
   if (stability) stability.textContent = result.stability_text;
