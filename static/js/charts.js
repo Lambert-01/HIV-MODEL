@@ -128,6 +128,23 @@ function lineTrace(x, y, name, color, extra = {}) {
   };
 }
 
+function endpointAnnotation(x, y, text, color, offset = -18) {
+  return {
+    x,
+    y,
+    text,
+    showarrow: true,
+    arrowhead: 2,
+    ax: 36,
+    ay: offset,
+    font: { color, size: 11 },
+    arrowcolor: color,
+    bgcolor: "rgba(7,17,31,0.86)",
+    bordercolor: color,
+    borderpad: 4
+  };
+}
+
 function renderMainChart(result) {
   const t = result.time_series.time;
   const series = [
@@ -283,23 +300,47 @@ function renderInfectedFocus(result) {
   const t = result.time_series.time;
   const I = result.time_series.I;
   safePlotlyReact("infectedChart", [
-    { x: t, y: I, name: "I(t)", mode: "lines", line: { color: "#ef476f", width: 2.5 } },
+    lineTrace(t, I, "I(t) Infected", "#ef476f", {
+      fill: "tozeroy",
+      fillcolor: "rgba(239,71,111,0.12)"
+    }),
     {
       x: [result.summary.time_peak],
       y: [result.summary.peak_infected],
       name: "Peak",
-      mode: "markers",
-      marker: { color: "#ffd166", size: 10, symbol: "diamond" }
+      mode: "markers+text",
+      marker: { color: "#ffd166", size: 11, symbol: "diamond", line: { color: "#07111f", width: 2 } },
+      text: [`Peak ${compactNumber(result.summary.peak_infected)}`],
+      textposition: "top right",
+      textfont: { color: "#ffd166", size: 12 },
+      hovertemplate: "Peak I: %{y:,.3f}<br>Time: %{x:.2f} years<extra></extra>"
     }
-  ], layout({ yaxis: { ...plotLayout.yaxis, title: "Infected" } }), plotConfig);
+  ], layout({
+    yaxis: { title: "Infected population" },
+    annotations: [
+      endpointAnnotation(t[t.length - 1], I[I.length - 1], `Final I: ${compactNumber(I[I.length - 1])}`, "#ef476f", 18)
+    ]
+  }), plotConfig);
 }
 
 function renderTreatedAids(result) {
   const t = result.time_series.time;
   safePlotlyReact("treatedAidsChart", [
-    { x: t, y: result.time_series.T, name: "T(t) Treated", mode: "lines", line: { color: "#06d6a0", width: 2.5 } },
-    { x: t, y: result.time_series.A, name: "A(t) AIDS",    mode: "lines", line: { color: "#ffd166", width: 2.5 } }
-  ], layout({ yaxis: { ...plotLayout.yaxis, title: "Population" } }), plotConfig);
+    lineTrace(t, result.time_series.T, "T(t) Treated", "#06d6a0", {
+      fill: "tozeroy",
+      fillcolor: "rgba(6,214,160,0.08)"
+    }),
+    lineTrace(t, result.time_series.A, "A(t) AIDS", "#ffd166", {
+      fill: "tozeroy",
+      fillcolor: "rgba(255,209,102,0.08)"
+    })
+  ], layout({
+    yaxis: { title: "Population" },
+    annotations: [
+      endpointAnnotation(t[t.length - 1], result.time_series.T.at(-1), `Final T: ${compactNumber(result.time_series.T.at(-1))}`, "#06d6a0", -18),
+      endpointAnnotation(t[t.length - 1], result.time_series.A.at(-1), `Final A: ${compactNumber(result.time_series.A.at(-1))}`, "#ffd166", 18)
+    ]
+  }), plotConfig);
 }
 
 function renderPopulation(result) {
@@ -560,15 +601,31 @@ function renderVectorFieldPhase(chartId, result, params) {
 
 function renderScenarioChart(data) {
   const colors = ["#00d4ff", "#ef476f", "#06d6a0", "#ffd166", "#a78bfa", "#fb923c", "#38bdf8", "#f472b6"];
-  const traces = Object.values(data.curves).map((curve, i) => ({
+  const curves = Object.values(data.curves);
+  const traces = curves.map((curve, i) => ({
     x: curve.time,
     y: curve.I,
     mode: "lines",
     name: curve.name,
-    line: { width: 2.5, color: colors[i % colors.length] }
+    line: { width: 3, color: colors[i % colors.length], shape: "spline", smoothing: 0.35 },
+    hovertemplate: `<b>${curve.name}</b><br>Time: %{x:.2f} years<br>I(t): %{y:,.3f}<extra></extra>`
   }));
+  const finalValues = curves.map((curve, i) => ({
+    curve,
+    i,
+    final: curve.I[curve.I.length - 1]
+  })).sort((a, b) => a.final - b.final);
+  const annotations = finalValues.slice(0, 3).map((row, rank) => endpointAnnotation(
+    row.curve.time[row.curve.time.length - 1],
+    row.final,
+    `${rank + 1}. ${row.curve.name}: ${compactNumber(row.final)}`,
+    colors[row.i % colors.length],
+    rank % 2 === 0 ? -18 : 18
+  ));
   safePlotlyReact("scenarioChart", traces, layout({
-    yaxis: { ...plotLayout.yaxis, title: "Infected I(t)" }
+    yaxis: { title: "Infected I(t)" },
+    margin: { t: 28, r: 150, b: 64, l: 72 },
+    annotations
   }), plotConfig);
 }
 
@@ -580,10 +637,11 @@ function renderScenarioAidsChart(data) {
     y: curve.A,
     mode: "lines",
     name: curve.name,
-    line: { width: 2.5, color: colors[i % colors.length] }
+    line: { width: 3, color: colors[i % colors.length], shape: "spline", smoothing: 0.35 },
+    hovertemplate: `<b>${curve.name}</b><br>Time: %{x:.2f} years<br>A(t): %{y:,.3f}<extra></extra>`
   }));
   safePlotlyReact("scenarioAidsChart", traces, layout({
-    yaxis: { ...plotLayout.yaxis, title: "AIDS A(t)" }
+    yaxis: { title: "AIDS A(t)" }
   }), plotConfig);
 }
 
@@ -631,20 +689,27 @@ function renderScenarioRadar(comparisons) {
 }
 
 function renderSensitivityChart(values) {
+  const ranked = [...values].sort((a, b) => Math.abs(b.sensitivity) - Math.abs(a.sensitivity));
   safePlotlyReact("sensitivityChart", [{
-    x: values.map((item) => item.parameter),
-    y: values.map((item) => item.sensitivity),
+    x: ranked.map((item) => item.parameter),
+    y: ranked.map((item) => item.sensitivity),
     type: "bar",
     marker: {
-      color: values.map((item) => item.sensitivity >= 0 ? "#ef476f" : "#06d6a0"),
+      color: ranked.map((item) => item.sensitivity >= 0 ? "#ef476f" : "#06d6a0"),
       opacity: 0.85
     },
-    text: values.map((item) => item.sensitivity.toFixed(3)),
+    text: ranked.map((item) => item.sensitivity.toFixed(3)),
     textposition: "outside",
-    textfont: { size: 10 }
+    textfont: { size: 11, color: "#f8fafc" },
+    hovertemplate: "<b>%{x}</b><br>Sensitivity: %{y:.4f}<extra></extra>"
   }], layout({
-    yaxis: { ...plotLayout.yaxis, title: "Sensitivity Index" },
-    xaxis: { ...plotLayout.xaxis, title: "Parameter" }
+    yaxis: { title: "Sensitivity Index" },
+    xaxis: { title: "Parameter" },
+    shapes: [{ type: "line", xref: "paper", x0: 0, x1: 1, y0: 0, y1: 0, line: { color: "rgba(248,250,252,0.55)", width: 2 } }],
+    annotations: [
+      { xref: "paper", yref: "paper", x: 0.01, y: 1.08, showarrow: false, text: "Positive increases R0", font: { color: "#ef476f", size: 12 } },
+      { xref: "paper", yref: "paper", x: 0.99, y: 1.08, showarrow: false, text: "Negative reduces R0", font: { color: "#06d6a0", size: 12 }, xanchor: "right" }
+    ]
   }), plotConfig);
 }
 
@@ -655,10 +720,20 @@ function renderMemoryChart(results) {
     y: result.time_series.I,
     mode: "lines",
     name: `q = ${result.parameters.q.toFixed(2)}`,
-    line: { width: 2.5, color: colors[i] }
+    line: { width: 3, color: colors[i], shape: "spline", smoothing: 0.35 },
+    hovertemplate: `<b>q=${result.parameters.q.toFixed(2)}</b><br>Time: %{x:.2f} years<br>I(t): %{y:,.3f}<extra></extra>`
   }));
+  const annotations = results.map((result, i) => endpointAnnotation(
+    result.time_series.time.at(-1),
+    result.time_series.I.at(-1),
+    `q=${result.parameters.q.toFixed(2)}: ${compactNumber(result.time_series.I.at(-1))}`,
+    colors[i],
+    i % 2 === 0 ? -18 : 18
+  ));
   safePlotlyReact("memoryChart", traces, layout({
-    yaxis: { ...plotLayout.yaxis, title: "Infected I(t)" }
+    yaxis: { title: "Infected I(t)" },
+    margin: { t: 28, r: 120, b: 64, l: 72 },
+    annotations
   }), plotConfig);
 }
 

@@ -121,7 +121,7 @@ document.addEventListener("click", (event) => {
       phase: "Phase Analysis", sensitivity: "Sensitivity",
       memory: "Memory Effect", surface: "Surfaces & Heatmaps",
       export: "Export", chapter6: "Chapter 6 Results", reliability: "Numerical Reliability",
-      demo: "Defense Demo", overview: "Overview", "about-thesis": "About Thesis"
+      demo: "Defense Demo", overview: "Overview"
     };
     document.title = `FracHIV-SITA Lab | ${titleMap[tab.dataset.tab] || tab.dataset.tab}`;
     // Lazy-load secondary tab data on first open
