@@ -7,6 +7,43 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+/* ── Chart header actions ── */
+function enhanceChartHeaders() {
+  document.querySelectorAll(".chart-card-title").forEach((title) => {
+    if (title.querySelector(".chart-actions")) return;
+    const card = title.closest(".chart-card");
+    const chart = card?.querySelector(".chart-body[id]");
+    if (!chart) return;
+    const original = title.innerHTML;
+    title.innerHTML = `
+      <span class="chart-title-main">${original}</span>
+      <span class="chart-actions">
+        <button class="chart-action-btn" type="button" data-chart-action="download" title="Export chart as PNG"><i class="fa fa-download"></i></button>
+        <button class="chart-action-btn" type="button" data-chart-action="expand" title="Expand chart"><i class="fa fa-up-right-and-down-left-from-center"></i></button>
+      </span>`;
+
+    title.querySelector('[data-chart-action="download"]')?.addEventListener("click", (event) => {
+      event.stopPropagation();
+      if (!chart?.id || !window.Plotly) return;
+      Plotly.downloadImage(chart.id, {
+        format: "png",
+        filename: chart.id,
+        scale: 4
+      });
+    });
+
+    title.querySelector('[data-chart-action="expand"]')?.addEventListener("click", (event) => {
+      event.stopPropagation();
+      card?.classList.toggle("chart-expanded");
+      setTimeout(() => {
+        if (chart && window.Plotly) Plotly.Plots.resize(chart);
+      }, 120);
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", enhanceChartHeaders);
+
 /* ── Skeleton helpers ── */
 function showSkeleton(tabName) {
   const sk = document.getElementById(`tab-${tabName}-skeleton`);
@@ -124,4 +161,19 @@ document.addEventListener("DOMContentLoaded", () => {
       closeSidebar();
     }
   });
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+  document.addEventListener("touchstart", (e) => {
+    const touch = e.touches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+  }, { passive: true });
+
+  document.addEventListener("touchend", (e) => {
+    const touch = e.changedTouches[0];
+    const dx = touch.clientX - touchStartX;
+    const dy = Math.abs(touch.clientY - touchStartY);
+    if (touchStartX < 28 && dx > 80 && dy < 60) openSidebar();
+  }, { passive: true });
 });

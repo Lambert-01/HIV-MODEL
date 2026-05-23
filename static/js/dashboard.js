@@ -14,6 +14,8 @@ let lastResult = null;
 let lastScenarioData = null;
 let lastChapter6Data = null;
 let lastReliabilityData = null;
+let lastRunAt = null;
+let lastRunSummary = null;
 
 function val(id) { return Number(document.getElementById(id).value); }
 
@@ -60,6 +62,8 @@ let lastPeakInfected = null;
 function updateCards(result) {
   const r0 = result.r0;
   const status = result.epidemic_status.toLowerCase();
+  document.querySelector(".dashboard-main")?.setAttribute("data-status", status);
+  document.body.dataset.epidemicStatus = status;
 
   animateValue(document.getElementById("cardR0"), r0, 3);
   document.getElementById("cardStatus").textContent = result.epidemic_status;
@@ -100,6 +104,12 @@ function updateCards(result) {
       card.classList.add(status);
     }
   });
+
+  const statusPill = document.getElementById("status-pill");
+  if (statusPill) {
+    statusPill.classList.remove("controlled", "threshold", "persistent");
+    statusPill.classList.add(status);
+  }
 
   // Update R0 tab result cards
   const Lambda = result.parameters.Lambda;
@@ -162,6 +172,8 @@ function updateLivePanels() {
   const payload = buildPayload();
   const p = payload.parameters;
   const rates = effectiveRates(p);
+  const previewR0 = localR0(p);
+  const previewStatus = previewR0 < 0.98 ? "controlled" : previewR0 <= 1.02 ? "threshold" : "persistent";
   const n0 = payload.initial_conditions.S0 + payload.initial_conditions.I0 + payload.initial_conditions.T0 + payload.initial_conditions.A0;
 
   const set = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
@@ -172,6 +184,13 @@ function updateLivePanels() {
   set("betaEffLive", rates.beta_eff.toFixed(5));
   set("tauEffLive", rates.tau_eff.toFixed(5));
   set("rhoEffLive", rates.rho_eff.toFixed(5));
+  set("sidebarR0Value", previewR0.toFixed(3));
+  set("sidebarR0Status", previewStatus === "controlled" ? "Controlled" : previewStatus === "threshold" ? "Threshold" : "Persistent");
+  const preview = document.getElementById("sidebarR0Preview");
+  if (preview) {
+    preview.classList.remove("controlled", "threshold", "persistent");
+    preview.classList.add(previewStatus);
+  }
 
   const memory = document.getElementById("memoryModeText");
   if (memory) {
@@ -221,6 +240,27 @@ function updateLivePanels() {
       </div>
     `).join("");
   }
+}
+
+function updateLastRunStatus(result, payload) {
+  lastRunAt = new Date();
+  lastRunSummary = {
+    q: payload.parameters.q,
+    beta0: payload.parameters.beta0,
+    r0: result.r0
+  };
+  renderLastRunStatus();
+}
+
+function renderLastRunStatus() {
+  const bar = document.getElementById("lastRunStatus");
+  if (!bar || !lastRunAt || !lastRunSummary) return;
+  const seconds = Math.max(0, Math.floor((Date.now() - lastRunAt.getTime()) / 1000));
+  const age = seconds < 5 ? "just now" : seconds < 60 ? `${seconds} seconds ago` : `${Math.floor(seconds / 60)} minutes ago`;
+  bar.innerHTML = `
+    <i class="fa fa-clock-rotate-left"></i>
+    <span>Last run: q=${lastRunSummary.q.toFixed(2)} · beta0=${lastRunSummary.beta0.toFixed(2)} · R0=${lastRunSummary.r0.toFixed(3)} · ${age}</span>
+  `;
 }
 
 function updateInterpretation(result) {
@@ -449,6 +489,7 @@ async function runSimulation() {
     lastResult = result;
 
     updateCards(result);
+    updateLastRunStatus(result, payload);
     updateResultsTable(result);
     renderMainChart(result);
     renderGauge(result.r0, result.epidemic_status);
@@ -711,4 +752,28 @@ document.addEventListener("DOMContentLoaded", async () => {
   syncSliderLabels();
   await loadScenarios();
   await runSimulation();
+  setInterval(renderLastRunStatus, 5000);
+});
+
+document.addEventListener("keydown", (event) => {
+  const activeElement = document.activeElement;
+  const isTyping = activeElement && ["INPUT", "SELECT", "TEXTAREA"].includes(activeElement.tagName);
+  if (event.ctrlKey && event.key === "Enter") {
+    event.preventDefault();
+    runSimulation();
+    return;
+  }
+  if (event.ctrlKey && event.key.toLowerCase() === "r") {
+    event.preventDefault();
+    resetDefaults();
+    return;
+  }
+  if (!isTyping && /^[1-9]$/.test(event.key)) {
+    const tabs = Array.from(document.querySelectorAll(".tab-btn[data-tab]"));
+    const target = tabs[Number(event.key) - 1];
+    if (target) {
+      event.preventDefault();
+      target.click();
+    }
+  }
 });
