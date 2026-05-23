@@ -1,0 +1,1639 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.5.23)  24 MAY 2026 00:01
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**"c:/Users/educa/OneDrive/Desktop/HIV MODEL/thesis/thesis.tex"
+(c:/Users/educa/OneDrive/Desktop/HIV MODEL/thesis/thesis.tex
+LaTeX2e <2025-06-01> patch level 1
+L3 programming layer <2025-08-13>
+(c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/documentmetadata-support.ltx (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdfmanagement-testphase/pdfmanagement-testphase.sty
+Package: pdfmanagement-testphase 2026-01-23 v0.96y LaTeX PDF management bundle
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tagpdf/tagpdf-base.sty
+Package: tagpdf-base 2026-01-29 v0.99y part of tagpdf - provide base, no-op versions of the user commands 
+\c@g__tag_MCID_abs_int=\count275
+\c@g__tag_struct_abs_int=\count276
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdfmanagement-testphase/pdfmanagement.ltx
+File: pdfmanagement.ltx 2026-01-23 v0.96y PDF management code
+\g__pdfmanagement_EmbeddedFiles_int=\count277
+\l__pdfmeta_xmp_indent_int=\count278
+\g_pdffile_embed_pdfa_int=\count279
+\g_pdffile_embed_nonpdfa_int=\count280
+))) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2025-06-09 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count281
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdfmanagement-testphase/l3backend-testphase-pdftex.def
+File: l3backend-testphase-pdftex.def 2026-01-23 v0.96y LaTeX PDF management bundle backend support:PDFoutput(pdfTeX)
+\l__pdf_backend_tmpa_box=\box53
+\l__pdf_backend_tmpb_box=\box54
+\g__pdf_backend_resourceid_int=\count282
+\g__pdf_backend_name_int=\count283
+\g__pdf_backend_page_int=\count284
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-latest.sty
+Package: latex-lab-testphase-latest 2025-09-13 v0.1d latex-lab modules
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tagpdf/tagpdf.sty
+Package: tagpdf 2026-01-29 v0.99y  LaTeX kernel code for PDF tagging 
+\l__tag_tmpa_int=\count285
+\l__tag_tmpa_box=\box55
+\l__tag_tmpb_box=\box56
+\l__tag_loglevel_int=\count286
+\g__tag_unique_cnt_int=\count287
+\l__tag_tag_stop_int=\count288
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tagpdf/tagpdf-mc-code-generic.sty
+Package: tagpdf-mc-code-generic 2026-01-29 v0.99y part of tagpdf - code related to marking chunks - generic mode
+\g__tag_mc_marks=\marks4
+)
+\g__tag_tree_id_pad_int=\count289
+\c@g__tag_parenttree_obj_int=\count290
+
+Package tagpdf Info: reading namespace definitions tagpdf-ns-pdf.def
+
+
+Package tagpdf Info: reading namespace definitions tagpdf-ns-pdf2.def
+
+
+Package tagpdf Info: reading namespace definitions tagpdf-ns-mathml.def
+
+
+Package tagpdf Info: reading namespace definitions tagpdf-ns-latex-book.def
+
+
+Package tagpdf Info: reading namespace definitions tagpdf-ns-latex.def
+
+
+Package tagpdf Info: reading namespace definitions tagpdf-ns-latex-lab.def
+
+
+Package tagpdf Info: reading namespace definitions tagpdf-ns-pdf.def
+
+
+Package tagpdf Info: reading namespace definitions tagpdf-ns-pdf2.def
+
+\g__tag_struct_AFobj_int=\count291
+\g__tag_para_begin_int=\count292
+\g__tag_para_end_int=\count293
+\g__tag_para_main_begin_int=\count294
+\g__tag_para_main_end_int=\count295
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty
+Package: latex-lab-testphase-names 2025-08-14 v0.8f Code related to the names of tags
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:47: Undefined control sequence.
+l.47 \NewStructureName
+                      {para/textblock}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:47: LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.47 \NewStructureName{p
+                        ara/textblock}
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no p in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no x in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no k in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:49: Undefined control sequence.
+l.49 \NewStructureName
+                      {para/semantic}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no p in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no c in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:51: Undefined control sequence.
+l.51 \NewStructureName
+                      {sec/-1}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no - in font nullfont!
+Missing character: There is no 1 in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:53: Undefined control sequence.
+l.53 \NewStructureName
+                      {sec/-1/title}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no - in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:55: Undefined control sequence.
+l.55 \NewStructureName
+                      {sec/-1/titleline}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no - in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no e in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:57: Undefined control sequence.
+l.57 \NewStructureName
+                      {sec/-1/number}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no - in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:59: Undefined control sequence.
+l.59 \NewStructureName
+                      {sec/0}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no 0 in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:61: Undefined control sequence.
+l.61 \NewStructureName
+                      {sec/0/title}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:63: Undefined control sequence.
+l.63 \NewStructureName
+                      {sec/0/titleline}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no e in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:65: Undefined control sequence.
+l.65 \NewStructureName
+                      {sec/0/number}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:67: Undefined control sequence.
+l.67 \NewStructureName
+                      {sec/1}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no 1 in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:69: Undefined control sequence.
+l.69 \NewStructureName
+                      {sec/1/title}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:71: Undefined control sequence.
+l.71 \NewStructureName
+                      {sec/1/number}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:73: Undefined control sequence.
+l.73 \NewStructureName
+                      {sec/2}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no 2 in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:75: Undefined control sequence.
+l.75 \NewStructureName
+                      {sec/2/title}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no 2 in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:77: Undefined control sequence.
+l.77 \NewStructureName
+                      {sec/2/number}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no 2 in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:79: Undefined control sequence.
+l.79 \NewStructureName
+                      {sec/3}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no 3 in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:81: Undefined control sequence.
+l.81 \NewStructureName
+                      {sec/3/title}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no 3 in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:83: Undefined control sequence.
+l.83 \NewStructureName
+                      {sec/3/number}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no 3 in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:85: Undefined control sequence.
+l.85 \NewStructureName
+                      {sec/4}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no 4 in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:87: Undefined control sequence.
+l.87 \NewStructureName
+                      {sec/4/title}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no 4 in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:89: Undefined control sequence.
+l.89 \NewStructureName
+                      {sec/4/number}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no 4 in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:91: Undefined control sequence.
+l.91 \NewStructureName
+                      {sec/5}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no 5 in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:93: Undefined control sequence.
+l.93 \NewStructureName
+                      {sec/5/title}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-names.sty:95: Undefined control sequence.
+l.95 \NewStructureName
+                      {sec/5/number}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-new-or-2.sty
+Overfull \hbox (20.0pt too wide) in paragraph at lines 47--38
+[]
+ []
+
+Package: latex-lab-testphase-new-or-2 2025-05-10 v0.86d Changes to the output routine
+(c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-footnotes.ltx
+File: latex-lab-footnotes.ltx 2025-07-04 v0.8o changes to the footnote interfaces
+\footnotemargin=\dimen148
+\g_fnote_id_int=\count296
+)) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-block.sty
+Package: latex-lab-testphase-block 2025-07-26 v0.9k blockenv implementation
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-kernel-changes.sty
+Package: latex-lab-kernel-changes 2025-07-09 v0.85i General kernel and class changes
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/glyphtounicode-cmex.tex)) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-context.sty
+Package: latex-lab-testphase-context 2025-10-09 v0.5b Providing context for instance, etc.
+)
+
+LaTeX template Info: Declaring template type 'blockenv' taking 1 argument(s)
+(template)           on line 96.
+
+
+LaTeX template Info: Declaring template type 'block' taking 1 argument(s) on
+(template)           line 97.
+
+
+LaTeX template Info: Declaring template type 'para' taking 1 argument(s) on
+(template)           line 98.
+
+
+LaTeX template Info: Declaring template type 'list' taking 1 argument(s) on
+(template)           line 99.
+
+
+LaTeX template Info: Declaring template type 'item' taking 1 argument(s) on
+(template)           line 100.
+
+\c@maxblocklevels=\count297
+\l__par_start_skip=\skip49
+\l__block_botsep_skip=\skip50
+\l__block_parbotsep_skip=\skip51
+\l__block_parindent_dim=\dimen149
+\l__block_counter_start_int=\count298
+\l__block_one_label_box=\box57
+\g__block_labels_box=\box58
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-block.sty:662: LaTeX socket Error: Socket 'tagsupport/block/list/label' undeclared!
+
+For immediate help type H <return>.
+ ...                                              
+                                                  
+l.662  }
+        
+
+You tried to use a socket that was not declared before.
+
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-block.sty:663: LaTeX socket Error: Socket 'tagsupport/block/list/label' undeclared!
+
+For immediate help type H <return>.
+ ...                                              
+                                                  
+l.663 ...gingSocketPlug{block/list/label}{default}
+                                                  
+
+You tried to use a socket that was not declared before.
+
+
+\l__block_tmpa_skip=\skip52
+\l__block_topsepadd_skip=\skip53
+\l__block_effective_top_skip=\skip54
+LaTeX Info: Redefining \centering on input line 1476.
+LaTeX Info: Redefining \raggedleft on input line 1477.
+LaTeX Info: Redefining \raggedright on input line 1478.
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-sec.sty
+Package: latex-lab-testphase-sec 2025-10-20 v0.84k Code related to the tagging of sectioning commands
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-sec.sty:176: LaTeX socket Error: Socket 'tagsupport/sec/begin' undeclared!
+
+For immediate help type H <return>.
+ ...                                              
+                                                  
+l.176   }
+         
+
+You tried to use a socket that was not declared before.
+
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-sec.sty:177: LaTeX socket Error: Socket 'tagsupport/sec/begin' undeclared!
+
+For immediate help type H <return>.
+ ...                                              
+                                                  
+l.177 \AssignTaggingSocketPlug{sec/begin}{kernel}
+                                                 
+
+You tried to use a socket that was not declared before.
+
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-sec.sty:181: LaTeX socket Error: Socket 'tagsupport/sec/end' undeclared!
+
+For immediate help type H <return>.
+ ...                                              
+                                                  
+l.181   }
+         
+
+You tried to use a socket that was not declared before.
+
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-sec.sty:182: LaTeX socket Error: Socket 'tagsupport/sec/end' undeclared!
+
+For immediate help type H <return>.
+ ...                                              
+                                                  
+l.182 \AssignTaggingSocketPlug{sec/end}{kernel}
+                                               
+
+You tried to use a socket that was not declared before.
+
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-sec.sty:186: LaTeX socket Error: Socket 'tagsupport/sec/title/begin' undeclared!
+
+For immediate help type H <return>.
+ ...                                              
+                                                  
+l.186  }
+        
+
+You tried to use a socket that was not declared before.
+
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-sec.sty:187: LaTeX socket Error: Socket 'tagsupport/sec/title/begin' undeclared!
+
+For immediate help type H <return>.
+ ...                                              
+                                                  
+l.187 ...aggingSocketPlug{sec/title/begin}{kernel}
+                                                  
+
+You tried to use a socket that was not declared before.
+
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-sec.sty:192: LaTeX socket Error: Socket 'tagsupport/sec/title/end' undeclared!
+
+For immediate help type H <return>.
+ ...                                              
+                                                  
+l.192  }
+        
+
+You tried to use a socket that was not declared before.
+
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-sec.sty:193: LaTeX socket Error: Socket 'tagsupport/sec/title/end' undeclared!
+
+For immediate help type H <return>.
+ ...                                              
+                                                  
+l.193 ...nTaggingSocketPlug{sec/title/end}{kernel}
+                                                  
+
+You tried to use a socket that was not declared before.
+
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-sec.sty:197: LaTeX socket Error: Socket 'tagsupport/sec/title/hang' undeclared!
+
+For immediate help type H <return>.
+ ...                                              
+                                                  
+l.197   }
+         
+
+You tried to use a socket that was not declared before.
+
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-sec.sty:198: LaTeX socket Error: Socket 'tagsupport/sec/title/hang' undeclared!
+
+For immediate help type H <return>.
+ ...                                              
+                                                  
+l.198 ...TaggingSocketPlug{sec/title/hang}{kernel}
+                                                  
+
+You tried to use a socket that was not declared before.
+
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-sec.sty:203: LaTeX socket Error: Socket 'tagsupport/sec/title/init' undeclared!
+
+For immediate help type H <return>.
+ ...                                              
+                                                  
+l.203  }
+        
+
+You tried to use a socket that was not declared before.
+
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-sec.sty:204: LaTeX socket Error: Socket 'tagsupport/sec/title/init' undeclared!
+
+For immediate help type H <return>.
+ ...                                              
+                                                  
+l.204 ...TaggingSocketPlug{sec/title/init}{kernel}
+                                                  
+
+You tried to use a socket that was not declared before.
+
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-sec.sty:208: LaTeX socket Error: Socket 'tagsupport/sec/title/split' undeclared!
+
+For immediate help type H <return>.
+ ...                                              
+                                                  
+l.208  }
+        
+
+You tried to use a socket that was not declared before.
+
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-sec.sty:209: LaTeX socket Error: Socket 'tagsupport/sec/title/split' undeclared!
+
+For immediate help type H <return>.
+ ...                                              
+                                                  
+l.209 ...aggingSocketPlug{sec/title/split}{kernel}
+                                                  
+
+You tried to use a socket that was not declared before.
+
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-sec.sty:213: LaTeX socket Error: Socket 'tagsupport/sec/title/runin/number' undeclared!
+
+For immediate help type H <return>.
+ ...                                              
+                                                  
+l.213  }
+        
+
+You tried to use a socket that was not declared before.
+
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-sec.sty:214: LaTeX socket Error: Socket 'tagsupport/sec/title/runin/number' undeclared!
+
+For immediate help type H <return>.
+ ...                                              
+                                                  
+l.214 ...ocketPlug{sec/title/runin/number}{kernel}
+                                                  
+
+You tried to use a socket that was not declared before.
+
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-sec.sty:224: LaTeX socket Error: Socket 'tagsupport/sec/title/number' undeclared!
+
+For immediate help type H <return>.
+ ...                                              
+                                                  
+l.224  }
+        
+
+You tried to use a socket that was not declared before.
+
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-sec.sty:225: LaTeX socket Error: Socket 'tagsupport/sec/title/number' undeclared!
+
+For immediate help type H <return>.
+ ...                                              
+                                                  
+l.225 ...ggingSocketPlug{sec/title/number}{kernel}
+                                                  
+
+You tried to use a socket that was not declared before.
+
+
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-toc.sty
+Package: latex-lab-testphase-toc 2025-07-02 v0.85h  Code related to the tagging of toc-like lists
+\g__tag_toc_level_int=\count299
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-minipage.sty
+Package: latex-lab-testphase-minipage 2025-05-10 v0.81g Code related to the tagging of minipages and parboxes
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-new-or-1.sty
+Package: latex-lab-testphase-new-or-1 2025-05-10 v0.85d Temporary output patches for tagging and better link support -- no longer active
+)) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-graphic.sty
+Package: latex-lab-testphase-graphic 2025-09-25 v0.80i Code related to the tagging of graphics
+\g__tag_graphic_int=\count300
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-float.sty
+Package: latex-lab-testphase-float 2025-10-17 v0.81l Code related to the tagging of floats
+\g__tag_float_int=\count301
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-bib.sty
+Package: latex-lab-testphase-bib 2025-05-09 v0.81c Code related to the tagging of bibliography and cite command
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-text.sty
+Package: latex-lab-testphase-text 2025-05-10 v0.85f Code related to the tagging of various small text commands
+LaTeX Info: Redefining \mbox on input line 84.
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-marginpar.sty
+Package: latex-lab-testphase-marginpar 2025-07-23 v0.85h Changes related to the tagging of the margin notes
+\g__kernel_marginpar_int=\count302
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-title.sty
+Package: latex-lab-testphase-title 2025-03-08 v0.85d Changes related to the tagging of the title
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-table.sty
+Package: latex-lab-testphase-table 2025-08-01 v0.85s Code related to the tagging of tables
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/array.sty
+Package: array 2025/06/08 v2.6j Tabular extension package (FMi)
+\col@sep=\dimen150
+\ar@mcellbox=\box59
+\extrarowheight=\dimen151
+\NC@list=\toks17
+\extratabsurround=\skip55
+\backup@length=\skip56
+\ar@cellbox=\box60
+)) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-math.sty
+Package: latex-lab-testphase-math 2025-03-10 v0.8d code related to the math tagging
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-math.ltx
+File: latex-lab-math.ltx 2025-10-02 v0.6w Grab all the math(s) and tag it (experiments)
+\l__math_tmpa_skip=\skip57
+\g__math_mathml_total_int=\count303
+\g__math_mathml_int=\count304
+\g__math_math_total_int=\count305
+\g__math_mathml_AF_found_int=\count306
+\g__math_mathml_AF_attached_int=\count307
+\l__math_tmpa_box=\box61
+\l__math_mathstyle_int=\count308
+\g__math_mathchoice_int=\count309
+\l__math_grab_env_int=\count310
+\g__math_postdisplaypenalty_int=\count311
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-mathpkg.ltx
+File: latex-lab-mathpkg.ltx 2025-06-20 v0.1c mathpkg adaptions
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-mathintent.ltx
+File: latex-lab-mathintent.ltx 2025-08-03 v0.1c MathML intent attributes
+)) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-firstaid.sty
+Package: latex-lab-testphase-firstaid 2025-11-03 v2025-11-03 Temporary patches to external packages needed for the tagging project
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-testphase-tikz.sty
+Package: latex-lab-testphase-tikz 2025-09-27 v0.80d Code related to the tagging of tikz pictures
+)) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdfmanagement-testphase/pdfmanagement-firstaid.sty
+Package: pdfmanagement-firstaid 2026-01-23 v0.96y LaTeX PDF management bundle / firstaid-patches
+
+Package pdfmanagement Info: loading pdfmanagement firstaid code for pgf
+
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/report.cls
+Document Class: report 2025/01/22 v1.4n Standard LaTeX document class
+(c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count312
+\c@chapter=\count313
+\c@section=\count314
+\c@subsection=\count315
+\c@subsubsection=\count316
+\c@paragraph=\count317
+\c@subparagraph=\count318
+\c@figure=\count319
+\c@table=\count320
+\abovecaptionskip=\skip58
+\belowcaptionskip=\skip59
+\bibindent=\dimen152
+
+
+[1{c:/Users/educa/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks18
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2024/12/12 v1.0g TeX engine tests
+))
+\Gm@cnth=\count321
+\Gm@cntv=\count322
+\c@Gm@tempcnt=\count323
+\Gm@bindingoffset=\dimen153
+\Gm@wd@mp=\dimen154
+\Gm@odd@mp=\dimen155
+\Gm@even@mp=\dimen156
+\Gm@layoutwidth=\dimen157
+\Gm@layoutheight=\dimen158
+\Gm@layouthoffset=\dimen159
+\Gm@layoutvoffset=\dimen160
+\Gm@dimlist=\toks19
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2024/12/21 v2.1c Standard LaTeX package
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2024/02/08 v1.3d Input encoding file
+\inpenc@prehook=\toks20
+\inpenc@posthook=\toks21
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/lmodern.sty
+Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/lmm/m/it on input line 23.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/lmsy/m/n on input line 24.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 25.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 26.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/lmm/b/it on input line 27.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/lmsy/b/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 29.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 31.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 32.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/lmr/m/it on input line 33.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/cmss/bx/n --> OT1/lmss/bx/n on input line 36.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/lmr/bx/it on input line 37.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/microtype.sty
+Package: microtype 2026/03/01 v3.2d Micro-typographical refinements (RS)
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2025/02/11 v2.5l e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count324
+)
+\MT@toks=\toks22
+\MT@tempbox=\box62
+\MT@count=\count325
+LaTeX Info: Redefining \noprotrusionifhmode on input line 1084.
+LaTeX Info: Redefining \leftprotrusion on input line 1085.
+\MT@prot@toks=\toks23
+LaTeX Info: Redefining \rightprotrusion on input line 1104.
+LaTeX Info: Redefining \textls on input line 1449.
+\MT@outer@kern=\dimen161
+LaTeX Info: Redefining \microtypecontext on input line 2053.
+LaTeX Info: Redefining \textmicrotypecontext on input line 2070.
+\MT@listname@count=\count326
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/microtype-pdftex.def
+File: microtype-pdftex.def 2026/03/01 v3.2d Definitions specific to pdftex (RS)
+LaTeX Info: Redefining \lsstyle on input line 944.
+LaTeX Info: Redefining \lslig on input line 944.
+\MT@outer@space=\skip60
+)
+Package microtype Info: Loading configuration file microtype.cfg.
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/microtype.cfg
+File: microtype.cfg 2026/03/01 v3.2d microtype main configuration file (RS)
+)
+LaTeX Info: Redefining \microtypesetup on input line 3065.
+)
+==> First Aid for microtype.sty no longer applied!
+    Expected:
+        2025/07/09 v3.2b Micro-typographical refinements (RS)
+    but found:
+        2026/03/01 v3.2d Micro-typographical refinements (RS)
+    so I'm assuming it got fixed.
+(c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2022/12/04 v6.7b set line spacing
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/parskip/parskip.sty
+Package: parskip 2021-03-14 v2.0h non-zero parskip adjustments
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+))
+Couldn't patch \@startsection
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/palatino.sty
+Package: palatino 2020/03/25 PSNFSS-v9.3 (SPQR) 
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/helvet.sty
+Package: helvet 2020/03/25 PSNFSS-v9.3 (WaS) 
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 274.
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2024/04/13 v1.2c Graphics/color driver for pdftex
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1353.
+Package xcolor Info: Model `RGB' extended on input line 1365.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1367.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdfmanagement-testphase/xcolor-patches-tmp-ltx.sty
+Package: xcolor-patches-tmp-ltx 2026-01-23 v0.96y patch xcolor for l3color
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
+Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
+\f@nch@headwidth=\skip61
+\f@nch@offset@elh=\skip62
+\f@nch@offset@erh=\skip63
+\f@nch@offset@olh=\skip64
+\f@nch@offset@orh=\skip65
+\f@nch@offset@elf=\skip66
+\f@nch@offset@erf=\skip67
+\f@nch@offset@olf=\skip68
+\f@nch@offset@orf=\skip69
+\f@nch@height=\skip70
+\f@nch@footalignment=\skip71
+\f@nch@widthL=\skip72
+\f@nch@widthC=\skip73
+\f@nch@widthR=\skip74
+\@temptokenb=\toks24
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/titlesec/titlesec.sty
+Package: titlesec 2025/01/04 v2.17 Sectioning titles
+\ttl@box=\box63
+\beforetitleunit=\skip75
+\aftertitleunit=\skip76
+\ttl@plus=\dimen162
+\ttl@minus=\dimen163
+\ttl@toksa=\toks25
+\titlewidth=\dimen164
+\titlewidthlast=\dimen165
+\titlewidthfirst=\dimen166
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2025/06/16 v2.17y AMS math features
+\@mathmargin=\skip77
+
+For additional information on amsmath, use the `?' option.
+(c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2024/11/17 v2.01 AMS text
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks26
+\ex@=\dimen167
+)) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen168
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2022/04/08 v2.04 operator names
+)
+\inf@bad=\count327
+LaTeX Info: Redefining \frac on input line 233.
+\uproot@=\count328
+\leftroot@=\count329
+LaTeX Info: Redefining \overline on input line 398.
+LaTeX Info: Redefining \colon on input line 409.
+\classnum@=\count330
+\DOTSCASE@=\count331
+LaTeX Info: Redefining \ldots on input line 495.
+LaTeX Info: Redefining \dots on input line 498.
+LaTeX Info: Redefining \cdots on input line 619.
+\Mathstrutbox@=\box64
+\strutbox@=\box65
+LaTeX Info: Redefining \big on input line 721.
+LaTeX Info: Redefining \Big on input line 722.
+LaTeX Info: Redefining \bigg on input line 723.
+LaTeX Info: Redefining \Bigg on input line 724.
+\big@size=\dimen169
+LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
+\macc@depth=\count332
+LaTeX Info: Redefining \bmod on input line 904.
+LaTeX Info: Redefining \pmod on input line 909.
+LaTeX Info: Redefining \smash on input line 939.
+LaTeX Info: Redefining \relbar on input line 969.
+LaTeX Info: Redefining \Relbar on input line 970.
+\c@MaxMatrixCols=\count333
+\dotsspace@=\muskip17
+\c@parentequation=\count334
+\dspbrk@lvl=\count335
+\tag@help=\toks27
+\row@=\count336
+\column@=\count337
+\maxfields@=\count338
+\andhelp@=\toks28
+\eqnshift@=\dimen170
+\alignsep@=\dimen171
+\tagshift@=\dimen172
+\tagwidth@=\dimen173
+\totwidth@=\dimen174
+\lineht@=\dimen175
+\@envbody=\toks29
+\multlinegap=\skip78
+\multlinetaggap=\skip79
+\mathdisplay@stack=\toks30
+LaTeX Info: Redefining \[ on input line 2949.
+LaTeX Info: Redefining \] on input line 2950.
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-amsmath.ltx
+File: latex-lab-amsmath.ltx 2025-09-29 v0.1i amsmath adaptions
+LaTeX Info: Redefining \eqref on input line 57.
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/mathtools/mathtools.sty
+Package: mathtools 2024/10/04 v1.31 mathematical typesetting tools
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2025/03/01 v4.3b Infix arithmetic (KKT,FJ)
+\calc@Acount=\count339
+\calc@Bcount=\count340
+\calc@Adimen=\dimen176
+\calc@Bdimen=\dimen177
+\calc@Askip=\skip80
+\calc@Bskip=\skip81
+LaTeX Info: Redefining \setlength on input line 86.
+LaTeX Info: Redefining \addtolength on input line 87.
+\calc@Ccount=\count341
+\calc@Cskip=\skip82
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/mathtools/mhsetup.sty
+Package: mhsetup 2021/03/18 v1.4 programming setup (MH)
+)
+\g_MT_multlinerow_int=\count342
+\l_MT_multwidth_dim=\dimen178
+\origjot=\skip83
+\l_MT_shortvdotswithinadjustabove_dim=\dimen179
+\l_MT_shortvdotswithinadjustbelow_dim=\dimen180
+\l_MT_above_intertext_sep=\dimen181
+\l_MT_below_intertext_sep=\dimen182
+\l_MT_above_shortintertext_sep=\dimen183
+\l_MT_below_shortintertext_sep=\dimen184
+\xmathstrut@box=\box66
+\xmathstrut@dim=\dimen185
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latex-lab/latex-lab-mathtools.ltx
+File: latex-lab-mathtools.ltx 2024-07-13 v0.1a mathtools adaptions
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/bm.sty
+Package: bm 2023/12/19 v1.2f Bold Symbol Support (DPC/FMi)
+\symboldoperators=\mathgroup6
+\symboldletters=\mathgroup7
+\symboldsymbols=\mathgroup8
+Package bm Info: No bold for \OMX/lmex/m/n, using \pmb.
+Package bm Info: No bold for \U/msa/m/n, using \pmb.
+Package bm Info: No bold for \U/msb/m/n, using \pmb.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 149.
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amscls/amsthm.sty
+Package: amsthm 2020/05/29 v2.20.6
+\thm@style=\toks31
+\thm@bodyfont=\toks32
+\thm@headfont=\toks33
+\thm@notefont=\toks34
+\thm@headpunct=\toks35
+\thm@preskip=\skip84
+\thm@postskip=\skip85
+\thm@headsep=\skip86
+\dth@everypar=\toks36
+)
+\c@theorem=\count343
+\c@lemma=\count344
+\c@definition=\count345
+\c@remark=\count346
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen186
+\lightrulewidth=\dimen187
+\cmidrulewidth=\dimen188
+\belowrulesep=\dimen189
+\belowbottomsep=\dimen190
+\aboverulesep=\dimen191
+\abovetopsep=\dimen192
+\cmidrulesep=\dimen193
+\cmidrulekern=\dimen194
+\defaultaddspace=\dimen195
+\@cmidla=\count347
+\@cmidlb=\count348
+\@aboverulesep=\dimen196
+\@belowrulesep=\dimen197
+\@thisruleclass=\count349
+\@lastruleclass=\count350
+\@thisrulewidth=\dimen198
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2024-12-18 v4.23 Multi-page Table package (DPC)
+\LTleft=\skip87
+\LTright=\skip88
+\LTpre=\skip89
+\LTpost=\skip90
+\LTchunksize=\count351
+\LTcapwidth=\dimen199
+\LT@head=\box67
+\LT@firsthead=\box68
+\LT@foot=\box69
+\LT@lastfoot=\box70
+\LT@gbox=\box71
+\LT@cols=\count352
+\LT@rows=\count353
+\c@LT@tables=\count354
+\c@LT@chunks=\count355
+\LT@p@ftn=\toks37
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/tabularx.sty
+Package: tabularx 2023/12/11 v2.12a `tabularx' package (DPC)
+\TX@col@width=\dimen256
+\TX@old@table=\dimen257
+\TX@old@col=\dimen258
+\TX@target=\dimen259
+\TX@delta=\dimen260
+\TX@cols=\count356
+\TX@ftn=\toks38
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/multirow/multirow.sty
+Package: multirow 2024/11/12 v2.9 Span multiple rows of a table
+\multirow@colwidth=\skip91
+\multirow@cntb=\count357
+\multirow@dima=\skip92
+\bigstrutjot=\dimen261
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count358
+\float@exts=\toks39
+\float@box=\box72
+\@float@everytoks=\toks40
+\@floatcapt=\box73
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2024/12/31 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 106.
+)
+\Gin@req@height=\dimen262
+\Gin@req@width=\dimen263
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2023/08/05 v3.6o Customizing captions (AR)
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
+\caption@tempdima=\dimen264
+\captionmargin=\dimen265
+\caption@leftmargin=\dimen266
+\caption@rightmargin=\dimen267
+\caption@width=\dimen268
+\caption@indent=\dimen269
+\caption@parindent=\dimen270
+\caption@hangindent=\dimen271
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count359
+\c@continuedfloat=\count360
+Package caption Info: float package is loaded.
+Package caption Info: longtable package is loaded.
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/caption/ltcaption.sty
+Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
+)) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/caption/subcaption.sty
+Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
+Package caption Info: New subtype `subfigure' on input line 238.
+\c@subfigure=\count361
+Package caption Info: New subtype `subtable' on input line 238.
+\c@subtable=\count362
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
+\pgfutil@everybye=\toks41
+\pgfutil@tempdima=\dimen272
+\pgfutil@tempdimb=\dimen273
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
+\pgfutil@abb=\box74
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/pgf.revision.tex)
+Package: pgfrcs 2025-08-29 v3.1.11a (3.1.11a)
+))
+Package: pgf 2025-08-29 v3.1.11a (3.1.11a)
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
+Package: pgfsys 2025-08-29 v3.1.11a (3.1.11a)
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks42
+\pgfkeys@temptoks=\toks43
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfkeyslibraryfiltered.code.tex
+\pgfkeys@tmptoks=\toks44
+))
+\pgf@x=\dimen274
+\pgf@y=\dimen275
+\pgf@xa=\dimen276
+\pgf@ya=\dimen277
+\pgf@xb=\dimen278
+\pgf@yb=\dimen279
+\pgf@xc=\dimen280
+\pgf@yc=\dimen281
+\pgf@xd=\dimen282
+\pgf@yd=\dimen283
+\w@pgf@writea=\write3
+\r@pgf@reada=\read2
+\c@pgf@counta=\count363
+\c@pgf@countb=\count364
+\c@pgf@countc=\count365
+\c@pgf@countd=\count366
+\t@pgf@toka=\toks45
+\t@pgf@tokb=\toks46
+\t@pgf@tokc=\toks47
+\pgf@sys@id@count=\count367
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
+File: pgf.cfg 2025-08-29 v3.1.11a (3.1.11a)
+)
+Driver file for pgf: pgfsys-pdftex.def
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-pdftex.def
+File: pgfsys-pdftex.def 2025-08-29 v3.1.11a (3.1.11a)
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-common-pdf.def
+File: pgfsys-common-pdf.def 2025-08-29 v3.1.11a (3.1.11a)
+))) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.tex
+File: pgfsyssoftpath.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfsyssoftpath@smallbuffer@items=\count368
+\pgfsyssoftpath@bigbuffer@items=\count369
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.tex
+File: pgfsysprotocol.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
+Package: pgfcore 2025-08-29 v3.1.11a (3.1.11a)
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
+\pgfmath@dimen=\dimen284
+\pgfmath@count=\count370
+\pgfmath@box=\box75
+\pgfmath@toks=\toks48
+\pgfmath@stack@operand=\toks49
+\pgfmath@stack@operation=\toks50
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code.tex) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigonometric.code.tex) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.random.code.tex) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.comparison.code.tex) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.code.tex) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round.code.tex) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.code.tex) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerarithmetics.code.tex) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count371
+)) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfint.code.tex) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex
+File: pgfcorepoints.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@picminx=\dimen285
+\pgf@picmaxx=\dimen286
+\pgf@picminy=\dimen287
+\pgf@picmaxy=\dimen288
+\pgf@pathminx=\dimen289
+\pgf@pathmaxx=\dimen290
+\pgf@pathminy=\dimen291
+\pgf@pathmaxy=\dimen292
+\pgf@xx=\dimen293
+\pgf@xy=\dimen294
+\pgf@yx=\dimen295
+\pgf@yy=\dimen296
+\pgf@zx=\dimen297
+\pgf@zy=\dimen298
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.code.tex
+File: pgfcorepathconstruct.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@path@lastx=\dimen299
+\pgf@path@lasty=\dimen300
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code.tex
+File: pgfcorepathusage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@shorten@end@additional=\dimen301
+\pgf@shorten@start@additional=\dimen302
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.tex
+File: pgfcorescopes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfpic=\box76
+\pgf@hbox=\box77
+\pgf@layerbox@main=\box78
+\pgf@picture@serial@count=\count372
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code.tex
+File: pgfcoregraphicstate.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgflinewidth=\dimen303
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformations.code.tex
+File: pgfcoretransformations.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@pt@x=\dimen304
+\pgf@pt@y=\dimen305
+\pgf@pt@temp=\dimen306
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
+File: pgfcorequick.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.code.tex
+File: pgfcoreobjects.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathprocessing.code.tex
+File: pgfcorepathprocessing.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.tex
+File: pgfcorearrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfarrowsep=\dimen307
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
+File: pgfcoreshade.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@max=\dimen308
+\pgf@sys@shading@range@num=\count373
+\pgf@shadingcount=\count374
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
+File: pgfcoreimage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.code.tex
+File: pgfcoreexternal.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfexternal@startupbox=\box79
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.code.tex
+File: pgfcorelayers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransparency.code.tex
+File: pgfcoretransparency.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepatterns.code.tex
+File: pgfcorepatterns.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorerdf.code.tex
+File: pgfcorerdf.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+))) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.tex
+File: pgfmoduleshapes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfnodeparttextbox=\box80
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex
+File: pgfmoduleplot.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65.sty
+Package: pgfcomp-version-0-65 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@nodesepstart=\dimen309
+\pgf@nodesepend=\dimen310
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18.sty
+Package: pgfcomp-version-1-18 2025-08-29 v3.1.11a (3.1.11a)
+)) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/utilities/pgffor.sty (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex)) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pgf/math/pgfmath.sty (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex
+Package: pgffor 2025-08-29 v3.1.11a (3.1.11a)
+\pgffor@iter=\dimen311
+\pgffor@skip=\dimen312
+\pgffor@stack=\toks51
+\pgffor@toks=\toks52
+)) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
+Package: tikz 2025-08-29 v3.1.11a (3.1.11a)
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.code.tex
+File: pgflibraryplothandlers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@plot@mark@count=\count375
+\pgfplotmarksize=\dimen313
+)
+\tikz@lastx=\dimen314
+\tikz@lasty=\dimen315
+\tikz@lastxsaved=\dimen316
+\tikz@lastysaved=\dimen317
+\tikz@lastmovetox=\dimen318
+\tikz@lastmovetoy=\dimen319
+\tikzleveldistance=\dimen320
+\tikzsiblingdistance=\dimen321
+\tikz@figbox=\box81
+\tikz@figbox@bg=\box82
+\tikz@tempbox=\box83
+\tikz@tempbox@bg=\box84
+\tikztreelevel=\count376
+\tikznumberofchildren=\count377
+\tikznumberofcurrentchild=\count378
+\tikz@fig@count=\count379
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
+File: pgfmodulematrix.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfmatrixcurrentrow=\count380
+\pgfmatrixcurrentcolumn=\count381
+\pgf@matrix@numberofcolumns=\count382
+)
+\tikz@expandcount=\count383
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+))) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.meta.code.tex
+File: pgflibraryarrows.meta.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfarrowinset=\dimen322
+\pgfarrowlength=\dimen323
+\pgfarrowwidth=\dimen324
+\pgfarrowlinewidth=\dimen325
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryshapes.geometric.code.tex
+File: tikzlibraryshapes.geometric.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshapes.geometric.code.tex
+File: pgflibraryshapes.geometric.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarypositioning.code.tex
+File: tikzlibrarypositioning.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryfit.code.tex
+File: tikzlibraryfit.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarybackgrounds.code.tex
+File: tikzlibrarybackgrounds.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@layerbox@background=\box85
+\pgf@layerboxsaved@background=\box86
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarycalc.code.tex
+File: tikzlibrarycalc.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/enumitem/enumitem.sty
+Package: enumitem 2025/02/06 v3.11 Customized lists
+\labelindent=\skip93
+\enit@outerparindent=\dimen326
+\enit@toks=\toks53
+\enit@inbox=\box87
+\enit@count@id=\count384
+\enitdp@description=\count385
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tcolorbox/tcolorbox.sty
+Package: tcolorbox 2025/11/28 version 6.9.0 text color boxes
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2024-01-22 v1.5x LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks54
+\verbatim@line=\toks55
+\verbatim@in@stream=\read3
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/environ/environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+ (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+))
+\tcb@titlebox=\box88
+\tcb@upperbox=\box89
+\tcb@lowerbox=\box90
+\tcb@phantombox=\box91
+\c@tcbbreakpart=\count386
+\c@tcblayer=\count387
+\c@tcolorbox@number=\count388
+\l__tcobox_tmpa_box=\box92
+\l__tcobox_tmpa_dim=\dimen327
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tcolorbox/tcolorbox.sty:76: Undefined control sequence.
+l.76 \NewStructureName
+                      {tcb/box}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tcolorbox/tcolorbox.sty:76: LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.76 \NewStructureName{t
+                        cb/box}
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tcolorbox/tcolorbox.sty:89: Undefined control sequence.
+l.89 \NewStructureName
+                      {tcb/box/title}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tcolorbox/tcolorbox.sty:89: LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.89 \NewStructureName{t
+                        cb/box/title}
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+\tcb@temp=\box93
+\tcb@temp=\box94
+\tcb@temp=\box95
+\tcb@temp=\box96
+) (c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tcolorbox/tcbskins.code.tex
+Library (tcolorbox): 'tcbskins.code.tex' version '6.9.0'
+
+! LaTeX Error: File `tikzfill.image.sty' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tcolorbox/tcbskins.code.tex:23: Emergency stop.
+<read *> 
+         
+l.23 ^^M
+        
+*** (cannot \read from terminal in nonstop modes)
+
+ 
+Here is how much of TeX's memory you used:
+ 27711 strings out of 469781
+ 628293 string characters out of 5480592
+ 1063690 words of memory out of 5000000
+ 55647 multiletter control sequences out of 15000+600000
+ 644175 words of font info for 43 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 88i,5n,88p,663b,127s stack positions out of 10000i,1000n,20000p,200000b,200000s
+c:/Users/educa/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tcolorbox/tcbskins.code.tex:23:  ==> Fatal error occurred, no output PDF file produced!
