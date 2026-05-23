@@ -1053,12 +1053,28 @@ which is less than one. This indicates that, under the selected intervention-adj
 
 \begin{figure}[H]
 \centering
-\fbox{\parbox[c][7cm][c]{0.90\textwidth}{\centering
-\textbf{Insert Figure 6.1 here}\\[4pt]
-Baseline SITA time-series graph from the dashboard showing $S(t)$, $I(t)$, $T(t)$, and $A(t)$.}}
-\caption{Baseline fractional-order SITA simulation for $q=0.95$.}
+\begin{subfigure}{0.98\textwidth}
+\centering
+\includegraphics[width=\textwidth]{mainChartlinear.png}
+\caption{Baseline SITA time-series graph in the dashboard linear view.}
+\label{fig:baseline_sita_linear}
+\end{subfigure}
+
+\vspace{0.4cm}
+
+\begin{subfigure}{0.98\textwidth}
+\centering
+\includegraphics[width=\textwidth]{mainChartlog.png}
+\caption{Baseline SITA time-series graph in logarithmic view.}
+\label{fig:baseline_sita_log}
+\end{subfigure}
+\caption{Baseline fractional-order SITA simulation for $q=0.95$ showing $S(t)$, $I(t)$, $T(t)$, and $A(t)$.}
 \label{fig:baseline_sita_simulation}
 \end{figure}
+
+Figure~\ref{fig:baseline_sita_simulation} shows the baseline behaviour of the four model compartments. The susceptible population $S(t)$ remains the largest compartment throughout the simulation and decreases gradually from the initial value of 10000 to approximately 7146.82 at the final time. The infected population $I(t)$ starts at its highest value of 150 and then decreases continuously, reaching approximately 3.11 by year 50. This decline is consistent with the computed value $\mathcal{R}_0=0.430<1$, which indicates controlled transmission under the selected intervention levels.
+
+The treated class $T(t)$ initially increases because infected individuals are moved into treatment through the testing and treatment-seeking intervention. After reaching a higher level, it gradually decreases and ends at approximately 94.27. The AIDS-stage class $A(t)$ remains low compared with the susceptible and treated compartments and ends at approximately 3.59. The logarithmic view is especially useful because it makes the smaller infected, treated, and AIDS-stage curves visible on the same graph as the much larger susceptible population.
 
 \begin{table}[H]
 \centering
@@ -1091,21 +1107,48 @@ All other parameter values were kept fixed so that the differences in the trajec
 
 \begin{figure}[H]
 \centering
-\fbox{\parbox[c][7cm][c]{0.90\textwidth}{\centering
-\textbf{Insert Figure 6.2 here}\\[4pt]
-Dashboard memory-effect graph comparing $I(t)$ for $q=1.00,0.95,0.85,0.75$.}}
+\includegraphics[width=0.96\textwidth]{memoryChart.png}
 \caption{Effect of fractional order on the infected population $I(t)$.}
 \label{fig:memory_infected}
 \end{figure}
 
+Figure~\ref{fig:memory_infected} compares the infected population for $q=1.00$, $q=0.95$, $q=0.85$, and $q=0.75$. All four curves begin from the same initial infected population, but the rate of decline differs. The ordinary model with $q=1.00$ decreases fastest, while the lower fractional order $q=0.75$ decreases slowest and remains highest at the final time. This confirms the role of fractional memory: smaller values of $q$ create stronger memory effects and delay the movement of the system toward the disease-free state.
+
 \begin{figure}[H]
 \centering
-\fbox{\parbox[c][7cm][c]{0.90\textwidth}{\centering
-\textbf{Insert Figure 6.3 here}\\[4pt]
-Dashboard memory-effect graphs comparing $T(t)$, $A(t)$, and the $I$--$T$ phase trajectory for different $q$ values.}}
-\caption{Memory-effect comparison for treatment, AIDS progression, and phase trajectory.}
+\begin{subfigure}{0.98\textwidth}
+\centering
+\includegraphics[width=\textwidth]{memoryAChart.png}
+\caption{AIDS-stage population $A(t)$ for different fractional orders.}
+\label{fig:memory_aids}
+\end{subfigure}
+
+\vspace{0.4cm}
+
+\begin{subfigure}{0.98\textwidth}
+\centering
+\includegraphics[width=\textwidth]{memoryPhaseChart.png}
+\caption{Memory-effect phase trajectory comparing $I(t)$ and $T(t)$.}
+\label{fig:memory_phase}
+\end{subfigure}
+
+\vspace{0.4cm}
+
+\begin{subfigure}{0.98\textwidth}
+\centering
+\includegraphics[width=\textwidth]{mittagChart.png}
+\caption{Mittag--Leffler memory kernel compared with the ordinary exponential case.}
+\label{fig:mittag_kernel}
+\end{subfigure}
+\caption{Additional memory-effect visualisations for AIDS progression, phase behaviour, and the fractional memory kernel.}
 \label{fig:memory_extra}
 \end{figure}
+
+Figure~\ref{fig:memory_extra} gives additional evidence of the effect of the fractional order. In Figure~\ref{fig:memory_aids}, the AIDS-stage population first increases slightly and then decreases over time. The curve for the lower fractional order $q=0.75$ remains higher for longer, while the ordinary case $q=1.00$ decreases faster. This means that stronger memory effects can delay the reduction of the AIDS-stage population.
+
+The phase graph in Figure~\ref{fig:memory_phase} shows the relationship between the infected and treated compartments. The trajectories move through a similar region of the phase plane, but the curves separate according to the fractional order. This indicates that changing $q$ affects not only the size of each compartment but also the dynamic relationship between infection and treatment.
+
+Figure~\ref{fig:mittag_kernel} shows the fractional memory kernel. The ordinary exponential case decreases faster, while the Mittag--Leffler type curves associated with fractional orders decay more slowly. This supports the interpretation that fractional models preserve past effects for a longer period than classical ordinary differential equation models.
 
 \begin{table}[H]
 \centering
