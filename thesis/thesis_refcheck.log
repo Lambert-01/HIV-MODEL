@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.5.23)  24 MAY 2026 19:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.5.23)  24 MAY 2026 18:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1060,8 +1060,8 @@ File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 tex.def
 File: l3backend-pdftex.def 2026-02-18 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count387
-) (thesis.aux)
-\openout1 = `thesis.aux'.
+) (thesis_refcheck.aux)
+\openout1 = `thesis_refcheck.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 191.
 LaTeX Font Info:    ... okay on input line 191.
@@ -1168,9 +1168,9 @@ Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \c@lstlisting=\count394
 Package hyperref Info: Link coloring ON on input line 191.
- (thesis.out) (thesis.out)
+ (thesis_refcheck.out) (thesis_refcheck.out)
 \@outlinefile=\write4
-\openout4 = `thesis.out'.
+\openout4 = `thesis_refcheck.out'.
 
 
 (C:\Users\educa\AppData\Local\Programs\MiKTeX\tex/latex/translations/dicts\tran
@@ -1288,23 +1288,23 @@ Package hyperref Info: Option `pageanchor' set `true' on input line 446.
 
 ] [5
 
-] [6] (thesis.toc [7
+] [6] (thesis_refcheck.toc [7
 
 ] [8])
 \tf@toc=\write5
-\openout5 = `thesis.toc'.
+\openout5 = `thesis_refcheck.toc'.
 
- [9] (thesis.lof)
+ [9] (thesis_refcheck.lof)
 \tf@lof=\write6
-\openout6 = `thesis.lof'.
+\openout6 = `thesis_refcheck.lof'.
 
- [10
+[10
 
-] (thesis.lot)
+] (thesis_refcheck.lot)
 \tf@lot=\write7
-\openout7 = `thesis.lot'.
+\openout7 = `thesis_refcheck.lot'.
 
-[11
+ [11
 
 ] [12
 
@@ -1490,18 +1490,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 2212--2213
 
 ] [55
 
-] [56] (thesis.aux)
+] [56] (thesis_refcheck.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-03-20>
  ***********
-Package rerunfilecheck Info: File `thesis.out' has not changed.
+Package rerunfilecheck Info: File `thesis_refcheck.out' has not changed.
 (rerunfilecheck)             Checksum: A088F15EBF56C2BBBE11828E19F8B40A;15220.
  ) 
 Here is how much of TeX's memory you used:
  39140 strings out of 467691
- 804384 string characters out of 5414987
- 1649483 words of memory out of 5000000
+ 804672 string characters out of 5414987
+ 1649510 words of memory out of 5000000
  66913 multiletter control sequences out of 15000+600000
  784234 words of font info for 302 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1532,7 +1532,7 @@ C:/Users/educa/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy6.pfb><C
 /Users/educa/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/
 msam10.pfb><C:/Users/educa/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
 fonts/symbols/msbm10.pfb>
-Output written on thesis.pdf (70 pages, 2017905 bytes).
+Output written on thesis_refcheck.pdf (70 pages, 2017905 bytes).
 PDF statistics:
  1278 PDF objects out of 1440 (max. 8388607)
  374 named destinations out of 1000 (max. 500000)
