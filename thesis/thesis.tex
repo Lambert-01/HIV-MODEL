@@ -763,296 +763,865 @@ This chapter formulated the fractional-order SITA model, defined the interventio
 \chapter{Theoretical Analysis of the Fractional Model}
 %% ============================================================
 
+\begin{remarkbox}[title={Purpose of this chapter}]
+This chapter establishes the main mathematical properties of the proposed fractional-order SITA model. The analysis verifies that the model is epidemiologically meaningful, that solutions remain nonnegative and bounded, and that the disease-free equilibrium can be studied through the basic reproduction number and fractional stability theory.
+\end{remarkbox}
+
+Throughout this chapter, the intervention functions are assumed to satisfy
+\[
+0\leq u_i(t)\leq 1,\qquad i=1,2,3,4,
+\]
+and all biological parameters are assumed to be nonnegative, with
+\[
+\Lambda>0,\quad \mu>0,\quad \beta_0>0,\quad \tau>0,\quad \delta>0,\quad \rho>0,\quad d>0,\quad 0<\eta<1.
+\]
+The fractional order satisfies
+\[
+0<q\leq 1.
+\]
+
+For mathematical analysis, the system is written in compact form as
+\[
+\CaputoD{t}{q}X(t)=F(t,X(t)),
+\qquad
+X(t)=\bigl(S(t),I(t),T(t),A(t)\bigr)^T.
+\]
+
+%% ------------------------------------------------------------
 \section{Equivalent Integral Form}
-Using the Riemann--Liouville fractional integral, the Caputo system can be written in equivalent integral form. For example,
+%% ------------------------------------------------------------
+
+The Caputo fractional system can be rewritten as an equivalent Volterra integral system by applying the Riemann--Liouville fractional integral. This representation is important because fractional differential equations are naturally nonlocal, meaning that the present state depends on the entire previous history of the system.
+
+For the susceptible compartment, the equivalent integral form is
 \begin{equation}
-S(t)=S_0+\frac{1}{\Gamma(q)}\int_0^t (t-s)^{q-1}\left[\Lambda-\lambda(s)S(s)-\mu S(s)\right]ds.
+S(t)=S_0+\frac{1}{\Gamma(q)}
+\int_0^t (t-s)^{q-1}
+\left[\Lambda-\lambda(s)S(s)-\mu S(s)\right]ds.
+\label{eq:int_S}
 \end{equation}
-Similar integral forms hold for $I(t)$, $T(t)$, and $A(t)$. This representation is important for proving existence, uniqueness, positivity, and for deriving numerical schemes.
 
+Similarly, for the infected, treated, and AIDS-stage compartments, we obtain
+\begin{align}
+I(t)&=I_0+\frac{1}{\Gamma(q)}
+\int_0^t (t-s)^{q-1}
+\left[
+\lambda(s)S(s)-\bigl(\tau(1+u_3(s))+\delta+\mu\bigr)I(s)
+\right]ds,
+\label{eq:int_I}\\[4pt]
+T(t)&=T_0+\frac{1}{\Gamma(q)}
+\int_0^t (t-s)^{q-1}
+\left[
+\tau(1+u_3(s))I(s)-\bigl(\rho(1-u_4(s))+\mu\bigr)T(s)
+\right]ds,
+\label{eq:int_T}\\[4pt]
+A(t)&=A_0+\frac{1}{\Gamma(q)}
+\int_0^t (t-s)^{q-1}
+\left[
+\delta I(s)+\rho(1-u_4(s))T(s)-(\mu+d)A(s)
+\right]ds.
+\label{eq:int_A}
+\end{align}
+
+\begin{remarkbox}[title={Interpretation}]
+Equations~\eqref{eq:int_S}--\eqref{eq:int_A} show explicitly how the Gamma function enters the model. The kernel $(t-s)^{q-1}$ weights past states of the system, which is the mathematical source of memory in the fractional-order model.
+\end{remarkbox}
+
+%% ------------------------------------------------------------
 \section{Existence and Uniqueness of Solutions}
-Let
-\[
-X(t)=(S(t),I(t),T(t),A(t))^T
-\]
-and write the system in compact form as
-\[
-\CaputoD{t}{q}X(t)=F(t,X(t)).
-\]
-On the biologically feasible region, the denominator $N(t)$ is positive whenever the total population is positive. Hence the right-hand side consists of continuous functions of the state variables and is locally Lipschitz on bounded subsets of the positive region.
+%% ------------------------------------------------------------
 
-\begin{resultbox}[title={Existence and Uniqueness}]
-If $F(t,X)$ is continuous in $t$ and locally Lipschitz continuous in $X$ on the feasible region, then the fractional-order HIV model has a unique solution on a suitable time interval.
+For a mathematical model to be meaningful, it must have a solution and that solution should be unique under the stated initial conditions. Let
+\[
+\Omega_M=\left\{X\in\mathbb{R}_+^4: 0\leq S+I+T+A\leq M,\; S+I+T+A>0\right\}
+\]
+be a bounded positive region for some $M>0$. In this region, the force of infection
+\[
+\lambda(t)=\frac{\beta_0(1-u_1(t))(1-u_2(t))(I+\eta T)}{N}
+\]
+is continuous whenever $N>0$.
+
+\begin{resultbox}[title={Theorem 4.1 --- Existence and Uniqueness}]
+Suppose that the initial data satisfy
+\[
+S_0\geq0,\qquad I_0\geq0,\qquad T_0\geq0,\qquad A_0\geq0,
+\qquad N_0=S_0+I_0+T_0+A_0>0.
+\]
+If the intervention functions $u_i(t)$, $i=1,2,3,4$, are bounded and continuous on $[0,T]$, then the fractional-order SITA system admits a unique local solution on a suitable interval $[0,T^*]\subseteq[0,T]$.
 \end{resultbox}
 
-\noindent\textbf{Proof Outline.}
-Using the definition of the Caputo derivative, the fractional system is transformed into a Volterra-type integral equation:
+\noindent\textbf{Proof.}
+Using the Caputo integral representation, the system can be written as
 \[
-X(t)=X(0)+\frac{1}{\Gamma(q)}\int_0^t(t-s)^{q-1}F(s,X(s))ds.
+X(t)=X(0)+\frac{1}{\Gamma(q)}
+\int_0^t(t-s)^{q-1}F(s,X(s))ds.
 \]
-Under the continuity and local Lipschitz conditions stated above, the associated integral operator is a contraction on a suitable function space over a sufficiently small interval. Banach's fixed point theorem then guarantees the existence and uniqueness of a local solution. Since the population is shown below to remain bounded in the feasible region, the local solution can be extended while it remains in that region \citep{Kilbas2006,Diethelm2010}. \hfill$\square$
+Define the operator
+\[
+(\mathcal{T}X)(t)=X(0)+\frac{1}{\Gamma(q)}
+\int_0^t(t-s)^{q-1}F(s,X(s))ds.
+\]
+On any bounded subset of $\Omega_M$, the function $F(t,X)$ is continuous in $t$ and locally Lipschitz in $X$, because it is made from sums, products, and rational terms whose denominator $N$ is positive. Hence, there exists a constant $L>0$ such that
+\[
+\|F(t,X)-F(t,Y)\|\leq L\|X-Y\|.
+\]
+For $X,Y\in C([0,T^*],\mathbb{R}^4)$, we have
+\[
+\|\mathcal{T}X-\mathcal{T}Y\|
+\leq
+\frac{L}{\Gamma(q)}
+\int_0^{T^*}(T^*-s)^{q-1}\|X-Y\|ds.
+\]
+Therefore,
+\[
+\|\mathcal{T}X-\mathcal{T}Y\|
+\leq
+\frac{L(T^*)^q}{\Gamma(q+1)}\|X-Y\|.
+\]
+Choosing $T^*>0$ sufficiently small so that
+\[
+\frac{L(T^*)^q}{\Gamma(q+1)}<1,
+\]
+the operator $\mathcal{T}$ becomes a contraction. By Banach's fixed point theorem, the model has a unique local solution. Since boundedness is established below, the solution can be extended while it remains in the biologically feasible region. \hfill$\square$
 
+%% ------------------------------------------------------------
 \section{Positivity of Solutions}
-\begin{resultbox}[title={Positivity}]
-If $S_0,I_0,T_0,A_0\geq0$, then
+%% ------------------------------------------------------------
+
+Population variables cannot be negative. Thus, positivity is an essential biological requirement.
+
+\begin{resultbox}[title={Theorem 4.2 --- Positivity}]
+If
 \[
-S(t), I(t), T(t), A(t)\geq0, \qquad t\geq0.
+S_0\geq0,\qquad I_0\geq0,\qquad T_0\geq0,\qquad A_0\geq0,
+\]
+then the solution of the fractional-order SITA model satisfies
+\[
+S(t)\geq0,\qquad I(t)\geq0,\qquad T(t)\geq0,\qquad A(t)\geq0,
+\qquad t\geq0.
 \]
 \end{resultbox}
 
-\noindent\textbf{Proof Outline.}
-At the boundary of the nonnegative region, the right-hand side of each compartment equation is nonnegative in the corresponding boundary component. Specifically, if $S=0$, then $\CaputoD{t}{q}S=\Lambda\geq0$; if $I=0$, then $\CaputoD{t}{q}I=\lambda(t)S\geq0$; if $T=0$, then $\CaputoD{t}{q}T=\tau(1+u_3)I\geq0$; and if $A=0$, then $\CaputoD{t}{q}A=\delta I+\rho(1-u_4)T\geq0$. By the positivity principle for Caputo fractional systems, solutions starting in the nonnegative orthant remain nonnegative. \hfill$\square$
+\noindent\textbf{Proof.}
+We verify that the vector field points inward on the boundary of the nonnegative orthant. At $S=0$,
+\[
+\CaputoD{t}{q}S(t)=\Lambda\geq0.
+\]
+At $I=0$,
+\[
+\CaputoD{t}{q}I(t)=\lambda(t)S(t)\geq0.
+\]
+At $T=0$,
+\[
+\CaputoD{t}{q}T(t)=\tau(1+u_3(t))I(t)\geq0.
+\]
+At $A=0$,
+\[
+\CaputoD{t}{q}A(t)=\delta I(t)+\rho(1-u_4(t))T(t)\geq0.
+\]
+Since each boundary component has a nonnegative fractional derivative in the corresponding compartment, the nonnegative orthant is positively invariant by the standard positivity principle for Caputo fractional systems. Therefore, solutions starting with nonnegative initial conditions remain nonnegative for all $t\geq0$. \hfill$\square$
 
+%% ------------------------------------------------------------
 \section{Boundedness and Feasible Region}
-Let
+%% ------------------------------------------------------------
+
+Boundedness ensures that the total population remains finite. Let
 \[
 N(t)=S(t)+I(t)+T(t)+A(t).
 \]
-Adding the model equations gives
+Adding the four model equations gives
 \begin{equation}
-\CaputoD{t}{q}N(t)=\Lambda-\mu N(t)-dA(t)\leq \Lambda-\mu N(t).
+\CaputoD{t}{q}N(t)=\Lambda-\mu N(t)-dA(t).
+\label{eq:caputo_N}
 \end{equation}
-The associated comparison fractional equation is
+Since $dA(t)\geq0$, it follows that
+\begin{equation}
+\CaputoD{t}{q}N(t)\leq \Lambda-\mu N(t).
+\label{eq:N_ineq}
+\end{equation}
+
+Consider the comparison equation
 \[
-\CaputoD{t}{q}Y(t)=\Lambda-\mu Y(t).
+\CaputoD{t}{q}Y(t)=\Lambda-\mu Y(t),\qquad Y(0)=N(0).
 \]
-Its solution can be expressed using the Mittag-Leffler function:
+Its solution is
+\begin{equation}
+Y(t)=\frac{\Lambda}{\mu}
++\left(N(0)-\frac{\Lambda}{\mu}\right)E_q(-\mu t^q),
+\label{eq:Y_ML}
+\end{equation}
+where $E_q(\cdot)$ is the Mittag--Leffler function.
+
+\begin{resultbox}[title={Theorem 4.3 --- Boundedness}]
+All solutions of the fractional-order SITA model with nonnegative initial conditions are bounded in the region
 \[
-Y(t)=\frac{\Lambda}{\mu}+\left(Y(0)-\frac{\Lambda}{\mu}\right)E_q(-\mu t^q).
+\Omega=
+\left\{
+(S,I,T,A)\in\mathbb{R}_+^4:
+0\leq N(t)\leq \frac{\Lambda}{\mu}
+\right\}
 \]
-Since $E_q(-\mu t^q)$ decays to zero for $\mu>0$, it follows that
+whenever $N(0)\leq \Lambda/\mu$. In general,
 \[
 \limsup_{t\to\infty}N(t)\leq\frac{\Lambda}{\mu}.
 \]
-Thus, the biologically feasible region is
-\begin{equation}
-\Omega=\left\{(S,I,T,A)\in\R_+^4: 0\leq N(t)\leq \frac{\Lambda}{\mu}\right\}.
-\end{equation}
-This boundedness result also supports the biological interpretation of the model, because the total population remains finite and the compartments stay inside a positively invariant region.
+\end{resultbox}
 
-\section{Disease-Free Equilibrium}
-At the disease-free equilibrium, $I=T=A=0$. Hence,
+\noindent\textbf{Proof.}
+By the fractional comparison principle, inequality~\eqref{eq:N_ineq} implies
 \[
-0=\Lambda-\mu S,
+N(t)\leq Y(t),
 \]
-and therefore
+where $Y(t)$ is given by~\eqref{eq:Y_ML}. Since $E_q(-\mu t^q)\to0$ as $t\to\infty$ for $\mu>0$, we obtain
+\[
+\limsup_{t\to\infty}N(t)\leq\frac{\Lambda}{\mu}.
+\]
+Therefore, the total population remains bounded and the region $\Omega$ is biologically feasible. \hfill$\square$
+
+\begin{remarkbox}[title={Biological meaning}]
+The bound $\Lambda/\mu$ represents the maximum long-term population size supported by recruitment and natural mortality in the absence of disease-induced mortality. The additional AIDS-induced death term $dA(t)$ only reduces the total population further.
+\end{remarkbox}
+
+%% ------------------------------------------------------------
+\section{Disease-Free Equilibrium}
+%% ------------------------------------------------------------
+
+The disease-free equilibrium represents the state where HIV is absent from the population. Therefore,
+\[
+I=T=A=0.
+\]
+Substituting these values into the susceptible equation gives
+\[
+0=\Lambda-\mu S.
+\]
+Hence,
 \begin{equation}
 E_0=\left(\frac{\Lambda}{\mu},0,0,0\right).
+\label{eq:dfe}
 \end{equation}
 
+\begin{remarkbox}[title={Interpretation}]
+At $E_0$, all individuals are susceptible and no infection is present. This equilibrium is the reference point for deriving the basic reproduction number.
+\end{remarkbox}
+
+%% ------------------------------------------------------------
 \section{Basic Reproduction Number}
-For equilibrium analysis, the intervention functions are treated as constant intervention levels. Define
+%% ------------------------------------------------------------
+
+For the derivation of $\Rzero$, the intervention functions are treated as constant levels:
+\[
+u_i(t)=u_i,\qquad i=1,2,3,4.
+\]
+Define
 \[
 \beff=\beta_0(1-u_1)(1-u_2),\qquad
 \taueff=\tau(1+u_3),\qquad
 \rhoeff=\rho(1-u_4).
 \]
-Using the next-generation matrix method \citep{VanDenDriessche2002}, the infected compartments are $I$ and $T$. The next-generation matrices are
+At the disease-free equilibrium,
 \[
-F=\begin{pmatrix}
+S^*=\frac{\Lambda}{\mu},
+\qquad
+N^*=\frac{\Lambda}{\mu}.
+\]
+Thus, near $E_0$,
+\[
+\lambda(t)S
+=
+\beff(I+\eta T).
+\]
+
+The infected-related compartments are $I$ and $T$. The new infection terms are
+\[
+\mathcal{F}_1=\beff(I+\eta T),
+\qquad
+\mathcal{F}_2=0.
+\]
+The transition terms are
+\[
+\mathcal{V}_1=(\taueff+\delta+\mu)I,
+\]
+and
+\[
+\mathcal{V}_2=(\rhoeff+\mu)T-\taueff I.
+\]
+Therefore,
+\[
+F=
+\begin{pmatrix}
 \beff & \eta\beff\\
 0&0
 \end{pmatrix},
 \qquad
-V=\begin{pmatrix}
+V=
+\begin{pmatrix}
 \taueff+\delta+\mu & 0\\
 -\taueff & \rhoeff+\mu
 \end{pmatrix}.
 \]
-The basic reproduction number is
+
+The inverse of $V$ is
+\[
+V^{-1}=
+\frac{1}{(\taueff+\delta+\mu)(\rhoeff+\mu)}
+\begin{pmatrix}
+\rhoeff+\mu & 0\\
+\taueff & \taueff+\delta+\mu
+\end{pmatrix}.
+\]
+The next-generation matrix is
+\[
+K=FV^{-1}.
+\]
+Multiplying gives
+\[
+K=
+\frac{\beff}{(\taueff+\delta+\mu)(\rhoeff+\mu)}
+\begin{pmatrix}
+\rhoeff+\mu+\eta\taueff &
+\eta(\taueff+\delta+\mu)\\
+0&0
+\end{pmatrix}.
+\]
+The basic reproduction number is the spectral radius of $K$. Hence,
 \begin{mathbox}
 \begin{equation}
 \Rzero=
 \frac{\beff}{\taueff+\delta+\mu}
-\left(1+\frac{\eta\taueff}{\rhoeff+\mu}\right).
-\label{eq:R0_fractional}
+\left(
+1+\frac{\eta\taueff}{\rhoeff+\mu}
+\right).
+\label{eq:R0_general_eff}
 \end{equation}
 \end{mathbox}
-The first factor represents the expected contribution of untreated infected individuals before leaving the infected class. The second factor accounts for the additional transmission contribution from treated individuals, reduced by the relative infectiousness parameter $\eta$ and by the treated-class exit rate.
-Substituting the intervention terms gives
+Substituting the intervention-modified rates gives
 \begin{mathbox}
 \begin{equation}
 \Rzero=
-\frac{\beta_0(1-u_1)(1-u_2)}{\tau(1+u_3)+\delta+\mu}
-\left(1+\frac{\eta\tau(1+u_3)}{\rho(1-u_4)+\mu}\right).
+\frac{\beta_0(1-u_1)(1-u_2)}
+{\tau(1+u_3)+\delta+\mu}
+\left(
+1+\frac{\eta\tau(1+u_3)}
+{\rho(1-u_4)+\mu}
+\right).
+\label{eq:R0_intervention_final}
 \end{equation}
 \end{mathbox}
 
-\section{Fractional-Order Local Stability}
-The disease-free equilibrium is locally asymptotically stable for the fractional model if all eigenvalues $\lambda_i$ of the linearized infected subsystem at $E_0$ satisfy
-\begin{equation}
-|\arg(\lambda_i)|>\frac{q\pi}{2}.
-\end{equation}
-When $q=1$, this reduces to the classical ordinary differential equation stability condition.
+\begin{remarkbox}[title={Important interpretation of $u_4$}]
+In the present model, $u_4$ reduces progression from treatment to AIDS through $\rho(1-u_4)$. Since the treated class still contributes to transmission through $\eta T$, the direct effect of $u_4$ on $\Rzero$ can be subtle. If the study aims to make adherence reduce infectiousness directly, a refined force of infection may use $\eta(1-u_4)T$. In the current structure, $u_4$ is mainly interpreted as reducing AIDS progression and improving treatment outcomes, while $u_1$ and $u_2$ directly reduce new infections.
+\end{remarkbox}
 
-For this model, $\Rzero<1$ means that the expected number of secondary infections generated by one infected individual is below the epidemic threshold. The fractional stability condition then verifies that the memory-dependent linearized system still moves away from infection persistence and toward the disease-free equilibrium.
+%% ------------------------------------------------------------
+\section{Local Stability of the Disease-Free Equilibrium}
+%% ------------------------------------------------------------
 
-\begin{resultbox}[title={Fractional Stability Result}]
-If $\Rzero<1$ and the eigenvalues of the infected subsystem satisfy
+The Jacobian matrix of the full system at $E_0$ is
 \[
-|\arg(\lambda_i)|>\frac{q\pi}{2},
+J(E_0)=
+\begin{pmatrix}
+-\mu & -\beff & -\eta\beff & 0\\
+0 & \beff-(\taueff+\delta+\mu) & \eta\beff & 0\\
+0 & \taueff & -(\rhoeff+\mu) & 0\\
+0 & \delta & \rhoeff & -(\mu+d)
+\end{pmatrix}.
 \]
-then the disease-free equilibrium $E_0$ is locally asymptotically stable in the fractional-order sense.
+Two eigenvalues are immediately obtained:
+\[
+\lambda_1=-\mu,
+\qquad
+\lambda_2=-(\mu+d),
+\]
+which are both negative.
+
+The remaining eigenvalues are obtained from the infected subsystem
+\[
+J_{IT}=
+\begin{pmatrix}
+\beff-(\taueff+\delta+\mu) & \eta\beff\\
+\taueff & -(\rhoeff+\mu)
+\end{pmatrix}.
+\]
+Let
+\[
+a=\taueff+\delta+\mu,
+\qquad
+b=\rhoeff+\mu.
+\]
+Then
+\[
+J_{IT}=
+\begin{pmatrix}
+\beff-a & \eta\beff\\
+\taueff & -b
+\end{pmatrix}.
+\]
+The trace is
+\[
+\operatorname{tr}(J_{IT})=\beff-a-b,
+\]
+and the determinant is
+\[
+\det(J_{IT})
+=
+(\beff-a)(-b)-\eta\beff\taueff.
+\]
+After simplification,
+\begin{equation}
+\det(J_{IT})
+=
+ab-\beff(b+\eta\taueff).
+\label{eq:det_simplified}
+\end{equation}
+Using~\eqref{eq:R0_general_eff}, we obtain
+\begin{equation}
+\det(J_{IT})=ab(1-\Rzero).
+\label{eq:det_R0_relation}
+\end{equation}
+
+\begin{resultbox}[title={Theorem 4.4 --- Fractional Local Stability of $E_0$}]
+The disease-free equilibrium
+\[
+E_0=\left(\frac{\Lambda}{\mu},0,0,0\right)
+\]
+is locally asymptotically stable in the fractional-order sense if
+\[
+\Rzero<1
+\]
+and the eigenvalues $\lambda_i$ of the linearized system satisfy
+\[
+|\arg(\lambda_i)|>\frac{q\pi}{2}.
+\]
+It is unstable if $\Rzero>1$.
 \end{resultbox}
 
+\noindent\textbf{Proof.}
+If $\Rzero<1$, then from~\eqref{eq:det_R0_relation},
+\[
+\det(J_{IT})=ab(1-\Rzero)>0.
+\]
+Also, $\Rzero<1$ implies
+\[
+\beff < \frac{ab}{b+\eta\taueff}<a,
+\]
+because $b+\eta\taueff>b$. Therefore,
+\[
+\operatorname{tr}(J_{IT})=\beff-a-b<0.
+\]
+Thus, the infected subsystem has eigenvalues with negative real parts. Since the remaining eigenvalues $-\mu$ and $-(\mu+d)$ are also negative, the linearized ordinary system is locally stable.
+
+For a Caputo fractional system of order $0<q\leq1$, local asymptotic stability requires
+\[
+|\arg(\lambda_i)|>\frac{q\pi}{2}.
+\]
+Eigenvalues with negative real parts satisfy this condition for $0<q\leq1$. Hence $E_0$ is locally asymptotically stable in the fractional-order sense when $\Rzero<1$.
+
+If $\Rzero>1$, then
+\[
+\det(J_{IT})=ab(1-\Rzero)<0,
+\]
+so the infected subsystem has eigenvalues with opposite signs in the real case or at least one eigenvalue with positive real part. Therefore, the disease-free equilibrium is unstable. \hfill$\square$
+
+%% ------------------------------------------------------------
+\section{Endemic Equilibrium}
+%% ------------------------------------------------------------
+
+An endemic equilibrium represents a persistent infection state:
+\[
+E^*=(S^*,I^*,T^*,A^*),
+\qquad
+I^*>0,\quad T^*>0,\quad A^*>0.
+\]
+At endemic equilibrium,
+\[
+\CaputoD{t}{q}S=
+\CaputoD{t}{q}I=
+\CaputoD{t}{q}T=
+\CaputoD{t}{q}A=0.
+\]
+Therefore, the equilibrium equations are
+\begin{align}
+0&=\Lambda-\lambda^*S^*-\mu S^*,\\
+0&=\lambda^*S^*-(\taueff+\delta+\mu)I^*,\\
+0&=\taueff I^*-(\rhoeff+\mu)T^*,\\
+0&=\delta I^*+\rhoeff T^*-(\mu+d)A^*.
+\end{align}
+From the third and fourth equations,
+\[
+T^*=\frac{\taueff}{\rhoeff+\mu}I^*,
+\]
+and
+\[
+A^*=
+\frac{\delta I^*+\rhoeff T^*}{\mu+d}.
+\]
+The explicit expression for $I^*$ may be obtained by substituting these relations into the force of infection and susceptible equilibrium equation. Because the resulting expression is lengthy, this thesis uses numerical simulation to examine endemic behaviour when $\Rzero>1$.
+
+\begin{remarkbox}[title={Interpretation}]
+The disease-free equilibrium is the main analytical focus because it determines whether HIV can invade a fully susceptible population. The endemic equilibrium is mainly explored numerically, especially under scenarios where interventions are weak and $\Rzero>1$.
+\end{remarkbox}
+
+%% ------------------------------------------------------------
 \section{Sensitivity Analysis}
+%% ------------------------------------------------------------
+
 The normalized sensitivity index of $\Rzero$ with respect to a parameter $p$ is
 \begin{equation}
-\Upsilon_p^{\Rzero}=\frac{\partial \Rzero}{\partial p}\cdot\frac{p}{\Rzero}.
+\Upsilon_p^{\Rzero}
+=
+\frac{\partial \Rzero}{\partial p}\cdot\frac{p}{\Rzero}.
+\label{eq:sensitivity_index}
 \end{equation}
-This is used to determine which biological parameters and social behaviour interventions have the strongest effect on HIV transmission.
+This index measures the relative change in $\Rzero$ caused by a relative change in $p$.
 
+From~\eqref{eq:R0_intervention_final}, the following direct sensitivity signs are obtained:
+\[
+\Upsilon_{\beta_0}^{\Rzero}=1,
+\]
+which means that a percentage increase in $\beta_0$ produces the same percentage increase in $\Rzero$.
+
+For the awareness and safer behaviour interventions,
+\[
+\Upsilon_{u_1}^{\Rzero}=-\frac{u_1}{1-u_1},
+\qquad
+\Upsilon_{u_2}^{\Rzero}=-\frac{u_2}{1-u_2}.
+\]
+Thus, increasing $u_1$ or $u_2$ decreases $\Rzero$, confirming that awareness and safer sexual behaviour directly reduce transmission.
+
+For the AIDS progression parameter $\delta$,
+\[
+\Upsilon_{\delta}^{\Rzero}
+=
+-\frac{\delta}{\taueff+\delta+\mu}.
+\]
+Hence increasing progression out of the untreated infected class reduces the average duration of untreated infection in this simplified transmission structure.
+
+\begin{remarkbox}[title={Sensitivity interpretation}]
+Positive sensitivity means that increasing the parameter increases $\Rzero$. Negative sensitivity means that increasing the parameter decreases $\Rzero$. The dashboard uses this idea to rank parameters and interventions according to their effect on HIV transmission potential.
+\end{remarkbox}
+
+%% ------------------------------------------------------------
 \section{Chapter Summary}
-This chapter presented the equivalent integral form, existence and uniqueness, positivity, boundedness, disease-free equilibrium, reproduction number, fractional stability criterion, and sensitivity analysis. The next chapter explains the research methodology, numerical scheme, and dashboard development process.
+%% ------------------------------------------------------------
+
+This chapter established the main theoretical properties of the fractional-order SITA HIV model. The equivalent integral form showed how memory enters through the Gamma-weighted kernel. Existence and uniqueness were justified using a fixed-point argument, while positivity and boundedness confirmed the biological validity of the model. The disease-free equilibrium was obtained, the basic reproduction number was derived using the next-generation matrix method, and local stability was analysed using the fractional-order eigenvalue condition. Sensitivity analysis was introduced as a tool for identifying the most influential biological and intervention parameters.
 
 %% ============================================================
 \chapter{Research Methodology, Numerical Method and Dashboard Development}
 %% ============================================================
 
+\begin{remarkbox}[title={Purpose of this chapter}]
+This chapter explains how the theoretical model is converted into numerical simulations and an interactive dashboard. It corrects and clarifies the fractional Adams--Bashforth--Moulton method, describes the computational workflow, and defines the simulation scenarios used to generate thesis results.
+\end{remarkbox}
+
+%% ------------------------------------------------------------
 \section{Research Design}
-This thesis uses a mathematical and computational research design. The mathematical component formulates and analyses the fractional-order SITA model as presented in Chapters~3 and~4. The computational component implements a fractional numerical solver and an interactive web-based dashboard to explore intervention scenarios, memory effects, sensitivity analysis, and epidemic trajectories.
+%% ------------------------------------------------------------
 
-The research proceeds in two parallel streams. The analytical stream establishes the theoretical properties of the model: positivity, boundedness, disease-free equilibrium, basic reproduction number, and fractional stability. The computational stream translates these results into a working simulation environment that allows parameter exploration and visual verification of the analytical findings.
+This thesis uses a mathematical and computational research design. The mathematical component formulates and analyses the fractional-order SITA HIV model, while the computational component implements the model numerically and visualizes the results through an interactive dashboard.
 
-\section{Model Development Procedure}
-The model development follows these steps:
+The study follows three connected stages:
 \begin{enumerate}
-  \item Define the four SITA compartments: susceptible $S(t)$, infected $I(t)$, treated $T(t)$, and AIDS-stage $A(t)$.
-  \item Introduce four social behaviour intervention functions $u_1, u_2, u_3, u_4 \in [0,1]$.
-  \item Replace ordinary derivatives with the Caputo fractional derivative of order $q$, $0 < q \leq 1$.
-  \item Derive the effective transmission rate $\beff$, force of infection $\lambda(t)$, effective treatment uptake $\taueff$, and effective AIDS progression rate $\rhoeff$.
-  \item Analyse positivity, boundedness, disease-free equilibrium, basic reproduction number $\Rzero$, and fractional-order local stability.
-  \item Implement the fractional Adams--Bashforth--Moulton predictor-corrector solver in Python.
-  \item Build the interactive Flask dashboard with API endpoints, Plotly visualisations, and export tools.
+  \item \textbf{Model construction}: define compartments, intervention functions, fractional derivatives, and model assumptions.
+  \item \textbf{Theoretical analysis}: establish positivity, boundedness, disease-free equilibrium, reproduction number, and fractional stability.
+  \item \textbf{Computational simulation}: implement the fractional numerical method, run intervention scenarios, analyse memory effects, and present results through dashboard visualisations.
 \end{enumerate}
 
+\begin{remarkbox}[title={Nature of the results}]
+The simulations in this thesis are scenario-based mathematical experiments. They are not direct clinical forecasts and are not fitted to patient-level data. Their purpose is to compare qualitative behaviour under different fractional orders and intervention levels.
+\end{remarkbox}
+
+%% ------------------------------------------------------------
+\section{Model Development Procedure}
+%% ------------------------------------------------------------
+
+The development of the fractional-order HIV model follows the sequence below:
+\begin{enumerate}
+  \item Define the total population as
+  \[
+  N(t)=S(t)+I(t)+T(t)+A(t).
+  \]
+  \item Construct the SITA compartmental structure.
+  \item Introduce four intervention functions:
+  \[
+  u_1,u_2,u_3,u_4\in[0,1].
+  \]
+  \item Define the effective rates:
+  \[
+  \beff=\beta_0(1-u_1)(1-u_2),\qquad
+  \taueff=\tau(1+u_3),\qquad
+  \rhoeff=\rho(1-u_4).
+  \]
+  \item Replace ordinary derivatives by the Caputo fractional derivative $\CaputoD{t}{q}$, where $0<q\leq1$.
+  \item Derive the reproduction number $\Rzero$.
+  \item Implement the fractional predictor--corrector method in Python.
+  \item Use dashboard graphs and tables to compare baseline, intervention, and memory-effect scenarios.
+\end{enumerate}
+
+%% ------------------------------------------------------------
 \section{Fractional Numerical Scheme}
-The numerical solution of the fractional-order SITA system is obtained using the fractional Adams--Bashforth--Moulton (ABM) predictor-corrector method \citep{Diethelm2002,Diethelm2010}. This method is well suited for Caputo fractional differential equations because it approximates the convolution integral that defines the Caputo derivative, thereby capturing the memory effect that all previous time steps contribute to the current state.
+%% ------------------------------------------------------------
 
-For a general Caputo fractional system
+The fractional-order model is solved numerically using the fractional Adams--Bashforth--Moulton predictor--corrector method. This method is widely used for Caputo fractional differential equations because it approximates the Volterra integral representation of the system and naturally accounts for memory effects.
+
+Consider the general Caputo fractional initial value problem
+\begin{equation}
+\CaputoD{t}{q}y(t)=f(t,y(t)),
+\qquad
+y(0)=y_0,
+\qquad
+0<q\leq1.
+\label{eq:general_fivp}
+\end{equation}
+Its equivalent integral form is
+\begin{equation}
+y(t)=y_0+\frac{1}{\Gamma(q)}
+\int_0^t(t-s)^{q-1}f(s,y(s))ds.
+\label{eq:general_integral}
+\end{equation}
+Let
 \[
-\CaputoD{t}{q}y(t)=f(t,y(t)),\qquad y(0)=y_0,\qquad 0<q\leq1,
+t_n=nh,\qquad n=0,1,\ldots,M,
 \]
-the equivalent Volterra integral form is
-\[
-y(t)=y_0+\frac{1}{\Gamma(q)}\int_0^t (t-s)^{q-1}f(s,y(s))\,ds.
-\]
-Let $t_n=nh$ for $n=0,1,\ldots,M$, where $h>0$ is the fixed step size.
+where $h>0$ is the time step.
 
-\subsection{Predictor Step (Adams--Bashforth)}
-The predictor approximation at step $n+1$ is
+%% ------------------------------------------------------------
+\subsection{Predictor Step}
+%% ------------------------------------------------------------
+
+The Adams--Bashforth predictor estimates $y_{n+1}$ using previously computed values:
 \begin{equation}
-y_{n+1}^{P}=y_0+\frac{h^q}{\Gamma(q+1)}\sum_{j=0}^{n}b_{j,n+1}\,f(t_j,y_j),
-\label{eq:abm_predictor}
+y_{n+1}^{P}
+=
+y_0+\frac{h^q}{\Gamma(q+1)}
+\sum_{j=0}^{n} b_{j,n+1} f(t_j,y_j),
+\label{eq:correct_predictor}
 \end{equation}
-where the predictor weights are
+where
 \begin{equation}
-b_{j,n+1}=(n+1-j)^q-(n-j)^q, \qquad j=0,1,\ldots,n.
-\label{eq:predictor_weights}
+b_{j,n+1}=(n+1-j)^q-(n-j)^q,
+\qquad
+j=0,1,\ldots,n.
+\label{eq:correct_predictor_weights}
 \end{equation}
 
-\subsection{Corrector Step (Adams--Moulton)}
-The corrector step uses the predicted value $y_{n+1}^{P}$ to improve the approximation:
+%% ------------------------------------------------------------
+\subsection{Corrector Step}
+%% ------------------------------------------------------------
+
+The Adams--Moulton corrector improves the predicted value by evaluating the function at $t_{n+1}$:
 \begin{equation}
-y_{n+1}=y_0+\frac{h^q}{\Gamma(q+2)}\left[f\bigl(t_{n+1},y_{n+1}^{P}\bigr)+\sum_{j=0}^{n}a_{j,n+1}\,f(t_j,y_j)\right],
-\label{eq:abm_corrector}
+y_{n+1}
+=
+y_0+
+\frac{h^q}{\Gamma(q+2)}
+\left[
+f(t_{n+1},y_{n+1}^{P})
++
+\sum_{j=0}^{n}a_{j,n+1}f(t_j,y_j)
+\right].
+\label{eq:correct_corrector}
 \end{equation}
-where the corrector weights $a_{j,n+1}$ are derived from the fractional memory kernel:
+
+The corrector weights are
 \begin{equation}
 a_{j,n+1}=
 \begin{cases}
-(n-1)^{q+1}-(n-1-q)\,n^q, & j=0,\\[4pt]
+n^{q+1}-(n-q)(n+1)^q, & j=0,\\[4pt]
 (n-j+2)^{q+1}+(n-j)^{q+1}-2(n-j+1)^{q+1}, & 1\leq j\leq n,\\[4pt]
 1, & j=n+1.
 \end{cases}
-\label{eq:corrector_weights}
+\label{eq:correct_corrector_weights}
 \end{equation}
 
-\begin{remarkbox}[title={Numerical Accuracy Note}]
-The ABM method provides improved accuracy over a simple fractional Euler scheme. The order of convergence depends on the step size $h$, the fractional order $q$, and the smoothness of the solution. For the simulations in this thesis, a default step size of $h=0.2$ years is used, which balances computational efficiency with numerical accuracy. Smaller step sizes improve accuracy but increase computation time due to the $O(M^2)$ memory accumulation in the corrector weights. Non-negativity constraints are applied at each step to ensure biological consistency.
+\begin{resultbox}[title={Corrected ABM weight formula}]
+The first corrector coefficient is
+\[
+a_{0,n+1}=n^{q+1}-(n-q)(n+1)^q.
+\]
+This is the standard form used in the Diethelm fractional Adams--Bashforth--Moulton predictor--corrector method. It replaces the earlier indexing form that may lead to incorrect weights.
+\end{resultbox}
+
+%% ------------------------------------------------------------
+\section{Application of the Scheme to the SITA System}
+%% ------------------------------------------------------------
+
+For the SITA system, define
+\[
+Y_n=(S_n,I_n,T_n,A_n)^T.
+\]
+The right-hand side vector is
+\[
+F(t_n,Y_n)=
+\begin{pmatrix}
+\Lambda-\lambda_nS_n-\mu S_n\\
+\lambda_nS_n-(\tau(1+u_3)+\delta+\mu)I_n\\
+\tau(1+u_3)I_n-(\rho(1-u_4)+\mu)T_n\\
+\delta I_n+\rho(1-u_4)T_n-(\mu+d)A_n
+\end{pmatrix},
+\]
+where
+\[
+\lambda_n=
+\frac{\beta_0(1-u_1)(1-u_2)(I_n+\eta T_n)}
+{S_n+I_n+T_n+A_n}.
+\]
+
+The vector predictor is
+\begin{equation}
+Y_{n+1}^{P}
+=
+Y_0+\frac{h^q}{\Gamma(q+1)}
+\sum_{j=0}^{n}b_{j,n+1}F(t_j,Y_j),
+\label{eq:vector_predictor}
+\end{equation}
+and the vector corrector is
+\begin{equation}
+Y_{n+1}
+=
+Y_0+\frac{h^q}{\Gamma(q+2)}
+\left[
+F(t_{n+1},Y_{n+1}^{P})
++
+\sum_{j=0}^{n}a_{j,n+1}F(t_j,Y_j)
+\right].
+\label{eq:vector_corrector}
+\end{equation}
+
+After each numerical step, nonnegative projection is applied:
+\[
+Y_{n+1}\leftarrow \max(Y_{n+1},0),
+\]
+component by component. This prevents small numerical round-off errors from producing negative population values.
+
+%% ------------------------------------------------------------
+\section{Numerical Algorithm}
+%% ------------------------------------------------------------
+
+\begin{resultbox}[title={Algorithm: Fractional ABM Simulation for the SITA Model}]
+\begin{enumerate}
+  \item Set the initial vector
+  \[
+  Y_0=(S_0,I_0,T_0,A_0)^T.
+  \]
+  \item Select model parameters and intervention levels.
+  \item Choose the fractional order $q$, final time $T_f$, and step size $h$.
+  \item Generate the time grid $t_n=nh$, $n=0,1,\ldots,M$.
+  \item For each time step $n=0,1,\ldots,M-1$:
+  \begin{enumerate}
+    \item Compute predictor weights $b_{j,n+1}$.
+    \item Evaluate the predictor $Y_{n+1}^{P}$.
+    \item Compute corrector weights $a_{j,n+1}$.
+    \item Evaluate the corrected value $Y_{n+1}$.
+    \item Apply nonnegative projection if necessary.
+  \end{enumerate}
+  \item Compute $\Rzero$, peak infection, final states, and summary indicators.
+  \item Send results to the dashboard for visualisation.
+\end{enumerate}
+\end{resultbox}
+
+%% ------------------------------------------------------------
+\section{Numerical Accuracy and Consistency Checks}
+%% ------------------------------------------------------------
+
+The numerical method is checked using the following consistency principles:
+\begin{enumerate}
+  \item \textbf{Non-negativity}: all simulated compartments must remain nonnegative.
+  \item \textbf{Boundedness}: the total population $N(t)$ should remain within the feasible region predicted by the theoretical analysis.
+  \item \textbf{Classical limit}: when $q=1$, the fractional model should behave like the corresponding ordinary differential equation model.
+  \item \textbf{Step-size reliability}: reducing the step size $h$ should not change the qualitative conclusions of the simulation.
+  \item \textbf{Threshold consistency}: scenarios with $\Rzero<1$ should generally show declining infection, while scenarios with $\Rzero>1$ may show persistence.
+\end{enumerate}
+
+\begin{remarkbox}[title={Part to fill after simulation}]
+After running final dashboard simulations, insert a short table comparing results for at least two step sizes, for example $h=0.2$ and $h=0.1$. This will strengthen the numerical credibility of the thesis.
 \end{remarkbox}
 
+%% ------------------------------------------------------------
 \section{Simulation Scenarios}
-Eight simulation scenarios are constructed to evaluate how social behaviour interventions and fractional memory modify the dynamics of the SITA HIV model. The scenarios are not intended to represent exact field measurements; rather, they provide a controlled numerical experiment for comparing the effect of each intervention pathway. Across the scenarios, the biological parameters $\Lambda, \mu, \beta_0, \tau, \delta, \rho, \eta,$ and $d$ are kept at their baseline values. Only the intervention controls $u_1,u_2,u_3,u_4$ and, where necessary, the fractional order $q$ are varied.
+%% ------------------------------------------------------------
 
-The intervention controls are interpreted as follows: $u_1$ represents awareness and education, $u_2$ represents safer sexual behaviour, $u_3$ represents testing and treatment-seeking, and $u_4$ represents adherence support. The controls enter the model through the effective transmission, treatment, and AIDS-progression rates:
-\[
-\beff=\beta_0(1-u_1)(1-u_2),\qquad
-\taueff=\tau(1+u_3),\qquad
-\rhoeff=\rho(1-u_4).
-\]
-Thus, larger values of $u_1$ and $u_2$ reduce new infections, larger values of $u_3$ increase movement from the infected class to the treated class, and larger values of $u_4$ reduce progression from treatment to AIDS.
+Eight simulation scenarios are used to examine the effects of social behaviour interventions and fractional memory. The scenarios are designed for comparative mathematical analysis rather than direct clinical prediction.
 
 \begin{table}[H]
 \centering
 \caption{Simulation scenarios used for intervention and memory comparison.}
-\label{tab:simulation_scenarios}
+\label{tab:simulation_scenarios_improved}
 \small
-\begin{tabularx}{\textwidth}{clcccccX}
+\begin{tabularx}{\textwidth}{c l c c c c c X}
 \toprule
-No. & Scenario & $u_1$ & $u_2$ & $u_3$ & $u_4$ & $q$ & Main purpose\\
+No. & Scenario & $u_1$ & $u_2$ & $u_3$ & $u_4$ & $q$ & Purpose\\
 \midrule
-1 & No intervention & 0.0 & 0.0 & 0.0 & 0.0 & 0.95 & Reference trajectory for comparison with intervention cases.\\
-2 & Awareness only & 0.7 & 0.0 & 0.0 & 0.0 & 0.95 & Measures the isolated effect of education and awareness on transmission.\\
-3 & Safer behaviour only & 0.0 & 0.7 & 0.0 & 0.0 & 0.95 & Measures the isolated effect of condom use and safer sexual practices.\\
-4 & Testing only & 0.0 & 0.0 & 0.7 & 0.0 & 0.95 & Examines faster movement from infection to treatment.\\
-5 & Adherence only & 0.0 & 0.0 & 0.0 & 0.8 & 0.95 & Examines reduced progression from treatment to AIDS.\\
-6 & Combined intervention & 0.7 & 0.7 & 0.6 & 0.8 & 0.95 & Represents an integrated prevention, testing, treatment, and adherence strategy.\\
-7 & Ordinary model & 0.5 & 0.5 & 0.5 & 0.5 & 1.00 & Removes fractional memory to compare with the classical model.\\
-8 & High memory effect & 0.4 & 0.4 & 0.4 & 0.4 & 0.75 & Tests the effect of stronger memory on long-term dynamics.\\
+1 & No intervention & 0.0 & 0.0 & 0.0 & 0.0 & 0.95 & Baseline fractional trajectory without behavioural control.\\
+2 & Awareness only & 0.7 & 0.0 & 0.0 & 0.0 & 0.95 & Isolates the effect of awareness and education.\\
+3 & Safer behaviour only & 0.0 & 0.7 & 0.0 & 0.0 & 0.95 & Isolates the effect of condom use and safer behaviour.\\
+4 & Testing only & 0.0 & 0.0 & 0.7 & 0.0 & 0.95 & Tests faster movement from infection to treatment.\\
+5 & Adherence only & 0.0 & 0.0 & 0.0 & 0.8 & 0.95 & Tests reduced progression from treatment to AIDS.\\
+6 & Combined intervention & 0.7 & 0.7 & 0.6 & 0.8 & 0.95 & Represents integrated prevention, testing, treatment, and adherence support.\\
+7 & Ordinary model & 0.5 & 0.5 & 0.5 & 0.5 & 1.00 & Removes fractional memory for comparison with the classical model.\\
+8 & High memory effect & 0.4 & 0.4 & 0.4 & 0.4 & 0.75 & Tests stronger memory effects on the epidemic trajectory.\\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\begin{scenariobox}[title={Reference and Single-Intervention Scenarios}]
-Scenario 1 gives the no-intervention reference case. Scenarios 2--5 then activate one control at a time while keeping the remaining controls equal to zero. This structure makes it possible to identify the individual contribution of awareness, safer behaviour, testing, and adherence before they are combined. Awareness and safer behaviour act directly on the effective transmission rate $\beff$, testing modifies the effective treatment-seeking rate $\taueff$, and adherence modifies the effective AIDS-progression rate $\rhoeff$.
+\begin{scenariobox}[title={Scenario interpretation}]
+Scenarios 1--5 identify individual intervention effects. Scenario 6 tests a combined strategy. Scenarios 7 and 8 isolate the impact of the fractional order by comparing the ordinary model with a stronger-memory fractional model.
 \end{scenariobox}
 
-\begin{scenariobox}[title={Combined Intervention Scenario}]
-Scenario 6 applies all four controls simultaneously. This scenario is important because HIV control in practice requires more than one action. Prevention reduces new infections, testing identifies infected individuals, treatment reduces untreated infection, and adherence reduces progression to AIDS. The combined scenario therefore represents a comprehensive control strategy and is expected to produce a stronger reduction in $\Rzero$ than the single-intervention cases.
-\end{scenariobox}
-
-\begin{scenariobox}[title={Memory-Comparison Scenarios}]
-Scenarios 7 and 8 are included to compare classical and fractional dynamics. Scenario 7 sets $q=1$, which removes the fractional memory effect and reduces the system to an ordinary differential equation model. Scenario 8 uses $q=0.75$, which introduces stronger memory. Comparing these cases helps determine whether past epidemic states and delayed behavioural effects change the predicted trajectories.
-\end{scenariobox}
-
-This scenario design supports three levels of analysis. First, the no-intervention case establishes a reference curve. Second, the single-intervention cases identify which control pathways are most influential. Third, the combined and memory scenarios examine whether integrated intervention and fractional memory produce substantially different long-term outcomes.
-
+%% ------------------------------------------------------------
 \section{Fractional-Order Comparison}
-To isolate the effect of the fractional order on epidemic dynamics, the model is simulated at four values of $q$ under identical initial conditions and parameter values:
+%% ------------------------------------------------------------
+
+To study memory effects, the system is simulated using
 \[
-q=1.00,\quad q=0.95,\quad q=0.85,\quad q=0.75.
+q=1.00,\qquad q=0.95,\qquad q=0.85,\qquad q=0.75.
 \]
-When $q=1$, the model reduces to the classical ordinary differential equation system and the Mittag--Leffler function $E_q(-\mu t^q)$ reduces to the exponential function $e^{-\mu t}$. This case represents a memoryless model in which the present rate of change depends only on the current state variables. When $0<q<1$, the Caputo derivative introduces a memory kernel, meaning that past states contribute to the present dynamics.
+When $q=1$, the model reduces to the classical first-order system. When $q<1$, memory effects are introduced through the Caputo kernel. Smaller values of $q$ represent stronger memory and slower decay of past influence.
 
-As $q$ decreases below one, the memory effect becomes stronger. In epidemiological terms, this means that past infection levels, treatment history, adherence behaviour, and accumulated behavioural change may continue to influence the present trajectory. Therefore, the fractional-order comparison is useful for determining whether the classical model underestimates or overestimates the persistence of infection, treatment burden, and AIDS progression.
+The dashboard compares the infected curve $I(t)$, the treated curve $T(t)$, the AIDS-stage curve $A(t)$, and the $I$--$T$ phase trajectory under different values of $q$.
 
-The memory comparison is visualised in the dashboard Memory Effect tab. The dashboard plots $I(t)$, $T(t)$, $A(t)$, and the $I$--$T$ phase trajectory for all four values of $q$ simultaneously. It also includes a Mittag--Leffler versus exponential decay chart to show how the fractional memory kernel decays more slowly than the ordinary exponential kernel. These visualisations provide the numerical basis for the fractional-order results presented in Chapter~6.
+%% ------------------------------------------------------------
+\section{Dashboard Architecture}
+%% ------------------------------------------------------------
 
-\section{Python Dashboard Architecture}
-The dashboard is developed using Python, Flask, HTML, CSS, JavaScript, and Plotly. It contains the following layers:
-\begin{enumerate}
-  \item \textbf{Model layer}: implements the fractional SITA equations.
-  \item \textbf{Numerical solver layer}: implements the fractional predictor-corrector method.
-  \item \textbf{Analysis layer}: computes $\Rzero$, sensitivity indices, peak infection, and final states.
-  \item \textbf{API layer}: exposes simulation, scenario comparison, sensitivity analysis, reproduction-number, and export endpoints.
-  \item \textbf{User interface layer}: provides sliders, scenario selectors, graphs, interpretation cards, and export tools using HTML, CSS, JavaScript, and Plotly.
-\end{enumerate}
+The dashboard is implemented as a small scientific web system with five layers:
 
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{>{\bfseries\color{urblue}}p{4cm}X}
+\toprule
+Layer & Function\\
+\midrule
+Model layer & Stores the fractional SITA equations and intervention functions.\\
+Solver layer & Runs the fractional ABM predictor--corrector numerical method.\\
+Analysis layer & Computes $\Rzero$, final states, peak infection, and sensitivity indices.\\
+API layer & Provides simulation, scenario, memory comparison, sensitivity, and export endpoints.\\
+Interface layer & Displays sliders, cards, graphs, tables, and downloadable outputs.\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+%% ------------------------------------------------------------
 \section{Dashboard Features}
+%% ------------------------------------------------------------
+
+The dashboard contains the following major features:
 \begin{itemize}
-  \item Slider for fractional order $q$.
-  \item Sliders for biological parameters and intervention functions.
-  \item Real-time computation of $\Rzero$.
-  \item Time-series plots for $S(t)$, $I(t)$, $T(t)$, $A(t)$, and $N(t)$.
-  \item Scenario comparison plots.
-  \item Sensitivity analysis charts.
+  \item Fractional order slider for $q$.
+  \item Parameter sliders for biological and intervention parameters.
+  \item Real-time $\Rzero$ computation.
+  \item Time-series graphs for $S(t)$, $I(t)$, $T(t)$, $A(t)$, and $N(t)$.
+  \item Scenario comparison module.
   \item Memory-effect comparison for different values of $q$.
-  \item Export of simulation results as CSV.
-  \item Downloadable figures for thesis reporting.
+  \item Sensitivity analysis bar chart.
+  \item Dashboard screenshot and result export functionality.
+  \item CSV export for simulation outputs.
 \end{itemize}
 
+%% ------------------------------------------------------------
 \section{Suggested Project Folder Structure}
+%% ------------------------------------------------------------
+
 \begin{lstlisting}[style=pythonstyle]
 fractional_hiv_thesis_dashboard/
 |
@@ -1098,8 +1667,11 @@ fractional_hiv_thesis_dashboard/
     `-- reports/
 \end{lstlisting}
 
+%% ------------------------------------------------------------
 \section{Chapter Summary}
-This chapter described the research design, numerical scheme, simulation scenarios, fractional-order comparison, and dashboard architecture. The next chapter presents the expected results and discussion structure.
+%% ------------------------------------------------------------
+
+This chapter described the computational methodology used to simulate the fractional-order SITA HIV model. The fractional Adams--Bashforth--Moulton predictor--corrector scheme was presented with corrected weights, and its application to the four-dimensional SITA system was described. The chapter also explained the numerical algorithm, consistency checks, simulation scenarios, fractional-order comparison, and dashboard architecture. The next chapter presents the numerical results and discusses their epidemiological and computational interpretation.
 
 %% ============================================================
 \chapter{Results and Discussion}
