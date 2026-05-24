@@ -8,6 +8,9 @@ __pycache__/
 dist/
 build/
 .eggs/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
 
 # Keep vendored frontend build files needed in production
 !static/vendor/bootstrap/
@@ -24,6 +27,8 @@ venv/
 env/
 .env/
 ENV/
+.env.*
+!.env.example
 
 # pytest
 .pytest_cache/
@@ -40,6 +45,34 @@ outputs/csv/*.csv
 outputs/figures/*.png
 outputs/reports/*.txt
 outputs/reports/*.pdf
+outputs/**/*.tmp
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+
+# Keep the main final thesis PDF if you want to publish it with the repo
+!thesis/thesis.pdf
+
+# Local/temporary thesis check builds
+thesis/*check*.pdf
+thesis/*check*.aux
+thesis/*check*.log
+thesis/*finalcheck*.pdf
+thesis/*finalcheck*.aux
+thesis/*finalcheck*.log
 
 # Download/extraction leftovers for local vendor assets
 fontawesome.zip
@@ -49,16 +82,22 @@ temp_fontawesome/
 # IDE
 .vscode/
 .idea/
+*.code-workspace
 *.swp
 *.swo
 
 # OS
 .DS_Store
 Thumbs.db
+desktop.ini
+~$*
+*.tmp
+*.bak
 
 # Flask session / instance
 instance/
 *.sqlite3
+*.db
 
 # Jupyter
 .ipynb_checkpoints/
