@@ -5,14 +5,14 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {6.1}{\ignorespaces Baseline fractional-order SITA simulation for $q=0.95$ showing $S(t)$, $I(t)$, $T(t)$, and $A(t)$.}}{31}{figure.caption.12}%
-\contentsline {figure}{\numberline {6.2}{\ignorespaces Two-by-two memory-effect dashboard visualisation for $q=1.00$, $q=0.95$, $q=0.85$, and $q=0.75$.}}{33}{figure.caption.14}%
-\contentsline {figure}{\numberline {6.3}{\ignorespaces Effect of single interventions on the infected population.}}{35}{figure.caption.16}%
-\contentsline {figure}{\numberline {6.4}{\ignorespaces Comparison of single and combined intervention strategies.}}{36}{figure.caption.18}%
-\contentsline {figure}{\numberline {6.5}{\ignorespaces Normalized sensitivity indices for $\mathcal {R}_0$.}}{37}{figure.caption.20}%
-\contentsline {figure}{\numberline {6.6}{\ignorespaces Dashboard baseline simulation interface.}}{38}{figure.caption.22}%
-\contentsline {figure}{\numberline {6.7}{\ignorespaces Dashboard scenario and memory-effect visualisation.}}{39}{figure.caption.23}%
-\contentsline {figure}{\numberline {6.8}{\ignorespaces Dashboard sensitivity analysis and thesis-result generator.}}{39}{figure.caption.24}%
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Baseline fractional-order SITA simulation for $q=0.95$ showing $S(t)$, $I(t)$, $T(t)$, and $A(t)$.}}{39}{figure.caption.12}%
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Two-by-two memory-effect dashboard visualisation for $q=1.00$, $q=0.95$, $q=0.85$, and $q=0.75$.}}{41}{figure.caption.14}%
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Effect of single interventions on the infected population.}}{43}{figure.caption.16}%
+\contentsline {figure}{\numberline {6.4}{\ignorespaces Comparison of single and combined intervention strategies.}}{44}{figure.caption.18}%
+\contentsline {figure}{\numberline {6.5}{\ignorespaces Normalized sensitivity indices for $\mathcal {R}_0$.}}{45}{figure.caption.20}%
+\contentsline {figure}{\numberline {6.6}{\ignorespaces Dashboard baseline simulation interface.}}{46}{figure.caption.22}%
+\contentsline {figure}{\numberline {6.7}{\ignorespaces Dashboard scenario and memory-effect visualisation.}}{47}{figure.caption.23}%
+\contentsline {figure}{\numberline {6.8}{\ignorespaces Dashboard sensitivity analysis and thesis-result generator.}}{47}{figure.caption.24}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

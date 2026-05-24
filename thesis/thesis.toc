@@ -39,39 +39,43 @@
 \contentsline {section}{\numberline {3.8}Chapter Summary}{16}{section.3.8}%
 \contentsline {chapter}{\numberline {4}Theoretical Analysis of the Fractional Model}{17}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Equivalent Integral Form}{17}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Existence and Uniqueness of Solutions}{17}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Positivity of Solutions}{18}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Boundedness and Feasible Region}{18}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Disease-Free Equilibrium}{19}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Basic Reproduction Number}{20}{section.4.6}%
-\contentsline {section}{\numberline {4.7}Fractional-Order Local Stability}{20}{section.4.7}%
-\contentsline {section}{\numberline {4.8}Sensitivity Analysis}{21}{section.4.8}%
-\contentsline {section}{\numberline {4.9}Chapter Summary}{21}{section.4.9}%
-\contentsline {chapter}{\numberline {5}Research Methodology, Numerical Method and Dashboard Development}{22}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Research Design}{22}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Model Development Procedure}{22}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Fractional Numerical Scheme}{23}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Predictor Step (Adams--Bashforth)}{23}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Corrector Step (Adams--Moulton)}{24}{subsection.5.3.2}%
-\contentsline {section}{\numberline {5.4}Simulation Scenarios}{24}{section.5.4}%
-\contentsline {section}{\numberline {5.5}Fractional-Order Comparison}{26}{section.5.5}%
-\contentsline {section}{\numberline {5.6}Python Dashboard Architecture}{27}{section.5.6}%
-\contentsline {section}{\numberline {5.7}Dashboard Features}{27}{section.5.7}%
-\contentsline {section}{\numberline {5.8}Suggested Project Folder Structure}{28}{section.5.8}%
-\contentsline {section}{\numberline {5.9}Chapter Summary}{29}{section.5.9}%
-\contentsline {chapter}{\numberline {6}Results and Discussion}{30}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Baseline Fractional Simulation}{30}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Effect of Fractional Order}{32}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Effect of Single Interventions}{34}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Combined Intervention Strategy}{36}{section.6.4}%
-\contentsline {section}{\numberline {6.5}Sensitivity Analysis Results}{37}{section.6.5}%
-\contentsline {section}{\numberline {6.6}Dashboard Demonstration}{38}{section.6.6}%
-\contentsline {section}{\numberline {6.7}Public Health Interpretation}{40}{section.6.7}%
-\contentsline {section}{\numberline {6.8}Chapter Summary}{40}{section.6.8}%
-\contentsline {chapter}{\numberline {7}Conclusion and Recommendations}{42}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Conclusion}{42}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Recommendations}{42}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Limitations of the Study}{43}{section.7.3}%
-\contentsline {chapter}{\numberline {A}Appendix A: Fractional Adams--Bashforth--Moulton Solver Skeleton}{44}{chapter.A}%
-\contentsline {chapter}{\numberline {B}Appendix B: Proposed Baseline Parameter Table}{46}{chapter.B}%
-\contentsline {chapter}{References}{47}{appendix*.25}%
+\contentsline {section}{\numberline {4.2}Existence and Uniqueness of Solutions}{18}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Positivity of Solutions}{19}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Boundedness and Feasible Region}{20}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Disease-Free Equilibrium}{22}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Basic Reproduction Number}{22}{section.4.6}%
+\contentsline {section}{\numberline {4.7}Local Stability of the Disease-Free Equilibrium}{24}{section.4.7}%
+\contentsline {section}{\numberline {4.8}Endemic Equilibrium}{26}{section.4.8}%
+\contentsline {section}{\numberline {4.9}Sensitivity Analysis}{27}{section.4.9}%
+\contentsline {section}{\numberline {4.10}Chapter Summary}{27}{section.4.10}%
+\contentsline {chapter}{\numberline {5}Research Methodology, Numerical Method and Dashboard Development}{29}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Research Design}{29}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Model Development Procedure}{30}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Fractional Numerical Scheme}{30}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Predictor Step}{31}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Corrector Step}{31}{subsection.5.3.2}%
+\contentsline {section}{\numberline {5.4}Application of the Scheme to the SITA System}{32}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Numerical Algorithm}{33}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Numerical Accuracy and Consistency Checks}{33}{section.5.6}%
+\contentsline {section}{\numberline {5.7}Simulation Scenarios}{34}{section.5.7}%
+\contentsline {section}{\numberline {5.8}Fractional-Order Comparison}{35}{section.5.8}%
+\contentsline {section}{\numberline {5.9}Dashboard Architecture}{35}{section.5.9}%
+\contentsline {section}{\numberline {5.10}Dashboard Features}{36}{section.5.10}%
+\contentsline {section}{\numberline {5.11}Suggested Project Folder Structure}{36}{section.5.11}%
+\contentsline {section}{\numberline {5.12}Chapter Summary}{37}{section.5.12}%
+\contentsline {chapter}{\numberline {6}Results and Discussion}{38}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Baseline Fractional Simulation}{38}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Effect of Fractional Order}{40}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Effect of Single Interventions}{42}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Combined Intervention Strategy}{44}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Sensitivity Analysis Results}{45}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Dashboard Demonstration}{46}{section.6.6}%
+\contentsline {section}{\numberline {6.7}Public Health Interpretation}{48}{section.6.7}%
+\contentsline {section}{\numberline {6.8}Chapter Summary}{48}{section.6.8}%
+\contentsline {chapter}{\numberline {7}Conclusion and Recommendations}{50}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Conclusion}{50}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Recommendations}{50}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Limitations of the Study}{51}{section.7.3}%
+\contentsline {chapter}{\numberline {A}Appendix A: Fractional Adams--Bashforth--Moulton Solver Skeleton}{52}{chapter.A}%
+\contentsline {chapter}{\numberline {B}Appendix B: Proposed Baseline Parameter Table}{54}{chapter.B}%
+\contentsline {chapter}{References}{55}{appendix*.25}%
