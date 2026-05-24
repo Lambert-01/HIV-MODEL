@@ -72,6 +72,6 @@
 \contentsline {section}{\numberline {7.1}Conclusion}{42}{section.7.1}%
 \contentsline {section}{\numberline {7.2}Recommendations}{42}{section.7.2}%
 \contentsline {section}{\numberline {7.3}Limitations of the Study}{43}{section.7.3}%
-\contentsline {chapter}{\numberline {A}Appendix A: Fractional Adams--Bashforth--Moulton Solver Skeleton}{44}{appendix.A}%
-\contentsline {chapter}{\numberline {B}Appendix B: Proposed Baseline Parameter Table}{46}{appendix.B}%
+\contentsline {chapter}{\numberline {A}Appendix A: Fractional Adams--Bashforth--Moulton Solver Skeleton}{44}{chapter.A}%
+\contentsline {chapter}{\numberline {B}Appendix B: Proposed Baseline Parameter Table}{46}{chapter.B}%
 \contentsline {chapter}{References}{47}{appendix*.25}%

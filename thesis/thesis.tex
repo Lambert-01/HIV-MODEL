@@ -5,7 +5,6 @@
 %% Institution: University of Rwanda — College of Science and Technology
 %% ============================================================
 
-\DocumentMetadata{}
 \documentclass[12pt,a4paper,oneside]{report}
 
 %% ─── CORE PACKAGES ──────────────────────────────────────────
@@ -16,8 +15,6 @@
 \IfFileExists{microtype.sty}{\usepackage{microtype}}{}
 \usepackage{setspace}
 \usepackage{parskip}
-\usepackage{palatino}
-\usepackage{helvet}
 
 %% ─── COLOURS ────────────────────────────────────────────────
 \usepackage{xcolor}
@@ -95,6 +92,15 @@
 \setlist[enumerate]{leftmargin=1.6em, itemsep=3pt, topsep=4pt}
 
 %% ─── COLOURED BOXES ─────────────────────────────────────────
+\providecommand{\NewStructureName}[1]{}
+\providecommand{\AssignStructureRole}[2]{}
+\providecommand{\NewTaggingSocket}[2]{}
+\providecommand{\NewTaggingSocketPlug}[3]{}
+\providecommand{\AssignTaggingSocketPlug}[2]{}
+\providecommand{\UseTaggingSocket}[1]{}
+\providecommand{\UseStructureName}[1]{#1}
+\providecommand{\tagstructbegin}[1]{}
+\providecommand{\tagstructend}{}
 \usepackage{tcolorbox}
 \tcbuselibrary{skins, breakable, theorems}
 
@@ -183,7 +189,8 @@
 %% DOCUMENT BEGINS
 %% ============================================================
 \begin{document}
-\pagenumbering{roman}
+\hypersetup{pageanchor=false}
+\pagenumbering{gobble}
 
 %% ============================================================
 %% TITLE PAGE
@@ -285,6 +292,9 @@ University of Rwanda \quad\textbullet\quad
 College of Science and Technology \quad\textbullet\quad
 Kigali, Rwanda}
 \end{titlepage}
+\clearpage
+\hypersetup{pageanchor=true}
+\pagenumbering{roman}
 
 %% ============================================================
 %% FRONT MATTER
@@ -385,6 +395,8 @@ Many existing HIV models use ordinary differential equations and treat transmiss
 
 This thesis addresses this limitation by developing a fractional-order SITA model that incorporates social behaviour interventions. The model uses the Caputo derivative to include memory effects and introduces intervention functions representing awareness, safer sexual behaviour, testing and treatment-seeking, and treatment adherence.
 
+The central mathematical problem is therefore to connect three components in one coherent framework: a biologically meaningful HIV compartmental model, a fractional-order derivative that represents memory, and intervention functions that can be varied computationally. This connection is important because it allows the model to be analysed theoretically and then explored numerically through a dashboard.
+
 \section{Aim of the Study}
 The main aim of this thesis is to formulate, analyse, and computationally simulate a fractional-order SITA model of HIV transmission incorporating social behaviour interventions and special functions.
 
@@ -413,10 +425,14 @@ The main aim of this thesis is to formulate, analyse, and computationally simula
 \end{enumerate}
 
 \section{Significance of the Study}
-This study is significant in three ways. Mathematically, it introduces fractional calculus and special functions into HIV modelling. Epidemiologically, it provides a framework for comparing behavioural and treatment-related interventions. Technologically, it supports the development of an interactive dashboard that makes the fractional model testable and understandable.
+This study is significant in three ways. Mathematically, it introduces fractional calculus and special functions into HIV modelling and shows how the Caputo derivative, Gamma function, and Mittag-Leffler function enter the analysis of a biological system. Epidemiologically, it provides a structured framework for comparing behavioural and treatment-related interventions through the basic reproduction number and numerical trajectories. Computationally, it supports the development of an interactive dashboard that makes the fractional model testable, reproducible, and easier to communicate during presentation.
+
+The work is also relevant to applied mathematics because it combines model formulation, qualitative analysis, numerical approximation, parameter-based simulation, and software implementation. These components show how mathematical theory can be translated into an exploratory tool for understanding disease dynamics.
 
 \section{Scope of the Study}
-The study focuses on a deterministic fractional-order SITA model with four compartments. It considers social behaviour interventions but does not include age structure, gender structure, spatial movement, stochasticity, or direct patient-level data. The dashboard is designed for academic simulation and interpretation, not clinical prediction.
+The study focuses on a deterministic fractional-order SITA model with four compartments. It considers social behaviour interventions but does not include age structure, gender structure, spatial movement, stochasticity, or direct patient-level data. The dashboard is designed for academic simulation and interpretation, not clinical prediction or direct policy forecasting.
+
+All numerical results should therefore be interpreted as scenario-based mathematical experiments. The purpose is to compare the qualitative effects of memory and intervention levels, not to estimate exact HIV prevalence or incidence in a real population.
 
 \section{Chapter Summary}
 This chapter introduced the study, motivated the use of fractional calculus for HIV modelling, and presented the problem statement, aim, objectives, research questions, significance, and scope. The next chapter reviews the mathematical and epidemiological literature supporting the thesis.
@@ -538,7 +554,11 @@ The model is formulated under the following assumptions:
   \item AIDS-induced mortality occurs in the AIDS compartment at rate $d$.
   \item Social behaviour interventions are bounded controls satisfying $0\leq u_i(t)\leq1$, $i=1,2,3,4$.
   \item The fractional order satisfies $0<q\leq1$, where $q=1$ gives the classical ordinary model and $0<q<1$ introduces memory.
+  \item During the analytical derivation of $\Rzero$, the intervention levels are treated as constants so that the disease-free equilibrium and next-generation matrix can be defined clearly.
+  \item The model is intended for qualitative and comparative analysis; parameter values used in simulations represent baseline academic scenarios rather than direct clinical calibration.
 \end{enumerate}
+
+These assumptions simplify the complex social and biological processes involved in HIV transmission. They are useful for constructing a mathematically tractable model, but they also define the limitations of the conclusions drawn from the simulations.
 
 \section{Social Behaviour Intervention Functions}
 The model includes four social behaviour interventions:
@@ -712,6 +732,30 @@ $u_4(t)$ & Treatment adherence intervention & $0\leq u_4\leq1$\\
 \end{tabular}
 \end{center}
 
+\begin{remarkbox}[title={Parameter Use and Interpretation}]
+The parameters in this thesis are used for mathematical simulation and scenario comparison. Some parameters, such as mortality and HIV prevalence context, are motivated by public-health literature, while other transition and intervention parameters are selected as baseline simulation values. The aim is not to claim exact calibration to Rwanda-specific individual data, but to study how the fractional order and intervention controls affect the qualitative behaviour of the model.
+\end{remarkbox}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{>{\bfseries}c p{6.2cm}p{4.1cm}}
+\toprule
+Parameter & Role in the model & Baseline source status\\
+\midrule
+$\Lambda$ & Recruitment into the susceptible population & Simulation/normalisation choice\\
+$\mu$ & Natural mortality rate & Estimated or assumed\\
+$\beta_0$ & Baseline transmission intensity & Literature-guided/assumed\\
+$\eta$ & Relative infectiousness under treatment & Literature-guided/assumed\\
+$\tau$ & Treatment initiation rate & Literature-guided/assumed\\
+$\delta$ & Progression from infection to AIDS & Literature-guided/assumed\\
+$\rho$ & Progression from treatment to AIDS & Literature-guided/assumed\\
+$d$ & AIDS-induced mortality & Literature-guided/assumed\\
+$q$ & Fractional memory order & Simulation parameter\\
+$u_1,u_2,u_3,u_4$ & Social behaviour intervention levels & User-defined controls\\
+\bottomrule
+\end{tabular}
+\end{center}
+
 \section{Chapter Summary}
 This chapter formulated the fractional-order SITA model, defined the intervention functions, stated the assumptions, and presented the model diagram and parameters. The next chapter analyses the mathematical properties of the model.
 
@@ -735,6 +779,7 @@ and write the system in compact form as
 \[
 \CaputoD{t}{q}X(t)=F(t,X(t)).
 \]
+On the biologically feasible region, the denominator $N(t)$ is positive whenever the total population is positive. Hence the right-hand side consists of continuous functions of the state variables and is locally Lipschitz on bounded subsets of the positive region.
 
 \begin{resultbox}[title={Existence and Uniqueness}]
 If $F(t,X)$ is continuous in $t$ and locally Lipschitz continuous in $X$ on the feasible region, then the fractional-order HIV model has a unique solution on a suitable time interval.
@@ -745,7 +790,7 @@ Using the definition of the Caputo derivative, the fractional system is transfor
 \[
 X(t)=X(0)+\frac{1}{\Gamma(q)}\int_0^t(t-s)^{q-1}F(s,X(s))ds.
 \]
-Under continuity and Lipschitz assumptions, the associated integral operator is a contraction on a suitable function space over a sufficiently small interval. Banach's fixed point theorem then guarantees the existence and uniqueness of a local solution. The solution can be extended as long as it remains bounded \citep{Kilbas2006,Diethelm2010}. \hfill$\square$
+Under the continuity and local Lipschitz conditions stated above, the associated integral operator is a contraction on a suitable function space over a sufficiently small interval. Banach's fixed point theorem then guarantees the existence and uniqueness of a local solution. Since the population is shown below to remain bounded in the feasible region, the local solution can be extended while it remains in that region \citep{Kilbas2006,Diethelm2010}. \hfill$\square$
 
 \section{Positivity of Solutions}
 \begin{resultbox}[title={Positivity}]
@@ -756,7 +801,7 @@ S(t), I(t), T(t), A(t)\geq0, \qquad t\geq0.
 \end{resultbox}
 
 \noindent\textbf{Proof Outline.}
-At the boundary of the nonnegative region, the right-hand side of each compartment equation is nonnegative in the outward direction. Specifically, if $S=0$, then the recruitment term gives a nonnegative increase into $S$; if $I=0$, then the infection inflow $\lambda(t)S\geq0$; if $T=0$, then the treatment inflow $\tau(1+u_3)I\geq0$; and if $A=0$, then $\delta I+\rho(1-u_4)T\geq0$. By the positivity principle for Caputo fractional systems, solutions starting in the nonnegative orthant remain nonnegative. \hfill$\square$
+At the boundary of the nonnegative region, the right-hand side of each compartment equation is nonnegative in the corresponding boundary component. Specifically, if $S=0$, then $\CaputoD{t}{q}S=\Lambda\geq0$; if $I=0$, then $\CaputoD{t}{q}I=\lambda(t)S\geq0$; if $T=0$, then $\CaputoD{t}{q}T=\tau(1+u_3)I\geq0$; and if $A=0$, then $\CaputoD{t}{q}A=\delta I+\rho(1-u_4)T\geq0$. By the positivity principle for Caputo fractional systems, solutions starting in the nonnegative orthant remain nonnegative. \hfill$\square$
 
 \section{Boundedness and Feasible Region}
 Let
@@ -783,6 +828,7 @@ Thus, the biologically feasible region is
 \begin{equation}
 \Omega=\left\{(S,I,T,A)\in\R_+^4: 0\leq N(t)\leq \frac{\Lambda}{\mu}\right\}.
 \end{equation}
+This boundedness result also supports the biological interpretation of the model, because the total population remains finite and the compartments stay inside a positively invariant region.
 
 \section{Disease-Free Equilibrium}
 At the disease-free equilibrium, $I=T=A=0$. Hence,
@@ -822,6 +868,7 @@ The basic reproduction number is
 \label{eq:R0_fractional}
 \end{equation}
 \end{mathbox}
+The first factor represents the expected contribution of untreated infected individuals before leaving the infected class. The second factor accounts for the additional transmission contribution from treated individuals, reduced by the relative infectiousness parameter $\eta$ and by the treated-class exit rate.
 Substituting the intervention terms gives
 \begin{mathbox}
 \begin{equation}
@@ -832,11 +879,13 @@ Substituting the intervention terms gives
 \end{mathbox}
 
 \section{Fractional-Order Local Stability}
-The disease-free equilibrium is locally asymptotically stable for the fractional model if all eigenvalues $\lambda_i$ of the Jacobian matrix at $E_0$ satisfy
+The disease-free equilibrium is locally asymptotically stable for the fractional model if all eigenvalues $\lambda_i$ of the linearized infected subsystem at $E_0$ satisfy
 \begin{equation}
 |\arg(\lambda_i)|>\frac{q\pi}{2}.
 \end{equation}
 When $q=1$, this reduces to the classical ordinary differential equation stability condition.
+
+For this model, $\Rzero<1$ means that the expected number of secondary infections generated by one infected individual is below the epidemic threshold. The fractional stability condition then verifies that the memory-dependent linearized system still moves away from infection persistence and toward the disease-free equilibrium.
 
 \begin{resultbox}[title={Fractional Stability Result}]
 If $\Rzero<1$ and the eigenvalues of the infected subsystem satisfy
@@ -1392,26 +1441,31 @@ import numpy as np
 from scipy.special import gamma
 
 
-def fractional_abm_solver(f, y0, t, q, params):
-    """Caputo fractional Adams-Bashforth-Moulton style solver.
-
-    f      : right-hand side function f(t, y, params)
-    y0     : initial vector
-    t      : time grid
-    q      : fractional order, 0 < q <= 1
-    params : parameter dictionary
-    """
+def fractional_abm_solver(rhs, y0, t, q, params):
+    """Predictor-corrector solver for Caputo fractional systems."""
     n = len(t)
     h = t[1] - t[0]
-    y = np.zeros((n, len(y0)))
-    y[0] = y0
+    y = np.zeros((n, len(y0)), dtype=float)
+    y[0] = np.maximum(y0, 0.0)
+    fvals = np.zeros_like(y)
+    fvals[0] = rhs(t[0], y[0], params)
 
     for k in range(1, n):
-        memory_sum = np.zeros_like(y0, dtype=float)
-        for j in range(k):
-            weight = (k-j)**q - (k-j-1)**q
-            memory_sum += weight * np.array(f(t[j], y[j], params))
-        y[k] = y0 + (h**q / gamma(q + 1)) * memory_sum
+        history = np.arange(k, 0, -1, dtype=float)
+        b = history**q - (history - 1.0)**q
+        y_pred = y[0] + (h**q / gamma(q + 1.0)) * (b @ fvals[:k])
+
+        a = np.empty(k, dtype=float)
+        a[0] = (k - 1)**(q + 1) - (k - 1 - q) * k**q
+        if k > 1:
+            m = np.arange(k - 1, 0, -1, dtype=float)
+            a[1:] = (m + 1.0)**(q + 1) + (m - 1.0)**(q + 1) - 2.0*m**(q + 1)
+
+        y[k] = y[0] + (h**q / gamma(q + 2.0)) * (
+            rhs(t[k], y_pred, params) + (a @ fvals[:k])
+        )
+        y[k] = np.maximum(y[k], 0.0)
+        fvals[k] = rhs(t[k], y[k], params)
 
     return y
 \end{lstlisting}
