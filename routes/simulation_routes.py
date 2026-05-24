@@ -50,8 +50,9 @@ def run_engine(payload, downsample=True):
     rates = compute_effective_rates(params)
     dfe = disease_free_equilibrium(params)
     fractional_stability = stability_details(params)
-    bounded_limit = float(params["Lambda"] / params["mu"]) if params["mu"] > 0 else None
-    bounded_ok = bool(bounded_limit is None or np.nanmax(N) <= bounded_limit * 1.05)
+    asymptotic_bound = float(params["Lambda"] / params["mu"]) if params["mu"] > 0 else None
+    finite_time_bound = max(float(N[0]), asymptotic_bound) if asymptotic_bound is not None else None
+    bounded_ok = bool(finite_time_bound is None or np.nanmax(N) <= finite_time_bound * 1.05)
 
     # Downsample for browser transfer — keeps peak point
     if downsample:
@@ -80,7 +81,8 @@ def run_engine(payload, downsample=True):
             "final_aids": float(A[-1]),
             "final_population": float(N[-1]),
             "memory_order": float(params["q"]),
-            "bounded_limit": bounded_limit,
+            "bounded_limit": finite_time_bound,
+            "asymptotic_bound": asymptotic_bound,
             "bounded_ok": bounded_ok,
         },
         "time_series": {

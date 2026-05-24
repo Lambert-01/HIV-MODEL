@@ -1105,15 +1105,19 @@ Y(t)=\frac{\Lambda}{\mu}
 where $E_q(\cdot)$ is the Mittag--Leffler function.
 
 \begin{resultbox}[title={Theorem 4.3 --- Boundedness}]
-All solutions of the fractional-order SITA model with nonnegative initial conditions are bounded in the region
+All solutions of the fractional-order SITA model with nonnegative initial conditions are bounded. If
+\[
+M_0=\max\left\{N(0),\frac{\Lambda}{\mu}\right\},
+\]
+then the solution remains in the finite-time feasible envelope
 \[
 \Omega=
 \left\{
 (S,I,T,A)\in\mathbb{R}_+^4:
-0\leq N(t)\leq \frac{\Lambda}{\mu}
+0\leq N(t)\leq M_0
 \right\}
 \]
-whenever $N(0)\leq \Lambda/\mu$. In general,
+and, in the long run,
 \[
 \limsup_{t\to\infty}N(t)\leq\frac{\Lambda}{\mu}.
 \]
@@ -1131,7 +1135,7 @@ where $Y(t)$ is given by~\eqref{eq:Y_ML}. Since $E_q(-\mu t^q)\to0$ as $t\to\inf
 Therefore, the total population remains bounded and the region $\Omega$ is biologically feasible. \hfill$\square$
 
 \begin{remarkbox}[title={Biological meaning}]
-The bound $\Lambda/\mu$ represents the maximum long-term population size supported by recruitment and natural mortality in the absence of disease-induced mortality. The additional AIDS-induced death term $dA(t)$ only reduces the total population further.
+The quantity $\Lambda/\mu$ represents the long-term carrying level supported by recruitment and natural mortality in the absence of disease-induced mortality. If the initial population satisfies $N(0)>\Lambda/\mu$, the finite-time solution may begin above this long-term level, but the comparison solution still shows that the population is bounded and eventually approaches the long-term envelope.
 \end{remarkbox}
 
 %% ------------------------------------------------------------
@@ -1679,15 +1683,29 @@ component by component. This prevents small numerical round-off errors from prod
 The numerical method is checked using the following consistency principles:
 \begin{enumerate}
   \item \textbf{Non-negativity}: all simulated compartments must remain nonnegative.
-  \item \textbf{Boundedness}: the total population $N(t)$ should remain within the feasible region predicted by the theoretical analysis.
+  \item \textbf{Boundedness}: the total population $N(t)$ should remain below the finite-time envelope $\max\{N(0),\Lambda/\mu\}$ and approach the long-term bound $\Lambda/\mu$.
   \item \textbf{Classical limit}: when $q=1$, the fractional model should behave like the corresponding ordinary differential equation model.
   \item \textbf{Step-size reliability}: reducing the step size $h$ should not change the qualitative conclusions of the simulation.
   \item \textbf{Threshold consistency}: scenarios with $\Rzero<1$ should generally show declining infection, while scenarios with $\Rzero>1$ may show persistence.
 \end{enumerate}
 
-\begin{remarkbox}[title={Part to fill after simulation}]
-After running final dashboard simulations, insert a short table comparing results for at least two step sizes, for example $h=0.2$ and $h=0.1$. This will strengthen the numerical credibility of the thesis.
-\end{remarkbox}
+\begin{table}[H]
+\centering
+\caption{Step-size reliability check for the baseline simulation.}
+\label{tab:step_size_reliability}
+\small
+\begin{tabular}{ccccc}
+\toprule
+Step size $h$ & Time steps & Final $I$ & Final $T$ & Final $A$\\
+\midrule
+0.20 & 251 & 3.1127 & 94.2720 & 3.5882\\
+0.10 & 501 & 3.1194 & 94.2676 & 3.5881\\
+0.05 & 1001 & 3.1194 & 94.2676 & 3.5880\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:step_size_reliability} shows that reducing the step size from $h=0.20$ to $h=0.05$ changes the final infected population by less than $0.01$ individuals in the baseline simulation. This supports the numerical reliability of the qualitative conclusions used in Chapter~6.
 
 %% ------------------------------------------------------------
 \section{Simulation Scenarios}
@@ -1771,6 +1789,24 @@ The dashboard contains the following major features:
 \end{itemize}
 
 %% ------------------------------------------------------------
+\section{System Testing and Validation}
+%% ------------------------------------------------------------
+
+The dashboard implementation was checked using automated unit and API tests. The test suite covers the reproduction-number formula, intervention effects, right-hand-side model function, nonnegative numerical output, input validation, scenario comparison, sensitivity analysis, memory comparison, and CSV export. The command
+\begin{lstlisting}[style=pythonstyle]
+python -m pytest tests -p no:cacheprovider -q
+\end{lstlisting}
+returned
+\begin{center}
+\textbf{34 passed}
+\end{center}
+on the project code used for this thesis.
+
+\begin{remarkbox}[title={Dashboard validation summary}]
+The tests confirm that the model equations execute without shape errors, the ABM solver returns nonnegative compartment values, invalid user inputs are rejected, $\Rzero$ is computed consistently with the analytical formula, and the main dashboard API endpoints return usable simulation, scenario, sensitivity, memory, and export results.
+\end{remarkbox}
+
+%% ------------------------------------------------------------
 \section{Suggested Project Folder Structure}
 %% ------------------------------------------------------------
 
@@ -1839,6 +1875,31 @@ The social behaviour intervention levels used in the baseline dashboard configur
 u_1=0.40,\qquad u_2=0.50,\qquad u_3=0.60,\qquad u_4=0.70.
 \]
 These values represent moderate-to-strong awareness, safer behaviour, testing and treatment-seeking, and adherence support.
+
+\begin{table}[H]
+\centering
+\caption{Baseline parameter values used in the dashboard simulation.}
+\label{tab:baseline_parameter_values}
+\small
+\begin{tabularx}{\textwidth}{c c X}
+\toprule
+Parameter & Baseline value & Source status and interpretation\\
+\midrule
+$\Lambda$ & 100 & Simulation recruitment/normalisation value for the academic baseline.\\
+$\mu$ & 0.02 & Assumed natural mortality rate used to define the long-term population envelope.\\
+$\beta_0$ & 0.30 & Baseline transmission intensity selected for scenario comparison.\\
+$\eta$ & 0.10 & Treated individuals are assumed to have reduced infectiousness compared with untreated infected individuals.\\
+$\tau$ & 0.20 & Baseline treatment initiation rate used before testing intervention adjustment.\\
+$\delta$ & 0.10 & Progression rate from untreated infection to AIDS-stage compartment.\\
+$\rho$ & 0.03 & Progression rate from treated class to AIDS before adherence intervention.\\
+$d$ & 0.33 & AIDS-induced mortality parameter used in the simulation setting.\\
+$q$ & 0.95 & Fractional order selected to represent moderate memory effects.\\
+$u_1,u_2,u_3,u_4$ & 0.40, 0.50, 0.60, 0.70 & User-defined intervention levels for awareness, safer behaviour, testing, and adherence.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+These baseline values are used for qualitative mathematical simulation and dashboard demonstration. They are not claimed to be fitted estimates from patient-level Rwanda data.
 
 Under this configuration, the effective rates were
 \[
@@ -1990,9 +2051,9 @@ This section examines the effect of each intervention when applied separately. T
 
 \begin{figure}[H]
 \centering
-\fbox{\parbox[c][7cm][c]{0.90\textwidth}{\centering
-\textbf{Insert Figure 6.4 here}\\[4pt]
-Scenario comparison graph showing $I(t)$ under the four single-intervention scenarios.}}
+\begin{figureframe}[colframe=urblue, borderline west={3pt}{0pt}{urgold}]
+\includegraphics[width=0.94\textwidth]{singleInterventionsChart.png}
+\end{figureframe}
 \caption{Effect of single interventions on the infected population.}
 \label{fig:single_interventions_infected}
 \end{figure}
@@ -2024,9 +2085,9 @@ Three combined scenarios were simulated: a moderate combined intervention, the m
 
 \begin{figure}[H]
 \centering
-\fbox{\parbox[c][7cm][c]{0.90\textwidth}{\centering
-\textbf{Insert Figure 6.5 here}\\[4pt]
-Scenario comparison graph showing $I(t)$ for no intervention, single interventions, and combined intervention strategies.}}
+\begin{figureframe}[colframe=mathgreen, borderline west={3pt}{0pt}{urblue}]
+\includegraphics[width=0.94\textwidth]{combinedInterventionsChart.png}
+\end{figureframe}
 \caption{Comparison of single and combined intervention strategies.}
 \label{fig:combined_intervention}
 \end{figure}
@@ -2055,9 +2116,9 @@ Sensitivity analysis was used to identify the parameters and intervention contro
 
 \begin{figure}[H]
 \centering
-\fbox{\parbox[c][7cm][c]{0.90\textwidth}{\centering
-\textbf{Insert Figure 6.6 here}\\[4pt]
-Sensitivity bar chart from the dashboard showing normalized sensitivity indices of $\mathcal{R}_0$.}}
+\begin{figureframe}[colframe=brickred, borderline west={3pt}{0pt}{urgold}]
+\includegraphics[width=0.90\textwidth]{sensitivityChart.png}
+\end{figureframe}
 \caption{Normalized sensitivity indices for $\mathcal{R}_0$.}
 \label{fig:sensitivity_indices}
 \end{figure}
@@ -2091,27 +2152,27 @@ The computational part of this thesis was implemented as an interactive Flask da
 
 \begin{figure}[H]
 \centering
-\fbox{\parbox[c][7cm][c]{0.90\textwidth}{\centering
-\textbf{Insert Figure 6.7 here}\\[4pt]
-Screenshot of the dashboard baseline simulation page.}}
+\begin{figureframe}[colframe=urblue, borderline west={3pt}{0pt}{urgold}]
+\includegraphics[width=0.94\textwidth]{dashboardBaselineFigure.png}
+\end{figureframe}
 \caption{Dashboard baseline simulation interface.}
 \label{fig:dashboard_baseline}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\fbox{\parbox[c][7cm][c]{0.90\textwidth}{\centering
-\textbf{Insert Figure 6.8 here}\\[4pt]
-Screenshot of the scenario comparison and memory-effect dashboard tabs.}}
+\begin{figureframe}[colframe=mathgreen, borderline west={3pt}{0pt}{urblue}]
+\includegraphics[width=0.94\textwidth]{dashboardScenarioMemoryFigure.png}
+\end{figureframe}
 \caption{Dashboard scenario and memory-effect visualisation.}
 \label{fig:dashboard_scenarios_memory}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\fbox{\parbox[c][7cm][c]{0.90\textwidth}{\centering
-\textbf{Insert Figure 6.9 here}\\[4pt]
-Screenshot of the sensitivity analysis and Chapter 6 result generator tabs.}}
+\begin{figureframe}[colframe=brickred, borderline west={3pt}{0pt}{urblue}]
+\includegraphics[width=0.94\textwidth]{dashboardSensitivityChapter6Figure.png}
+\end{figureframe}
 \caption{Dashboard sensitivity analysis and thesis-result generator.}
 \label{fig:dashboard_sensitivity_chapter6}
 \end{figure}
