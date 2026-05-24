@@ -31,4 +31,4 @@ echo  ERROR: pdflatex failed. Check thesis\thesis.log for details.
 echo ============================================================
 pause
 
-:end
+:end 

@@ -105,7 +105,11 @@
 \tcbuselibrary{skins, breakable, theorems}
 
 \newtcolorbox{mathbox}[1][]{
+  enhanced,
   colback=lightblue, colframe=urblue,
+  coltitle=white, colbacktitle=urblue,
+  fonttitle=\bfseries\sffamily,
+  fontupper=\color{black},
   boxrule=1pt, arc=5pt,
   left=10pt, right=10pt, top=8pt, bottom=8pt,
   breakable,
@@ -113,29 +117,38 @@
 }
 
 \newtcolorbox{remarkbox}[1][]{
+  enhanced,
   colback=verylight, colframe=urgold,
+  coltitle=white, colbacktitle=urblue,
   leftrule=4pt, rightrule=0.4pt, toprule=0.4pt, bottomrule=0.4pt,
   arc=2pt,
   left=10pt, right=8pt, top=6pt, bottom=6pt,
-  fonttitle=\bfseries\color{urblue},
+  fonttitle=\bfseries\sffamily,
+  fontupper=\color{black},
   breakable,
   #1
 }
 
 \newtcolorbox{resultbox}[1][]{
+  enhanced,
   colback=white, colframe=mathgreen,
+  coltitle=white, colbacktitle=mathgreen!75!black,
   boxrule=1.2pt, arc=5pt,
   left=10pt, right=10pt, top=8pt, bottom=8pt,
-  fonttitle=\bfseries\sffamily\color{mathgreen},
+  fonttitle=\bfseries\sffamily,
+  fontupper=\color{black},
   breakable,
   #1
 }
 
 \newtcolorbox{scenariobox}[1][]{
-  colback=framegray!30, colframe=ursilver,
+  enhanced,
+  colback=framegray!20, colframe=urblue!70!black,
+  coltitle=white, colbacktitle=urblue,
   boxrule=0.8pt, arc=4pt,
   left=9pt, right=9pt, top=7pt, bottom=7pt,
-  fonttitle=\bfseries\small\color{urblue},
+  fonttitle=\bfseries\sffamily\small,
+  fontupper=\color{black},
   breakable,
   #1
 }
