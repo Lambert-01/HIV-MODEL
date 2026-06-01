@@ -345,11 +345,7 @@
 \centering
 {\color{white}\fontsize{15}{20}\selectfont\bfseries\sffamily
 A Fractional-Order Compartmental Model of HIV Transmission\\[7pt]
-with Social Behaviour Interventions}\\[12pt]
-{\color{urgold!85!white}\small\itshape
-Fractional Calculus
-$\;\diamond\;$ HIV Dynamics
-$\;\diamond\;$ Computational Simulation}
+with Social Behaviour Interventions}
 \end{tcolorbox}
 
 \vspace{0.55cm}
@@ -385,7 +381,7 @@ Student Name   & NDACYAYISABA Lambert \\
 Reg.~Number    & 222008909 \\
 Programme      & Bachelor's Degree in Applied Mathematics \\
 Supervisor     & Dr.~MUHIRWA Jean Pierre \\
-Submission     & Kigali, May 2026 \\
+Academic Year  & 2025--2026 \\
 \end{tabular}
 \end{center}
 \end{tcolorbox}
@@ -407,7 +403,7 @@ I, NDACYAYISABA Lambert, declare that this final year project report is my origi
 
 \chapter*{Approval}
 \addcontentsline{toc}{chapter}{Approval}
-This report has been submitted for examination with the approval of the university supervisor.
+This final year project report has been submitted for examination with the approval of the university supervisor.
 
 \vspace{1.2cm}
 \noindent\textbf{Supervisor:} Dr. MUHIRWA Jean Pierre\\[8pt]
@@ -419,7 +415,7 @@ This work is dedicated to my family, mentors, lecturers, and all people who beli
 
 \chapter*{Acknowledgements}
 \addcontentsline{toc}{chapter}{Acknowledgements}
-I sincerely thank God for strength and guidance throughout this academic journey. I extend my gratitude to my supervisor, Dr. MUHIRWA Jean Pierre, for his guidance and valuable academic direction. I also appreciate the University of Rwanda, College of Science and Technology, and the Department of Applied Mathematics for providing the academic foundation for this work. I am grateful to my family, classmates, and friends for their support and encouragement.
+I thank God for strength and guidance throughout this academic journey. I extend my gratitude to my supervisor, Dr. MUHIRWA Jean Pierre, for his guidance and valuable academic direction. I also appreciate the University of Rwanda, College of Science and Technology, and the Department of Applied Mathematics for providing the academic foundation for this work. I am grateful to my family, classmates, and friends for their support and encouragement.
 
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
@@ -503,7 +499,7 @@ The central mathematical problem is therefore to connect three components in one
 \newpage
 
 \section{Aim of the Study}
-The main aim of this report is to formulate, analyse, and computationally simulate a fractional-order SITA model of HIV transmission incorporating social behaviour interventions and special functions.
+The main aim of this report is to formulate, analyse, and computationally simulate a fractional-order SITA model of HIV transmission incorporating social behaviour interventions.
 
 \section{Specific Objectives}
 \begin{enumerate}
@@ -548,7 +544,7 @@ Treatment compartments are important because antiretroviral therapy changes both
 \section{Social Behaviour in HIV Transmission}
 HIV transmission is strongly influenced by behavioural and social factors. These include condom use, number of sexual partners, HIV testing, disclosure, stigma, treatment-seeking behaviour, and adherence to ART. Mathematical models can represent these effects through risk groups, behaviour-dependent transmission rates, or intervention functions \citep{Poundstone2004,Supervie2011}.
 
-Social behaviour is especially relevant in HIV modelling because infection risk is not determined only by biological infectiousness. Awareness campaigns, safer sexual behaviour, willingness to test, and adherence support can change the effective contact process and the movement of infected individuals into treatment. In the present thesis, these factors are represented by bounded intervention functions so that their separate and combined effects can be compared numerically.
+Social behaviour is especially relevant in HIV modelling because infection risk is not determined only by biological infectiousness. Awareness campaigns, safer sexual behaviour, willingness to test, and adherence support can change the effective contact process and the movement of infected individuals into treatment. In the present report, these factors are represented by bounded intervention functions so that their separate and combined effects can be compared numerically.
 
 \section{Fractional Calculus in Epidemiological Models}
 Fractional calculus extends ordinary differentiation and integration to non-integer orders. In epidemiological modelling, fractional derivatives are useful because they can incorporate memory and hereditary effects \citep{Podlubny1999,Kilbas2006,Diethelm2010}. Several fractional HIV/AIDS models have been proposed using Caputo and related operators \citep{Gunerhan2020,Unaegbu2021}.
@@ -1630,7 +1626,7 @@ The tests confirm that the model equations execute without shape errors, the ABM
 %% ------------------------------------------------------------
 
 \begin{lstlisting}[style=pythonstyle]
-fractional_hiv_thesis_dashboard/
+fractional_hiv_project_dashboard/
 |
 |-- app.py
 |-- config.py
@@ -1986,7 +1982,7 @@ The computational part of this report was implemented as an interactive Flask da
 \begin{figureframe}[colframe=brickred, borderline west={3pt}{0pt}{urblue}]
 \includegraphics[width=0.94\textwidth]{dashboardSensitivityChapter6Figure.png}
 \end{figureframe}
-\caption{Dashboard sensitivity analysis and thesis-result generator.}
+\caption{Dashboard sensitivity analysis and report-result generator.}
 \label{fig:dashboard_sensitivity_chapter6}
 \end{figure}
 
