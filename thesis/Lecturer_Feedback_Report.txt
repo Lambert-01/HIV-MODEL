@@ -1,0 +1,587 @@
+                               Lecturer Feedback Report
+                   Extracted from the commented PDF: thesis_Final_Version_COMMENT.pdf
+
+ Student: NDACYAYISABA Lambert | Supervisor: Dr. MUHIRWA Jean Pierre | Document reviewed: Final Year Thesis
+ / Project Report
+
+ This report lists the lecturer comments, requested changes, and crossed-out/removed text found in the annotated
+ PDF. It is organized as an action checklist followed by detailed annotation tables.
+
+                 Annotation type                                                    Count
+
+                 StrikeOut / removed text                                           32
+
+                 Text/Caret/Highlight/Underline comments                            28
+
+                 Total non-link annotations                                         60
+
+
+
+
+ 1. Main Requested Changes
+ 1. Title/topic wording: Keep the topic unchanged but change the document wording from “thesis/final year thesis”
+ toward “report / Final Year Project Report” where the lecturer marked it.
+
+ 2. Objectives: Reduce the specific objectives to three major objectives.
+
+ 3. Research questions: Reduce the research questions to three major research questions.
+
+ 4. Chapter summaries: Delete the chapter summaries that were crossed out or marked “delete”: Chapters 1, 2, 3,
+ 4, 6 and 7.
+
+ 5. Model diagram placement: Move the compartmental figure before the mathematical model formulation.
+
+ 6. Parameter values: Find baseline parameter values from literature and cite references; avoid saying all
+ parameters are simply assumed.
+
+ 7. Chapter 4 title: Rename “Theoretical Analysis of the Fractional Model” to “Model Analysis”.
+
+ 8. Purpose/interpretation boxes: Remove the marked “Purpose of this chapter”, “Interpretation”, and “Biological
+ meaning” boxes where the lecturer requested deletion.
+
+ 9. Methodology chapter placement/name: Either move the methodology chapter before model formulation, or
+ rename it to something like “Numerical Scheme and Dashboard”. The lecturer noted that methodology normally
+ comes before model development.
+
+ 10. Model development procedure: Move the model development procedure earlier if keeping it as methodology,
+ because the lecturer said it comes before model development.
+
+
+
+
+Lecturer Feedback Report - NDACYAYISABA Lambert                                                               Page 1
+ 2. Lecturer Comments and Instructions
+ This table contains the direct comments written by the lecturer using text, caret, underline, or highlight
+ annotations.
+
+    N    Pa    Type        Marked text / area                        Lecturer comment / requested action
+    o.   ge
+
+    1    1     Text        al Fun                                    Don't change the topic.
+
+    2    1     Text        YEAR                                      Final Year Project Report
+
+    3    1     Underlin    Final Year Thesis                         -
+               e
+
+    4    1     Text        Thesis                                    Final Year Project Report
+
+    5    3     Text        hesis ha                                  report
+
+    6    3     Text        approv                                    the
+
+    7    3     Text        -                                         of
+
+    8    6     Highlight   thesis develops and analyses a            report uses ......to analyse
+
+    9    6     Underlin    thesis                                    avoid use of thesis rather use report
+               e
+
+    1    15    Caret       ct.                                       They are too many. make them to be three.
+    0
+
+    1    15    Caret       y?                                        Make them to be three.
+    1
+
+    1    16    Caret       rk.                                       delete this.
+    2
+
+    1    20    Caret       ly.                                       delete
+    3
+
+    1    24    Caret       ur are                                    The compartmental figure must come before the
+    4                                                                mathematical model.
+
+    1    26    Caret       ed                                        Find them in literature and put reference. We cannot
+    5                                                                be able to explain how all of them have been assumed.
+
+    1    26    Caret       ed.                                       I don't like this chapter summary. Delete
+    6
+
+    1    27    Caret       el                                        Model Analysis
+    7
+
+    1    27    Caret       ry.                                       delete
+    8
+
+    1    28    Caret       el.                                       delete
+    9
+
+    2    31    Caret       er.                                       delete
+    0
+
+    2    31    Caret       pe.                                       delete
+    1
+
+    2    35    Caret       ain                                       delete
+    2
+
+    2    36    Caret       er.                                       delete
+    3
+
+    2    37    Caret       nt                                        Take this chapter before Model formulation. Otherwise
+    4                                                                Methodology always comes before model formulation.
+                                                                     Or you may change the name and called it Numerical
+                                                                     scheme and dashboard
+
+    2    37    Caret       ts.                                       delete
+    5
+
+    2    37    Caret       re                                        You see. All these come before model development. So,
+    6                                                                take this chapter above.
+
+    2    55    Caret       ly.                                       delete
+    7
+
+    2    57    Caret       ts.                                       delete
+    8
+
+
+
+
+Lecturer Feedback Report - NDACYAYISABA Lambert                                                                         Page 2
+ 3. Crossed-Out / Removed Text
+ The following items were marked with StrikeOut annotations. They represent words, phrases, headings, figures,
+ tables, or sections the lecturer removed or indicated should be deleted.
+
+     N    Pa    Removed / crossed-out text                                                            Likely action
+     o.   ge
+
+     1    1     and Special Functions                                                                 Remove or revise this marked text.
+
+     2    1     Fractional Calculus Special Functions HIV Dynamics Computational                      Remove or revise this marked text.
+                Simulation
+
+     3    1     Keywords: HIV/AIDS · Fractional-Order Model · Caputo Derivative · Gamma               Remove or revise this marked text.
+                Function · Mittag-Leffler Function · Social Behaviour Interventions · Basic
+                Reproduction Number · Python Dashboard CDq t X(t) = F(t, X(t)) R0 = β0(1
+                u1)(1 u2) τ(1 + u3) + δ + µ 1 + ητ(1 + u3) ρ(1 u4) + µ 0 < q 1
+
+     4    1     FINAL YEAR THESIS                                                                     Replace “thesis” wording with
+                                                                                                      “report” wording where
+                                                                                                      appropriate.
+
+     5    1     Research Area • Fractional Mathematical Epidemiology Submission • Kigali, May         Remove or revise this marked text.
+                2026
+
+     6    2     this final year thesis is                                                             Replace “thesis” wording with
+                                                                                                      “report” wording where
+                                                                                                      appropriate.
+
+     7    3     thesis                                                                                Replace “thesis” wording with
+                                                                                                      “report” wording where
+                                                                                                      appropriate.
+
+     8    3     my                                                                                    Remove or revise this marked text.
+
+     9    3     as the                                                                                Remove or revise this marked text.
+
+     1    5     I sincerely                                                                           Remove or revise this marked text.
+     0
+
+     1    14    thesis                                                                                Replace “thesis” wording with
+     1                                                                                                “report” wording where
+                                                                                                      appropriate.
+
+     1    15    thesis is                                                                             Replace “thesis” wording with
+     2                                                                                                “report” wording where
+                                                                                                      appropriate.
+
+     1    15    1. To formulate a fractional-order SITA HIV transmission model using the              Reduce objectives to three major
+     3          Caputo fractional derivative. 2. To introduce social behaviour interventions          objectives.
+                representing awareness, safer sexual behaviour, testing and
+                treatment-seeking, and treatment adherence. 3. To define the role of special
+                functions, particularly the Gamma function and the Mittag-Leffler function, in
+                the fractional model. 4. To establish positivity and boundedness of solutions. 5.
+                To determine the disease-free equilibrium of the fractional model. 6. To derive
+                the basic reproduction number R0 using the next-generation matrix method. 7.
+                To analyse local stability using fractional-order stability criteria. 8. To perform
+                numerical simulations for different fractional orders and intervention scenarios.
+                9. To develop an interactive Python dashboard for visualising model behaviour,
+                memory effects, and intervention impact.
+
+     1    15    1. How can a SITA HIV transmission model be reformulated using Caputo                 Reduce research questions to three
+     4          fractional derivatives? 2. How do social behaviour interventions modify               major questions.
+                transmission, treatment uptake, and AIDS progres- sion? 3. What role do the
+                Gamma function and Mittag-Leffler function play in the fractional-order model?
+                4. What is the basic reproduction number R0 of the model? 5. Under what
+                fractional-order stability conditions is the disease-free equilibrium locally
+                stable? 6. How does varying the fractional order q affect HIV transmission
+                dynamics? 7. How can a dashboard communicate the effect of memory and
+                behavioural interventions in a clear and interactive way?
+
+     1    16    1.9 Chapter Summary This chapter introduced the research problem and                  Delete this chapter summary
+     5          positioned HIV transmission as a process shaped by biological, behavioural, and       section.
+                social factors. It justified the use of fractional calculus by explaining why
+                memory effects are relevant for awareness, testing, adherence, and treatment
+                response. The chapter also stated the aim, specific objectives, research
+                questions, significance, and scope of the study. These elements establish the
+                direction of the thesis: to combine a fractional-order SITA model with
+                intervention analysis and a computational dashboard. The next chapter reviews
+                the epidemiological and mathematical literature that supports this modelling
+                framework.
+
+
+
+
+Lecturer Feedback Report - NDACYAYISABA Lambert                                                                                            Page 3
+     N    Pa    Removed / crossed-out text                                                            Likely action
+     o.   ge
+
+     1    20    2.11 Chapter Summary This chapter reviewed the main scientific foundations of         Delete this chapter summary
+     6          the study. It first connected the thesis to classical compartmental epidemic          section.
+                modelling and HIV/AIDS models with treatment and AIDS progression. It then
+                discussed social and behavioural determinants of HIV transmission, showing
+                why awareness, safer behaviour, testing, stigma, and adherence can be
+                represented mathematically. The chapter also introduced the Gamma function,
+                Riemann–Liouville fractional integral, Caputo derivative, Mittag-Leffler function,
+                and fractional stability criterion. The identified gap is the need for a model that
+                joins fractional memory, social behaviour interventions, and computational
+                simulation in one applied framework. The next chapter formulates that model
+                explicitly.
+
+     1    24    S Susceptible I Infected T Treated A AIDS Λ λ(t)S τ(1 + u3)I δI ρ(1 u4)T µ µ µ µ +    Move/reposition diagram before
+     7          d Fractional-order memory model CDq t X(t) = flows into X flows out of X Force        the mathematical model; revise
+                of infection: λ(t) = β0(1 u1)(1 u2)(I + ηT) N . Social behaviour interventions u1:    layout as requested.
+                awareness and education; u2: condom use / safer sexual behaviour; u3: testing
+                and treatment-seeking; u4: treatment adher- ence. Figure 3.1: Flow diagram of
+                the fractional-order SITA HIV transmission model with social behaviour
+
+     1    25    thesis                                                                                Replace “thesis” wording with
+     8                                                                                                “report” wording where
+                                                                                                      appropriate.
+
+     1    26    Λ Recruitment into the susceptible popula- tion Simulation value µ Natural            Replace assumed parameter status
+     9          mortality rate Estimated or assumed β0 Baseline transmission intensity                with literature-supported values
+                Lit.-guided / assumed η Relative infectiousness under treatment Lit.-guided /         and citations.
+                assumed τ Treatment initiation rate Lit.-guided / assumed δ Progression from
+                infection to AIDS Lit.-guided / assumed ρ Progression from treatment to AIDS
+                Lit.-guided / assumed d AIDS-induced mortality Lit.-guided / assumed
+
+     2    26    3.8 Chapter Summary This chapter constructed the proposed fractional-order            Delete this chapter summary
+     0          SITA model. It defined the susceptible, infected, treated, and AIDS-stage             section.
+                compartments; stated the biological and modelling assumptions; and
+                introduced four bounded intervention functions for awareness, safer
+                behaviour, testing and treatment-seeking, and adherence. The chapter then
+                derived the effective transmission, treatment, and AIDS-progression terms and
+                used them to formulate the Caputo fractional system. The flow diagram and
+                parameter table clarify how individuals move through the model and how each
+                intervention enters the equations. The next chapter studies whether the model
+                is mathematically and biologically well posed.
+
+     2    27    Theoretical Analysis of the Fractional Model                                          Remove or revise this marked text.
+     1
+
+     2    27    Purpose of this chapter This chapter establishes the main mathematical                Delete the marked explanatory
+     2          properties of the proposed fractional-order SITA model. The analysis verifies         box/paragraph.
+                that the model is epidemiologically meaningful, that solutions remain
+                nonnegative and bounded, and that the disease-free equilibrium can be studied
+                through the basic reproduction number and fractional stability theory.
+
+     2    28    Interpretation Equations (4.1)–(4.4) show explicitly how the Gamma function           Delete the marked explanatory
+     3          enters the model. The kernel (t s)q1 weights past states of the system, which         box/paragraph.
+                is the mathematical source of memory in the fractional-order model.
+
+     2    31    Interpretation At E0, all individuals are susceptible and no infection is present.    Delete the marked explanatory
+     4          This equilibrium is the reference point for deriving the basic reproduction           box/paragraph.
+                number.
+
+     2    31    Biological meaning The quantity Λ/µ represents the long-term carrying level           Delete the marked explanatory
+     5          supported by recruitment and natural mortality in the absence of                      box/paragraph.
+                disease-induced mortality. If the initial population satisfies N(0) > Λ/µ, the
+                finite-time solution may begin above this long-term level, but the comparison
+                solution still shows that the population is bounded and eventually approaches
+                the long-term envelope.
+
+     2    35    4.10 Chapter Summary This chapter established the mathematical validity of            Delete this chapter summary
+     6          the fractional-order SITA model. The Caputo system was rewritten in Volterra          section.
+                integral form, making the memory structure of the model explicit through the
+                Gamma-weighted kernel. Existence and uniqueness were justified using a
+                fixed-point argument, while positivity and boundedness showed that
+                nonnegative initial populations remain
+
+     2    36    Fractional-Order HIV Transmission Model NDACYAYISABA Lambert biologically             Remove or revise this marked text.
+     7          meaningful over time. The chapter derived the disease-free equilibrium and the
+                basic reproduction number using the next-generation matrix method. It also
+                stated the fractional-order local stability condition and introduced normalized
+                sensitivity indices for measuring the influence of model parameters and
+                intervention controls. These results provide the theoretical basis for the
+                numerical and dashboard work in the next chapter.
+
+
+
+
+Lecturer Feedback Report - NDACYAYISABA Lambert                                                                                            Page 4
+     N    Pa    Removed / crossed-out text                                                         Likely action
+     o.   ge
+
+     2    37    Chapter 5 Methodology and Dashboard Develop- ment                                  Remove or revise this marked text.
+     8
+
+     2    37    Purpose of this chapter This chapter explains how the theoretical model is         Delete the marked explanatory
+     9          converted into numerical simulations and an interactive dashboard. It corrects     box/paragraph.
+                and clarifies the fractional Adams–Bashforth–Moulton method, describes the
+                computational workflow, and defines the simulation scenarios used to generate
+                thesis results.
+
+     3    37    5.2 Model Development Procedure                                                    Remove or revise this marked text.
+     0
+
+     3    55    6.8 Chapter Summary This chapter interpreted the numerical behaviour of the        Delete this chapter summary
+     1          fractional-order SITA model. The baseline simulation gave R0 = 0.430, indicating   section.
+                that the selected intervention-adjusted parameters place the system below the
+                epidemic threshold. The fractional-order comparison showed that smaller
+                values of q slow the decline of infected, treated, and AIDS-stage populations,
+                supporting the role of memory in the model. The intervention simulations
+                showed that awareness and safer behaviour directly reduce transmission, while
+                testing and adherence mainly affect movement between infected, treated, and
+                AIDS-stage compartments. Combined interventions produced the strongest
+                reduction in R0 and final infection levels. Sensitivity analysis confirmed that
+                transmission-related quantities are the dominant drivers in this configuration,
+                and the dashboard demonstration showed how the model can be explored and
+                presented interactively.
+
+     3    57    7.4 Chapter Summary This final chapter brought together the main conclusions       Delete this chapter summary
+     2          of the thesis. It emphasized that the study formulated a fractional-order SITA     section.
+                HIV model, analysed its basic mathematical properties, derived the
+                reproduction number, and used numerical simulation to compare memory
+                effects and intervention strategies. The recommendations identify possible
+                extensions, including richer population structure, Rwanda-specific parameter
+                estimation, stochastic effects, and alternative fractional operators. The
+                limitations clarify that the results should be understood as applied
+                mathematical simulations rather than direct clinical or policy forecasts.
+
+
+
+
+Lecturer Feedback Report - NDACYAYISABA Lambert                                                                                         Page 5
+ 4. Page-by-Page Correction Plan
+ Use this checklist while editing the LaTeX source.
+
+ Page 1
+ • StrikeOut: Remove/correct marked text: and Special Functions
+
+ • Comment: Text: Don't change the topic. | marked text: al Fun
+
+ • StrikeOut: Remove/correct marked text: Fractional Calculus Special Functions HIV Dynamics Computational Simulation
+
+ • StrikeOut: Remove/correct marked text: Keywords: HIV/AIDS · Fractional-Order Model · Caputo Derivative · Gamma Function ·
+ Mittag-Leffler Function · Social Behaviour Interventions · Basic Reproduction Number · Python Dashboard CDq t X(t) = F(t, X(t)) R0 =
+ β0(1 u1)(1 u2) τ(1 + u3) + δ + µ 1 + ητ(1 + u3) ρ(1 u4) + µ 0 < q 1
+
+ • StrikeOut: Remove/correct marked text: FINAL YEAR THESIS
+
+ • Comment: Text: Final Year Project Report | marked text: YEAR
+
+ • StrikeOut: Remove/correct marked text: Research Area • Fractional Mathematical Epidemiology Submission • Kigali, May 2026
+
+ • Comment: Underline: - | marked text: Final Year Thesis
+
+ • Comment: Text: Final Year Project Report | marked text: Thesis
+
+
+ Page 2
+ • StrikeOut: Remove/correct marked text: this final year thesis is
+
+
+ Page 3
+ • StrikeOut: Remove/correct marked text: thesis
+
+ • Comment: Text: report | marked text: hesis ha
+
+ • StrikeOut: Remove/correct marked text: my
+
+ • Comment: Text: the | marked text: approv
+
+ • StrikeOut: Remove/correct marked text: as the
+
+ • Comment: Text: of
+
+
+ Page 5
+ • StrikeOut: Remove/correct marked text: I sincerely
+
+
+ Page 6
+ • Comment: Highlight: report uses ......to analyse | marked text: thesis develops and analyses a
+
+ • Comment: Underline: avoid use of thesis rather use report | marked text: thesis
+
+
+ Page 14
+ • StrikeOut: Remove/correct marked text: thesis
+
+
+ Page 15
+ • StrikeOut: Remove/correct marked text: thesis is
+
+ • StrikeOut: Remove/correct marked text: 1. To formulate a fractional-order SITA HIV transmission model using the Caputo
+ fractional derivative. 2. To introduce social behaviour interventions representing awareness, safer sexual behaviour, testing and
+ treatment-seeking, and treatment adherence. 3. To define the role of special functions, particularly the Gamma function and the
+ Mittag-Leffler function, in the fractional model. 4. To establish positivity and boundedness of solutions. 5. To determine the
+ disease-free equilibrium of the fractional model. 6. To derive the basic reproduction
+
+ • Comment: Caret: They are too many. make them to be three. | marked text: ct.
+
+ • StrikeOut: Remove/correct marked text: 1. How can a SITA HIV transmission model be reformulated using Caputo fractional
+ derivatives? 2. How do social behaviour interventions modify transmission, treatment uptake, and AIDS progres- sion? 3. What role
+ do the Gamma function and Mittag-Leffler function play in the fractional-order model? 4. What is the basic reproduction number R0
+ of the model? 5. Under what fractional-order stability conditions is the disease-free equilibrium locally stable? 6. How does varying
+ the fractional order q affect HIV transmission dynamics? 7. How can a dashb
+
+ • Comment: Caret: Make them to be three. | marked text: y?
+
+
+
+
+Lecturer Feedback Report - NDACYAYISABA Lambert                                                                                  Page 6
+ Page 16
+ • StrikeOut: Remove/correct marked text: 1.9 Chapter Summary This chapter introduced the research problem and positioned HIV
+ transmission as a process shaped by biological, behavioural, and social factors. It justified the use of fractional calculus by
+ explaining why memory effects are relevant for awareness, testing, adherence, and treatment response. The chapter also stated
+ the aim, specific objectives, research questions, significance, and scope of the study. These elements establish the direction of the
+ thesis: to combine a fractional-order SITA model with intervention analysis an
+
+ • Comment: Caret: delete this. | marked text: rk.
+
+
+ Page 20
+ • StrikeOut: Remove/correct marked text: 2.11 Chapter Summary This chapter reviewed the main scientific foundations of the
+ study. It first connected the thesis to classical compartmental epidemic modelling and HIV/AIDS models with treatment and AIDS
+ progression. It then discussed social and behavioural determinants of HIV transmission, showing why awareness, safer behaviour,
+ testing, stigma, and adherence can be represented mathematically. The chapter also introduced the Gamma function,
+ Riemann–Liouville fractional integral, Caputo derivative, Mittag-Leffler function, and fractional s
+
+ • Comment: Caret: delete | marked text: ly.
+
+
+ Page 24
+ • StrikeOut: Remove/correct marked text: S Susceptible I Infected T Treated A AIDS Λ λ(t)S τ(1 + u3)I δI ρ(1 u4)T µ µ µ µ + d
+ Fractional-order memory model CDq t X(t) = flows into X flows out of X Force of infection: λ(t) = β0(1 u1)(1 u2)(I + ηT) N . Social
+ behaviour interventions u1: awareness and education; u2: condom use / safer sexual behaviour; u3: testing and treatment-seeking;
+ u4: treatment adher- ence. Figure 3.1: Flow diagram of the fractional-order SITA HIV transmission model with social behaviour
+
+ • Comment: Caret: The compartmental figure must come before the mathematical model. | marked text: ur are
+
+
+ Page 25
+ • StrikeOut: Remove/correct marked text: thesis
+
+
+ Page 26
+ • StrikeOut: Remove/correct marked text: Λ Recruitment into the susceptible popula- tion Simulation value µ Natural mortality rate
+ Estimated or assumed β0 Baseline transmission intensity Lit.-guided / assumed η Relative infectiousness under treatment
+ Lit.-guided / assumed τ Treatment initiation rate Lit.-guided / assumed δ Progression from infection to AIDS Lit.-guided / assumed
+ ρ Progression from treatment to AIDS Lit.-guided / assumed d AIDS-induced mortality Lit.-guided / assumed
+
+ • Comment: Caret: Find them in literature and put reference. We cannot be able to explain how all of them have been assumed. |
+ marked text: ed
+
+ • StrikeOut: Remove/correct marked text: 3.8 Chapter Summary This chapter constructed the proposed fractional-order SITA model.
+ It defined the susceptible, infected, treated, and AIDS-stage compartments; stated the biological and modelling assumptions; and
+ introduced four bounded intervention functions for awareness, safer behaviour, testing and treatment-seeking, and adherence.
+ The chapter then derived the effective transmission, treatment, and AIDS-progression terms and used them to formulate the
+ Caputo fractional system. The flow diagram and parameter table clarify how individuals
+
+ • Comment: Caret: I don't like this chapter summary. Delete | marked text: ed.
+
+
+ Page 27
+ • StrikeOut: Remove/correct marked text: Theoretical Analysis of the Fractional Model
+
+ • Comment: Caret: Model Analysis | marked text: el
+
+ • StrikeOut: Remove/correct marked text: Purpose of this chapter This chapter establishes the main mathematical properties of the
+ proposed fractional-order SITA model. The analysis verifies that the model is epidemiologically meaningful, that solutions remain
+ nonnegative and bounded, and that the disease-free equilibrium can be studied through the basic reproduction number and
+ fractional stability theory.
+
+ • Comment: Caret: delete | marked text: ry.
+
+
+ Page 28
+ • StrikeOut: Remove/correct marked text: Interpretation Equations (4.1)–(4.4) show explicitly how the Gamma function enters the
+ model. The kernel (t s)q1 weights past states of the system, which is the mathematical source of memory in the fractional-order
+ model.
+
+ • Comment: Caret: delete | marked text: el.
+
+
+ Page 31
+
+
+
+Lecturer Feedback Report - NDACYAYISABA Lambert                                                                                   Page 7
+ • StrikeOut: Remove/correct marked text: Interpretation At E0, all individuals are susceptible and no infection is present. This
+ equilibrium is the reference point for deriving the basic reproduction number.
+
+ • Comment: Caret: delete | marked text: er.
+
+ • StrikeOut: Remove/correct marked text: Biological meaning The quantity Λ/µ represents the long-term carrying level supported by
+ recruitment and natural mortality in the absence of disease-induced mortality. If the initial population satisfies N(0) > Λ/µ, the
+ finite-time solution may begin above this long-term level, but the comparison solution still shows that the population is bounded
+ and eventually approaches the long-term envelope.
+
+ • Comment: Caret: delete | marked text: pe.
+
+
+ Page 35
+ • StrikeOut: Remove/correct marked text: 4.10 Chapter Summary This chapter established the mathematical validity of the
+ fractional-order SITA model. The Caputo system was rewritten in Volterra integral form, making the memory structure of the model
+ explicit through the Gamma-weighted kernel. Existence and uniqueness were justified using a fixed-point argument, while
+ positivity and boundedness showed that nonnegative initial populations remain
+
+ • Comment: Caret: delete | marked text: ain
+
+
+ Page 36
+ • StrikeOut: Remove/correct marked text: Fractional-Order HIV Transmission Model NDACYAYISABA Lambert biologically
+ meaningful over time. The chapter derived the disease-free equilibrium and the basic reproduction number using the
+ next-generation matrix method. It also stated the fractional-order local stability condition and introduced normalized sensitivity
+ indices for measuring the influence of model parameters and intervention controls. These results provide the theoretical basis for
+ the numerical and dashboard work in the next chapter.
+
+ • Comment: Caret: delete | marked text: er.
+
+
+ Page 37
+ • StrikeOut: Remove/correct marked text: Chapter 5 Methodology and Dashboard Develop- ment
+
+ • Comment: Caret: Take this chapter before Model formulation. Otherwise Methodology always comes before model formulation.
+ Or you may change the name and called it Numerical scheme and dashboard | marked text: nt
+
+ • StrikeOut: Remove/correct marked text: Purpose of this chapter This chapter explains how the theoretical model is converted into
+ numerical simulations and an interactive dashboard. It corrects and clarifies the fractional Adams–Bashforth–Moulton method,
+ describes the computational workflow, and defines the simulation scenarios used to generate thesis results.
+
+ • Comment: Caret: delete | marked text: ts.
+
+ • StrikeOut: Remove/correct marked text: 5.2 Model Development Procedure
+
+ • Comment: Caret: You see. All these come before model development. So, take this chapter above. | marked text: re
+
+
+ Page 55
+ • StrikeOut: Remove/correct marked text: 6.8 Chapter Summary This chapter interpreted the numerical behaviour of the
+ fractional-order SITA model. The baseline simulation gave R0 = 0.430, indicating that the selected intervention-adjusted parameters
+ place the system below the epidemic threshold. The fractional-order comparison showed that smaller values of q slow the decline
+ of infected, treated, and AIDS-stage populations, supporting the role of memory in the model. The intervention simulations showed
+ that awareness and safer behaviour directly reduce transmission, while testing and a
+
+ • Comment: Caret: delete | marked text: ly.
+
+
+ Page 57
+ • StrikeOut: Remove/correct marked text: 7.4 Chapter Summary This final chapter brought together the main conclusions of the
+ thesis. It emphasized that the study formulated a fractional-order SITA HIV model, analysed its basic mathematical properties,
+ derived the reproduction number, and used numerical simulation to compare memory effects and intervention strategies. The
+ recommendations identify possible extensions, including richer population structure, Rwanda-specific parameter estimation,
+ stochastic effects, and alternative fractional operators. The limitations clarify that the res
+
+ • Comment: Caret: delete | marked text: ts.
+
+
+
+
+Lecturer Feedback Report - NDACYAYISABA Lambert                                                                                     Page 8
+

@@ -1,5 +1,5 @@
 %% ============================================================
-%% FINAL YEAR THESIS — Fractional-Order HIV Model
+%% FINAL YEAR PROJECT REPORT — Fractional-Order HIV Model
 %% Student    : NDACYAYISABA Lambert
 %% Supervisor : Dr. MUHIRWA Jean Pierre
 %% Institution: University of Rwanda — College of Science and Technology
@@ -189,7 +189,7 @@
   citecolor=mathgreen,
   urlcolor=urblue,
   pdfauthor={NDACYAYISABA Lambert},
-  pdftitle={Final Year Thesis: Fractional-Order HIV Transmission Model with Social Behaviour Interventions},
+  pdftitle={Final Year Project Report: Fractional-Order HIV Transmission Model with Social Behaviour Interventions},
   pdfsubject={Applied Mathematics — Fractional Calculus — Mathematical Epidemiology}
 }
 
@@ -309,7 +309,7 @@
      Kigali, Rwanda};
   \node[anchor=center, text=urgold!80!white, font=\sffamily\footnotesize]
     at ([xshift=0pt, yshift=30pt] current page.south)
-    {Final Year Thesis
+    {Final Year Project Report
      \enspace\textbullet\enspace
      May 2026
      \enspace\textbullet\enspace
@@ -318,13 +318,13 @@
 \end{tikzpicture}
 
 %% ── BODY CONTENT (positioned below header band) ──
-\vspace*{3.6cm}
+\vspace*{2cm}
 
 %% ── THESIS TYPE LABEL ──
 \begin{center}
 {\color{urblue}\rule{0.18\linewidth}{0.5pt}}%
 \enspace
-{\color{urblue}\bfseries\sffamily\small FINAL YEAR THESIS}%
+{\color{urblue}\bfseries\sffamily\small FINAL YEAR PROJECT REPORT}%
 \enspace
 {\color{urblue}\rule{0.18\linewidth}{0.5pt}}
 \end{center}
@@ -345,10 +345,9 @@
 \centering
 {\color{white}\fontsize{15}{20}\selectfont\bfseries\sffamily
 A Fractional-Order Compartmental Model of HIV Transmission\\[7pt]
-with Social Behaviour Interventions and Special Functions}\\[12pt]
+with Social Behaviour Interventions}\\[12pt]
 {\color{urgold!85!white}\small\itshape
 Fractional Calculus
-$\;\diamond\;$ Special Functions
 $\;\diamond\;$ HIV Dynamics
 $\;\diamond\;$ Computational Simulation}
 \end{tcolorbox}
@@ -386,72 +385,9 @@ Student Name   & NDACYAYISABA Lambert \\
 Reg.~Number    & 222008909 \\
 Programme      & Bachelor's Degree in Applied Mathematics \\
 Supervisor     & Dr.~MUHIRWA Jean Pierre \\
-Research Area  & Fractional Mathematical Epidemiology \\
 Submission     & Kigali, May 2026 \\
 \end{tabular}
 \end{center}
-\end{tcolorbox}
-
-\vspace{0.5cm}
-
-%% ── SECOND DECORATIVE DIVIDER ──
-\begin{center}
-{\color{ursilver}\rule{0.25\linewidth}{0.5pt}}%
-\enspace
-{\color{urblue}\small$\circ$}%
-\enspace
-{\color{urgold}\small$\star$}%
-\enspace
-{\color{urblue}\small$\circ$}%
-\enspace
-{\color{ursilver}\rule{0.25\linewidth}{0.5pt}}
-\end{center}
-
-\vspace{0.45cm}
-
-%% ── KEYWORDS BOX ──
-\begin{tcolorbox}[
-  enhanced,
-  colback=lightblue,
-  colframe=urblue,
-  boxrule=0.8pt,
-  arc=5pt,
-  left=12pt, right=12pt, top=8pt, bottom=8pt,
-  borderline north={2pt}{0pt}{urgold},
-  borderline south={2pt}{0pt}{urgold}
-]
-\centering
-{\color{urblue}\bfseries\sffamily\small Keywords:}\enspace
-{\color{darkgray}\small
-HIV/AIDS
-$\cdot$ Fractional-Order Model
-$\cdot$ Caputo Derivative
-$\cdot$ Gamma Function
-$\cdot$ Mittag-Leffler Function
-$\cdot$ Social Behaviour Interventions
-$\cdot$ Basic Reproduction Number
-$\cdot$ Python Dashboard}
-\end{tcolorbox}
-
-\vspace{0.5cm}
-
-%% ── MATHEMATICAL FORMULA STRIP ──
-\begin{tcolorbox}[
-  enhanced,
-  colback=white,
-  colframe=ursilver,
-  boxrule=0.7pt,
-  arc=4pt,
-  left=10pt, right=10pt, top=6pt, bottom=6pt,
-  borderline west={3pt}{0pt}{urblue}
-]
-\centering
-{\color{urblue}\small
-${}^{C}\!D_t^{q}\,X(t) = F(t,X(t))$
-\enspace$\diamond$\enspace
-$\mathcal{R}_0 = \dfrac{\beta_0(1-u_1)(1-u_2)}{\tau(1+u_3)+\delta+\mu}\!\left(1+\dfrac{\eta\tau(1+u_3)}{\rho(1-u_4)+\mu}\right)$
-\enspace$\diamond$\enspace
-$0 < q \leq 1$}
 \end{tcolorbox}
 
 \end{titlepage}
@@ -464,14 +400,14 @@ $0 < q \leq 1$}
 %% ============================================================
 \chapter*{Declaration}
 \addcontentsline{toc}{chapter}{Declaration}
-I, NDACYAYISABA Lambert, declare that this final year thesis is my original work and has not been submitted elsewhere for any academic award. All sources used in this work have been acknowledged through proper citation and referencing.
+I, NDACYAYISABA Lambert, declare that this final year project report is my original work and has not been submitted elsewhere for any academic award. All sources used in this work have been acknowledged through proper citation and referencing.
 
 \vspace{1.2cm}
 \noindent\textbf{Student Signature:} \rule{6cm}{0.4pt}\hfill\textbf{Date:} \rule{3.5cm}{0.4pt}
 
 \chapter*{Approval}
 \addcontentsline{toc}{chapter}{Approval}
-This thesis has been submitted for examination with my approval as the university supervisor.
+This report has been submitted for examination with the approval of the university supervisor.
 
 \vspace{1.2cm}
 \noindent\textbf{Supervisor:} Dr. MUHIRWA Jean Pierre\\[8pt]
@@ -489,14 +425,14 @@ I sincerely thank God for strength and guidance throughout this academic journey
 \addcontentsline{toc}{chapter}{Abstract}
 HIV/AIDS remains a major public health concern, particularly in sub-Saharan Africa, where transmission and control are shaped by both biomedical and social factors. Although antiretroviral therapy has improved survival and reduced transmission risk, HIV dynamics continue to be influenced by awareness, safer sexual behaviour, HIV testing, treatment-seeking behaviour, stigma, and adherence to medication. These factors suggest that HIV transmission cannot be fully understood through biological processes alone.
 
-This thesis develops and analyses a fractional-order SITA model for HIV transmission with social behaviour interventions. The population is divided into four compartments: susceptible individuals $S(t)$, infected individuals $I(t)$, treated individuals $T(t)$, and individuals in the AIDS stage $A(t)$. The model is formulated using the Caputo fractional derivative of order $q$, where $0<q\leq 1$. The fractional order introduces memory effects, allowing the model to reflect the fact that behavioural change, treatment adherence, and public health interventions may influence transmission over time rather than instantaneously.
+This report uses a fractional-order SITA model to analyse HIV transmission with social behaviour interventions. The population is divided into four compartments: susceptible individuals $S(t)$, infected individuals $I(t)$, treated individuals $T(t)$, and individuals in the AIDS stage $A(t)$. The model is formulated using the Caputo fractional derivative of order $q$, where $0<q\leq 1$. The fractional order introduces memory effects, allowing the model to reflect the fact that behavioural change, treatment adherence, and public health interventions may influence transmission over time rather than instantaneously.
 
-Special functions, especially the Gamma function and the Mittag-Leffler function, are introduced as essential tools in the formulation and analysis of the fractional model. The Gamma function appears in the definition of the Caputo derivative, while the Mittag-Leffler function plays a role similar to the exponential function in fractional dynamical systems. The thesis presents positivity, boundedness, disease-free equilibrium, the basic reproduction number $\Rzero$, and local stability using fractional-order stability conditions. Numerical simulations are implemented using a fractional Adams--Bashforth--Moulton predictor-corrector method, and an interactive Python dashboard is used to visualize memory effects, intervention scenarios, sensitivity analysis, and epidemic trajectories.
+Special functions, especially the Gamma function and the Mittag-Leffler function, are introduced as essential tools in the formulation and analysis of the fractional model. The Gamma function appears in the definition of the Caputo derivative, while the Mittag-Leffler function plays a role similar to the exponential function in fractional dynamical systems. The report presents positivity, boundedness, disease-free equilibrium, the basic reproduction number $\Rzero$, and local stability using fractional-order stability conditions. Numerical simulations are implemented using a fractional Adams--Bashforth--Moulton predictor-corrector method, and an interactive Python dashboard is used to visualize memory effects, intervention scenarios, sensitivity analysis, and epidemic trajectories.
 
 The baseline simulation produced $\Rzero=0.430<1$, indicating controlled transmission under the selected intervention-adjusted parameters. The fractional-order comparison showed that smaller values of $q$ slow the decline of infected, treated, and AIDS-stage populations, while combined intervention scenarios produced the strongest reduction in infection.
 
 \begin{remarkbox}[title={Core Contribution}]
-This thesis extends a standard HIV compartmental model by replacing ordinary derivatives with Caputo fractional derivatives and by incorporating social behaviour interventions into transmission, treatment uptake, and progression mechanisms. The work connects fractional calculus, special functions, epidemiological modelling, and computational simulation.
+This report extends a standard HIV compartmental model by replacing ordinary derivatives with Caputo fractional derivatives and by incorporating social behaviour interventions into transmission, treatment uptake, and progression mechanisms. The work connects fractional calculus, special functions, epidemiological modelling, and computational simulation.
 \end{remarkbox}
 
 \newpage
@@ -548,7 +484,7 @@ HIV/AIDS remains a major public health problem whose transmission is shaped by b
 
 Mathematical modelling provides a systematic way of understanding how HIV spreads and how interventions may influence long-term dynamics. Classical compartmental models are commonly formulated using ordinary differential equations. However, ordinary models assume that the rate of change depends only on the current state of the system. This assumption may be restrictive in HIV modelling because social behaviour and treatment response often carry memory: past awareness campaigns, previous adherence patterns, and earlier testing behaviour can continue to influence present transmission.
 
-Fractional calculus provides a natural extension of ordinary calculus by allowing derivatives of non-integer order. A fractional-order model can capture memory and hereditary effects, making it suitable for diseases and interventions whose dynamics are influenced by past states \citep{Podlubny1999,Kilbas2006,Diethelm2010}. For this reason, this thesis formulates a fractional-order HIV transmission model using the Caputo fractional derivative.
+Fractional calculus provides a natural extension of ordinary calculus by allowing derivatives of non-integer order. A fractional-order model can capture memory and hereditary effects, making it suitable for diseases and interventions whose dynamics are influenced by past states \citep{Podlubny1999,Kilbas2006,Diethelm2010}. For this reason, this report formulates a fractional-order HIV transmission model using the Caputo fractional derivative.
 
 \newpage
 
@@ -560,36 +496,30 @@ Social behaviour remains relevant in the Rwandan HIV response. Stigma, testing b
 \section{Statement of the Problem}
 Many existing HIV models use ordinary differential equations and treat transmission as a direct function of current infected populations. Such models may not fully capture memory effects arising from past behaviour, treatment adherence, community awareness, or stigma reduction. In addition, social behaviour is often represented as a fixed parameter rather than as intervention functions that modify transmission, treatment uptake, and progression.
 
-This thesis addresses this limitation by developing a fractional-order SITA model that incorporates social behaviour interventions. The model uses the Caputo derivative to include memory effects and introduces intervention functions representing awareness, safer sexual behaviour, testing and treatment-seeking, and treatment adherence.
+This report addresses this limitation by developing a fractional-order SITA model that incorporates social behaviour interventions. The model uses the Caputo derivative to include memory effects and introduces intervention functions representing awareness, safer sexual behaviour, testing and treatment-seeking, and treatment adherence.
 
 The central mathematical problem is therefore to connect three components in one coherent framework: a biologically meaningful HIV compartmental model, a fractional-order derivative that represents memory, and intervention functions that can be varied computationally. This connection is important because it allows the model to be analysed theoretically and then explored numerically through a dashboard.
 
+\newpage
+
 \section{Aim of the Study}
-The main aim of this thesis is to formulate, analyse, and computationally simulate a fractional-order SITA model of HIV transmission incorporating social behaviour interventions and special functions.
+The main aim of this report is to formulate, analyse, and computationally simulate a fractional-order SITA model of HIV transmission incorporating social behaviour interventions and special functions.
 
 \section{Specific Objectives}
 \begin{enumerate}
-  \item To formulate a fractional-order SITA HIV transmission model using the Caputo fractional derivative.
-  \item To introduce social behaviour interventions representing awareness, safer sexual behaviour, testing and treatment-seeking, and treatment adherence.
-  \item To define the role of special functions, particularly the Gamma function and the Mittag-Leffler function, in the fractional model.
-  \item To establish positivity and boundedness of solutions.
-  \item To determine the disease-free equilibrium of the fractional model.
-  \item To derive the basic reproduction number $\Rzero$ using the next-generation matrix method.
-  \item To analyse local stability using fractional-order stability criteria.
-  \item To perform numerical simulations for different fractional orders and intervention scenarios.
-  \item To develop an interactive Python dashboard for visualising model behaviour, memory effects, and intervention impact.
+  \item To formulate a fractional-order SITA HIV transmission model using the Caputo derivative and social behaviour intervention functions.
+  \item To analyse the main mathematical properties of the model, including positivity, boundedness, disease-free equilibrium, $\Rzero$, and fractional-order stability.
+  \item To implement numerical simulations and a Python dashboard for studying memory effects, intervention scenarios, sensitivity, and epidemic trajectories.
 \end{enumerate}
 
 \section{Research Questions}
 \begin{enumerate}
-  \item How can a SITA HIV transmission model be reformulated using Caputo fractional derivatives?
-  \item How do social behaviour interventions modify transmission, treatment uptake, and AIDS progression?
-  \item What role do the Gamma function and Mittag-Leffler function play in the fractional-order model?
-  \item What is the basic reproduction number $\Rzero$ of the model?
-  \item Under what fractional-order stability conditions is the disease-free equilibrium locally stable?
-  \item How does varying the fractional order $q$ affect HIV transmission dynamics?
-  \item How can a dashboard communicate the effect of memory and behavioural interventions in a clear and interactive way?
+  \item How can a SITA HIV transmission model be formulated using the Caputo fractional derivative and social behaviour interventions?
+  \item What are the main analytical properties of the model, including positivity, boundedness, $\Rzero$, and local stability?
+  \item How do fractional memory and intervention scenarios affect the simulated HIV dynamics in the dashboard?
 \end{enumerate}
+
+\newpage
 
 \section{Significance of the Study}
 This study is significant in three ways. Mathematically, it introduces fractional calculus and special functions into HIV modelling and shows how the Caputo derivative, Gamma function, and Mittag-Leffler function enter the analysis of a biological system. Epidemiologically, it provides a structured framework for comparing behavioural and treatment-related interventions through the basic reproduction number and numerical trajectories. Computationally, it supports the development of an interactive dashboard that makes the fractional model testable, reproducible, and easier to communicate during presentation.
@@ -601,9 +531,6 @@ The study focuses on a deterministic fractional-order SITA model with four compa
 
 All numerical results should therefore be interpreted as scenario-based mathematical experiments. The purpose is to compare the qualitative effects of memory and intervention levels, not to estimate exact HIV prevalence or incidence in a real population.
 
-\section{Chapter Summary}
-This chapter introduced the research problem and positioned HIV transmission as a process shaped by biological, behavioural, and social factors. It justified the use of fractional calculus by explaining why memory effects are relevant for awareness, testing, adherence, and treatment response. The chapter also stated the aim, specific objectives, research questions, significance, and scope of the study. These elements establish the direction of the thesis: to combine a fractional-order SITA model with intervention analysis and a computational dashboard. The next chapter reviews the epidemiological and mathematical literature that supports this modelling framework.
-
 %% ============================================================
 \chapter{Literature Review and Mathematical Preliminaries}
 %% ============================================================
@@ -612,9 +539,11 @@ This chapter introduced the research problem and positioned HIV transmission as 
 Compartmental epidemic modelling has its roots in the work of \citet{Kermack1927}, who introduced the classical SIR framework. Later studies extended such models to represent different infectious disease dynamics. \citet{Hethcote2000} provides a comprehensive review of infectious disease models, including threshold quantities such as the basic reproduction number.
 
 \section{HIV/AIDS Mathematical Models}
-HIV differs from many acute infections because infected individuals do not naturally move into a permanently recovered class. For this reason, HIV models often include treatment and AIDS progression compartments \citep{AndersonMay1991,SilvaTorres2017}. In this thesis, the population is divided into susceptible, infected, treated, and AIDS classes.
+HIV differs from many acute infections because infected individuals do not naturally move into a permanently recovered class. For this reason, HIV models often include treatment and AIDS progression compartments \citep{AndersonMay1991,SilvaTorres2017}. In this report, the population is divided into susceptible, infected, treated, and AIDS classes.
 
 Treatment compartments are important because antiretroviral therapy changes both the clinical progression of HIV and the effective contribution of treated individuals to transmission. Models such as SICA or SITA-type systems are therefore useful because they separate untreated infection from treatment and advanced disease stages. This separation allows the modeller to study treatment uptake, progression to AIDS, and disease-induced mortality within the same framework.
+
+\newpage 
 
 \section{Social Behaviour in HIV Transmission}
 HIV transmission is strongly influenced by behavioural and social factors. These include condom use, number of sexual partners, HIV testing, disclosure, stigma, treatment-seeking behaviour, and adherence to ART. Mathematical models can represent these effects through risk groups, behaviour-dependent transmission rates, or intervention functions \citep{Poundstone2004,Supervie2011}.
@@ -626,7 +555,7 @@ Fractional calculus extends ordinary differentiation and integration to non-inte
 
 The motivation for using fractional derivatives is that epidemic processes may depend on past states rather than only on the current state. For HIV, this is meaningful because public-health education, treatment adherence, stigma reduction, and testing habits often influence behaviour over a period of time. A Caputo fractional model therefore provides a mathematical way to include delayed and persistent effects while still using standard initial conditions.
 
-Numerically, fractional models require methods that account for the memory integral. Predictor--corrector methods of Adams--Bashforth--Moulton type are commonly used for Caputo systems because each new time step depends on a weighted history of earlier function values \citep{Diethelm2002,Diethelm2010}. This is the numerical approach adopted in the computational part of the thesis.
+Numerically, fractional models require methods that account for the memory integral. Predictor--corrector methods of Adams--Bashforth--Moulton type are commonly used for Caputo systems because each new time step depends on a weighted history of earlier function values \citep{Diethelm2002,Diethelm2010}. This is the numerical approach adopted in the computational part of the report.
 
 \section{Gamma Function}
 The Gamma function is a fundamental special function in fractional calculus. It generalizes the factorial function and is defined by
@@ -638,6 +567,9 @@ For positive integers $n$, it satisfies
 \Gamma(n)=(n-1)!.
 \end{equation}
 The Gamma function appears in the definition of fractional integrals and derivatives.
+
+
+\newpage
 
 \section{Riemann--Liouville Fractional Integral}
 For a function $f$ and order $q>0$, the Riemann--Liouville fractional integral is defined as
@@ -652,7 +584,7 @@ For $0<q<1$, the Caputo fractional derivative of a differentiable function $f$ i
 \CaputoD{t}{q}f(t)=\frac{1}{\Gamma(1-q)}\int_0^t \frac{f'(s)}{(t-s)^q}\,ds.
 \label{eq:caputo_definition}
 \end{equation}
-The Caputo derivative is used in this thesis because it allows classical initial conditions, such as $S(0)=S_0$, $I(0)=I_0$, $T(0)=T_0$, and $A(0)=A_0$ \citep{Caputo1967,Diethelm2010}.
+The Caputo derivative is used in this report because it allows classical initial conditions, such as $S(0)=S_0$, $I(0)=I_0$, $T(0)=T_0$, and $A(0)=A_0$ \citep{Caputo1967,Diethelm2010}.
 
 \begin{remarkbox}[title={Why the Caputo Derivative is Selected}]
 The Caputo derivative is selected because it is suitable for biological models with standard initial conditions. It also carries a memory kernel, meaning that the present dynamics depend on past states. This is important for HIV modelling because awareness, adherence, stigma reduction, and testing behaviour may influence transmission over time rather than only at the present moment.
@@ -686,10 +618,7 @@ the equilibrium is locally asymptotically stable if every eigenvalue $\lambda_i$
 This criterion is more general than the ordinary condition $\operatorname{Re}(\lambda_i)<0$ and becomes the classical condition when $q=1$ \citep{Matignon1996}.
 
 \section{Summary of Literature Gap}
-The literature shows that compartmental HIV models are useful, fractional derivatives can represent memory effects, and special functions provide the mathematical foundation for fractional models. However, there remains room for a model that combines fractional-order HIV dynamics with social behaviour interventions and a computational dashboard. This thesis addresses that gap.
-
-\section{Chapter Summary}
-This chapter reviewed the main scientific foundations of the study. It first connected the thesis to classical compartmental epidemic modelling and HIV/AIDS models with treatment and AIDS progression. It then discussed social and behavioural determinants of HIV transmission, showing why awareness, safer behaviour, testing, stigma, and adherence can be represented mathematically. The chapter also introduced the Gamma function, Riemann--Liouville fractional integral, Caputo derivative, Mittag-Leffler function, and fractional stability criterion. The identified gap is the need for a model that joins fractional memory, social behaviour interventions, and computational simulation in one applied framework. The next chapter formulates that model explicitly.
+The literature shows that compartmental HIV models are useful, fractional derivatives can represent memory effects, and special functions provide the mathematical foundation for fractional models. However, there remains room for a model that combines fractional-order HIV dynamics with social behaviour interventions and a computational dashboard. This report addresses that gap.
 
 %% ============================================================
 \chapter{Fractional-Order Model Formulation}
@@ -751,6 +680,43 @@ $u_4(t)$ & Treatment adherence intervention & $0\leq u_4(t)\leq1$\\
 \end{tabular}
 \end{center}
 
+\section{Model Flow Diagram}
+\begin{figure}[H]
+\centering
+\resizebox{0.95\textwidth}{!}{%
+\begin{tikzpicture}[
+  >=Stealth,
+  node distance=2.8cm,
+  compartment/.style={
+    rectangle, rounded corners=8pt, minimum width=2.9cm, minimum height=1.15cm,
+    thick, draw=urblue, fill=lightblue, align=center,
+    font=\bfseries\color{urblue}
+  },
+  flow/.style={->, very thick, color=urblue},
+  deathflow/.style={->, thick, color=brickred!80},
+  lab/.style={font=\small\itshape\color{darkgray}, fill=white, inner sep=1.5pt}
+]
+\node[compartment] (S) {$S(t)$\\Susceptible};
+\node[compartment, right=of S] (I) {$I(t)$\\Infected};
+\node[compartment, right=of I] (T) {$T(t)$\\Treated};
+\node[compartment, below=2.0cm of I, xshift=1.4cm] (A) {$A(t)$\\AIDS};
+
+\coordinate[left=1.6cm of S] (entry);
+\draw[flow] (entry) -- (S.west) node[midway, above, lab] {$\Lambda$};
+\draw[flow] (S) -- (I) node[midway, above, lab] {$\lambda(t)S$};
+\draw[flow] (I) -- (T) node[midway, above, lab] {$\tau(1+u_3)I$};
+\draw[flow] (I) -- (A) node[midway, left, lab] {$\delta I$};
+\draw[flow] (T) -- (A) node[midway, right, lab] {$\rho(1-u_4)T$};
+
+\draw[deathflow] (S) -- ++(0,-1.1) node[below, lab] {$\mu S$};
+\draw[deathflow] (I) -- ++(0,-1.1) node[below, lab] {$\mu I$};
+\draw[deathflow] (T) -- ++(0,-1.1) node[below, lab] {$\mu T$};
+\draw[deathflow] (A) -- ++(0,-1.1) node[below, lab] {$(\mu+d)A$};
+\end{tikzpicture}}
+\caption{Compartmental flow diagram for the SITA HIV model. The figure is placed before the equations to show the population transfers before the mathematical formulation.}
+\label{fig:fractional_model_diagram}
+\end{figure}
+
 \section{Effective Transmission and Transition Terms}
 The effective transmission rate is defined as
 \begin{equation}
@@ -790,99 +756,6 @@ S(0)=S_0,\qquad I(0)=I_0,\qquad T(0)=T_0,\qquad A(0)=A_0.
 When $q=1$, the Caputo derivative becomes the ordinary first derivative and the fractional-order model reduces to the classical SITA ordinary differential equation model. When $0<q<1$, the model includes memory effects.
 \end{remarkbox}
 
-\newpage  
-
-
-\section{Model Flow Diagram}
-\begin{figure}[H]
-\centering
-\resizebox{0.97\textwidth}{!}{%
-\begin{tikzpicture}[
-    >=Stealth,
-    node distance=3.1cm and 2.8cm,
-    compartment/.style={
-        rectangle,
-        rounded corners=10pt,
-        minimum width=3.3cm,
-        minimum height=1.35cm,
-        thick,
-        draw=urblue,
-        fill=lightblue,
-        align=center,
-        font=\bfseries\large\color{urblue}
-    },
-    note/.style={
-        rectangle,
-        rounded corners=8pt,
-        draw=mathgreen!70!black,
-        fill=mathgreen!8,
-        thick,
-        text width=7.0cm,
-        align=left,
-        font=\small
-    },
-    deathnode/.style={
-        circle,
-        minimum size=0.8cm,
-        thick,
-        draw=brickred,
-        fill=brickred!12,
-        font=\footnotesize\bfseries\color{brickred}
-    },
-    flow/.style={->, very thick, color=urblue},
-    deathflow/.style={->, thick, color=brickred!80},
-    lab/.style={font=\small\itshape\color{darkgray}, fill=white, inner sep=1.5pt}
-]
-
-\node[compartment] (S) {$S$\\[-1pt]\normalsize Susceptible};
-\node[compartment, right=of S] (I) {$I$\\[-1pt]\normalsize Infected};
-\node[compartment, right=of I] (T) {$T$\\[-1pt]\normalsize Treated};
-\node[compartment, below=2.45cm of I, xshift=1.6cm] (A) {$A$\\[-1pt]\normalsize AIDS};
-
-\coordinate[left=1.9cm of S] (entry);
-\draw[flow] (entry) -- (S.west) node[midway, above, lab] {$\Lambda$};
-\draw[flow] (S) -- (I) node[midway, above, lab] {$\lambda(t)S$};
-\draw[flow] (I) -- (T) node[midway, above, lab] {$\tau(1+u_3)I$};
-\draw[flow] (I) -- (A) node[midway, left, lab] {$\delta I$};
-\draw[flow] (T) -- (A) node[midway, right, lab] {$\rho(1-u_4)T$};
-
-\node[deathnode, below=1.55cm of S] (dS) {$\mu$};
-\node[deathnode, below=1.55cm of I] (dI) {$\mu$};
-\node[deathnode, below=1.55cm of T] (dT) {$\mu$};
-\node[deathnode, below=1.55cm of A] (dA) {$\mu+d$};
-\draw[deathflow] (S) -- (dS);
-\draw[deathflow] (I) -- (dI);
-\draw[deathflow] (T) -- (dT);
-\draw[deathflow] (A) -- (dA);
-
-\node[note, above=1.45cm of I, xshift=1.55cm] (lambdaBox)
-{\textbf{Fractional-order memory model}\\[-2pt]
-\[
-\CaputoD{t}{q}X(t)=\text{flows into }X-\text{flows out of }X
-\]
-\textbf{Force of infection:}
-\[
-\lambda(t)=\frac{\beta_0(1-u_1)(1-u_2)(I+\eta T)}{N}.
-\]
-};
-
-\node[note, below=1.0cm of A, text width=8.8cm] (legendBox)
-{\textbf{Social behaviour interventions}\\[2pt]
-$u_1$: awareness and education;\quad
-$u_2$: condom use / safer sexual behaviour;\\
-$u_3$: testing and treatment-seeking;\quad
-$u_4$: treatment adherence.};
-
-\draw[dashed, thick, color=mathgreen!70!black]
-(lambdaBox.south west) .. controls +(down:1.0cm) and +(up:0.8cm) .. ($(S)!0.5!(I)$);
-\end{tikzpicture}}
-\caption{Flow diagram of the fractional-order SITA HIV transmission model with social behaviour interventions. The compartmental structure is similar to a classical HIV model, but the dynamics are governed by Caputo fractional derivatives, allowing the model to include memory effects.}
-\label{fig:fractional_model_diagram}
-\end{figure}
-
-\newpage 
-
-
 \section{Parameter Description}
 \begin{center}
 \renewcommand{\arraystretch}{1.35}
@@ -907,40 +780,31 @@ $u_4(t)$ & Treatment adherence intervention & $0\leq u_4\leq1$\\
 \end{tabular}
 \end{center}
 
-\begin{remarkbox}[title={Parameter Use and Interpretation}]
-The parameters in this thesis are used for mathematical simulation and scenario comparison. Some parameters, such as mortality and HIV prevalence context, are motivated by public-health literature, while other transition and intervention parameters are selected as baseline simulation values. The aim is not to claim exact calibration to Rwanda-specific individual data, but to study how the fractional order and intervention controls affect the qualitative behaviour of the model.
-\end{remarkbox}
+The parameter values used in the simulations are selected from three sources: demographic and HIV context reports, published HIV modelling studies, and normalized values chosen for controlled scenario comparison. Rwanda-specific HIV context is guided by RPHIA and public-health reports \citep{RBC2020RPHIA,RRP2020Stigma}, while the compartmental HIV structure and transition parameters are guided by standard HIV/AIDS modelling literature \citep{AndersonMay1991,SilvaTorres2017,Gunerhan2020,Unaegbu2021}. The dashboard therefore uses literature-informed baseline values for academic simulation rather than claiming direct calibration to patient-level Rwanda data.
 
 \begin{center}
 \renewcommand{\arraystretch}{1.25}
 \begin{tabular}{>{\bfseries}c p{6.2cm}p{4.1cm}}
 \toprule
-Parameter & Role in the model & Baseline source status\\
+Parameter & Role in the model & Source or modelling basis\\
 \midrule
-$\Lambda$ & Recruitment into the susceptible population & Simulation value\\
-$\mu$ & Natural mortality rate & Estimated or assumed\\
-$\beta_0$ & Baseline transmission intensity & Lit.-guided / assumed\\
-$\eta$ & Relative infectiousness under treatment & Lit.-guided / assumed\\
-$\tau$ & Treatment initiation rate & Lit.-guided / assumed\\
-$\delta$ & Progression from infection to AIDS & Lit.-guided / assumed\\
-$\rho$ & Progression from treatment to AIDS & Lit.-guided / assumed\\
-$d$ & AIDS-induced mortality & Lit.-guided / assumed\\
-$q$ & Fractional memory order & Simulation parameter\\
-$u_1,u_2,u_3,u_4$ & Social behaviour intervention levels & User-defined controls\\
+$\Lambda$ & Recruitment into the susceptible population & Normalized simulation scale\\
+$\mu$ & Natural mortality rate & Demographic modelling context\\
+$\beta_0$ & Baseline transmission intensity & HIV model literature\\
+$\eta$ & Relative infectiousness under treatment & ART-reduced infectiousness\\
+$\tau$ & Treatment initiation rate & HIV treatment-model literature\\
+$\delta$ & Progression from infection to AIDS & HIV progression literature\\
+$\rho$ & Progression from treatment to AIDS & Treatment progression literature\\
+$d$ & AIDS-induced mortality & HIV/AIDS model literature\\
+$q$ & Fractional memory order & Fractional model scenario\\
+$u_1,u_2,u_3,u_4$ & Social behaviour intervention levels & Intervention scenarios\\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\section{Chapter Summary}
-This chapter constructed the proposed fractional-order SITA model. It defined the susceptible, infected, treated, and AIDS-stage compartments; stated the biological and modelling assumptions; and introduced four bounded intervention functions for awareness, safer behaviour, testing and treatment-seeking, and adherence. The chapter then derived the effective transmission, treatment, and AIDS-progression terms and used them to formulate the Caputo fractional system. The flow diagram and parameter table clarify how individuals move through the model and how each intervention enters the equations. The next chapter studies whether the model is mathematically and biologically well posed.
-
 %% ============================================================
-\chapter{Theoretical Analysis of the Fractional Model}
+\chapter{Model Analysis}
 %% ============================================================
-
-\begin{remarkbox}[title={Purpose of this chapter}]
-This chapter establishes the main mathematical properties of the proposed fractional-order SITA model. The analysis verifies that the model is epidemiologically meaningful, that solutions remain nonnegative and bounded, and that the disease-free equilibrium can be studied through the basic reproduction number and fractional stability theory.
-\end{remarkbox}
 
 Throughout this chapter, the intervention functions are assumed to satisfy
 \[
@@ -997,10 +861,6 @@ A(t)&=A_0+\frac{1}{\Gamma(q)}
 \right]ds.
 \label{eq:int_A}
 \end{align}
-
-\begin{remarkbox}[title={Interpretation}]
-Equations~\eqref{eq:int_S}--\eqref{eq:int_A} show explicitly how the Gamma function enters the model. The kernel $(t-s)^{q-1}$ weights past states of the system, which is the mathematical source of memory in the fractional-order model.
-\end{remarkbox}
 
 %% ------------------------------------------------------------
 \section{Existence and Uniqueness of Solutions}
@@ -1157,10 +1017,6 @@ where $Y(t)$ is given by~\eqref{eq:Y_ML}. Since $E_q(-\mu t^q)\to0$ as $t\to\inf
 \]
 Therefore, the total population remains bounded and the region $\Omega$ is biologically feasible. \hfill$\square$
 
-\begin{remarkbox}[title={Biological meaning}]
-The quantity $\Lambda/\mu$ represents the long-term carrying level supported by recruitment and natural mortality in the absence of disease-induced mortality. If the initial population satisfies $N(0)>\Lambda/\mu$, the finite-time solution may begin above this long-term level, but the comparison solution still shows that the population is bounded and eventually approaches the long-term envelope.
-\end{remarkbox}
-
 %% ------------------------------------------------------------
 \section{Disease-Free Equilibrium}
 %% ------------------------------------------------------------
@@ -1178,10 +1034,6 @@ Hence,
 E_0=\left(\frac{\Lambda}{\mu},0,0,0\right).
 \label{eq:dfe}
 \end{equation}
-
-\begin{remarkbox}[title={Interpretation}]
-At $E_0$, all individuals are susceptible and no infection is present. This equilibrium is the reference point for deriving the basic reproduction number.
-\end{remarkbox}
 
 %% ------------------------------------------------------------
 \section{Basic Reproduction Number}
@@ -1434,11 +1286,7 @@ and
 A^*=
 \frac{\delta I^*+\rhoeff T^*}{\mu+d}.
 \]
-The explicit expression for $I^*$ may be obtained by substituting these relations into the force of infection and susceptible equilibrium equation. Because the resulting expression is lengthy, this thesis uses numerical simulation to examine endemic behaviour when $\Rzero>1$.
-
-\begin{remarkbox}[title={Interpretation}]
-The disease-free equilibrium is the main analytical focus because it determines whether HIV can invade a fully susceptible population. The endemic equilibrium is mainly explored numerically, especially under scenarios where interventions are weak and $\Rzero>1$.
-\end{remarkbox}
+The explicit expression for $I^*$ may be obtained by substituting these relations into the force of infection and susceptible equilibrium equation. Because the resulting expression is lengthy, this report uses numerical simulation to examine endemic behaviour when $\Rzero>1$.
 
 %% ------------------------------------------------------------
 \section{Sensitivity Analysis}
@@ -1480,62 +1328,9 @@ Positive sensitivity means that increasing the parameter increases $\Rzero$. Neg
 \end{remarkbox}
 
 %% ------------------------------------------------------------
-\section{Chapter Summary}
-%% ------------------------------------------------------------
-
-This chapter established the mathematical validity of the fractional-order SITA model. The Caputo system was rewritten in Volterra integral form, making the memory structure of the model explicit through the Gamma-weighted kernel. Existence and uniqueness were justified using a fixed-point argument, while positivity and boundedness showed that nonnegative initial populations remain biologically meaningful over time. The chapter derived the disease-free equilibrium and the basic reproduction number using the next-generation matrix method. It also stated the fractional-order local stability condition and introduced normalized sensitivity indices for measuring the influence of model parameters and intervention controls. These results provide the theoretical basis for the numerical and dashboard work in the next chapter.
-
 %% ============================================================
-\chapter{Methodology and Dashboard Development}
+\chapter{Numerical Scheme and Dashboard}
 %% ============================================================
-
-\begin{remarkbox}[title={Purpose of this chapter}]
-This chapter explains how the theoretical model is converted into numerical simulations and an interactive dashboard. It corrects and clarifies the fractional Adams--Bashforth--Moulton method, describes the computational workflow, and defines the simulation scenarios used to generate thesis results.
-\end{remarkbox}
-
-%% ------------------------------------------------------------
-\section{Research Design}
-%% ------------------------------------------------------------
-
-This thesis uses a mathematical and computational research design. The mathematical component formulates and analyses the fractional-order SITA HIV model, while the computational component implements the model numerically and visualizes the results through an interactive dashboard.
-
-The study follows three connected stages:
-\begin{enumerate}
-  \item \textbf{Model construction}: define compartments, intervention functions, fractional derivatives, and model assumptions.
-  \item \textbf{Theoretical analysis}: establish positivity, boundedness, disease-free equilibrium, reproduction number, and fractional stability.
-  \item \textbf{Computational simulation}: implement the fractional numerical method, run intervention scenarios, analyse memory effects, and present results through dashboard visualisations.
-\end{enumerate}
-
-\begin{remarkbox}[title={Nature of the results}]
-The simulations in this thesis are scenario-based mathematical experiments. They are not direct clinical forecasts and are not fitted to patient-level data. Their purpose is to compare qualitative behaviour under different fractional orders and intervention levels.
-\end{remarkbox}
-
-%% ------------------------------------------------------------
-\section{Model Development Procedure}
-%% ------------------------------------------------------------
-
-The development of the fractional-order HIV model follows the sequence below:
-\begin{enumerate}
-  \item Define the total population as
-  \[
-  N(t)=S(t)+I(t)+T(t)+A(t).
-  \]
-  \item Construct the SITA compartmental structure.
-  \item Introduce four intervention functions:
-  \[
-  u_1,u_2,u_3,u_4\in[0,1].
-  \]
-  \item Define the effective rates:
-  \[
-  \beff=\beta_0(1-u_1)(1-u_2),\qquad
-  \taueff=\tau(1+u_3),\qquad
-  \rhoeff=\rho(1-u_4).
-  \]
-  \item Replace ordinary derivatives by the Caputo fractional derivative $\CaputoD{t}{q}$, where $0<q\leq1$.
-  \item Derive the reproduction number $\Rzero$.
-  \item Implement the fractional predictor--corrector method in Python.
-  \item Use dashboard graphs and tables to compare baseline, intervention, and memory-effect scenarios.
-\end{enumerate}
 
 %% ------------------------------------------------------------
 \section{Fractional Numerical Scheme}
@@ -1706,7 +1501,8 @@ component by component. This prevents small numerical round-off errors from prod
 The numerical method is checked using the following consistency principles:
 \begin{enumerate}
   \item \textbf{Non-negativity}: all simulated compartments must remain nonnegative.
-  \item \textbf{Boundedness}: the total population $N(t)$ should remain below the finite-time envelope $\max\{N(0),\Lambda/\mu\}$ and approach the long-term bound $\Lambda/\mu$.
+  \item \textbf{Boundedness}: the total population $N(t)$ should remain below the finite-time envelope
+  $\max\{N(0),\Lambda/\mu\}$ and approach the long-term bound $\Lambda/\mu$.
   \item \textbf{Classical limit}: when $q=1$, the fractional model should behave like the corresponding ordinary differential equation model.
   \item \textbf{Step-size reliability}: reducing the step size $h$ should not change the qualitative conclusions of the simulation.
   \item \textbf{Threshold consistency}: scenarios with $\Rzero<1$ should generally show declining infection, while scenarios with $\Rzero>1$ may show persistence.
@@ -1823,7 +1619,7 @@ returned
 \begin{center}
 \textbf{34 passed}
 \end{center}
-on the project code used for this thesis.
+on the project code used for this report.
 
 \begin{remarkbox}[title={Dashboard validation summary}]
 The tests confirm that the model equations execute without shape errors, the ABM solver returns nonnegative compartment values, invalid user inputs are rejected, $\Rzero$ is computed consistently with the analytical formula, and the main dashboard API endpoints return usable simulation, scenario, sensitivity, memory, and export results.
@@ -1878,18 +1674,12 @@ fractional_hiv_thesis_dashboard/
     `-- reports/
 \end{lstlisting}
 
-%% ------------------------------------------------------------
-\section{Chapter Summary}
-%% ------------------------------------------------------------
-
-This chapter explained how the theoretical model is converted into a reproducible computational study. It presented the fractional Adams--Bashforth--Moulton predictor--corrector method with the weights used to approximate the Caputo memory integral, then described how the algorithm is applied to the four-dimensional SITA system. The chapter also defined the simulation workflow, consistency checks, baseline configuration, intervention scenarios, and fractional-order comparison. Finally, it described the Flask dashboard architecture, including the model, solver, analysis, API, interface, and export layers. The next chapter uses this methodology to present and interpret numerical results.
-
 %% ============================================================
 \chapter{Results and Discussion}
 %% ============================================================
 
 \section{Baseline Fractional Simulation}
-This section presents the baseline numerical simulation of the fractional-order SITA model using the parameter values and initial conditions described in the methodology chapter. The baseline simulation was performed for 50 years with step size $h=0.2$ and fractional order $q=0.95$. The initial population was
+This section presents the baseline numerical simulation of the fractional-order SITA model using the parameter values and initial conditions described in the numerical scheme and dashboard chapter. The baseline simulation was performed for 50 years with step size $h=0.2$ and fractional order $q=0.95$. The initial population was
 \[
 S(0)=10000,\qquad I(0)=150,\qquad T(0)=80,\qquad A(0)=20.
 \]
@@ -1908,21 +1698,21 @@ These values represent moderate-to-strong awareness, safer behaviour, testing an
 \toprule
 Parameter & Baseline value & Source status and interpretation\\
 \midrule
-$\Lambda$ & 100 & Simulation recruitment/normalisation value for the academic baseline.\\
-$\mu$ & 0.02 & Assumed natural mortality rate used to define the long-term population envelope.\\
-$\beta_0$ & 0.30 & Baseline transmission intensity selected for scenario comparison.\\
-$\eta$ & 0.10 & Treated individuals are assumed to have reduced infectiousness compared with untreated infected individuals.\\
-$\tau$ & 0.20 & Baseline treatment initiation rate used before testing intervention adjustment.\\
+$\Lambda$ & 100 & Normalized recruitment value used to scale the academic simulation.\\
+$\mu$ & 0.02 & Demographic mortality value used to define the long-term population envelope.\\
+$\beta_0$ & 0.30 & Baseline transmission intensity guided by HIV compartmental modelling studies.\\
+$\eta$ & 0.10 & Reduced infectiousness under treatment, reflecting ART-related transmission reduction.\\
+$\tau$ & 0.20 & Treatment initiation rate used before testing-intervention adjustment.\\
 $\delta$ & 0.10 & Progression rate from untreated infection to AIDS-stage compartment.\\
 $\rho$ & 0.03 & Progression rate from treated class to AIDS before adherence intervention.\\
-$d$ & 0.33 & AIDS-induced mortality parameter used in the simulation setting.\\
+$d$ & 0.33 & AIDS-induced mortality parameter used in HIV/AIDS model simulations.\\
 $q$ & 0.95 & Fractional order selected to represent moderate memory effects.\\
 $u_1,u_2,u_3,u_4$ & 0.40, 0.50, 0.60, 0.70 & User-defined intervention levels for awareness, safer behaviour, testing, and adherence.\\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-These baseline values are used for qualitative mathematical simulation and dashboard demonstration. They are not claimed to be fitted estimates from patient-level Rwanda data.
+These baseline values are literature-informed and scaled for qualitative mathematical simulation and dashboard demonstration \citep{AndersonMay1991,SilvaTorres2017,Gunerhan2020,Unaegbu2021,RBC2020RPHIA}. They are not claimed to be fitted estimates from patient-level Rwanda data.
 
 Under this configuration, the effective rates were
 \[
@@ -2171,7 +1961,7 @@ The baseline transmission rate $\beta_0$ has a positive sensitivity index of app
 The sensitivity results therefore support the intervention findings: reducing transmission is central to controlling the epidemic threshold. Treatment and adherence parameters also affect the system, especially by changing movement into treatment and progression to AIDS, but transmission-related factors are the strongest drivers of $\mathcal{R}_0$ in this configuration.
 
 \section{Dashboard Demonstration}
-The computational part of this thesis was implemented as an interactive Flask dashboard. The dashboard allows the user to adjust initial conditions, biological parameters, fractional order, and intervention levels. It then displays time-series graphs, $\mathcal{R}_0$, stability interpretation, scenario comparison, memory-effect comparison, sensitivity analysis, and export tools.
+The computational part of this report was implemented as an interactive Flask dashboard. The dashboard allows the user to adjust initial conditions, biological parameters, fractional order, and intervention levels. It then displays time-series graphs, $\mathcal{R}_0$, stability interpretation, scenario comparison, memory-effect comparison, sensitivity analysis, and export tools.
 
 \begin{figure}[H]
 \centering
@@ -2200,7 +1990,7 @@ The computational part of this thesis was implemented as an interactive Flask da
 \label{fig:dashboard_sensitivity_chapter6}
 \end{figure}
 
-The dashboard supports the thesis in three main ways. First, it provides visual evidence for the analytical model by plotting the numerical trajectories of the four compartments. Second, it allows intervention scenarios to be compared using the same baseline parameter values. Third, it provides export tools for CSV tables, figures, and thesis-ready interpretation text. This makes the mathematical model easier to communicate during thesis writing and presentation.
+The dashboard supports the report in three main ways. First, it provides visual evidence for the analytical model by plotting the numerical trajectories of the four compartments. Second, it allows intervention scenarios to be compared using the same baseline parameter values. Third, it provides export tools for CSV tables, figures, and report-ready interpretation text. This makes the mathematical model easier to communicate during project writing and presentation.
 
 \section{Public Health Interpretation}
 The numerical results have direct public-health interpretation, although the model is intended for academic simulation rather than clinical prediction. The results show that interventions reducing effective transmission have a strong effect on the reproduction number. In practical terms, awareness campaigns, risk-reduction education, condom use, and safer sexual behaviour can reduce the probability that susceptible individuals become infected.
@@ -2211,15 +2001,12 @@ In the context of Rwanda's HIV response, the model supports the importance of in
 
 The fractional-order results also provide an important interpretation. When $q<1$, past behaviour and treatment history influence present dynamics through memory effects. This reflects the fact that public health interventions may not act instantaneously; instead, their influence may persist over time through community awareness, adherence habits, stigma reduction, and accumulated treatment experience.
 
-\section{Chapter Summary}
-This chapter interpreted the numerical behaviour of the fractional-order SITA model. The baseline simulation gave $\mathcal{R}_0=0.430$, indicating that the selected intervention-adjusted parameters place the system below the epidemic threshold. The fractional-order comparison showed that smaller values of $q$ slow the decline of infected, treated, and AIDS-stage populations, supporting the role of memory in the model. The intervention simulations showed that awareness and safer behaviour directly reduce transmission, while testing and adherence mainly affect movement between infected, treated, and AIDS-stage compartments. Combined interventions produced the strongest reduction in $\mathcal{R}_0$ and final infection levels. Sensitivity analysis confirmed that transmission-related quantities are the dominant drivers in this configuration, and the dashboard demonstration showed how the model can be explored and presented interactively.
-
 %% ============================================================
 \chapter{Conclusion and Recommendations}
 %% ============================================================
 
 \section{Conclusion}
-This thesis develops a fractional-order SITA HIV transmission model incorporating social behaviour interventions. The use of Caputo fractional derivatives allows the model to capture memory effects, while the Gamma and Mittag-Leffler functions provide the mathematical foundation for the fractional framework. The model connects HIV transmission, treatment initiation, AIDS progression, and behavioural interventions in a single mathematical structure.
+This report develops a fractional-order SITA HIV transmission model incorporating social behaviour interventions. The use of Caputo fractional derivatives allows the model to capture memory effects, while the Gamma and Mittag-Leffler functions provide the mathematical foundation for the fractional framework. The model connects HIV transmission, treatment initiation, AIDS progression, and behavioural interventions in a single mathematical structure.
 
 The theoretical analysis focuses on positivity, boundedness, disease-free equilibrium, the basic reproduction number, and fractional-order stability. The computational component demonstrates how fractional dynamics and social behaviour interventions can be explored through simulation and dashboard visualisation.
 
@@ -2235,14 +2022,11 @@ The theoretical analysis focuses on positivity, boundedness, disease-free equili
 \section{Limitations of the Study}
 \begin{enumerate}
   \item The model assumes homogeneous mixing.
-  \item Parameter values may be literature-based or assumed.
+  \item Parameter values are literature-informed and scaled for scenario comparison, but they are not fitted to patient-level Rwanda data.
   \item The model is deterministic and does not include random effects.
   \item The intervention functions simplify complex human behaviour into bounded mathematical controls.
   \item The dashboard is for academic simulation, not clinical prediction.
 \end{enumerate}
-
-\section{Chapter Summary}
-This final chapter brought together the main conclusions of the thesis. It emphasized that the study formulated a fractional-order SITA HIV model, analysed its basic mathematical properties, derived the reproduction number, and used numerical simulation to compare memory effects and intervention strategies. The recommendations identify possible extensions, including richer population structure, Rwanda-specific parameter estimation, stochastic effects, and alternative fractional operators. The limitations clarify that the results should be understood as applied mathematical simulations rather than direct clinical or policy forecasts.
 
 %% ============================================================
 \appendix
@@ -2288,13 +2072,13 @@ def fractional_abm_solver(rhs, y0, t, q, params):
 \toprule
 Parameter & Description & Baseline Status\\
 \midrule
-$\beta_0$ & Baseline transmission rate & Lit./assumed\\
-$\mu$ & Natural death rate & Estimated\\
-$\tau$ & Treatment initiation rate & Lit./assumed\\
-$\delta$ & Progression from infected to AIDS & Lit./assumed\\
-$\rho$ & Progression from treated to AIDS & Lit./assumed\\
-$d$ & AIDS-induced mortality & Lit./assumed\\
-$\eta$ & Relative infectiousness under treatment & Lit./assumed\\
+$\beta_0$ & Baseline transmission rate & Literature-guided\\
+$\mu$ & Natural death rate & Demographic context\\
+$\tau$ & Treatment initiation rate & Literature-guided\\
+$\delta$ & Progression from infected to AIDS & Literature-guided\\
+$\rho$ & Progression from treated to AIDS & Literature-guided\\
+$d$ & AIDS-induced mortality & Literature-guided\\
+$\eta$ & Relative infectiousness under treatment & Literature-guided\\
 $q$ & Fractional order & Simulation parameter\\
 $u_1,u_2,u_3,u_4$ & Social behaviour interventions & User-defined\\
 \bottomrule
