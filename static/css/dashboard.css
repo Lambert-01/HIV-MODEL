@@ -753,7 +753,6 @@
   z-index: 40;
 }
 
-.chart-card:hover .chart-formula-tab,
 .chart-card.formula-open .chart-formula-tab,
 .chart-formula-tab:hover {
   opacity: 1;
