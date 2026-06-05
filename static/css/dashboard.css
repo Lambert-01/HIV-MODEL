@@ -1295,7 +1295,7 @@
 }
 
 .formula-reference-grid {
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 520px), 1fr));
 }
 
 .demo-step-grid {
@@ -1360,6 +1360,7 @@
   background: rgba(255, 255, 255, 0.055);
   border: 1px solid var(--border);
   border-radius: 10px;
+  min-width: 0;
   padding: 16px;
 }
 
@@ -1382,6 +1383,39 @@
   line-height: 1.75;
   margin-top: 6px;
   overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 2px;
+}
+
+.formula-card .formula-lines {
+  background: rgba(0, 0, 0, 0.24);
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 7px;
+  color: var(--text-main);
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  line-height: 1.75;
+  margin-top: 8px;
+  overflow-x: auto;
+  padding: 10px 12px;
+  white-space: pre;
+}
+
+.formula-reference-grid .formula-card strong {
+  white-space: normal;
+}
+
+.formula-reference-grid .katex {
+  font-size: 0.96em;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+.formula-reference-grid .katex-html {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
   padding-bottom: 2px;
 }
 

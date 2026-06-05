@@ -601,22 +601,25 @@
       <div class="formula-reference-grid mb-3">
         <div class="formula-card">
           <span>Baseline, phase and population graphs</span>
-          <strong>\({}^{C}D_t^q X(t)=F(t,X(t))\)</strong>
+          <code class="formula-lines">C D_t^q X(t) = F(t, X(t))</code>
           <p>The solver generates S(t), I(t), T(t), A(t), N(t), and phase plots from the fractional compartment system.</p>
         </div>
         <div class="formula-card">
           <span>Scenario and intervention graphs</span>
-          <strong>\(\beta_{\text{eff}}=\beta_0(1-u_1)(1-u_2),\quad \tau_{\text{eff}}=\tau(1+u_3),\quad \rho_{\text{eff}}=\rho(1-u_4)\)</strong>
+          <code class="formula-lines">beta_eff = beta0(1-u1)(1-u2)
+tau_eff  = tau(1+u3)
+rho_eff  = rho(1-u4)</code>
           <p>Changing the intervention sliders modifies these rates before each scenario is simulated.</p>
         </div>
         <div class="formula-card">
           <span>R0 gauge, surface and heatmaps</span>
-          <strong>\(\mathcal{R}_0=\dfrac{\beta_{\text{eff}}}{\tau_{\text{eff}}+\delta+\mu}\left(1+\dfrac{\eta\tau_{\text{eff}}}{\rho_{\text{eff}}+\mu}\right)\)</strong>
+          <code class="formula-lines">R0 = beta_eff/(tau_eff + delta + mu)
+     * (1 + eta*tau_eff/(rho_eff + mu))</code>
           <p>The threshold value determines controlled, threshold, or persistent status.</p>
         </div>
         <div class="formula-card">
           <span>Sensitivity graph</span>
-          <strong>\(\Upsilon_p^{\mathcal{R}_0}=\dfrac{\partial\mathcal{R}_0}{\partial p}\dfrac{p}{\mathcal{R}_0}\)</strong>
+          <code class="formula-lines">Sensitivity(p) = (dR0/dp) * p/R0</code>
           <p>Each sensitivity bar ranks how strongly a parameter or control changes R0.</p>
         </div>
       </div>
@@ -715,27 +718,30 @@
           <div class="formula-reference-grid p-3">
             <div class="formula-card">
               <span>Fractional SITA model</span>
-              <strong>
-                \({}^{C}D_t^qS=\Lambda-\lambda S-\mu S\)<br>
-                \({}^{C}D_t^qI=\lambda S-(\tau_{\text{eff}}+\delta+\mu)I\)<br>
-                \({}^{C}D_t^qT=\tau_{\text{eff}}I-(\rho_{\text{eff}}+\mu)T\)<br>
-                \({}^{C}D_t^qA=\delta I+\rho_{\text{eff}}T-(\mu+d)A\)
-              </strong>
+              <code class="formula-lines">C D_t^q S = Lambda - lambda*S - mu*S
+C D_t^q I = lambda*S - (tau_eff + delta + mu)*I
+C D_t^q T = tau_eff*I - (rho_eff + mu)*T
+C D_t^q A = delta*I + rho_eff*T - (mu + d)*A</code>
               <p>Generates the baseline SITA trajectories, final state table, phase plots, memory curves, and reliability comparisons.</p>
             </div>
             <div class="formula-card">
               <span>Force of infection</span>
-              <strong>\(\lambda(t)=\dfrac{\beta_0(1-u_1)(1-u_2)(I+\eta T)}{N}\)</strong>
+              <code class="formula-lines">lambda(t) = beta0(1-u1)(1-u2)(I + eta*T)/N</code>
               <p>Controls the movement from susceptible to infected in every simulation graph.</p>
             </div>
             <div class="formula-card">
               <span>Intervention-adjusted rates</span>
-              <strong>\(\beta_{\text{eff}}=\beta_0(1-u_1)(1-u_2)\), \(\tau_{\text{eff}}=\tau(1+u_3)\), \(\rho_{\text{eff}}=\rho(1-u_4)\)</strong>
+              <code class="formula-lines">beta_eff = beta0(1-u1)(1-u2)
+tau_eff  = tau(1+u3)
+rho_eff  = rho(1-u4)</code>
               <p>Used by the single-intervention, combined-intervention, scenario comparison, surface, and heatmap graphs.</p>
             </div>
             <div class="formula-card">
               <span>Threshold and sensitivity</span>
-              <strong>\(\mathcal{R}_0=\dfrac{\beta_{\text{eff}}}{\tau_{\text{eff}}+\delta+\mu}\left(1+\dfrac{\eta\tau_{\text{eff}}}{\rho_{\text{eff}}+\mu}\right)\), \(\Upsilon_p^{\mathcal{R}_0}=\dfrac{\partial\mathcal{R}_0}{\partial p}\dfrac{p}{\mathcal{R}_0}\)</strong>
+              <code class="formula-lines">R0 = beta_eff/(tau_eff + delta + mu)
+     * (1 + eta*tau_eff/(rho_eff + mu))
+
+Sensitivity(p) = (dR0/dp) * p/R0</code>
               <p>Used by the R0 gauge, stability interpretation, R0 surface, waterfall, and sensitivity ranking.</p>
             </div>
           </div>
@@ -899,37 +905,47 @@
         <div class="formula-reference-grid p-3">
           <div class="formula-card">
             <span>Caputo fractional SITA system</span>
-            <strong>
-              \({}^{C}D_t^qS=\Lambda-\lambda S-\mu S\)<br>
-              \({}^{C}D_t^qI=\lambda S-[\tau(1+u_3)+\delta+\mu]I\)<br>
-              \({}^{C}D_t^qT=\tau(1+u_3)I-[\rho(1-u_4)+\mu]T\)<br>
-              \({}^{C}D_t^qA=\delta I+\rho(1-u_4)T-(\mu+d)A\)
-            </strong>
+            <code class="formula-lines">C D_t^q S = Lambda - lambda*S - mu*S
+C D_t^q I = lambda*S - [tau(1+u3) + delta + mu]*I
+C D_t^q T = tau(1+u3)*I - [rho(1-u4) + mu]*T
+C D_t^q A = delta*I + rho(1-u4)*T - (mu + d)*A</code>
             <p>Used for the main SITA time series, infected focus, treated-AIDS graph, total population graph, phase graph, memory graph, and scenario curves.</p>
           </div>
           <div class="formula-card">
             <span>Population and force of infection</span>
-            <strong>\(N=S+I+T+A,\quad \lambda(t)=\dfrac{\beta_{\text{eff}}(I+\eta T)}{N}\)</strong>
+            <code class="formula-lines">N = S + I + T + A
+lambda(t) = beta_eff*(I + eta*T)/N</code>
             <p>Used to compute new infection pressure and the total population trajectory.</p>
           </div>
           <div class="formula-card">
             <span>Intervention functions</span>
-            <strong>\(\beta_{\text{eff}}=\beta_0(1-u_1)(1-u_2)\), \(\tau_{\text{eff}}=\tau(1+u_3)\), \(\rho_{\text{eff}}=\rho(1-u_4)\)</strong>
+            <code class="formula-lines">beta_eff = beta0(1-u1)(1-u2)
+tau_eff  = tau(1+u3)
+rho_eff  = rho(1-u4)</code>
             <p>Used by intervention controls, scenario comparison, R0 surface, heatmaps, and waterfall analysis.</p>
           </div>
           <div class="formula-card">
             <span>Threshold, DFE and boundedness</span>
-            <strong>\(E_0=(\Lambda/\mu,0,0,0)\), \(\mathcal{R}_0=\dfrac{\beta_{\text{eff}}}{\tau_{\text{eff}}+\delta+\mu}\left(1+\dfrac{\eta\tau_{\text{eff}}}{\rho_{\text{eff}}+\mu}\right)\), \(N(t)\leq\max\{N(0),\Lambda/\mu\}\)</strong>
+            <code class="formula-lines">E0 = (Lambda/mu, 0, 0, 0)
+R0 = beta_eff/(tau_eff + delta + mu)
+     * (1 + eta*tau_eff/(rho_eff + mu))
+N(t) <= max{N(0), Lambda/mu}</code>
             <p>Used by the R0 gauge, stability panel, feasible-bound graph, and reliability interpretation.</p>
           </div>
           <div class="formula-card">
             <span>Fractional stability and sensitivity</span>
-            <strong>\(|\arg(\lambda_i)|&gt;q\pi/2,\quad \Upsilon_p^{\mathcal{R}_0}=\dfrac{\partial\mathcal{R}_0}{\partial p}\dfrac{p}{\mathcal{R}_0}\)</strong>
+            <code class="formula-lines">|arg(lambda_i)| > q*pi/2
+Sensitivity(p) = (dR0/dp) * p/R0</code>
             <p>Used by the stability details and normalized sensitivity bar chart.</p>
           </div>
           <div class="formula-card">
             <span>Numerical ABM predictor-corrector</span>
-            <strong>\(y_{n+1}^{P}=y_0+\dfrac{h^q}{\Gamma(q+1)}\sum b_{j,n+1}f(t_j,y_j)\), \(y_{n+1}=y_0+\dfrac{h^q}{\Gamma(q+2)}\left[f(t_{n+1},y_{n+1}^{P})+\sum a_{j,n+1}f(t_j,y_j)\right]\)</strong>
+            <code class="formula-lines">Predictor:
+yP(n+1) = y0 + h^q/Gamma(q+1) * sum b(j,n+1) f(tj,yj)
+
+Corrector:
+y(n+1) = y0 + h^q/Gamma(q+2)
+       * [f(t(n+1), yP(n+1)) + sum a(j,n+1) f(tj,yj)]</code>
             <p>Used by every simulated curve because the dashboard solves the Caputo system numerically.</p>
           </div>
         </div>
