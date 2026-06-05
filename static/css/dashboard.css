@@ -1150,6 +1150,8 @@
   color: var(--primary);
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.82rem;
+  line-height: 1.65;
+  overflow-x: auto;
   padding: 10px 14px;
   margin: 10px 0;
 }
@@ -1204,10 +1206,15 @@
 
 .parameter-card-grid,
 .intervention-formula-grid,
+.formula-reference-grid,
 .demo-step-grid {
   display: grid;
   gap: 12px;
   grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+
+.formula-reference-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
 .demo-step-grid {
@@ -1290,8 +1297,11 @@
   color: var(--text-main);
   display: block;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 1.05rem;
+  font-size: 0.92rem;
+  line-height: 1.75;
   margin-top: 6px;
+  overflow-x: auto;
+  padding-bottom: 2px;
 }
 
 .parameter-chip em {
@@ -1305,6 +1315,7 @@
 .formula-card p {
   color: var(--text-muted);
   font-size: 0.82rem;
+  line-height: 1.65;
   margin: 8px 0 0;
 }
 
@@ -1325,6 +1336,9 @@
 
 .formula-card:nth-child(2) { border-left-color: var(--success); }
 .formula-card:nth-child(3) { border-left-color: var(--secondary); }
+.formula-card:nth-child(4) { border-left-color: var(--danger); }
+.formula-card:nth-child(5) { border-left-color: var(--success); }
+.formula-card:nth-child(6) { border-left-color: var(--secondary); }
 
 .parameter-chip {
   background: rgba(255, 255, 255, 0.04);
