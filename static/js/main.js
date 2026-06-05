@@ -7,6 +7,170 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+/* ── Graph formula reference tabs ── */
+const GRAPH_FORMULAS = {
+  mainChart: {
+    title: "Baseline SITA Time Series",
+    formula: String.raw`\({}^{C}D_t^qS=\Lambda-\lambda S-\mu S,\quad {}^{C}D_t^qI=\lambda S-(\tau_{\mathrm{eff}}+\delta+\mu)I,\quad {}^{C}D_t^qT=\tau_{\mathrm{eff}}I-(\rho_{\mathrm{eff}}+\mu)T,\quad {}^{C}D_t^qA=\delta I+\rho_{\mathrm{eff}}T-(\mu+d)A\)`,
+    meaning: "This system generates the S(t), I(t), T(t), and A(t) curves."
+  },
+  infectedChart: {
+    title: "Infected Focus I(t)",
+    formula: String.raw`\({}^{C}D_t^qI=\lambda(t)S-(\tau_{\mathrm{eff}}+\delta+\mu)I\)`,
+    meaning: "This equation tracks untreated infected individuals and produces the infected curve and peak marker."
+  },
+  treatedAidsChart: {
+    title: "Treated and AIDS Curves",
+    formula: String.raw`\({}^{C}D_t^qT=\tau_{\mathrm{eff}}I-(\rho_{\mathrm{eff}}+\mu)T,\quad {}^{C}D_t^qA=\delta I+\rho_{\mathrm{eff}}T-(\mu+d)A\)`,
+    meaning: "These equations generate the treated and AIDS-stage trajectories."
+  },
+  stackedChart: {
+    title: "Population Composition",
+    formula: String.raw`\(N(t)=S(t)+I(t)+T(t)+A(t)\)`,
+    meaning: "The stacked graph shows how the four compartments combine to form the total population."
+  },
+  populationChart: {
+    title: "Total Population Bound",
+    formula: String.raw`\({}^{C}D_t^qN(t)=\Lambda-\mu N(t)-dA(t),\quad N(t)\leq\max\{N(0),\Lambda/\mu\}\)`,
+    meaning: "This graph checks total population against the feasible bound."
+  },
+  interventionDetailChart: {
+    title: "Intervention Strengths",
+    formula: String.raw`\(\beta_{\mathrm{eff}}=\beta_0(1-u_1)(1-u_2),\quad \tau_{\mathrm{eff}}=\tau(1+u_3),\quad \rho_{\mathrm{eff}}=\rho(1-u_4)\)`,
+    meaning: "The bars show the selected intervention controls that modify transmission, treatment uptake, and AIDS progression."
+  },
+  r0Gauge: {
+    title: "R0 Gauge",
+    formula: String.raw`\(\mathcal{R}_0=\dfrac{\beta_{\mathrm{eff}}}{\tau_{\mathrm{eff}}+\delta+\mu}\left(1+\dfrac{\eta\tau_{\mathrm{eff}}}{\rho_{\mathrm{eff}}+\mu}\right)\)`,
+    meaning: "The gauge classifies the selected parameters as controlled, threshold, or persistent."
+  },
+  r0GaugeDetail: {
+    title: "R0 and Stability",
+    formula: String.raw`\(\mathcal{R}_0=\dfrac{\beta_{\mathrm{eff}}}{\tau_{\mathrm{eff}}+\delta+\mu}\left(1+\dfrac{\eta\tau_{\mathrm{eff}}}{\rho_{\mathrm{eff}}+\mu}\right),\quad |\arg(\lambda_i)|>q\pi/2\)`,
+    meaning: "The R0 formula gives the threshold value; the argument condition is the fractional local stability check."
+  },
+  scenarioChart: {
+    title: "Scenario Infected Curves",
+    formula: String.raw`\({}^{C}D_t^qI=\lambda S-(\tau(1+u_3)+\delta+\mu)I,\quad \lambda=\dfrac{\beta_0(1-u_1)(1-u_2)(I+\eta T)}{N}\)`,
+    meaning: "Each scenario reruns the infected equation with different q and intervention values."
+  },
+  scenarioAidsChart: {
+    title: "Scenario AIDS Curves",
+    formula: String.raw`\({}^{C}D_t^qA=\delta I+\rho(1-u_4)T-(\mu+d)A\)`,
+    meaning: "The AIDS-stage scenario graph compares how each intervention affects A(t)."
+  },
+  scenarioR0Chart: {
+    title: "Scenario R0 Ranking",
+    formula: String.raw`\(\mathcal{R}_0=\dfrac{\beta_0(1-u_1)(1-u_2)}{\tau(1+u_3)+\delta+\mu}\left(1+\dfrac{\eta\tau(1+u_3)}{\rho(1-u_4)+\mu}\right)\)`,
+    meaning: "Each bar is the R0 value computed for one intervention scenario."
+  },
+  scenarioRadarChart: {
+    title: "Scenario Radar Summary",
+    formula: String.raw`\(R_0,\ I_{\max},\ I(t_{\mathrm{end}}),\ A(t_{\mathrm{end}}),\ T(t_{\mathrm{end}}),\ \overline{u}=(u_1+u_2+u_3+u_4)/4\)`,
+    meaning: "The radar chart combines threshold, peak, final outcomes, and average intervention strength."
+  },
+  phaseITChart: {
+    title: "I-T Phase Plane",
+    formula: String.raw`\(\left(I(t),T(t)\right),\quad {}^{C}D_t^qI=\lambda S-(\tau_{\mathrm{eff}}+\delta+\mu)I,\quad {}^{C}D_t^qT=\tau_{\mathrm{eff}}I-(\rho_{\mathrm{eff}}+\mu)T\)`,
+    meaning: "This phase graph plots infected against treated values over time."
+  },
+  phaseIAChart: {
+    title: "I-A Phase Plane",
+    formula: String.raw`\(\left(I(t),A(t)\right),\quad {}^{C}D_t^qA=\delta I+\rho_{\mathrm{eff}}T-(\mu+d)A\)`,
+    meaning: "This graph shows the dynamic relationship between infected and AIDS-stage populations."
+  },
+  phaseSIChart: {
+    title: "S-I Phase Plane",
+    formula: String.raw`\(\left(S(t),I(t)\right),\quad {}^{C}D_t^qS=\Lambda-\lambda S-\mu S,\quad {}^{C}D_t^qI=\lambda S-(\tau_{\mathrm{eff}}+\delta+\mu)I\)`,
+    meaning: "This graph shows how susceptible and infected populations move together."
+  },
+  phaseTAChart: {
+    title: "T-A Phase Plane",
+    formula: String.raw`\(\left(T(t),A(t)\right),\quad {}^{C}D_t^qT=\tau_{\mathrm{eff}}I-(\rho_{\mathrm{eff}}+\mu)T,\quad {}^{C}D_t^qA=\delta I+\rho_{\mathrm{eff}}T-(\mu+d)A\)`,
+    meaning: "This graph shows the treatment-to-AIDS pathway over time."
+  },
+  sensitivityChart: {
+    title: "Sensitivity Analysis",
+    formula: String.raw`\(\Upsilon_p^{\mathcal{R}_0}=\dfrac{\partial\mathcal{R}_0}{\partial p}\cdot\dfrac{p}{\mathcal{R}_0}\)`,
+    meaning: "Each bar measures the proportional effect of a parameter on R0."
+  },
+  memoryChart: {
+    title: "Memory Effect on I(t)",
+    formula: String.raw`\({}^{C}D_t^qI=\lambda S-(\tau_{\mathrm{eff}}+\delta+\mu)I,\quad q\in\{1.00,0.95,0.85,0.75\}\)`,
+    meaning: "The same infected equation is solved for different fractional orders q."
+  },
+  memoryTChart: {
+    title: "Memory Effect on T(t)",
+    formula: String.raw`\({}^{C}D_t^qT=\tau_{\mathrm{eff}}I-(\rho_{\mathrm{eff}}+\mu)T\)`,
+    meaning: "The treated curve changes when the fractional memory order q changes."
+  },
+  memoryAChart: {
+    title: "Memory Effect on A(t)",
+    formula: String.raw`\({}^{C}D_t^qA=\delta I+\rho_{\mathrm{eff}}T-(\mu+d)A\)`,
+    meaning: "The AIDS-stage curve changes when fractional memory is strengthened or weakened."
+  },
+  memoryPhaseChart: {
+    title: "Memory Phase Comparison",
+    formula: String.raw`\(\left(I_q(t),T_q(t)\right),\quad q\in\{1.00,0.95,0.85,0.75\}\)`,
+    meaning: "The phase trajectories compare infected and treated dynamics under different q values."
+  },
+  mittagChart: {
+    title: "Mittag-Leffler Memory Kernel",
+    formula: String.raw`\(E_q(-\mu t^q)=\sum_{k=0}^{\infty}\dfrac{(-\mu t^q)^k}{\Gamma(qk+1)},\quad q=1:\ e^{-\mu t}\)`,
+    meaning: "This graph explains why fractional memory decays more slowly than the ordinary exponential case."
+  },
+  surfaceChart: {
+    title: "R0 Surface",
+    formula: String.raw`\(\mathcal{R}_0(u_1,u_2)=\dfrac{\beta_0(1-u_1)(1-u_2)}{\tau_{\mathrm{eff}}+\delta+\mu}\left(1+\dfrac{\eta\tau_{\mathrm{eff}}}{\rho_{\mathrm{eff}}+\mu}\right)\)`,
+    meaning: "The 3D surface varies awareness u1 and safer behaviour u2 while computing R0."
+  },
+  r0HeatmapChart: {
+    title: "R0 Heatmap",
+    formula: String.raw`\(\mathcal{R}_0=f(u_1,u_2)\)`,
+    meaning: "The heatmap uses the R0 formula across a grid of awareness and safer-behaviour values."
+  },
+  finalInfectedHeatmapChart: {
+    title: "Final Infected Heatmap",
+    formula: String.raw`\(I_{\mathrm{final}}(u_1,u_2)\approx I_{\mathrm{base}}\dfrac{\mathcal{R}_0(u_1,u_2)}{\mathcal{R}_{0,\mathrm{base}}}\)`,
+    meaning: "This exploratory heatmap estimates final infection changes using the R0 ratio."
+  },
+  finalAidsHeatmapChart: {
+    title: "Final AIDS Heatmap",
+    formula: String.raw`\(A_{\mathrm{final}}(u_3,u_4)\approx A_{\mathrm{base}}(1-0.35u_3)(1-0.55u_4)\)`,
+    meaning: "This exploratory heatmap summarizes how testing and adherence reduce AIDS-stage burden."
+  },
+  waterfallChart: {
+    title: "R0 Intervention Waterfall",
+    formula: String.raw`\Delta\mathcal{R}_0=\mathcal{R}_0(\text{after control})-\mathcal{R}_0(\text{before control})`,
+    meaning: "The waterfall graph decomposes how each intervention changes R0."
+  },
+  reliabilityChart: {
+    title: "Step-Size Reliability",
+    formula: String.raw`\(e_h=|I_h(t_{\mathrm{end}})-I_{h_{\mathrm{ref}}}(t_{\mathrm{end}})|\)`,
+    meaning: "This graph compares final and peak infected values across numerical step sizes."
+  }
+};
+
+function graphFormulaFor(chartId, titleText = "") {
+  if (GRAPH_FORMULAS[chartId]) return GRAPH_FORMULAS[chartId];
+  return {
+    title: titleText.replace(/\s+/g, " ").trim() || "Graph Formula",
+    formula: String.raw`\({}^{C}D_t^qX(t)=F(t,X(t))\)`,
+    meaning: "This graph is generated from the fractional SITA model using the selected parameters."
+  };
+}
+
+function renderFormulaMath(element) {
+  if (!element || typeof renderMathInElement !== "function") return;
+  renderMathInElement(element, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\(", right: "\\)", display: false }
+    ],
+    throwOnError: false
+  });
+}
+
 /* ── Chart header actions ── */
 function enhanceChartHeaders() {
   document.querySelectorAll(".chart-card-title").forEach((title) => {
@@ -15,12 +179,31 @@ function enhanceChartHeaders() {
     const chart = card?.querySelector(".chart-body[id]");
     if (!chart) return;
     const original = title.innerHTML;
+    const formula = graphFormulaFor(chart.id, title.textContent);
+    card.dataset.formulaChart = chart.id;
     title.innerHTML = `
       <span class="chart-title-main">${original}</span>
       <span class="chart-actions">
+        <button class="chart-action-btn" type="button" data-chart-action="formula" title="Show formula behind this graph"><i class="fa fa-square-root-variable"></i></button>
         <button class="chart-action-btn" type="button" data-chart-action="download" title="Export chart as PNG"><i class="fa fa-download"></i></button>
         <button class="chart-action-btn" type="button" data-chart-action="expand" title="Expand chart"><i class="fa fa-up-right-and-down-left-from-center"></i></button>
       </span>`;
+
+    const formulaTab = document.createElement("div");
+    formulaTab.className = "chart-formula-tab";
+    formulaTab.innerHTML = `
+      <div class="chart-formula-kicker"><i class="fa fa-square-root-variable me-1"></i> Formula behind this graph</div>
+      <h6>${formula.title}</h6>
+      <div class="chart-formula-equation">${formula.formula}</div>
+      <p>${formula.meaning}</p>`;
+    title.insertAdjacentElement("afterend", formulaTab);
+    renderFormulaMath(formulaTab);
+
+    title.querySelector('[data-chart-action="formula"]')?.addEventListener("click", (event) => {
+      event.stopPropagation();
+      card?.classList.toggle("formula-open");
+      title.querySelector('[data-chart-action="formula"]')?.classList.toggle("active", card?.classList.contains("formula-open"));
+    });
 
     title.querySelector('[data-chart-action="download"]')?.addEventListener("click", (event) => {
       event.stopPropagation();

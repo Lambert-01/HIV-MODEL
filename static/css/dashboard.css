@@ -671,6 +671,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
+  position: relative;
 }
 
 .chart-card-title {
@@ -725,6 +726,74 @@
   color: var(--status-color);
 }
 
+.chart-action-btn.active {
+  background: var(--status-bg);
+  border-color: var(--status-border);
+  color: var(--status-color);
+}
+
+.chart-formula-tab {
+  background:
+    linear-gradient(135deg, rgba(7, 17, 31, 0.98), rgba(3, 10, 22, 0.96)),
+    var(--bg-card);
+  border: 1px solid var(--status-border);
+  border-left: 3px solid var(--status-color);
+  border-radius: 8px;
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.34);
+  color: var(--text-main);
+  max-width: min(620px, calc(100% - 24px));
+  opacity: 0;
+  padding: 14px 16px;
+  pointer-events: none;
+  position: absolute;
+  right: 12px;
+  top: 54px;
+  transform: translateY(-6px);
+  transition: opacity 180ms ease, transform 180ms ease;
+  z-index: 40;
+}
+
+.chart-card:hover .chart-formula-tab,
+.chart-card.formula-open .chart-formula-tab,
+.chart-formula-tab:hover {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.chart-formula-kicker {
+  color: var(--secondary);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.chart-formula-tab h6 {
+  color: var(--text-main);
+  font-size: 0.88rem;
+  font-weight: 800;
+  margin: 0 0 8px;
+}
+
+.chart-formula-equation {
+  color: var(--primary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  max-width: 100%;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.chart-formula-tab p {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  margin: 8px 0 0;
+}
+
 .chart-card.chart-expanded {
   background: #07111f;
   inset: 18px;
@@ -744,6 +813,19 @@
 .chart-large .chart-body { min-height: 420px; }
 
 #r0Gauge { min-height: 380px; }
+
+@media (max-width: 640px) {
+  .chart-formula-tab {
+    left: 10px;
+    max-width: none;
+    right: 10px;
+    top: 58px;
+  }
+
+  .chart-formula-equation {
+    font-size: 0.76rem;
+  }
+}
 
 .chart-body .js-plotly-plot,
 .chart-body .plot-container {
