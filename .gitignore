@@ -24,6 +24,7 @@ build/
 # Virtual environments
 venv/
 .venv/
+.venv*/
 env/
 .env/
 ENV/
@@ -49,18 +50,30 @@ outputs/**/*.tmp
 
 # LaTeX build artifacts
 *.aux
+*.bak
 *.bbl
 *.bcf
 *.blg
+*.dvi
 *.fdb_latexmk
 *.fls
+*.glg
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
+*.ist
 *.lof
 *.log
 *.lot
+*.nav
 *.out
+*.snm
 *.run.xml
 *.synctex.gz
 *.toc
+*.vrb
 *.xdv
 
 # Keep the main final thesis PDF if you want to publish it with the repo

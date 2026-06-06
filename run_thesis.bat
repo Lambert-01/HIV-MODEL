@@ -4,6 +4,9 @@ setlocal
 REM Build thesis/thesis.tex from the project root.
 REM Run this file by double-clicking it or from PowerShell with:
 REM   .\run_thesis.bat
+REM
+REM On macOS/Linux, use:
+REM   ./run_thesis.sh
 
 set "ROOT=%~dp0"
 set "THESIS_DIR=%ROOT%thesis"
@@ -60,4 +63,3 @@ echo.
 popd
 pause
 exit /b 1
-
