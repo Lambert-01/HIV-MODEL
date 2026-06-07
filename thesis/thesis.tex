@@ -1627,55 +1627,6 @@ on the project code used for this report.
 The tests confirm that the model equations execute without shape errors, the ABM solver returns nonnegative compartment values, invalid user inputs are rejected, $\Rzero$ is computed consistently with the analytical formula, and the main dashboard API endpoints return usable simulation, scenario, sensitivity, memory, and export results.
 \end{remarkbox}
 
-%% ------------------------------------------------------------
-\section{Suggested Project Folder Structure}
-%% ------------------------------------------------------------
-
-\begin{lstlisting}[style=pythonstyle]
-fractional_hiv_project_dashboard/
-|
-|-- app.py
-|-- config.py
-|-- requirements.txt
-|-- README.md
-|
-|-- model/
-|   |-- fractional_sita_model.py
-|   |-- fractional_solver.py
-|   |-- reproduction_number.py
-|   |-- scenarios.py
-|   |-- sensitivity.py
-|   `-- validation.py
-|
-|-- routes/
-|   |-- simulation_routes.py
-|   |-- export_routes.py
-|   `-- health_routes.py
-|
-|-- templates/
-|   |-- base.html
-|   |-- index.html
-|   |-- dashboard.html
-|   |-- documentation.html
-|   `-- about.html
-|
-|-- static/
-|   |-- css/
-|   |-- js/
-|   |-- assets/
-|   `-- vendor/
-|
-|-- data/
-|   |-- baseline_parameters.json
-|   |-- scenario_presets.json
-|   `-- sample_outputs.csv
-|
-`-- outputs/
-    |-- csv/
-    |-- figures/
-    `-- reports/
-\end{lstlisting}
-
 %% ============================================================
 \chapter{Results and Discussion}
 %% ============================================================
@@ -2032,6 +1983,53 @@ The theoretical analysis focuses on positivity, boundedness, disease-free equili
 
 %% ============================================================
 \appendix
+
+\chapter{Suggested Project Folder Structure}
+\begin{lstlisting}[style=pythonstyle]
+fractional_hiv_project_dashboard/
+|
+|-- app.py
+|-- config.py
+|-- requirements.txt
+|-- README.md
+|
+|-- model/
+|   |-- fractional_sita_model.py
+|   |-- fractional_solver.py
+|   |-- reproduction_number.py
+|   |-- scenarios.py
+|   |-- sensitivity.py
+|   `-- validation.py
+|
+|-- routes/
+|   |-- simulation_routes.py
+|   |-- export_routes.py
+|   `-- health_routes.py
+|
+|-- templates/
+|   |-- base.html
+|   |-- index.html
+|   |-- dashboard.html
+|   |-- documentation.html
+|   `-- about.html
+|
+|-- static/
+|   |-- css/
+|   |-- js/
+|   |-- assets/
+|   `-- vendor/
+|
+|-- data/
+|   |-- baseline_parameters.json
+|   |-- scenario_presets.json
+|   `-- sample_outputs.csv
+|
+`-- outputs/
+    |-- csv/
+    |-- figures/
+    `-- reports/
+\end{lstlisting}
+
 \chapter{Fractional ABM Solver Skeleton}
 \begin{lstlisting}[style=pythonstyle]
 import numpy as np
