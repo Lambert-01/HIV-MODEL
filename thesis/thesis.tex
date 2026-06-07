@@ -1984,8 +1984,16 @@ The theoretical analysis focuses on positivity, boundedness, disease-free equili
 %% ============================================================
 \appendix
 
-\chapter{Suggested Project Folder Structure}
-\begin{lstlisting}[style=pythonstyle]
+\chapter{Supplementary Project Materials}
+
+\section{Suggested Project Folder Structure}
+\begin{lstlisting}[
+  style=pythonstyle,
+  basicstyle=\ttfamily\scriptsize,
+  aboveskip=3pt,
+  belowskip=3pt,
+  lineskip=-1pt
+]
 fractional_hiv_project_dashboard/
 |
 |-- app.py
@@ -2030,14 +2038,18 @@ fractional_hiv_project_dashboard/
     `-- reports/
 \end{lstlisting}
 
-\chapter{Fractional ABM Solver Skeleton}
-\begin{lstlisting}[style=pythonstyle]
+\section{Fractional ABM Solver Skeleton}
+\begin{lstlisting}[
+  style=pythonstyle,
+  basicstyle=\ttfamily\scriptsize,
+  aboveskip=3pt,
+  belowskip=3pt,
+  lineskip=-1pt
+]
 import numpy as np
 from scipy.special import gamma
 
-
 def fractional_abm_solver(rhs, y0, t, q, params):
-    """Predictor-corrector solver for Caputo fractional systems."""
     n = len(t)
     h = t[1] - t[0]
     y = np.zeros((n, len(y0)), dtype=float)
@@ -2065,9 +2077,10 @@ def fractional_abm_solver(rhs, y0, t, q, params):
     return y
 \end{lstlisting}
 
-\chapter{Proposed Baseline Parameter Table}
+\section{Proposed Baseline Parameter Table}
 \begin{center}
-\renewcommand{\arraystretch}{1.35}
+\small
+\renewcommand{\arraystretch}{1.12}
 \begin{tabular}{>{\bfseries}c p{6.5cm}p{3cm}}
 \toprule
 Parameter & Description & Baseline Status\\
