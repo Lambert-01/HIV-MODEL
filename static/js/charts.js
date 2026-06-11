@@ -302,7 +302,12 @@ function runLineAnimation(chartId, state) {
     : null;
   const totalFrames = backendFrames ? backendFrames.length : animationFramesCount(length);
   const initialTraces = state.traces.map((trace) => animatedLineTrace(trace, 1, length));
-  Plotly.react(chartId, initialTraces, lockedAnimationLayout(state), state.config);
+  Plotly.react(chartId, cleanTraces(initialTraces), lockedAnimationLayout(state), state.config).catch((error) => {
+    clearChartAnimationTimer(chartId);
+    state.running = false;
+    setAnimationStatus(chartId, "Chart error", false);
+    console.error(`Animation failed for ${chartId}`, error);
+  });
   state.timer = setInterval(() => {
     state.frame += 1;
     const idx = backendFrames
@@ -315,13 +320,14 @@ function runLineAnimation(chartId, state) {
       clearChartAnimationTimer(chartId);
       state.running = false;
       setAnimationStatus(chartId, "Complete", false);
-      Plotly.react(chartId, state.traces.map(cloneTrace), state.layout, state.config);
+      Plotly.react(chartId, cleanTraces(state.traces), state.layout, state.config);
     }
   }, Math.max(18, (state.backend?.frame_ms || 70) / state.speed));
 }
 
 function animatedLineTrace(trace, idx, length) {
   const next = cloneTrace(trace);
+  if (!next) return null;
   if (Array.isArray(trace.x) && Array.isArray(trace.y) && trace.x.length > 1) {
     next.x = trace.x.slice(0, Math.min(idx, trace.x.length));
     next.y = trace.y.slice(0, Math.min(idx, trace.y.length));
@@ -344,11 +350,16 @@ function runBarAnimation(chartId, state) {
     ? backendOrder.map((index) => ({ value: values[index] || 0, index }))
     : values.map((value, index) => ({ value, index })).sort((a, b) => Math.abs(b.value) - Math.abs(a.value));
   const hasWaterfallTrace = state.traces.some((trace) => trace.type === "waterfall");
-  Plotly.react(chartId, state.traces.map((item) => ({
+  Plotly.react(chartId, cleanTraces(state.traces.map((item) => ({
     ...cloneTrace(item),
     y: Array.isArray(item.y) ? item.y.map(() => 0) : item.y,
     text: Array.isArray(item.y) ? item.y.map(() => "") : item.text
-  })), lockedAnimationLayout(state), state.config);
+  }))), lockedAnimationLayout(state), state.config).catch((error) => {
+    clearChartAnimationTimer(chartId);
+    state.running = false;
+    setAnimationStatus(chartId, "Chart error", false);
+    console.error(`Animation failed for ${chartId}`, error);
+  });
   state.timer = setInterval(() => {
     state.frame += 1;
     const progress = Math.min(state.frame / totalFrames, 1);
@@ -362,7 +373,7 @@ function runBarAnimation(chartId, state) {
       return { ...cloneTrace(trace), y, text };
     });
     if (hasWaterfallTrace) {
-      Plotly.react(chartId, animatedTraces, lockedAnimationLayout(state), state.config);
+      Plotly.react(chartId, cleanTraces(animatedTraces), lockedAnimationLayout(state), state.config);
     } else {
       updatePlotData(chartId, animatedTraces);
     }
@@ -371,7 +382,7 @@ function runBarAnimation(chartId, state) {
       clearChartAnimationTimer(chartId);
       state.running = false;
       setAnimationStatus(chartId, "Complete", false);
-      Plotly.react(chartId, state.traces.map(cloneTrace), state.layout, state.config);
+      Plotly.react(chartId, cleanTraces(state.traces), state.layout, state.config);
     }
   }, Math.max(18, (state.backend?.frame_ms || 60) / state.speed));
 }
@@ -390,10 +401,15 @@ function runPhaseAnimation(chartId, state) {
     ? state.backend.frame_indices
     : null;
   const totalFrames = backendFrames ? backendFrames.length : animationFramesCount(length);
-  Plotly.react(chartId, state.traces.map((trace, index) => {
+  Plotly.react(chartId, cleanTraces(state.traces.map((trace, index) => {
     if (trace.hoverinfo === "skip" || /direction/i.test(trace.name || "")) return cloneTrace(trace);
     return index === pathIndex ? animatedLineTrace(trace, 1, length) : { ...cloneTrace(trace), x: [], y: [], text: [] };
-  }), lockedAnimationLayout(state), state.config);
+  })), lockedAnimationLayout(state), state.config).catch((error) => {
+    clearChartAnimationTimer(chartId);
+    state.running = false;
+    setAnimationStatus(chartId, "Chart error", false);
+    console.error(`Animation failed for ${chartId}`, error);
+  });
   state.timer = setInterval(() => {
     state.frame += 1;
     const idx = backendFrames
@@ -418,7 +434,7 @@ function runPhaseAnimation(chartId, state) {
       clearChartAnimationTimer(chartId);
       state.running = false;
       setAnimationStatus(chartId, "Complete", false);
-      Plotly.react(chartId, state.traces.map(cloneTrace), state.layout, state.config);
+      Plotly.react(chartId, cleanTraces(state.traces), state.layout, state.config);
     }
   }, Math.max(18, (state.backend?.frame_ms || 58) / state.speed));
 }
@@ -439,13 +455,15 @@ function safePlotlyReact(chartId, traces, chartLayout, config = plotConfig) {
 
   const plot = pendingPlots[chartId];
   delete pendingPlots[chartId];
-  return Plotly.react(chartId, plot.traces, plot.chartLayout, plot.config).then(() => {
+  return Plotly.react(chartId, cleanTraces(plot.traces), plot.chartLayout, plot.config).then(() => {
     if (element.classList.contains("plot-ready")) return;
     element.classList.add("plot-ready");
     element.animate(
       [{ opacity: 0, transform: "translateY(8px)" }, { opacity: 1, transform: "translateY(0)" }],
       { duration: 420, easing: "ease-out" }
     );
+  }).catch((error) => {
+    console.error(`Plot failed for ${chartId}`, error);
   });
 }
 
@@ -454,7 +472,9 @@ function flushPendingPlots() {
     if (!isPlotTargetVisible(chartId)) return;
     const plot = pendingPlots[chartId];
     delete pendingPlots[chartId];
-    Plotly.react(chartId, plot.traces, plot.chartLayout, plot.config);
+    Plotly.react(chartId, cleanTraces(plot.traces), plot.chartLayout, plot.config).catch((error) => {
+      console.error(`Plot failed for ${chartId}`, error);
+    });
   });
 
   document.querySelectorAll(".js-plotly-plot").forEach((chart) => {
