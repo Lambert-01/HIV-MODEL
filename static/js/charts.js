@@ -57,15 +57,29 @@ const plotConfig = {
 const pendingPlots = {};
 const chartAnimations = {};
 
+function stripUndefined(value) {
+  if (Array.isArray(value)) return value.map(stripUndefined);
+  if (!value || typeof value !== "object") return value;
+  return Object.entries(value).reduce((clean, [key, item]) => {
+    if (item !== undefined) clean[key] = stripUndefined(item);
+    return clean;
+  }, {});
+}
+
 function cloneTrace(trace) {
-  return {
-    ...trace,
-    x: Array.isArray(trace.x) ? [...trace.x] : trace.x,
-    y: Array.isArray(trace.y) ? [...trace.y] : trace.y,
-    text: Array.isArray(trace.text) ? [...trace.text] : trace.text,
-    marker: trace.marker ? { ...trace.marker } : trace.marker,
-    line: trace.line ? { ...trace.line } : trace.line
-  };
+  if (!trace || typeof trace !== "object") return null;
+  const next = { ...trace };
+  if (Array.isArray(trace.x)) next.x = [...trace.x];
+  if (Array.isArray(trace.y)) next.y = [...trace.y];
+  if (Array.isArray(trace.text)) next.text = [...trace.text];
+  if (!next.type && (Array.isArray(next.x) || Array.isArray(next.y))) next.type = "scatter";
+  return stripUndefined(next);
+}
+
+function cleanTraces(traces) {
+  return (Array.isArray(traces) ? traces : [])
+    .map(cloneTrace)
+    .filter((trace) => trace && typeof trace === "object");
 }
 
 function animationLayout(chartLayout, overrides = {}) {
@@ -89,7 +103,7 @@ function numericExtent(values, padding = 0.06) {
 
 function mergedAxisRange(traces, axis) {
   const values = [];
-  traces.forEach((trace) => {
+  cleanTraces(traces).forEach((trace) => {
     if (Array.isArray(trace[axis])) values.push(...trace[axis]);
   });
   return numericExtent(values);
@@ -106,14 +120,15 @@ function lockedAnimationLayout(state) {
 }
 
 function updatePlotData(chartId, traces) {
-  const x = traces.map((trace) => Array.isArray(trace.x) ? trace.x : undefined);
-  const y = traces.map((trace) => Array.isArray(trace.y) ? trace.y : undefined);
-  const text = traces.map((trace) => Array.isArray(trace.text) || typeof trace.text === "string" ? trace.text : undefined);
+  const clean = cleanTraces(traces);
+  const x = clean.map((trace) => Array.isArray(trace.x) ? trace.x : undefined);
+  const y = clean.map((trace) => Array.isArray(trace.y) ? trace.y : undefined);
+  const text = clean.map((trace) => Array.isArray(trace.text) || typeof trace.text === "string" ? trace.text : undefined);
   const update = {};
   if (x.some((item) => item !== undefined)) update.x = x;
   if (y.some((item) => item !== undefined)) update.y = y;
   if (text.some((item) => item !== undefined)) update.text = text;
-  return Plotly.update(chartId, update, {}, traces.map((_trace, index) => index));
+  return Plotly.update(chartId, update, {}, clean.map((_trace, index) => index));
 }
 
 function animationFramesCount(length) {
@@ -197,7 +212,7 @@ function registerLineAnimation(chartId, traces, chartLayout, options = {}) {
   attachAnimationControls(chartId, options.label || "Animated Line", options.modeName || "animated line chart");
   chartAnimations[chartId] = {
     type: "line",
-    traces: traces.map(cloneTrace),
+    traces: cleanTraces(traces),
     layout: chartLayout,
     config: options.config || plotConfig,
     backend: options.backend || null,
@@ -213,7 +228,7 @@ function registerBarRaceAnimation(chartId, traces, chartLayout, options = {}) {
   attachAnimationControls(chartId, options.label || "Bar Race", options.modeName || "bar chart race");
   chartAnimations[chartId] = {
     type: "bar",
-    traces: traces.map(cloneTrace),
+    traces: cleanTraces(traces),
     layout: chartLayout,
     config: options.config || plotConfig,
     backend: options.backend || null,
@@ -229,7 +244,7 @@ function registerPhaseAnimation(chartId, traces, chartLayout, options = {}) {
   attachAnimationControls(chartId, options.label || "Phase Motion", options.modeName || "animated scatter plot");
   chartAnimations[chartId] = {
     type: "phase",
-    traces: traces.map(cloneTrace),
+    traces: cleanTraces(traces),
     layout: chartLayout,
     config: options.config || plotConfig,
     backend: options.backend || null,
@@ -245,6 +260,10 @@ function runChartAnimation(chartId, resume = false) {
   const state = chartAnimations[chartId];
   const element = document.getElementById(chartId);
   if (!state || !element || !window.Plotly) return;
+  if (!state.traces.length) {
+    setAnimationStatus(chartId, "No data", false);
+    return;
+  }
   clearChartAnimationTimer(chartId);
   state.running = true;
   state.paused = false;
@@ -273,7 +292,7 @@ function resetChartAnimation(chartId) {
   state.paused = false;
   state.frame = 0;
   setAnimationStatus(chartId, "Full graph", false);
-  Plotly.react(chartId, state.traces.map(cloneTrace), state.layout, state.config);
+  Plotly.react(chartId, cleanTraces(state.traces), state.layout, state.config);
 }
 
 function runLineAnimation(chartId, state) {
