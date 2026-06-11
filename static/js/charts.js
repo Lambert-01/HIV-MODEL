@@ -240,12 +240,17 @@ function resetChartAnimation(chartId) {
 
 function runLineAnimation(chartId, state) {
   const length = Math.max(...state.traces.map((trace) => Array.isArray(trace.x) ? trace.x.length : 1), 1);
-  const totalFrames = animationFramesCount(length);
+  const backendFrames = Array.isArray(state.backend?.frame_indices) && state.backend.frame_indices.length
+    ? state.backend.frame_indices
+    : null;
+  const totalFrames = backendFrames ? backendFrames.length : animationFramesCount(length);
   const initialTraces = state.traces.map((trace) => animatedLineTrace(trace, 1, length));
   Plotly.react(chartId, initialTraces, animationLayout(state.layout), state.config);
   state.timer = setInterval(() => {
     state.frame += 1;
-    const idx = frameIndex(state.frame, totalFrames, length);
+    const idx = backendFrames
+      ? Math.min(length, (backendFrames[Math.min(state.frame, backendFrames.length - 1)] || 0) + 1)
+      : frameIndex(state.frame, totalFrames, length);
     const traces = state.traces.map((trace) => animatedLineTrace(trace, idx, length));
     Plotly.react(chartId, traces, animationLayout(state.layout), state.config);
     setAnimationStatus(chartId, `${Math.round((idx / length) * 100)}%`, true);
@@ -255,7 +260,7 @@ function runLineAnimation(chartId, state) {
       setAnimationStatus(chartId, "Complete", false);
       Plotly.react(chartId, state.traces.map(cloneTrace), state.layout, state.config);
     }
-  }, Math.max(18, 70 / state.speed));
+  }, Math.max(18, (state.backend?.frame_ms || 70) / state.speed));
 }
 
 function animatedLineTrace(trace, idx, length) {
@@ -277,7 +282,10 @@ function runBarAnimation(chartId, state) {
   const firstTrace = state.traces[0] || {};
   const values = Array.isArray(firstTrace.y) ? firstTrace.y.map(Number) : [];
   const totalFrames = 80;
-  const ordered = values.map((value, index) => ({ value, index })).sort((a, b) => Math.abs(b.value) - Math.abs(a.value));
+  const backendOrder = Array.isArray(state.backend?.bar_order) ? state.backend.bar_order : null;
+  const ordered = backendOrder?.length
+    ? backendOrder.map((index) => ({ value: values[index] || 0, index }))
+    : values.map((value, index) => ({ value, index })).sort((a, b) => Math.abs(b.value) - Math.abs(a.value));
   Plotly.react(chartId, state.traces.map((item) => ({
     ...cloneTrace(item),
     y: Array.isArray(item.y) ? item.y.map(() => 0) : item.y,
@@ -303,7 +311,7 @@ function runBarAnimation(chartId, state) {
       setAnimationStatus(chartId, "Complete", false);
       Plotly.react(chartId, state.traces.map(cloneTrace), state.layout, state.config);
     }
-  }, Math.max(18, 60 / state.speed));
+  }, Math.max(18, (state.backend?.frame_ms || 60) / state.speed));
 }
 
 function runPhaseAnimation(chartId, state) {
@@ -316,14 +324,19 @@ function runPhaseAnimation(chartId, state) {
   ) || state.traces[0];
   const pathIndex = Math.max(0, state.traces.indexOf(pathTrace));
   const length = Math.max(pathTrace?.x?.length || 1, 1);
-  const totalFrames = animationFramesCount(length);
+  const backendFrames = Array.isArray(state.backend?.frame_indices) && state.backend.frame_indices.length
+    ? state.backend.frame_indices
+    : null;
+  const totalFrames = backendFrames ? backendFrames.length : animationFramesCount(length);
   Plotly.react(chartId, state.traces.map((trace, index) => {
     if (trace.hoverinfo === "skip" || /direction/i.test(trace.name || "")) return cloneTrace(trace);
     return index === pathIndex ? animatedLineTrace(trace, 1, length) : { ...cloneTrace(trace), x: [], y: [], text: [] };
   }), animationLayout(state.layout), state.config);
   state.timer = setInterval(() => {
     state.frame += 1;
-    const idx = frameIndex(state.frame, totalFrames, length);
+    const idx = backendFrames
+      ? Math.min(length, (backendFrames[Math.min(state.frame, backendFrames.length - 1)] || 0) + 1)
+      : frameIndex(state.frame, totalFrames, length);
     const traces = state.traces.map((trace, index) => {
       if (trace.hoverinfo === "skip" || /direction/i.test(trace.name || "")) return cloneTrace(trace);
       if (index === pathIndex) return animatedLineTrace(trace, idx, length);
@@ -345,7 +358,7 @@ function runPhaseAnimation(chartId, state) {
       setAnimationStatus(chartId, "Complete", false);
       Plotly.react(chartId, state.traces.map(cloneTrace), state.layout, state.config);
     }
-  }, Math.max(18, 58 / state.speed));
+  }, Math.max(18, (state.backend?.frame_ms || 58) / state.speed));
 }
 
 function isPlotTargetVisible(chartId) {
@@ -406,6 +419,17 @@ function compactNumber(value) {
   if (abs >= 100) return Number(value).toFixed(0);
   if (abs >= 10) return Number(value).toFixed(1);
   return Number(value).toFixed(2);
+}
+
+function backendAnimation(result, chartId) {
+  const chart = result?.animation?.charts?.[chartId];
+  if (!chart) return null;
+  return {
+    ...chart,
+    frame_ms: result.animation.frame_ms,
+    duration_ms: result.animation.duration_ms,
+    source: result.animation.source
+  };
 }
 
 function lineTrace(x, y, name, color, extra = {}) {
@@ -495,7 +519,12 @@ function renderMainChart(result) {
     }]
   });
   safePlotlyReact("mainChart", traces, chartLayout, plotConfig);
-  registerLineAnimation("mainChart", traces, chartLayout, { label: "Animated Line", modeName: "SITA line drawing" });
+  const backend = backendAnimation(result, "mainChart");
+  registerLineAnimation("mainChart", traces, chartLayout, {
+    backend,
+    label: backend?.label || "Animated Line",
+    modeName: "SITA line drawing"
+  });
 }
 
 function renderGauge(r0, status) {
@@ -549,7 +578,7 @@ function renderGaugeInto(chartId, r0, status) {
   }], layout({ margin: { t: 20, r: 20, b: 20, l: 20 } }), plotConfig);
 }
 
-function renderInterventions(params) {
+function renderInterventions(params, animation = null) {
   const traces = [{
     x: ["u₁ Awareness", "u₂ Safer", "u₃ Testing", "u₄ Adherence"],
     y: [params.u1, params.u2, params.u3, params.u4],
@@ -567,10 +596,17 @@ function renderInterventions(params) {
     xaxis: { ...plotLayout.xaxis, title: "" }
   });
   safePlotlyReact("interventionChart", traces, chartLayout, plotConfig);
-  registerBarRaceAnimation("interventionChart", traces, chartLayout, { label: "Bar Growth", modeName: "intervention bar animation" });
+  const backend = animation?.charts?.interventionChart
+    ? { ...animation.charts.interventionChart, frame_ms: animation.frame_ms, source: animation.source }
+    : null;
+  registerBarRaceAnimation("interventionChart", traces, chartLayout, {
+    backend,
+    label: backend?.label || "Bar Growth",
+    modeName: "intervention bar animation"
+  });
 }
 
-function renderInterventionsInto(chartId, params) {
+function renderInterventionsInto(chartId, params, animation = null) {
   if (!document.getElementById(chartId)) return;
   const traces = [{
     x: ["u1", "u2", "u3", "u4"],
@@ -585,7 +621,11 @@ function renderInterventionsInto(chartId, params) {
     xaxis: { ...plotLayout.xaxis, title: "" }
   });
   safePlotlyReact(chartId, traces, chartLayout, plotConfig);
-  registerBarRaceAnimation(chartId, traces, chartLayout, { label: "Bar Growth", modeName: "intervention bar animation" });
+  registerBarRaceAnimation(chartId, traces, chartLayout, {
+    backend: animation?.charts?.[chartId] ? { ...animation.charts[chartId], frame_ms: animation.frame_ms, source: animation.source } : null,
+    label: animation?.charts?.[chartId]?.label || "Bar Growth",
+    modeName: "intervention bar animation"
+  });
 }
 
 function interventionLabel(value) {
@@ -623,7 +663,12 @@ function renderInfectedFocus(result) {
     ]
   });
   safePlotlyReact("infectedChart", traces, chartLayout, plotConfig);
-  registerLineAnimation("infectedChart", traces, chartLayout, { label: "Animated Line", modeName: "infected line drawing" });
+  const backend = backendAnimation(result, "infectedChart");
+  registerLineAnimation("infectedChart", traces, chartLayout, {
+    backend,
+    label: backend?.label || "Animated Line",
+    modeName: "infected line drawing"
+  });
 }
 
 function renderTreatedAids(result) {
@@ -646,7 +691,12 @@ function renderTreatedAids(result) {
     ]
   });
   safePlotlyReact("treatedAidsChart", traces, chartLayout, plotConfig);
-  registerLineAnimation("treatedAidsChart", traces, chartLayout, { label: "Animated Line", modeName: "treated/AIDS line drawing" });
+  const backend = backendAnimation(result, "treatedAidsChart");
+  registerLineAnimation("treatedAidsChart", traces, chartLayout, {
+    backend,
+    label: backend?.label || "Animated Line",
+    modeName: "treated/AIDS line drawing"
+  });
 }
 
 function renderPopulation(result) {
@@ -672,7 +722,12 @@ function renderPopulation(result) {
   }
   const chartLayout = layout({ yaxis: { ...plotLayout.yaxis, title: "Total Population" } });
   safePlotlyReact("populationChart", traces, chartLayout, plotConfig);
-  registerLineAnimation("populationChart", traces, chartLayout, { label: "Animated Line", modeName: "population line drawing" });
+  const backend = backendAnimation(result, "populationChart");
+  registerLineAnimation("populationChart", traces, chartLayout, {
+    backend,
+    label: backend?.label || "Animated Line",
+    modeName: "population line drawing"
+  });
 }
 
 function renderStackedAndPercentage(result) {
@@ -693,7 +748,12 @@ function renderStackedAndPercentage(result) {
   }));
   const stackedLayout = layout({ yaxis: { ...plotLayout.yaxis, title: "Population" } });
   safePlotlyReact("stackedChart", stackedTraces, stackedLayout, plotConfig);
-  registerLineAnimation("stackedChart", stackedTraces, stackedLayout, { label: "Animated Stack", modeName: "stacked area animation" });
+  const stackedBackend = backendAnimation(result, "stackedChart");
+  registerLineAnimation("stackedChart", stackedTraces, stackedLayout, {
+    backend: stackedBackend,
+    label: stackedBackend?.label || "Animated Stack",
+    modeName: "stacked area animation"
+  });
 
   const percentageTraces = traces.map((item) => ({
     x: t,
@@ -728,7 +788,12 @@ function renderPhase(result) {
     hovermode: "closest"
   });
   safePlotlyReact("phaseChart", traces, chartLayout, plotConfig);
-  registerPhaseAnimation("phaseChart", traces, chartLayout, { label: "Phase Motion", modeName: "animated scatter plot" });
+  const backend = backendAnimation(result, "phaseChart");
+  registerPhaseAnimation("phaseChart", traces, chartLayout, {
+    backend,
+    label: backend?.label || "Phase Motion",
+    modeName: "animated scatter plot"
+  });
 }
 
 function renderAnimatedPhase(result) {
@@ -756,7 +821,12 @@ function renderAnimatedPhase(result) {
   });
 
   safePlotlyReact("phaseChart", traces, phaseLayout, plotConfig);
-  registerPhaseAnimation("phaseChart", traces, phaseLayout, { label: "Phase Motion", modeName: "animated scatter plot" });
+  const backend = backendAnimation(result, "phaseChart");
+  registerPhaseAnimation("phaseChart", traces, phaseLayout, {
+    backend,
+    label: backend?.label || "Phase Motion",
+    modeName: "animated scatter plot"
+  });
 }
 
 function renderPhaseVariant(chartId, result, xKey, yKey, xLabel, yLabel) {

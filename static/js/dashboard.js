@@ -494,8 +494,8 @@ async function runSimulation() {
     renderMainChart(result);
     renderGauge(result.r0, result.epidemic_status);
     renderGaugeInto("r0GaugeDetail", result.r0, result.epidemic_status);
-    renderInterventions(result.parameters);
-    renderInterventionsInto("interventionDetailChart", result.parameters);
+    renderInterventions(result.parameters, result.animation);
+    renderInterventionsInto("interventionDetailChart", result.parameters, result.animation);
     renderInfectedFocus(result);
     renderTreatedAids(result);
     renderPopulation(result);

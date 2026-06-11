@@ -706,14 +706,31 @@
   margin-left: auto;
 }
 
-.chart-animation-controls {
+.chart-animation-toolbar {
+  align-items: center;
+  background:
+    linear-gradient(90deg, rgba(0, 212, 255, 0.075), rgba(255, 209, 102, 0.04)),
+    rgba(7, 17, 31, 0.36);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+  display: inline-flex;
+  gap: 10px;
+  justify-content: space-between;
+  min-height: 48px;
+  min-width: 0;
+  padding: 8px 12px;
+}
+
+.chart-animation-meta,
+.chart-animation-actions {
   align-items: center;
   display: inline-flex;
-  flex: 0 1 auto;
-  gap: 5px;
-  justify-content: flex-end;
-  margin-left: auto;
+  gap: 8px;
   min-width: 0;
+}
+
+.chart-animation-actions {
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .chart-animation-badge {
@@ -733,6 +750,22 @@
   white-space: nowrap;
 }
 
+.chart-animation-source {
+  align-items: center;
+  color: var(--text-muted);
+  display: inline-flex;
+  font-size: 0.68rem;
+  font-weight: 800;
+  gap: 5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.chart-animation-source i {
+  color: var(--success);
+}
+
 .chart-animation-btn {
   align-items: center;
   background: rgba(255, 255, 255, 0.06);
@@ -749,6 +782,12 @@
   min-width: 30px;
   padding: 0 9px;
   transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.chart-animation-btn.primary {
+  background: rgba(6, 214, 160, 0.12);
+  border-color: rgba(6, 214, 160, 0.28);
+  color: var(--success);
 }
 
 .chart-animation-btn:hover {
@@ -773,12 +812,12 @@
   white-space: nowrap;
 }
 
-.chart-animation-controls.is-running .chart-animation-badge,
-.chart-animation-controls.is-running .chart-animation-status {
+.chart-animation-toolbar.is-running .chart-animation-badge,
+.chart-animation-toolbar.is-running .chart-animation-status {
   color: var(--secondary);
 }
 
-.chart-animation-controls.is-running .chart-animation-badge {
+.chart-animation-toolbar.is-running .chart-animation-badge {
   animation: animationBadgePulse 1.15s ease-in-out infinite;
   border-color: rgba(255, 209, 102, 0.36);
   background: rgba(255, 209, 102, 0.10);
@@ -897,15 +936,14 @@
 #r0Gauge { min-height: 380px; }
 
 @media (max-width: 640px) {
-  .chart-card-title {
+  .chart-animation-toolbar {
     align-items: flex-start;
     flex-direction: column;
   }
 
-  .chart-animation-controls {
+  .chart-animation-actions {
     flex-wrap: wrap;
     justify-content: flex-start;
-    margin-left: 0;
     width: 100%;
   }
 
