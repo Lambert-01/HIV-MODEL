@@ -55,6 +55,290 @@ const plotConfig = {
 };
 
 const pendingPlots = {};
+const chartAnimations = {};
+
+function cloneTrace(trace) {
+  return {
+    ...trace,
+    x: Array.isArray(trace.x) ? [...trace.x] : trace.x,
+    y: Array.isArray(trace.y) ? [...trace.y] : trace.y,
+    text: Array.isArray(trace.text) ? [...trace.text] : trace.text,
+    marker: trace.marker ? { ...trace.marker } : trace.marker,
+    line: trace.line ? { ...trace.line } : trace.line
+  };
+}
+
+function animationLayout(chartLayout, overrides = {}) {
+  return {
+    ...chartLayout,
+    ...overrides,
+    annotations: overrides.annotations ?? [],
+    updatemenus: [],
+    transition: { duration: 120, easing: "cubic-in-out" }
+  };
+}
+
+function animationFramesCount(length) {
+  return Math.max(28, Math.min(150, Number(length) || 80));
+}
+
+function frameIndex(frame, totalFrames, length) {
+  if (length <= 1) return length;
+  const eased = 1 - Math.pow(1 - frame / Math.max(totalFrames - 1, 1), 2.4);
+  return Math.max(1, Math.min(length, Math.round(1 + eased * (length - 1))));
+}
+
+function getChartCard(chartId) {
+  const body = document.getElementById(chartId);
+  return body?.closest(".chart-card") || null;
+}
+
+function attachAnimationControls(chartId, label, modeName) {
+  const card = getChartCard(chartId);
+  const title = card?.querySelector(".chart-card-title");
+  if (!title || title.querySelector(`[data-animation-controls="${chartId}"]`)) return;
+
+  const controls = document.createElement("div");
+  controls.className = "chart-animation-controls";
+  controls.dataset.animationControls = chartId;
+  controls.innerHTML = `
+    <span class="chart-animation-badge"><i class="fa fa-wand-magic-sparkles"></i>${label}</span>
+    <button class="chart-animation-btn" type="button" data-animation-action="run" title="Run ${modeName}">
+      <i class="fa fa-play"></i><span>Run</span>
+    </button>
+    <button class="chart-animation-btn" type="button" data-animation-action="pause" title="Pause animation">
+      <i class="fa fa-pause"></i>
+    </button>
+    <button class="chart-animation-btn" type="button" data-animation-action="reset" title="Reset full graph">
+      <i class="fa fa-rotate-left"></i>
+    </button>
+    <button class="chart-animation-btn speed" type="button" data-animation-action="speed" title="Animation speed">1x</button>
+    <span class="chart-animation-status" data-animation-status>Ready</span>
+  `;
+  title.appendChild(controls);
+  controls.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-animation-action]");
+    if (!button) return;
+    const action = button.dataset.animationAction;
+    if (action === "run") runChartAnimation(chartId);
+    if (action === "pause") pauseChartAnimation(chartId);
+    if (action === "reset") resetChartAnimation(chartId);
+    if (action === "speed") toggleChartAnimationSpeed(chartId);
+  });
+}
+
+function setAnimationStatus(chartId, text, active = false) {
+  const controls = document.querySelector(`[data-animation-controls="${chartId}"]`);
+  const status = controls?.querySelector("[data-animation-status]");
+  if (status) status.textContent = text;
+  controls?.classList.toggle("is-running", active);
+}
+
+function clearChartAnimationTimer(chartId) {
+  const state = chartAnimations[chartId];
+  if (state?.timer) clearInterval(state.timer);
+  if (state) state.timer = null;
+}
+
+function toggleChartAnimationSpeed(chartId) {
+  const state = chartAnimations[chartId];
+  if (!state) return;
+  state.speed = state.speed === 1 ? 2 : state.speed === 2 ? 0.5 : 1;
+  const controls = document.querySelector(`[data-animation-controls="${chartId}"]`);
+  const speed = controls?.querySelector('[data-animation-action="speed"]');
+  if (speed) speed.textContent = `${state.speed}x`;
+  if (state.running) runChartAnimation(chartId, true);
+}
+
+function registerLineAnimation(chartId, traces, chartLayout, options = {}) {
+  attachAnimationControls(chartId, options.label || "Animated Line", options.modeName || "animated line chart");
+  chartAnimations[chartId] = {
+    type: "line",
+    traces: traces.map(cloneTrace),
+    layout: chartLayout,
+    config: options.config || plotConfig,
+    label: options.label || "Animated Line",
+    speed: chartAnimations[chartId]?.speed || 1,
+    running: false,
+    paused: false,
+    frame: 0
+  };
+}
+
+function registerBarRaceAnimation(chartId, traces, chartLayout, options = {}) {
+  attachAnimationControls(chartId, options.label || "Bar Race", options.modeName || "bar chart race");
+  chartAnimations[chartId] = {
+    type: "bar",
+    traces: traces.map(cloneTrace),
+    layout: chartLayout,
+    config: options.config || plotConfig,
+    label: options.label || "Bar Race",
+    speed: chartAnimations[chartId]?.speed || 1,
+    running: false,
+    paused: false,
+    frame: 0
+  };
+}
+
+function registerPhaseAnimation(chartId, traces, chartLayout, options = {}) {
+  attachAnimationControls(chartId, options.label || "Phase Motion", options.modeName || "animated scatter plot");
+  chartAnimations[chartId] = {
+    type: "phase",
+    traces: traces.map(cloneTrace),
+    layout: chartLayout,
+    config: options.config || plotConfig,
+    label: options.label || "Phase Motion",
+    speed: chartAnimations[chartId]?.speed || 1,
+    running: false,
+    paused: false,
+    frame: 0
+  };
+}
+
+function runChartAnimation(chartId, resume = false) {
+  const state = chartAnimations[chartId];
+  const element = document.getElementById(chartId);
+  if (!state || !element || !window.Plotly) return;
+  clearChartAnimationTimer(chartId);
+  state.running = true;
+  state.paused = false;
+  if (!resume) state.frame = 0;
+  setAnimationStatus(chartId, "Running", true);
+
+  if (state.type === "line") runLineAnimation(chartId, state);
+  if (state.type === "bar") runBarAnimation(chartId, state);
+  if (state.type === "phase") runPhaseAnimation(chartId, state);
+}
+
+function pauseChartAnimation(chartId) {
+  const state = chartAnimations[chartId];
+  if (!state) return;
+  clearChartAnimationTimer(chartId);
+  state.running = false;
+  state.paused = true;
+  setAnimationStatus(chartId, "Paused", false);
+}
+
+function resetChartAnimation(chartId) {
+  const state = chartAnimations[chartId];
+  if (!state || !window.Plotly) return;
+  clearChartAnimationTimer(chartId);
+  state.running = false;
+  state.paused = false;
+  state.frame = 0;
+  setAnimationStatus(chartId, "Full graph", false);
+  Plotly.react(chartId, state.traces.map(cloneTrace), state.layout, state.config);
+}
+
+function runLineAnimation(chartId, state) {
+  const length = Math.max(...state.traces.map((trace) => Array.isArray(trace.x) ? trace.x.length : 1), 1);
+  const totalFrames = animationFramesCount(length);
+  const initialTraces = state.traces.map((trace) => animatedLineTrace(trace, 1, length));
+  Plotly.react(chartId, initialTraces, animationLayout(state.layout), state.config);
+  state.timer = setInterval(() => {
+    state.frame += 1;
+    const idx = frameIndex(state.frame, totalFrames, length);
+    const traces = state.traces.map((trace) => animatedLineTrace(trace, idx, length));
+    Plotly.react(chartId, traces, animationLayout(state.layout), state.config);
+    setAnimationStatus(chartId, `${Math.round((idx / length) * 100)}%`, true);
+    if (state.frame >= totalFrames) {
+      clearChartAnimationTimer(chartId);
+      state.running = false;
+      setAnimationStatus(chartId, "Complete", false);
+      Plotly.react(chartId, state.traces.map(cloneTrace), state.layout, state.config);
+    }
+  }, Math.max(18, 70 / state.speed));
+}
+
+function animatedLineTrace(trace, idx, length) {
+  const next = cloneTrace(trace);
+  if (Array.isArray(trace.x) && Array.isArray(trace.y) && trace.x.length > 1) {
+    next.x = trace.x.slice(0, Math.min(idx, trace.x.length));
+    next.y = trace.y.slice(0, Math.min(idx, trace.y.length));
+    if (Array.isArray(trace.text)) next.text = trace.text.slice(0, Math.min(idx, trace.text.length));
+    return next;
+  }
+  const showMarker = idx >= length;
+  next.x = showMarker && Array.isArray(trace.x) ? trace.x : [];
+  next.y = showMarker && Array.isArray(trace.y) ? trace.y : [];
+  next.text = showMarker ? trace.text : [];
+  return next;
+}
+
+function runBarAnimation(chartId, state) {
+  const firstTrace = state.traces[0] || {};
+  const values = Array.isArray(firstTrace.y) ? firstTrace.y.map(Number) : [];
+  const totalFrames = 80;
+  const ordered = values.map((value, index) => ({ value, index })).sort((a, b) => Math.abs(b.value) - Math.abs(a.value));
+  Plotly.react(chartId, state.traces.map((item) => ({
+    ...cloneTrace(item),
+    y: Array.isArray(item.y) ? item.y.map(() => 0) : item.y,
+    text: Array.isArray(item.y) ? item.y.map(() => "") : item.text
+  })), animationLayout(state.layout), state.config);
+  state.timer = setInterval(() => {
+    state.frame += 1;
+    const progress = Math.min(state.frame / totalFrames, 1);
+    const eased = 1 - Math.pow(1 - progress, 2.6);
+    const revealCount = Math.max(1, Math.ceil(eased * values.length));
+    const animatedTraces = state.traces.map((trace) => {
+      if (!Array.isArray(trace.y)) return cloneTrace(trace);
+      const traceValues = trace.y.map(Number);
+      const y = traceValues.map((value, index) => ordered.slice(0, revealCount).some((row) => row.index === index) ? value * eased : 0);
+      const text = y.map((value, index) => Math.abs(value) > 0.001 ? (Math.abs(traceValues[index]) >= 10 ? traceValues[index].toFixed(1) : traceValues[index].toFixed(3)) : "");
+      return { ...cloneTrace(trace), y, text };
+    });
+    Plotly.react(chartId, animatedTraces, animationLayout(state.layout), state.config);
+    setAnimationStatus(chartId, `${Math.round(progress * 100)}%`, true);
+    if (progress >= 1) {
+      clearChartAnimationTimer(chartId);
+      state.running = false;
+      setAnimationStatus(chartId, "Complete", false);
+      Plotly.react(chartId, state.traces.map(cloneTrace), state.layout, state.config);
+    }
+  }, Math.max(18, 60 / state.speed));
+}
+
+function runPhaseAnimation(chartId, state) {
+  const pathTrace = state.traces.find((trace) =>
+    Array.isArray(trace.x) &&
+    Array.isArray(trace.y) &&
+    trace.x.length > 2 &&
+    trace.hoverinfo !== "skip" &&
+    !/direction/i.test(trace.name || "")
+  ) || state.traces[0];
+  const pathIndex = Math.max(0, state.traces.indexOf(pathTrace));
+  const length = Math.max(pathTrace?.x?.length || 1, 1);
+  const totalFrames = animationFramesCount(length);
+  Plotly.react(chartId, state.traces.map((trace, index) => {
+    if (trace.hoverinfo === "skip" || /direction/i.test(trace.name || "")) return cloneTrace(trace);
+    return index === pathIndex ? animatedLineTrace(trace, 1, length) : { ...cloneTrace(trace), x: [], y: [], text: [] };
+  }), animationLayout(state.layout), state.config);
+  state.timer = setInterval(() => {
+    state.frame += 1;
+    const idx = frameIndex(state.frame, totalFrames, length);
+    const traces = state.traces.map((trace, index) => {
+      if (trace.hoverinfo === "skip" || /direction/i.test(trace.name || "")) return cloneTrace(trace);
+      if (index === pathIndex) return animatedLineTrace(trace, idx, length);
+      if (index === pathIndex + 1 && Array.isArray(pathTrace.x)) {
+        return {
+          ...cloneTrace(trace),
+          x: [pathTrace.x[Math.min(idx - 1, length - 1)]],
+          y: [pathTrace.y[Math.min(idx - 1, length - 1)]],
+          text: [`t=${Math.round((idx / length) * 100)}%`]
+        };
+      }
+      return idx >= length ? cloneTrace(trace) : { ...cloneTrace(trace), x: [], y: [], text: [] };
+    });
+    Plotly.react(chartId, traces, animationLayout(state.layout), state.config);
+    setAnimationStatus(chartId, `${Math.round((idx / length) * 100)}%`, true);
+    if (state.frame >= totalFrames) {
+      clearChartAnimationTimer(chartId);
+      state.running = false;
+      setAnimationStatus(chartId, "Complete", false);
+      Plotly.react(chartId, state.traces.map(cloneTrace), state.layout, state.config);
+    }
+  }, Math.max(18, 58 / state.speed));
+}
 
 function isPlotTargetVisible(chartId) {
   const element = document.getElementById(chartId);
@@ -182,7 +466,7 @@ function renderMainChart(result) {
     bordercolor: item.color,
     borderpad: 4
   }));
-  safePlotlyReact("mainChart", traces, layout({
+  const chartLayout = layout({
     margin: { t: 30, r: 110, b: 62, l: 72 },
     yaxis: { title: "Population", tickformat: "~s" },
     annotations,
@@ -201,7 +485,9 @@ function renderMainChart(result) {
         { label: "Log", method: "relayout", args: [{ "yaxis.type": "log", "yaxis.title.text": "Population (log scale)" }] }
       ]
     }]
-  }), plotConfig);
+  });
+  safePlotlyReact("mainChart", traces, chartLayout, plotConfig);
+  registerLineAnimation("mainChart", traces, chartLayout, { label: "Animated Line", modeName: "SITA line drawing" });
 }
 
 function renderGauge(r0, status) {
@@ -256,7 +542,7 @@ function renderGaugeInto(chartId, r0, status) {
 }
 
 function renderInterventions(params) {
-  safePlotlyReact("interventionChart", [{
+  const traces = [{
     x: ["u₁ Awareness", "u₂ Safer", "u₃ Testing", "u₄ Adherence"],
     y: [params.u1, params.u2, params.u3, params.u4],
     type: "bar",
@@ -267,25 +553,31 @@ function renderInterventions(params) {
     text: [params.u1, params.u2, params.u3, params.u4].map((v) => v.toFixed(2)),
     textposition: "outside",
     textfont: { size: 11 }
-  }], layout({
+  }];
+  const chartLayout = layout({
     yaxis: { ...plotLayout.yaxis, range: [0, 1.15], title: "Level" },
     xaxis: { ...plotLayout.xaxis, title: "" }
-  }), plotConfig);
+  });
+  safePlotlyReact("interventionChart", traces, chartLayout, plotConfig);
+  registerBarRaceAnimation("interventionChart", traces, chartLayout, { label: "Bar Growth", modeName: "intervention bar animation" });
 }
 
 function renderInterventionsInto(chartId, params) {
   if (!document.getElementById(chartId)) return;
-  safePlotlyReact(chartId, [{
+  const traces = [{
     x: ["u1", "u2", "u3", "u4"],
     y: [params.u1, params.u2, params.u3, params.u4],
     type: "bar",
     marker: { color: ["#00d4ff", "#ffd166", "#06d6a0", "#ef476f"] },
     text: [params.u1, params.u2, params.u3, params.u4].map((v) => interventionLabel(v)),
     textposition: "outside"
-  }], layout({
+  }];
+  const chartLayout = layout({
     yaxis: { ...plotLayout.yaxis, range: [0, 1.18], title: "Intervention strength" },
     xaxis: { ...plotLayout.xaxis, title: "" }
-  }), plotConfig);
+  });
+  safePlotlyReact(chartId, traces, chartLayout, plotConfig);
+  registerBarRaceAnimation(chartId, traces, chartLayout, { label: "Bar Growth", modeName: "intervention bar animation" });
 }
 
 function interventionLabel(value) {
@@ -299,7 +591,7 @@ function interventionLabel(value) {
 function renderInfectedFocus(result) {
   const t = result.time_series.time;
   const I = result.time_series.I;
-  safePlotlyReact("infectedChart", [
+  const traces = [
     lineTrace(t, I, "I(t) Infected", "#ef476f", {
       fill: "tozeroy",
       fillcolor: "rgba(239,71,111,0.12)"
@@ -315,17 +607,20 @@ function renderInfectedFocus(result) {
       textfont: { color: "#ffd166", size: 12 },
       hovertemplate: "Peak I: %{y:,.3f}<br>Time: %{x:.2f} years<extra></extra>"
     }
-  ], layout({
+  ];
+  const chartLayout = layout({
     yaxis: { title: "Infected population" },
     annotations: [
       endpointAnnotation(t[t.length - 1], I[I.length - 1], `Final I: ${compactNumber(I[I.length - 1])}`, "#ef476f", 18)
     ]
-  }), plotConfig);
+  });
+  safePlotlyReact("infectedChart", traces, chartLayout, plotConfig);
+  registerLineAnimation("infectedChart", traces, chartLayout, { label: "Animated Line", modeName: "infected line drawing" });
 }
 
 function renderTreatedAids(result) {
   const t = result.time_series.time;
-  safePlotlyReact("treatedAidsChart", [
+  const traces = [
     lineTrace(t, result.time_series.T, "T(t) Treated", "#06d6a0", {
       fill: "tozeroy",
       fillcolor: "rgba(6,214,160,0.08)"
@@ -334,13 +629,16 @@ function renderTreatedAids(result) {
       fill: "tozeroy",
       fillcolor: "rgba(255,209,102,0.08)"
     })
-  ], layout({
+  ];
+  const chartLayout = layout({
     yaxis: { title: "Population" },
     annotations: [
       endpointAnnotation(t[t.length - 1], result.time_series.T.at(-1), `Final T: ${compactNumber(result.time_series.T.at(-1))}`, "#06d6a0", -18),
       endpointAnnotation(t[t.length - 1], result.time_series.A.at(-1), `Final A: ${compactNumber(result.time_series.A.at(-1))}`, "#ffd166", 18)
     ]
-  }), plotConfig);
+  });
+  safePlotlyReact("treatedAidsChart", traces, chartLayout, plotConfig);
+  registerLineAnimation("treatedAidsChart", traces, chartLayout, { label: "Animated Line", modeName: "treated/AIDS line drawing" });
 }
 
 function renderPopulation(result) {
@@ -364,7 +662,9 @@ function renderPopulation(result) {
       hovertemplate: "Lambda/mu = %{y:.2f}<extra>Boundedness</extra>"
     });
   }
-  safePlotlyReact("populationChart", traces, layout({ yaxis: { ...plotLayout.yaxis, title: "Total Population" } }), plotConfig);
+  const chartLayout = layout({ yaxis: { ...plotLayout.yaxis, title: "Total Population" } });
+  safePlotlyReact("populationChart", traces, chartLayout, plotConfig);
+  registerLineAnimation("populationChart", traces, chartLayout, { label: "Animated Line", modeName: "population line drawing" });
 }
 
 function renderStackedAndPercentage(result) {
@@ -375,26 +675,32 @@ function renderStackedAndPercentage(result) {
     { key: "T", color: "#06d6a0", name: "T(t)" },
     { key: "A", color: "#ffd166", name: "A(t)" }
   ];
-  safePlotlyReact("stackedChart", traces.map((item) => ({
+  const stackedTraces = traces.map((item) => ({
     x: t,
     y: result.time_series[item.key],
     stackgroup: "one",
     mode: "lines",
     name: item.name,
     line: { color: item.color, width: 1.5 }
-  })), layout({ yaxis: { ...plotLayout.yaxis, title: "Population" } }), plotConfig);
+  }));
+  const stackedLayout = layout({ yaxis: { ...plotLayout.yaxis, title: "Population" } });
+  safePlotlyReact("stackedChart", stackedTraces, stackedLayout, plotConfig);
+  registerLineAnimation("stackedChart", stackedTraces, stackedLayout, { label: "Animated Stack", modeName: "stacked area animation" });
 
-  safePlotlyReact("percentageChart", traces.map((item) => ({
+  const percentageTraces = traces.map((item) => ({
     x: t,
     y: result.time_series[item.key].map((v, i) => result.time_series.N[i] ? 100 * v / result.time_series.N[i] : 0),
     mode: "lines",
     name: item.name,
     line: { color: item.color, width: 2.3 }
-  })), layout({ yaxis: { ...plotLayout.yaxis, title: "Percent of N", range: [0, 100] } }), plotConfig);
+  }));
+  const percentageLayout = layout({ yaxis: { ...plotLayout.yaxis, title: "Percent of N", range: [0, 100] } });
+  safePlotlyReact("percentageChart", percentageTraces, percentageLayout, plotConfig);
+  registerLineAnimation("percentageChart", percentageTraces, percentageLayout, { label: "Animated Line", modeName: "percentage line drawing" });
 }
 
 function renderPhase(result) {
-  safePlotlyReact("phaseChart", [{
+  const traces = [{
     x: result.time_series.I,
     y: result.time_series.T,
     mode: "lines+markers",
@@ -407,18 +713,18 @@ function renderPhase(result) {
     },
     line: { color: "rgba(255,255,255,0.2)", width: 1 },
     name: "I–T phase"
-  }], layout({
+  }];
+  const chartLayout = layout({
     xaxis: { ...plotLayout.xaxis, title: "I(t)" },
     yaxis: { ...plotLayout.yaxis, title: "T(t)" },
     hovermode: "closest"
-  }), plotConfig);
+  });
+  safePlotlyReact("phaseChart", traces, chartLayout, plotConfig);
+  registerPhaseAnimation("phaseChart", traces, chartLayout, { label: "Phase Motion", modeName: "animated scatter plot" });
 }
-
-let phaseAnimationTimer = null;
 
 function renderAnimatedPhase(result) {
   const t = result.time_series.time;
-  const maxIdx = t.length - 1;
   const traces = [{
     x: result.time_series.I,
     y: result.time_series.T,
@@ -441,32 +747,8 @@ function renderAnimatedPhase(result) {
     hovermode: "closest"
   });
 
-  if (phaseAnimationTimer) clearInterval(phaseAnimationTimer);
-  if (!isPlotTargetVisible("phaseChart")) {
-    safePlotlyReact("phaseChart", traces, phaseLayout, plotConfig);
-    return;
-  }
-  
-  Plotly.newPlot("phaseChart", traces, phaseLayout, plotConfig);
-  
-  let idx = 0;
-  phaseAnimationTimer = setInterval(() => {
-    idx++;
-    if (idx >= maxIdx) {
-      clearInterval(phaseAnimationTimer);
-      Plotly.update("phaseChart", {
-        x: [[result.time_series.I[maxIdx]]],
-        y: [[result.time_series.T[maxIdx]]],
-        text: [["End"]]
-      }, {}, [1]);
-      return;
-    }
-    Plotly.update("phaseChart", {
-      x: [[result.time_series.I[idx]]],
-      y: [[result.time_series.T[idx]]],
-      text: [[t[idx].toFixed(1) + "y"]]
-    }, {}, [1]);
-  }, 50);
+  safePlotlyReact("phaseChart", traces, phaseLayout, plotConfig);
+  registerPhaseAnimation("phaseChart", traces, phaseLayout, { label: "Phase Motion", modeName: "animated scatter plot" });
 }
 
 function renderPhaseVariant(chartId, result, xKey, yKey, xLabel, yLabel) {
@@ -477,7 +759,7 @@ function renderPhaseVariant(chartId, result, xKey, yKey, xLabel, yLabel) {
   const e0 = result.disease_free_equilibrium || { S: 0, I: 0, T: 0, A: 0 };
   const dfeX = e0[xKey] ?? 0;
   const dfeY = e0[yKey] ?? 0;
-  safePlotlyReact(chartId, [{
+  const traces = [{
     x,
     y,
     mode: "lines+markers",
@@ -501,11 +783,14 @@ function renderPhaseVariant(chartId, result, xKey, yKey, xLabel, yLabel) {
     textposition: "top center",
     name: "Disease-free equilibrium",
     hovertemplate: "E0<br>" + xLabel + ": %{x:.2f}<br>" + yLabel + ": %{y:.2f}<extra></extra>"
-  }], layout({
+  }];
+  const chartLayout = layout({
     xaxis: { ...plotLayout.xaxis, title: xLabel },
     yaxis: { ...plotLayout.yaxis, title: yLabel },
     hovermode: "closest"
-  }), plotConfig);
+  });
+  safePlotlyReact(chartId, traces, chartLayout, plotConfig);
+  registerPhaseAnimation(chartId, traces, chartLayout, { label: "Phase Motion", modeName: "animated scatter plot" });
 }
 
 function sitaDerivativeForPhase(S, I, T, A, params) {
@@ -556,7 +841,7 @@ function renderVectorFieldPhase(chartId, result, params) {
   }
 
   const peakIndex = Ivals.indexOf(Math.max(...Ivals));
-  safePlotlyReact(chartId, [
+  const traces = [
     {
       x: vx,
       y: vy,
@@ -591,12 +876,15 @@ function renderVectorFieldPhase(chartId, result, params) {
       marker: { color: "#ffd166", size: 12, symbol: "diamond", line: { color: "#07111f", width: 1 } },
       name: "Disease-free equilibrium"
     }
-  ], layout({
+  ];
+  const chartLayout = layout({
     xaxis: { ...plotLayout.xaxis, title: "I(t) Infected", range: [xmin, xmax], zeroline: true, zerolinecolor: "rgba(255,255,255,0.28)" },
     yaxis: { ...plotLayout.yaxis, title: "T(t) Treated", range: [ymin, ymax], zeroline: true, zerolinecolor: "rgba(255,255,255,0.28)" },
     hovermode: "closest",
     legend: { orientation: "h", y: -0.2 }
-  }), plotConfig);
+  });
+  safePlotlyReact(chartId, traces, chartLayout, plotConfig);
+  registerPhaseAnimation(chartId, traces, chartLayout, { label: "Phase Motion", modeName: "animated scatter plot" });
 }
 
 function renderScenarioChart(data) {
@@ -622,11 +910,13 @@ function renderScenarioChart(data) {
     colors[row.i % colors.length],
     rank % 2 === 0 ? -18 : 18
   ));
-  safePlotlyReact("scenarioChart", traces, layout({
+  const chartLayout = layout({
     yaxis: { title: "Infected I(t)" },
     margin: { t: 28, r: 150, b: 64, l: 72 },
     annotations
-  }), plotConfig);
+  });
+  safePlotlyReact("scenarioChart", traces, chartLayout, plotConfig);
+  registerLineAnimation("scenarioChart", traces, chartLayout, { label: "Animated Line", modeName: "scenario line drawing" });
 }
 
 function renderScenarioAidsChart(data) {
@@ -640,25 +930,30 @@ function renderScenarioAidsChart(data) {
     line: { width: 3, color: colors[i % colors.length], shape: "spline", smoothing: 0.35 },
     hovertemplate: `<b>${curve.name}</b><br>Time: %{x:.2f} years<br>A(t): %{y:,.3f}<extra></extra>`
   }));
-  safePlotlyReact("scenarioAidsChart", traces, layout({
+  const chartLayout = layout({
     yaxis: { title: "AIDS A(t)" }
-  }), plotConfig);
+  });
+  safePlotlyReact("scenarioAidsChart", traces, chartLayout, plotConfig);
+  registerLineAnimation("scenarioAidsChart", traces, chartLayout, { label: "Animated Line", modeName: "AIDS scenario line drawing" });
 }
 
 function renderScenarioR0Chart(comparisons) {
   if (!document.getElementById("scenarioR0Chart")) return;
-  safePlotlyReact("scenarioR0Chart", [{
+  const traces = [{
     x: comparisons.map((row) => row.name),
     y: comparisons.map((row) => row.r0),
     type: "bar",
     marker: { color: comparisons.map((row) => row.r0 < 1 ? "#06d6a0" : row.r0 <= 1.02 ? "#fca311" : "#ef476f") },
     text: comparisons.map((row) => row.r0.toFixed(2)),
     textposition: "outside"
-  }], layout({
+  }];
+  const chartLayout = layout({
     xaxis: { ...plotLayout.xaxis, title: "", tickangle: -25 },
     yaxis: { ...plotLayout.yaxis, title: "R0" },
     shapes: [{ type: "line", xref: "paper", x0: 0, x1: 1, y0: 1, y1: 1, line: { color: "#ffd166", width: 2, dash: "dash" } }]
-  }), plotConfig);
+  });
+  safePlotlyReact("scenarioR0Chart", traces, chartLayout, plotConfig);
+  registerBarRaceAnimation("scenarioR0Chart", traces, chartLayout, { label: "Bar Race", modeName: "R0 bar chart race" });
 }
 
 function renderScenarioRadar(comparisons) {
@@ -681,16 +976,17 @@ function renderScenarioRadar(comparisons) {
     fill: "toself",
     name: row.name
   }));
-  safePlotlyReact("scenarioRadarChart", traces, {
+  const chartLayout = {
     ...plotLayout,
     polar: { radialaxis: { visible: true, range: [0, 1], color: "#94a3b8" }, bgcolor: "rgba(0,0,0,0)" },
     margin: { t: 20, r: 35, b: 30, l: 35 }
-  }, plotConfig);
+  };
+  safePlotlyReact("scenarioRadarChart", traces, chartLayout, plotConfig);
 }
 
 function renderSensitivityChart(values) {
   const ranked = [...values].sort((a, b) => Math.abs(b.sensitivity) - Math.abs(a.sensitivity));
-  safePlotlyReact("sensitivityChart", [{
+  const traces = [{
     x: ranked.map((item) => item.parameter),
     y: ranked.map((item) => item.sensitivity),
     type: "bar",
@@ -702,7 +998,8 @@ function renderSensitivityChart(values) {
     textposition: "outside",
     textfont: { size: 11, color: "#f8fafc" },
     hovertemplate: "<b>%{x}</b><br>Sensitivity: %{y:.4f}<extra></extra>"
-  }], layout({
+  }];
+  const chartLayout = layout({
     yaxis: { title: "Sensitivity Index" },
     xaxis: { title: "Parameter" },
     shapes: [{ type: "line", xref: "paper", x0: 0, x1: 1, y0: 0, y1: 0, line: { color: "rgba(248,250,252,0.55)", width: 2 } }],
@@ -710,7 +1007,9 @@ function renderSensitivityChart(values) {
       { xref: "paper", yref: "paper", x: 0.01, y: 1.08, showarrow: false, text: "Positive increases R0", font: { color: "#ef476f", size: 12 } },
       { xref: "paper", yref: "paper", x: 0.99, y: 1.08, showarrow: false, text: "Negative reduces R0", font: { color: "#06d6a0", size: 12 }, xanchor: "right" }
     ]
-  }), plotConfig);
+  });
+  safePlotlyReact("sensitivityChart", traces, chartLayout, plotConfig);
+  registerBarRaceAnimation("sensitivityChart", traces, chartLayout, { label: "Bar Race", modeName: "sensitivity bar chart race" });
 }
 
 function renderMemoryChart(results) {
@@ -730,39 +1029,47 @@ function renderMemoryChart(results) {
     colors[i],
     i % 2 === 0 ? -18 : 18
   ));
-  safePlotlyReact("memoryChart", traces, layout({
+  const chartLayout = layout({
     yaxis: { title: "Infected I(t)" },
     margin: { t: 28, r: 120, b: 64, l: 72 },
     annotations
-  }), plotConfig);
+  });
+  safePlotlyReact("memoryChart", traces, chartLayout, plotConfig);
+  registerLineAnimation("memoryChart", traces, chartLayout, { label: "Animated Line", modeName: "memory comparison line drawing" });
 }
 
 function renderMemoryExtraCharts(results) {
   const colors = ["#00d4ff", "#06d6a0", "#ffd166", "#ef476f"];
   const build = (key, chartId, title) => {
     if (!document.getElementById(chartId)) return;
-    safePlotlyReact(chartId, results.map((result, i) => ({
+    const traces = results.map((result, i) => ({
       x: result.time_series.time,
       y: result.time_series[key],
       mode: "lines",
       name: `q=${result.parameters.q.toFixed(2)}`,
       line: { width: 2.3, color: colors[i] }
-    })), layout({ yaxis: { ...plotLayout.yaxis, title } }), plotConfig);
+    }));
+    const chartLayout = layout({ yaxis: { ...plotLayout.yaxis, title } });
+    safePlotlyReact(chartId, traces, chartLayout, plotConfig);
+    registerLineAnimation(chartId, traces, chartLayout, { label: "Animated Line", modeName: `${title} line drawing` });
   };
   build("T", "memoryTChart", "Treated T(t)");
   build("A", "memoryAChart", "AIDS A(t)");
   if (document.getElementById("memoryPhaseChart")) {
-    safePlotlyReact("memoryPhaseChart", results.map((result, i) => ({
+    const traces = results.map((result, i) => ({
       x: result.time_series.I,
       y: result.time_series.T,
       mode: "lines",
       name: `q=${result.parameters.q.toFixed(2)}`,
       line: { width: 2.2, color: colors[i] }
-    })), layout({
+    }));
+    const chartLayout = layout({
       xaxis: { ...plotLayout.xaxis, title: "I(t)" },
       yaxis: { ...plotLayout.yaxis, title: "T(t)" },
       hovermode: "closest"
-    }), plotConfig);
+    });
+    safePlotlyReact("memoryPhaseChart", traces, chartLayout, plotConfig);
+    registerPhaseAnimation("memoryPhaseChart", traces, chartLayout, { label: "Phase Motion", modeName: "memory phase animation" });
   }
   renderMittagLefflerChart(results[0]?.parameters || {});
 }
@@ -809,16 +1116,18 @@ function renderMittagLefflerChart(params) {
     name: q === 1 ? "exp(-mu t), q=1" : `E_q(-mu t^q), q=${q.toFixed(2)}`,
     line: { width: 2.4, color: colors[i] }
   }));
-  safePlotlyReact("mittagChart", traces, layout({
+  const chartLayout = layout({
     yaxis: { ...plotLayout.yaxis, title: "Memory kernel", range: [0, 1.05] },
     xaxis: { ...plotLayout.xaxis, title: "Time (years)" }
-  }), plotConfig);
+  });
+  safePlotlyReact("mittagChart", traces, chartLayout, plotConfig);
+  registerLineAnimation("mittagChart", traces, chartLayout, { label: "Animated Line", modeName: "memory kernel line drawing" });
 }
 
 function renderReliabilityChart(rows) {
   if (!document.getElementById("reliabilityChart")) return;
   const x = rows.map((row) => `h=${Number(row.step).toFixed(2)}`);
-  safePlotlyReact("reliabilityChart", [
+  const traces = [
     {
       x,
       y: rows.map((row) => row.final_infected),
@@ -837,11 +1146,14 @@ function renderReliabilityChart(rows) {
       text: rows.map((row) => Number(row.peak_infected).toFixed(1)),
       textposition: "outside"
     }
-  ], layout({
+  ];
+  const chartLayout = layout({
     barmode: "group",
     yaxis: { ...plotLayout.yaxis, title: "Population" },
     xaxis: { ...plotLayout.xaxis, title: "Time step" }
-  }), plotConfig);
+  });
+  safePlotlyReact("reliabilityChart", traces, chartLayout, plotConfig);
+  registerBarRaceAnimation("reliabilityChart", traces, chartLayout, { label: "Bar Growth", modeName: "reliability bar animation" });
 }
 
 function renderSurface(params) {
@@ -921,7 +1233,7 @@ function renderHeatmapsAndWaterfall(params, result) {
     const afterU2 = computeR0FromParams(params, { u1: params.u1, u2: params.u2, u3: 0, u4: 0 });
     const afterU3 = computeR0FromParams(params, { u1: params.u1, u2: params.u2, u3: params.u3, u4: 0 });
     const final = computeR0FromParams(params);
-    safePlotlyReact("waterfallChart", [{
+    const traces = [{
       type: "waterfall",
       x: ["Baseline", "Awareness", "Safer", "Testing", "Adherence", "Final"],
       y: [base, afterU1 - base, afterU2 - afterU1, afterU3 - afterU2, final - afterU3, final],
@@ -929,7 +1241,10 @@ function renderHeatmapsAndWaterfall(params, result) {
       decreasing: { marker: { color: "#06d6a0" } },
       increasing: { marker: { color: "#ef476f" } },
       totals: { marker: { color: "#00d4ff" } }
-    }], layout({ yaxis: { ...plotLayout.yaxis, title: "R0" } }), plotConfig);
+    }];
+    const chartLayout = layout({ yaxis: { ...plotLayout.yaxis, title: "R0" } });
+    safePlotlyReact("waterfallChart", traces, chartLayout, plotConfig);
+    registerBarRaceAnimation("waterfallChart", traces, chartLayout, { label: "Step Race", modeName: "R0 waterfall animation" });
   }
 }
 
