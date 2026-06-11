@@ -810,79 +810,6 @@
 }
 
 .chart-large .chart-body { min-height: 420px; }
-.chart-body-tall { min-height: 360px; }
-
-/* ── Animated Visualization Studio ── */
-.animation-studio {
-  background:
-    linear-gradient(135deg, rgba(0, 212, 255, 0.07), rgba(6, 214, 160, 0.045)),
-    rgba(255, 255, 255, 0.018);
-  border: 1px solid rgba(0, 212, 255, 0.16);
-  border-radius: var(--radius);
-  padding: 16px;
-  position: relative;
-}
-
-.animation-studio::before {
-  background: linear-gradient(90deg, var(--primary), var(--success), var(--secondary));
-  border-radius: var(--radius) var(--radius) 0 0;
-  content: "";
-  height: 2px;
-  left: 0;
-  opacity: 0.75;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-.animation-studio-head {
-  align-items: flex-start;
-  display: flex;
-  gap: 14px;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.animation-studio-head h5 {
-  color: var(--text-main);
-  font-size: 1rem;
-  font-weight: 800;
-  margin: 4px 0 0;
-}
-
-.animation-actions {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: flex-end;
-}
-
-.animation-note {
-  align-items: center;
-  background: rgba(7, 17, 31, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
-  color: var(--text-muted);
-  display: flex;
-  font-size: 0.86rem;
-  gap: 10px;
-  line-height: 1.5;
-  margin-bottom: 14px;
-  padding: 10px 12px;
-}
-
-.animation-note i {
-  color: var(--primary);
-  flex: 0 0 auto;
-}
-
-.animation-studio .chart-card {
-  border-color: rgba(0, 212, 255, 0.13);
-}
-
-.animation-studio .chart-card-title {
-  background: rgba(7, 17, 31, 0.58);
-}
 
 #r0Gauge { min-height: 380px; }
 
@@ -896,23 +823,6 @@
 
   .chart-formula-equation {
     font-size: 0.76rem;
-  }
-
-  .animation-studio {
-    padding: 12px;
-  }
-
-  .animation-studio-head {
-    flex-direction: column;
-  }
-
-  .animation-actions {
-    justify-content: flex-start;
-    width: 100%;
-  }
-
-  .chart-body-tall {
-    min-height: 320px;
   }
 }
 
