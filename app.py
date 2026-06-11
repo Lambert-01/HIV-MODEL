@@ -24,10 +24,6 @@ def create_app():
     def dashboard():
         return render_template("dashboard.html")
 
-    @app.get("/presentation")
-    def presentation():
-        return render_template("presentation.html")
-
     @app.get("/documentation")
     def documentation():
         return render_template("documentation.html")
