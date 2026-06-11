@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+
+{% block title %}Presentation Mode | FracHIV-SITA Lab{% endblock %}
+
+{% block head_extra %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/presentation.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="presentation-shell">
+  <div class="presentation-hero">
+    <div class="hero-copy">
+      <p class="eyebrow"><i class="fa fa-location-dot"></i> Rwanda-focused thesis showcase</p>
+      <h1>Fractional-Order HIV SITA Dashboard Presentation</h1>
+      <p class="hero-lede">
+        Live simulation of susceptible, infected, treated, and AIDS-stage dynamics with social behaviour interventions,
+        fractional memory, R0 threshold analysis, and scenario comparison.
+      </p>
+      <div class="hero-actions">
+        <button class="scenario-chip active" data-scenario="baseline">
+          <i class="fa fa-chart-line"></i><span>Baseline</span>
+        </button>
+        <button class="scenario-chip" data-scenario="no_intervention">
+          <i class="fa fa-ban"></i><span>No Intervention</span>
+        </button>
+        <button class="scenario-chip" data-scenario="combined_intervention">
+          <i class="fa fa-people-group"></i><span>Combined</span>
+        </button>
+        <button class="scenario-chip" data-scenario="high_memory">
+          <i class="fa fa-wave-square"></i><span>High Memory</span>
+        </button>
+        <button class="scenario-chip" data-scenario="ordinary_model">
+          <i class="fa fa-circle-nodes"></i><span>q=1 Ordinary</span>
+        </button>
+        <a class="dashboard-link" href="{{ url_for('dashboard') }}">
+          <i class="fa fa-table-columns"></i><span>Full Dashboard</span>
+        </a>
+      </div>
+    </div>
+    <div class="hero-metrics" aria-label="Current simulation metrics">
+      <div class="metric-tile">
+        <span class="metric-label">R0</span>
+        <strong id="metricR0">--</strong>
+        <small id="metricStatus">Waiting</small>
+      </div>
+      <div class="metric-tile">
+        <span class="metric-label">Peak I</span>
+        <strong id="metricPeak">--</strong>
+        <small id="metricPeakTime">--</small>
+      </div>
+      <div class="metric-tile">
+        <span class="metric-label">Final I</span>
+        <strong id="metricFinalI">--</strong>
+        <small>At end year</small>
+      </div>
+      <div class="metric-tile">
+        <span class="metric-label">Memory q</span>
+        <strong id="metricQ">--</strong>
+        <small id="metricMemoryMode">Fractional</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="presentation-status" id="presentationStatus">
+    <i class="fa fa-spinner fa-spin"></i>
+    <span>Preparing live dashboard evidence...</span>
+  </div>
+
+  <div class="presentation-grid">
+    <section class="stage-panel">
+      <div class="panel-heading">
+        <div>
+          <p class="panel-kicker">Live model trajectory</p>
+          <h2 id="activeScenarioTitle">Baseline Scenario</h2>
+        </div>
+        <div class="year-readout">
+          <span>Year</span>
+          <strong id="currentYear">0.0</strong>
+        </div>
+      </div>
+      <div id="presentationTrajectory" class="presentation-chart chart-large"></div>
+      <div class="state-strip">
+        <span><b>S</b> Susceptible</span>
+        <span><b>I</b> Infected</span>
+        <span><b>T</b> Treated</span>
+        <span><b>A</b> AIDS stage</span>
+      </div>
+    </section>
+
+    <aside class="talk-panel">
+      <div class="talk-block accent-rwanda">
+        <h3><i class="fa fa-map-location-dot"></i> Rwanda Context</h3>
+        <p>
+          This is an academic simulation inspired by HIV prevention and treatment challenges in Rwanda.
+          It is designed to explore intervention behaviour, not to replace clinical or policy data.
+        </p>
+      </div>
+      <div class="talk-block">
+        <h3><i class="fa fa-diagram-project"></i> Model Story</h3>
+        <p>
+          The dashboard turns the SITA equations into an interactive tool: S moves to I through transmission,
+          I can move to T through testing and treatment-seeking, and disease progression is tracked through A.
+        </p>
+      </div>
+      <div class="talk-block">
+        <h3><i class="fa fa-brain"></i> Special Part</h3>
+        <p>
+          The fractional order q lets the model remember past states. During the presentation, compare q=1
+          with q&lt;1 to show why fractional memory matters.
+        </p>
+      </div>
+      <div class="talk-block">
+        <h3><i class="fa fa-bullseye"></i> Defense Message</h3>
+        <p>
+          The strongest evidence is the dashboard itself: it connects theory, computation, intervention
+          scenarios, R0, sensitivity, and chapter-ready results in one working system.
+        </p>
+      </div>
+    </aside>
+  </div>
+
+  <section class="flow-band" aria-label="SITA model flow">
+    <div class="flow-node">S(t)<span>Susceptible</span></div>
+    <i class="fa fa-arrow-right"></i>
+    <div class="flow-node infected">I(t)<span>Infected</span></div>
+    <i class="fa fa-arrow-right"></i>
+    <div class="flow-node treated">T(t)<span>Treated</span></div>
+    <i class="fa fa-arrow-right"></i>
+    <div class="flow-node aids">A(t)<span>AIDS stage</span></div>
+  </section>
+
+  <section class="analysis-grid">
+    <div class="analysis-panel">
+      <div class="panel-heading compact">
+        <div>
+          <p class="panel-kicker">Intervention evidence</p>
+          <h2>Scenario R0 Comparison</h2>
+        </div>
+      </div>
+      <div id="presentationScenarioChart" class="presentation-chart"></div>
+    </div>
+    <div class="analysis-panel">
+      <div class="panel-heading compact">
+        <div>
+          <p class="panel-kicker">Fractional memory</p>
+          <h2>I(t) Under Different q</h2>
+        </div>
+      </div>
+      <div id="presentationMemoryChart" class="presentation-chart"></div>
+    </div>
+    <div class="analysis-panel wide">
+      <div class="panel-heading compact">
+        <div>
+          <p class="panel-kicker">What changes R0 most?</p>
+          <h2>Sensitivity Ranking</h2>
+        </div>
+      </div>
+      <div id="presentationSensitivityChart" class="presentation-chart"></div>
+    </div>
+  </section>
+
+  <section class="script-panel">
+    <h2>Short Presentation Flow</h2>
+    <div class="script-steps">
+      <div><span>1</span><p>Start with Rwanda context and explain that this is an academic HIV dynamics simulator.</p></div>
+      <div><span>2</span><p>Show the moving SITA graph and connect the dashboard variables to the thesis equations.</p></div>
+      <div><span>3</span><p>Switch from no intervention to combined intervention and explain the R0 and final infected changes.</p></div>
+      <div><span>4</span><p>Show q=1 versus high memory to make the fractional-order contribution visible.</p></div>
+      <div><span>5</span><p>Open the full dashboard for detailed Chapter 6 tables, exports, and sensitivity evidence.</p></div>
+    </div>
+  </section>
+</section>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/presentation.js') }}"></script>
+{% endblock %}

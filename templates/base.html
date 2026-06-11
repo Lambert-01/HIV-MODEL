@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
+  {% block head_extra %}{% endblock %}
 </head>
 <body>
 
@@ -59,6 +60,9 @@
           </a>
           <a href="{{ url_for('dashboard') }}" class="nav-link nav-pill {% if request.endpoint == 'dashboard' %}active{% endif %}">
             <i class="fa fa-flask me-1"></i>Simulator
+          </a>
+          <a href="{{ url_for('presentation') }}" class="nav-link nav-pill {% if request.endpoint == 'presentation' %}active{% endif %}">
+            <i class="fa fa-display me-1"></i>Presentation
           </a>
           <a href="{{ url_for('documentation') }}" class="nav-link nav-pill {% if request.endpoint == 'documentation' %}active{% endif %}">
             <i class="fa fa-book me-1"></i>Docs
