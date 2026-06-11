@@ -500,6 +500,7 @@ async function runSimulation() {
     renderTreatedAids(result);
     renderPopulation(result);
     renderStackedAndPercentage(result);
+    if (typeof renderAnimationStudio === "function") renderAnimationStudio(result);
     renderAnimatedPhase(result);
     renderVectorFieldPhase("phaseITChart", result, result.parameters);
     renderPhaseVariant("phaseIAChart", result, "I", "A", "I(t)", "A(t)");
@@ -730,6 +731,22 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("resetDefaults")?.addEventListener("click", resetDefaults);
   document.getElementById("downloadCsv")?.addEventListener("click", downloadCsv);
   document.getElementById("downloadParams")?.addEventListener("click", downloadParams);
+  document.getElementById("replayAnimations")?.addEventListener("click", () => {
+    if (!lastResult) {
+      showToast("Run a simulation first.", "error");
+      return;
+    }
+    if (typeof renderAnimationStudio === "function") {
+      renderAnimationStudio(lastResult);
+      showToast("Animations replaying.", "success");
+    }
+  });
+  document.getElementById("pauseAnimations")?.addEventListener("click", () => {
+    if (typeof clearDashboardAnimations === "function") {
+      clearDashboardAnimations();
+      showToast("Animations paused.", "success");
+    }
+  });
   document.getElementById("exportCsvBtn")?.addEventListener("click", downloadCsv);
   document.getElementById("exportJsonBtn")?.addEventListener("click", () => { downloadParams(); flashExportBtn("exportJsonBtn"); });
   document.getElementById("exportReportBtn")?.addEventListener("click", () => { downloadServerReport(); flashExportBtn("exportReportBtn"); });
