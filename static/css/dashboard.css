@@ -971,21 +971,6 @@
   width: 100%;
 }
 
-.chart-card .modebar {
-  background: rgba(7, 17, 31, 0.92) !important;
-  border: 1px solid rgba(148, 163, 184, 0.14);
-  border-radius: 8px;
-  padding: 4px;
-}
-
-.chart-card .modebar-btn svg path {
-  fill: #e2e8f0 !important;
-}
-
-.chart-card .modebar-btn:hover {
-  background: rgba(0, 212, 255, 0.16) !important;
-}
-
 #baselineInterpretation,
 #thesisTextBox,
 #stabilityText,
