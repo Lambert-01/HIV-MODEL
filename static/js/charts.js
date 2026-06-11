@@ -96,26 +96,31 @@ function getChartCard(chartId) {
 function attachAnimationControls(chartId, label, modeName) {
   const card = getChartCard(chartId);
   const title = card?.querySelector(".chart-card-title");
-  if (!title || title.querySelector(`[data-animation-controls="${chartId}"]`)) return;
+  if (!title || card.querySelector(`[data-animation-controls="${chartId}"]`)) return;
 
   const controls = document.createElement("div");
-  controls.className = "chart-animation-controls";
+  controls.className = "chart-animation-toolbar";
   controls.dataset.animationControls = chartId;
   controls.innerHTML = `
-    <span class="chart-animation-badge"><i class="fa fa-wand-magic-sparkles"></i>${label}</span>
-    <button class="chart-animation-btn" type="button" data-animation-action="run" title="Run ${modeName}">
-      <i class="fa fa-play"></i><span>Run</span>
-    </button>
-    <button class="chart-animation-btn" type="button" data-animation-action="pause" title="Pause animation">
-      <i class="fa fa-pause"></i>
-    </button>
-    <button class="chart-animation-btn" type="button" data-animation-action="reset" title="Reset full graph">
-      <i class="fa fa-rotate-left"></i>
-    </button>
-    <button class="chart-animation-btn speed" type="button" data-animation-action="speed" title="Animation speed">1x</button>
-    <span class="chart-animation-status" data-animation-status>Ready</span>
+    <div class="chart-animation-meta">
+      <span class="chart-animation-badge"><i class="fa fa-wand-magic-sparkles"></i>${label}</span>
+      <span class="chart-animation-source"><i class="fa fa-server"></i>Python engine</span>
+    </div>
+    <div class="chart-animation-actions">
+      <button class="chart-animation-btn primary" type="button" data-animation-action="run" title="Run ${modeName}">
+        <i class="fa fa-play"></i><span>Run</span>
+      </button>
+      <button class="chart-animation-btn" type="button" data-animation-action="pause" title="Pause animation">
+        <i class="fa fa-pause"></i><span>Pause</span>
+      </button>
+      <button class="chart-animation-btn" type="button" data-animation-action="reset" title="Reset full graph">
+        <i class="fa fa-rotate-left"></i><span>Reset</span>
+      </button>
+      <button class="chart-animation-btn speed" type="button" data-animation-action="speed" title="Animation speed">1x</button>
+      <span class="chart-animation-status" data-animation-status>Ready</span>
+    </div>
   `;
-  title.appendChild(controls);
+  title.insertAdjacentElement("afterend", controls);
   controls.addEventListener("click", (event) => {
     const button = event.target.closest("[data-animation-action]");
     if (!button) return;
@@ -157,6 +162,7 @@ function registerLineAnimation(chartId, traces, chartLayout, options = {}) {
     traces: traces.map(cloneTrace),
     layout: chartLayout,
     config: options.config || plotConfig,
+    backend: options.backend || null,
     label: options.label || "Animated Line",
     speed: chartAnimations[chartId]?.speed || 1,
     running: false,
@@ -172,6 +178,7 @@ function registerBarRaceAnimation(chartId, traces, chartLayout, options = {}) {
     traces: traces.map(cloneTrace),
     layout: chartLayout,
     config: options.config || plotConfig,
+    backend: options.backend || null,
     label: options.label || "Bar Race",
     speed: chartAnimations[chartId]?.speed || 1,
     running: false,
@@ -187,6 +194,7 @@ function registerPhaseAnimation(chartId, traces, chartLayout, options = {}) {
     traces: traces.map(cloneTrace),
     layout: chartLayout,
     config: options.config || plotConfig,
+    backend: options.backend || null,
     label: options.label || "Phase Motion",
     speed: chartAnimations[chartId]?.speed || 1,
     running: false,

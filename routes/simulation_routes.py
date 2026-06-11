@@ -29,6 +29,68 @@ def _downsample(arr, target=DOWNSAMPLE_TARGET):
     return arr[idx]
 
 
+def _animation_frame_indices(length, target=96):
+    """Backend animation timeline used by the dashboard frontend."""
+    length = int(length or 0)
+    if length <= 1:
+        return [0]
+    frames = max(24, min(int(target), length))
+    progress = np.linspace(0.0, 1.0, frames)
+    eased = 1.0 - np.power(1.0 - progress, 2.35)
+    idx = np.unique(np.round(eased * (length - 1)).astype(int))
+    if idx[0] != 0:
+        idx = np.insert(idx, 0, 0)
+    if idx[-1] != length - 1:
+        idx = np.append(idx, length - 1)
+    return idx.astype(int).tolist()
+
+
+def build_animation_payload(time_values, params=None):
+    """Return animation metadata prepared in Python and consumed by Plotly UI."""
+    frames = _animation_frame_indices(len(time_values))
+    duration_ms = 3600
+    return {
+        "source": "python-engine",
+        "duration_ms": duration_ms,
+        "frame_ms": max(18, int(duration_ms / max(len(frames), 1))),
+        "frame_indices": frames,
+        "styles": {
+            "line": {"name": "Animated Line", "description": "Line draws from the backend timeline."},
+            "stack": {"name": "Animated Stack", "description": "Stacked population reveals over time."},
+            "phase": {"name": "Phase Motion", "description": "Phase trajectory advances along backend frames."},
+            "bar": {"name": "Bar Growth", "description": "Bars grow according to backend ranked values."},
+            "race": {"name": "Bar Race", "description": "Bars reveal by ranked magnitude."},
+        },
+        "charts": {
+            "mainChart": {"style": "line", "label": "Animated Line", "frame_indices": frames},
+            "infectedChart": {"style": "line", "label": "Animated Line", "frame_indices": frames},
+            "treatedAidsChart": {"style": "line", "label": "Animated Line", "frame_indices": frames},
+            "stackedChart": {"style": "stack", "label": "Animated Stack", "frame_indices": frames},
+            "populationChart": {"style": "line", "label": "Animated Line", "frame_indices": frames},
+            "phaseChart": {"style": "phase", "label": "Phase Motion", "frame_indices": frames},
+            "interventionChart": {
+                "style": "bar",
+                "label": "Bar Growth",
+                "bar_order": _ranked_keys(params or {}, ["u1", "u2", "u3", "u4"]),
+            },
+            "interventionDetailChart": {
+                "style": "bar",
+                "label": "Bar Growth",
+                "bar_order": _ranked_keys(params or {}, ["u1", "u2", "u3", "u4"]),
+            },
+        },
+    }
+
+
+def _ranked_keys(values, keys):
+    ranked = sorted(
+        enumerate(keys),
+        key=lambda item: abs(float(values.get(item[1], 0.0))),
+        reverse=True,
+    )
+    return [index for index, _key in ranked]
+
+
 def run_engine(payload, downsample=True):
     errors = validate_payload(payload)
     if errors:
@@ -97,6 +159,7 @@ def run_engine(payload, downsample=True):
         "initial_conditions": initial,
         "simulation": simulation,
     }
+    result["animation"] = build_animation_payload(result["time_series"]["time"], params)
     return result, []
 
 
