@@ -260,7 +260,7 @@
 
 % 7
 \begin{frame}{Numerical Scheme + Implementation}
-  \small
+  \footnotesize
   \begin{columns}[T,onlytextwidth]
     \begin{column}{0.47\textwidth}
       \tagline{Numerical idea}
@@ -268,23 +268,23 @@
         \item Time interval is divided into discrete steps.
         \item A predictor estimates the next state.
         \item A corrector updates the state using fractional-memory weights.
-        \item The same engine is used for baseline, memory, intervention, and sensitivity experiments.
+        \item One engine supports baseline, memory, intervention, and sensitivity experiments.
       \end{itemize}
     \end{column}
     \begin{column}{0.48\textwidth}
       \begin{tikzpicture}[node distance=0.38cm]
-        \node[draw=Blue,fill=SoftBlue,rounded corners=3pt,text width=5.05cm,align=left,minimum height=0.78cm,inner sep=5pt] (p) {\textbf{Inputs}\\parameters, initial conditions, $q$, controls};
-        \node[draw=Teal,fill=SoftTeal,rounded corners=3pt,text width=5.05cm,align=left,minimum height=0.78cm,inner sep=5pt,below=of p] (s) {\textbf{Solver}\\fractional Adams--Bashforth--Moulton type};
-        \node[draw=Gold,fill=SoftGold,rounded corners=3pt,text width=5.05cm,align=left,minimum height=0.78cm,inner sep=5pt,below=of s] (r) {\textbf{Outputs}\\trajectories, $\Rzero$, scenarios, sensitivity};
-        \node[draw=Red,fill=white,rounded corners=3pt,text width=5.05cm,align=left,minimum height=0.78cm,inner sep=5pt,below=of r] (d) {\textbf{Presentation}\\moving visualizations during the live demo};
+        \node[draw=Blue,fill=SoftBlue,rounded corners=3pt,text width=5.05cm,align=left,minimum height=0.70cm,inner sep=4pt] (p) {\textbf{Inputs}\\parameters, initial conditions, $q$, controls};
+        \node[draw=Teal,fill=SoftTeal,rounded corners=3pt,text width=5.05cm,align=left,minimum height=0.70cm,inner sep=4pt,below=of p] (s) {\textbf{Solver}\\fractional ABM-type method};
+        \node[draw=Gold,fill=SoftGold,rounded corners=3pt,text width=5.05cm,align=left,minimum height=0.70cm,inner sep=4pt,below=of s] (r) {\textbf{Outputs}\\trajectories, $\Rzero$, scenarios, sensitivity};
+        \node[draw=Red,fill=white,rounded corners=3pt,text width=5.05cm,align=left,minimum height=0.70cm,inner sep=4pt,below=of r] (d) {\textbf{Demo}\\moving graphs and scenario comparison};
         \draw[-{Latex},line width=1pt] (p)--(s);
         \draw[-{Latex},line width=1pt] (s)--(r);
         \draw[-{Latex},line width=1pt] (r)--(d);
       \end{tikzpicture}
     \end{column}
   \end{columns}
-  \vspace{0.16cm}
-  \keybox{SoftGold}{\textbf{Presentation link:} the mathematical model is explained in the slides; moving graphs are shown separately during the live demonstration.}
+  \vspace{0.10cm}
+  \keybox{SoftGold}{\textbf{Presentation link:} the slides explain the model; moving graphs are shown separately during the live demonstration.}
 \end{frame}
 
 % 8
