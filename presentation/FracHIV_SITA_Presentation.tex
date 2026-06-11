@@ -96,7 +96,7 @@
 % 1
 \begin{frame}[plain]
   \begin{tikzpicture}[remember picture,overlay]
-    \node[anchor=center] at (current page.center)
+    \node[anchor=south west,inner sep=0pt,outer sep=0pt] at (current page.south west)
       {\includegraphics[width=\paperwidth,height=\paperheight]{ai_cover_background.png}};
     \fill[Navy,opacity=0.22] (current page.south west) rectangle (current page.north east);
     \node[anchor=north west] at ($(current page.north west)+(0.62,-0.48)$)
