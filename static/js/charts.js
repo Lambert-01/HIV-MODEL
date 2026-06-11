@@ -109,7 +109,9 @@ function updatePlotData(chartId, traces) {
   const x = traces.map((trace) => Array.isArray(trace.x) ? trace.x : undefined);
   const y = traces.map((trace) => Array.isArray(trace.y) ? trace.y : undefined);
   const text = traces.map((trace) => Array.isArray(trace.text) || typeof trace.text === "string" ? trace.text : undefined);
-  const update = { x, y };
+  const update = {};
+  if (x.some((item) => item !== undefined)) update.x = x;
+  if (y.some((item) => item !== undefined)) update.y = y;
   if (text.some((item) => item !== undefined)) update.text = text;
   return Plotly.update(chartId, update, {}, traces.map((_trace, index) => index));
 }
@@ -281,14 +283,14 @@ function runLineAnimation(chartId, state) {
     : null;
   const totalFrames = backendFrames ? backendFrames.length : animationFramesCount(length);
   const initialTraces = state.traces.map((trace) => animatedLineTrace(trace, 1, length));
-  Plotly.react(chartId, initialTraces, animationLayout(state.layout), state.config);
+  Plotly.react(chartId, initialTraces, lockedAnimationLayout(state), state.config);
   state.timer = setInterval(() => {
     state.frame += 1;
     const idx = backendFrames
       ? Math.min(length, (backendFrames[Math.min(state.frame, backendFrames.length - 1)] || 0) + 1)
       : frameIndex(state.frame, totalFrames, length);
     const traces = state.traces.map((trace) => animatedLineTrace(trace, idx, length));
-    Plotly.react(chartId, traces, animationLayout(state.layout), state.config);
+    updatePlotData(chartId, traces);
     setAnimationStatus(chartId, `${Math.round((idx / length) * 100)}%`, true);
     if (state.frame >= totalFrames) {
       clearChartAnimationTimer(chartId);
@@ -322,11 +324,12 @@ function runBarAnimation(chartId, state) {
   const ordered = backendOrder?.length
     ? backendOrder.map((index) => ({ value: values[index] || 0, index }))
     : values.map((value, index) => ({ value, index })).sort((a, b) => Math.abs(b.value) - Math.abs(a.value));
+  const hasWaterfallTrace = state.traces.some((trace) => trace.type === "waterfall");
   Plotly.react(chartId, state.traces.map((item) => ({
     ...cloneTrace(item),
     y: Array.isArray(item.y) ? item.y.map(() => 0) : item.y,
     text: Array.isArray(item.y) ? item.y.map(() => "") : item.text
-  })), animationLayout(state.layout), state.config);
+  })), lockedAnimationLayout(state), state.config);
   state.timer = setInterval(() => {
     state.frame += 1;
     const progress = Math.min(state.frame / totalFrames, 1);
@@ -339,7 +342,11 @@ function runBarAnimation(chartId, state) {
       const text = y.map((value, index) => Math.abs(value) > 0.001 ? (Math.abs(traceValues[index]) >= 10 ? traceValues[index].toFixed(1) : traceValues[index].toFixed(3)) : "");
       return { ...cloneTrace(trace), y, text };
     });
-    Plotly.react(chartId, animatedTraces, animationLayout(state.layout), state.config);
+    if (hasWaterfallTrace) {
+      Plotly.react(chartId, animatedTraces, lockedAnimationLayout(state), state.config);
+    } else {
+      updatePlotData(chartId, animatedTraces);
+    }
     setAnimationStatus(chartId, `${Math.round(progress * 100)}%`, true);
     if (progress >= 1) {
       clearChartAnimationTimer(chartId);
@@ -367,7 +374,7 @@ function runPhaseAnimation(chartId, state) {
   Plotly.react(chartId, state.traces.map((trace, index) => {
     if (trace.hoverinfo === "skip" || /direction/i.test(trace.name || "")) return cloneTrace(trace);
     return index === pathIndex ? animatedLineTrace(trace, 1, length) : { ...cloneTrace(trace), x: [], y: [], text: [] };
-  }), animationLayout(state.layout), state.config);
+  }), lockedAnimationLayout(state), state.config);
   state.timer = setInterval(() => {
     state.frame += 1;
     const idx = backendFrames
@@ -386,7 +393,7 @@ function runPhaseAnimation(chartId, state) {
       }
       return idx >= length ? cloneTrace(trace) : { ...cloneTrace(trace), x: [], y: [], text: [] };
     });
-    Plotly.react(chartId, traces, animationLayout(state.layout), state.config);
+    updatePlotData(chartId, traces);
     setAnimationStatus(chartId, `${Math.round((idx / length) * 100)}%`, true);
     if (state.frame >= totalFrames) {
       clearChartAnimationTimer(chartId);
