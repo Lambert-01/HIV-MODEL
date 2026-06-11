@@ -118,7 +118,10 @@ def run_engine(payload, downsample=True):
 
     # Downsample for browser transfer — keeps peak point
     if downsample:
-        keep = np.round(np.linspace(0, len(t_grid) - 1, DOWNSAMPLE_TARGET)).astype(int)
+        if len(t_grid) <= DOWNSAMPLE_TARGET:
+            keep = np.arange(len(t_grid))
+        else:
+            keep = np.round(np.linspace(0, len(t_grid) - 1, DOWNSAMPLE_TARGET)).astype(int)
         if peak_index not in keep:
             keep = np.sort(np.append(keep, peak_index))
         t_out = t_grid[keep]
