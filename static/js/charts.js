@@ -78,6 +78,42 @@ function animationLayout(chartLayout, overrides = {}) {
   };
 }
 
+function numericExtent(values, padding = 0.06) {
+  const nums = (values || []).map(Number).filter(Number.isFinite);
+  if (!nums.length) return null;
+  const min = Math.min(...nums);
+  const max = Math.max(...nums);
+  const span = Math.max(max - min, Math.abs(max) * padding, 1e-9);
+  return [Math.max(0, min - span * padding), max + span * padding];
+}
+
+function mergedAxisRange(traces, axis) {
+  const values = [];
+  traces.forEach((trace) => {
+    if (Array.isArray(trace[axis])) values.push(...trace[axis]);
+  });
+  return numericExtent(values);
+}
+
+function lockedAnimationLayout(state) {
+  const full = state.traces;
+  const xRange = mergedAxisRange(full, "x");
+  const yRange = mergedAxisRange(full, "y");
+  const next = animationLayout(state.layout);
+  next.xaxis = { ...(next.xaxis || {}), ...(xRange ? { range: xRange, autorange: false } : {}) };
+  next.yaxis = { ...(next.yaxis || {}), ...(yRange ? { range: yRange, autorange: false } : {}) };
+  return next;
+}
+
+function updatePlotData(chartId, traces) {
+  const x = traces.map((trace) => Array.isArray(trace.x) ? trace.x : undefined);
+  const y = traces.map((trace) => Array.isArray(trace.y) ? trace.y : undefined);
+  const text = traces.map((trace) => Array.isArray(trace.text) || typeof trace.text === "string" ? trace.text : undefined);
+  const update = { x, y };
+  if (text.some((item) => item !== undefined)) update.text = text;
+  return Plotly.update(chartId, update, {}, traces.map((_trace, index) => index));
+}
+
 function animationFramesCount(length) {
   return Math.max(28, Math.min(150, Number(length) || 80));
 }
