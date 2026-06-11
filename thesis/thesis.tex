@@ -1981,124 +1981,6 @@ The theoretical analysis focuses on positivity, boundedness, disease-free equili
   \item The dashboard is for academic simulation, not clinical prediction.
 \end{enumerate}
 
-%% ============================================================
-\appendix
-
-\chapter{Supplementary Project Materials}
-
-\section{Suggested Project Folder Structure}
-\begin{lstlisting}[
-  style=pythonstyle,
-  basicstyle=\ttfamily\scriptsize,
-  aboveskip=3pt,
-  belowskip=3pt,
-  lineskip=-1pt
-]
-fractional_hiv_project_dashboard/
-|
-|-- app.py
-|-- config.py
-|-- requirements.txt
-|-- README.md
-|
-|-- model/
-|   |-- fractional_sita_model.py
-|   |-- fractional_solver.py
-|   |-- reproduction_number.py
-|   |-- scenarios.py
-|   |-- sensitivity.py
-|   `-- validation.py
-|
-|-- routes/
-|   |-- simulation_routes.py
-|   |-- export_routes.py
-|   `-- health_routes.py
-|
-|-- templates/
-|   |-- base.html
-|   |-- index.html
-|   |-- dashboard.html
-|   |-- documentation.html
-|   `-- about.html
-|
-|-- static/
-|   |-- css/
-|   |-- js/
-|   |-- assets/
-|   `-- vendor/
-|
-|-- data/
-|   |-- baseline_parameters.json
-|   |-- scenario_presets.json
-|   `-- sample_outputs.csv
-|
-`-- outputs/
-    |-- csv/
-    |-- figures/
-    `-- reports/
-\end{lstlisting}
-
-\section{Fractional ABM Solver Skeleton}
-\begin{lstlisting}[
-  style=pythonstyle,
-  basicstyle=\ttfamily\scriptsize,
-  aboveskip=3pt,
-  belowskip=3pt,
-  lineskip=-1pt
-]
-import numpy as np
-from scipy.special import gamma
-
-def fractional_abm_solver(rhs, y0, t, q, params):
-    n = len(t)
-    h = t[1] - t[0]
-    y = np.zeros((n, len(y0)), dtype=float)
-    y[0] = np.maximum(y0, 0.0)
-    fvals = np.zeros_like(y)
-    fvals[0] = rhs(t[0], y[0], params)
-
-    for k in range(1, n):
-        history = np.arange(k, 0, -1, dtype=float)
-        b = history**q - (history - 1.0)**q
-        y_pred = y[0] + (h**q / gamma(q + 1.0)) * (b @ fvals[:k])
-
-        a = np.empty(k, dtype=float)
-        a[0] = (k - 1)**(q + 1) - (k - 1 - q) * k**q
-        if k > 1:
-            m = np.arange(k - 1, 0, -1, dtype=float)
-            a[1:] = (m + 1.0)**(q + 1) + (m - 1.0)**(q + 1) - 2.0*m**(q + 1)
-
-        y[k] = y[0] + (h**q / gamma(q + 2.0)) * (
-            rhs(t[k], y_pred, params) + (a @ fvals[:k])
-        )
-        y[k] = np.maximum(y[k], 0.0)
-        fvals[k] = rhs(t[k], y[k], params)
-
-    return y
-\end{lstlisting}
-
-\section{Proposed Baseline Parameter Table}
-\begin{center}
-\small
-\renewcommand{\arraystretch}{1.12}
-\begin{tabular}{>{\bfseries}c p{6.5cm}p{3cm}}
-\toprule
-Parameter & Description & Baseline Status\\
-\midrule
-$\beta_0$ & Baseline transmission rate & Literature-guided\\
-$\mu$ & Natural death rate & Demographic context\\
-$\tau$ & Treatment initiation rate & Literature-guided\\
-$\delta$ & Progression from infected to AIDS & Literature-guided\\
-$\rho$ & Progression from treated to AIDS & Literature-guided\\
-$d$ & AIDS-induced mortality & Literature-guided\\
-$\eta$ & Relative infectiousness under treatment & Literature-guided\\
-$q$ & Fractional order & Simulation parameter\\
-$u_1,u_2,u_3,u_4$ & Social behaviour interventions & User-defined\\
-\bottomrule
-\end{tabular}
-\end{center}
-
-%% ============================================================
 %% REFERENCES
 %% ============================================================
 \begin{thebibliography}{99}
@@ -2210,5 +2092,143 @@ World Health Organization. (2025).
 \url{https://www.who.int/news-room/fact-sheets/detail/hiv-aids}
 
 \end{thebibliography}
+
+\clearpage
+%% ============================================================
+%% APPENDICES
+%% ============================================================
+\appendix
+\chapter*{Appendices}
+\addcontentsline{toc}{chapter}{Appendices}
+\markboth{Appendices}{Appendices}
+
+\begin{remarkbox}[title={Purpose of the Appendices}]
+The appendices provide supporting implementation material for the fractional-order HIV dashboard. They are placed after the References in accordance with the recommended final thesis structure. The material is supplementary: it supports reproducibility and documentation, while the main mathematical formulation, analysis, and results remain in the body of the report.
+\end{remarkbox}
+
+\chapter{Dashboard Implementation Support}
+
+\section{Project Folder Structure}
+The following structure summarises the organisation of the Python dashboard used to implement the fractional-order SITA model, run simulations, expose API routes, and export figures or reports.
+
+\begin{lstlisting}[
+  style=pythonstyle,
+  basicstyle=\ttfamily\scriptsize,
+  aboveskip=3pt,
+  belowskip=3pt,
+  lineskip=-1pt
+]
+fractional_hiv_project_dashboard/
+|
+|-- app.py
+|-- config.py
+|-- requirements.txt
+|-- README.md
+|
+|-- model/
+|   |-- fractional_sita_model.py
+|   |-- fractional_solver.py
+|   |-- reproduction_number.py
+|   |-- scenarios.py
+|   |-- sensitivity.py
+|   `-- validation.py
+|
+|-- routes/
+|   |-- simulation_routes.py
+|   |-- export_routes.py
+|   `-- health_routes.py
+|
+|-- templates/
+|   |-- base.html
+|   |-- index.html
+|   |-- dashboard.html
+|   |-- documentation.html
+|   `-- about.html
+|
+|-- static/
+|   |-- css/
+|   |-- js/
+|   |-- assets/
+|   `-- vendor/
+|
+|-- data/
+|   |-- baseline_parameters.json
+|   |-- scenario_presets.json
+|   `-- sample_outputs.csv
+|
+`-- outputs/
+    |-- csv/
+    |-- figures/
+    `-- reports/
+\end{lstlisting}
+
+\section{Fractional ABM Solver Skeleton}
+The following code skeleton shows the numerical idea behind the fractional Adams--Bashforth--Moulton predictor-corrector scheme used by the dashboard. The production implementation includes validation and dashboard-specific data formatting, while the skeleton below highlights the solver logic.
+
+\begin{lstlisting}[
+  style=pythonstyle,
+  basicstyle=\ttfamily\scriptsize,
+  aboveskip=3pt,
+  belowskip=3pt,
+  lineskip=-1pt
+]
+import numpy as np
+from scipy.special import gamma
+
+def fractional_abm_solver(rhs, y0, t, q, params):
+    n = len(t)
+    h = t[1] - t[0]
+    y = np.zeros((n, len(y0)), dtype=float)
+    y[0] = np.maximum(y0, 0.0)
+    fvals = np.zeros_like(y)
+    fvals[0] = rhs(t[0], y[0], params)
+
+    for k in range(1, n):
+        history = np.arange(k, 0, -1, dtype=float)
+        b = history**q - (history - 1.0)**q
+        y_pred = y[0] + (h**q / gamma(q + 1.0)) * (b @ fvals[:k])
+
+        a = np.empty(k, dtype=float)
+        a[0] = (k - 1)**(q + 1) - (k - 1 - q) * k**q
+        if k > 1:
+            m = np.arange(k - 1, 0, -1, dtype=float)
+            a[1:] = (m + 1.0)**(q + 1) + (m - 1.0)**(q + 1) - 2.0*m**(q + 1)
+
+        y[k] = y[0] + (h**q / gamma(q + 2.0)) * (
+            rhs(t[k], y_pred, params) + (a @ fvals[:k])
+        )
+        y[k] = np.maximum(y[k], 0.0)
+        fvals[k] = rhs(t[k], y[k], params)
+
+    return y
+\end{lstlisting}
+
+\chapter{Supplementary Parameter Documentation}
+
+\section{Baseline Parameter Summary}
+Table~\ref{tab:appendix_parameter_summary} records the main model parameters used in the dashboard. The table is included as supplementary documentation to clarify how the computational interface relates to the mathematical notation in the report.
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.15}
+\caption{Supplementary summary of baseline model parameters.}
+\label{tab:appendix_parameter_summary}
+\begin{tabular}{>{\bfseries}c p{6.5cm}p{3cm}}
+\toprule
+Parameter & Description & Baseline Status\\
+\midrule
+$\beta_0$ & Baseline transmission rate & Literature-guided\\
+$\mu$ & Natural death rate & Demographic context\\
+$\tau$ & Treatment initiation rate & Literature-guided\\
+$\delta$ & Progression from infected to AIDS & Literature-guided\\
+$\rho$ & Progression from treated to AIDS & Literature-guided\\
+$d$ & AIDS-induced mortality & Literature-guided\\
+$\eta$ & Relative infectiousness under treatment & Literature-guided\\
+$q$ & Fractional order & Simulation parameter\\
+$u_1,u_2,u_3,u_4$ & Social behaviour interventions & User-defined\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \end{document}
