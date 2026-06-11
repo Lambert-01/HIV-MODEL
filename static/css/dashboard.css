@@ -1438,8 +1438,28 @@
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 520px), 1fr));
 }
 
+.motion-studio-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.85fr);
+}
+
+.motion-studio-grid .chart-card {
+  min-height: 440px;
+}
+
+.motion-studio-grid .chart-body {
+  min-height: 360px;
+}
+
 .demo-step-grid {
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+@media (max-width: 1100px) {
+  .motion-studio-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .chapter6-map {

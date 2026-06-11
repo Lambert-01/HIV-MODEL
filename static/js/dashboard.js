@@ -516,6 +516,7 @@ async function runSimulation() {
     renderPopulation(result);
     renderStackedAndPercentage(result);
     renderAnimatedPhase(result);
+    renderDemoMotionStudio(result);
     renderVectorFieldPhase("phaseITChart", result, result.parameters);
     renderPhaseVariant("phaseIAChart", result, "I", "A", "I(t)", "A(t)");
     renderPhaseVariant("phaseSIChart", result, "S", "I", "S(t)", "I(t)");

@@ -812,6 +812,75 @@ function renderPopulation(result) {
   });
 }
 
+function renderDemoMotionStudio(result) {
+  if (!document.getElementById("demoMotionLineChart") && !document.getElementById("demoMotionRankChart")) return;
+
+  const t = result.time_series.time;
+  const lineTraces = [
+    lineTrace(t, result.time_series.S, "S(t) Susceptible", "#00d4ff"),
+    lineTrace(t, result.time_series.I, "I(t) Infected", "#ef476f"),
+    lineTrace(t, result.time_series.T, "T(t) Treated", "#06d6a0"),
+    lineTrace(t, result.time_series.A, "A(t) AIDS", "#ffd166")
+  ];
+  const lineLayout = layout({
+    margin: { t: 24, r: 28, b: 60, l: 74 },
+    yaxis: { ...plotLayout.yaxis, title: "Population", tickformat: "~s" },
+    legend: { ...plotLayout.legend, y: -0.24 }
+  });
+  if (document.getElementById("demoMotionLineChart")) {
+    safePlotlyReact("demoMotionLineChart", lineTraces, lineLayout, plotConfig);
+    const backend = backendAnimation(result, "mainChart") || {
+      frame_indices: result.animation?.frame_indices,
+      frame_ms: result.animation?.frame_ms,
+      source: result.animation?.source
+    };
+    registerLineAnimation("demoMotionLineChart", lineTraces, lineLayout, {
+      backend,
+      label: "Animated Line",
+      modeName: "SITA trajectory replay"
+    });
+  }
+
+  if (document.getElementById("demoMotionRankChart")) {
+    const finalRows = [
+      { label: "S Susceptible", value: result.summary.final_susceptible, color: "#00d4ff" },
+      { label: "I Infected", value: result.summary.final_infected, color: "#ef476f" },
+      { label: "T Treated", value: result.summary.final_treated, color: "#06d6a0" },
+      { label: "A AIDS", value: result.summary.final_aids, color: "#ffd166" }
+    ];
+    const rankOrder = finalRows
+      .map((row, index) => ({ index, value: row.value }))
+      .sort((a, b) => Math.abs(b.value) - Math.abs(a.value))
+      .map((row) => row.index);
+    const barTraces = [{
+      x: finalRows.map((row) => row.label),
+      y: finalRows.map((row) => row.value),
+      type: "bar",
+      marker: { color: finalRows.map((row) => row.color), opacity: 0.9 },
+      text: finalRows.map((row) => compactNumber(row.value)),
+      textposition: "outside",
+      hovertemplate: "%{x}<br>Final value: %{y:,.3f}<extra></extra>",
+      name: "Final state"
+    }];
+    const barLayout = layout({
+      margin: { t: 24, r: 24, b: 74, l: 70 },
+      yaxis: { ...plotLayout.yaxis, title: "Final population", tickformat: "~s" },
+      xaxis: { ...plotLayout.xaxis, title: "", tickangle: -18 },
+      showlegend: false
+    });
+    safePlotlyReact("demoMotionRankChart", barTraces, barLayout, plotConfig);
+    registerBarRaceAnimation("demoMotionRankChart", barTraces, barLayout, {
+      backend: {
+        bar_order: rankOrder,
+        frame_ms: result.animation?.frame_ms || 36,
+        source: result.animation?.source || "python-engine"
+      },
+      label: "Bar Race",
+      modeName: "compartment ranking race"
+    });
+  }
+}
+
 function renderStackedAndPercentage(result) {
   const t = result.time_series.time;
   const traces = [
