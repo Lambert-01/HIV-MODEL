@@ -3,99 +3,90 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
-\usepackage{amsmath,amssymb,bm}
+\usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{booktabs}
 \usepackage{hyperref}
 \usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric}
 
-\definecolor{URBlue}{RGB}{0,56,101}
-\definecolor{URGold}{RGB}{204,153,0}
-\definecolor{RwandaGreen}{RGB}{0,126,94}
-\definecolor{DeepInk}{RGB}{18,33,58}
-\definecolor{SoftBlue}{RGB}{232,241,249}
+\definecolor{Navy}{RGB}{10,27,48}
+\definecolor{Ink}{RGB}{20,32,48}
+\definecolor{Teal}{RGB}{0,126,112}
+\definecolor{Blue}{RGB}{0,74,128}
+\definecolor{Gold}{RGB}{204,153,0}
+\definecolor{Red}{RGB}{180,65,70}
+\definecolor{SoftTeal}{RGB}{230,247,244}
+\definecolor{SoftBlue}{RGB}{232,242,250}
 \definecolor{SoftGold}{RGB}{255,247,224}
-\definecolor{AlertRed}{RGB}{184,69,69}
-\definecolor{Muted}{RGB}{83,94,108}
+\definecolor{Muted}{RGB}{82,94,108}
+\definecolor{Line}{RGB}{216,226,235}
 
 \newcommand{\Rzero}{\mathcal{R}_0}
 \newcommand{\CaputoD}[2]{{}^{C}D_{#1}^{#2}}
 \newcommand{\beff}{\beta_{\mathrm{eff}}}
 \newcommand{\taueff}{\tau_{\mathrm{eff}}}
 \newcommand{\rhoeff}{\rho_{\mathrm{eff}}}
-\newcommand{\appurl}{https://hiv-model.onrender.com/}
 
 \setbeamertemplate{navigation symbols}{}
-\setbeamertemplate{itemize item}{\color{RwandaGreen}\raisebox{0.2ex}{\scriptsize$\blacktriangleright$}}
-\setbeamertemplate{itemize subitem}{\color{URGold}\tiny$\bullet$}
-\setbeamercolor{normal text}{fg=DeepInk,bg=white}
-\setbeamercolor{frametitle}{fg=DeepInk,bg=white}
-\setbeamercolor{title}{fg=white}
+\setbeamercolor{normal text}{fg=Ink,bg=white}
 \setbeamerfont{frametitle}{series=\bfseries,size=\Large}
-\setbeamerfont{title}{series=\bfseries,size=\huge}
-\setbeamerfont{subtitle}{size=\large}
+\setbeamertemplate{itemize item}{\color{Teal}\scriptsize$\blacktriangleright$}
+\setbeamertemplate{enumerate item}{\color{Teal}\insertenumlabel.}
 
 \setbeamertemplate{frametitle}{
-  \vspace{0.35cm}
-  \begin{beamercolorbox}[wd=\paperwidth,leftskip=0.55cm,rightskip=0.55cm]{frametitle}
+  \vspace{0.28cm}
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=0.58cm,rightskip=0.58cm]{frametitle}
     \insertframetitle
     \ifx\insertframesubtitle\empty\else
       \par{\small\color{Muted}\insertframesubtitle}
     \fi
   \end{beamercolorbox}
-  \vspace{-0.1cm}
-  \hspace{0.55cm}{\color{URGold}\rule{2.2cm}{1.4pt}}{\color{RwandaGreen}\rule{8.3cm}{1.4pt}}
+  \vspace{-0.08cm}
+  \hspace{0.58cm}{\color{Gold}\rule{2.0cm}{1.2pt}}{\color{Teal}\rule{8.5cm}{1.2pt}}
 }
 
 \setbeamertemplate{footline}{
   \leavevmode
   \hbox{
-    \begin{beamercolorbox}[wd=.72\paperwidth,ht=2.8ex,dp=1.1ex,leftskip=0.55cm]{normal text}
-      {\scriptsize FracHIV-SITA Lab \hspace{0.4em}|\hspace{0.4em} Dashboard-focused thesis presentation}
+    \begin{beamercolorbox}[wd=.74\paperwidth,ht=2.8ex,dp=1.1ex,leftskip=0.58cm]{normal text}
+      {\scriptsize Fractional-Order HIV SITA Model \hspace{0.4em}|\hspace{0.4em} University of Rwanda}
     \end{beamercolorbox}
-    \begin{beamercolorbox}[wd=.28\paperwidth,ht=2.8ex,dp=1.1ex,rightskip=0.55cm plus 1fil]{normal text}
+    \begin{beamercolorbox}[wd=.26\paperwidth,ht=2.8ex,dp=1.1ex,rightskip=0.58cm plus 1fil]{normal text}
       \hfill{\scriptsize \insertframenumber/10}
     \end{beamercolorbox}
   }
 }
 
-\newcommand{\sectiontag}[1]{%
-  {\small\bfseries\color{URGold}#1}\par\vspace{0.15cm}
+\newcommand{\tagline}[1]{{\small\bfseries\color{Gold}#1}\par\vspace{0.12cm}}
+\newcommand{\keybox}[2]{%
+  \begin{tikzpicture}
+    \node[
+      fill=#1,
+      draw=#1!65!black,
+      rounded corners=3pt,
+      inner sep=7pt,
+      text width=\linewidth-0.4cm,
+      align=left
+    ] {#2};
+  \end{tikzpicture}
 }
-
-\newcommand{\metriccard}[3]{%
+\newcommand{\compactcard}[3]{%
   \begin{tikzpicture}
     \node[
       fill=#1,
       text=white,
       rounded corners=3pt,
-      minimum width=3.15cm,
-      minimum height=1.55cm,
-      inner sep=6pt,
-      align=left
-    ] {
-      {\scriptsize\bfseries #2}\\[2pt]
-      {\Large\bfseries #3}
-    };
+      minimum width=2.78cm,
+      minimum height=1.1cm,
+      inner sep=5pt,
+      align=center
+    ] {{\scriptsize #2}\\[-1pt]{\bfseries #3}};
   \end{tikzpicture}
 }
 
-\newcommand{\softbox}[2]{%
-  \begin{tikzpicture}
-    \node[
-      fill=#1,
-      draw=#1!70!black,
-      rounded corners=3pt,
-      inner sep=8pt,
-      text width=\linewidth-0.45cm,
-      align=left
-    ] {#2};
-  \end{tikzpicture}
-}
-
-\title{Fractional-Order HIV SITA Dashboard}
-\subtitle{Social Behaviour Interventions, Memory Effects, and Live Simulation Evidence}
+\title{Fractional-Order HIV SITA Model}
+\subtitle{Social Behaviour Interventions and Simulation-Based Analysis}
 \author{NDACYAYISABA Lambert}
 \institute{University of Rwanda -- College of Science and Technology\\Supervisor: Dr. MUHIRWA Jean Pierre}
 \date{Kigali, Rwanda}
@@ -105,47 +96,43 @@
 % 1
 \begin{frame}[plain]
   \begin{tikzpicture}[remember picture,overlay]
-    \fill[DeepInk] (current page.south west) rectangle (current page.north east);
-    \fill[URBlue] (current page.south west) rectangle ($(current page.north east)+(0,-6.8)$);
-    \fill[RwandaGreen] ($(current page.south west)+(0,0)$) rectangle ($(current page.south east)+(0,0.55)$);
-    \fill[URGold] ($(current page.south west)+(0,0.55)$) rectangle ($(current page.south east)+(0,0.72)$);
-    \node[opacity=0.16,anchor=south east] at ($(current page.south east)+(-0.1,0.65)$)
-      {\includegraphics[width=0.67\paperwidth]{../thesis/dashboardBaselineFigure.png}};
-    \node[anchor=north west] at ($(current page.north west)+(0.65,-0.55)$)
-      {\includegraphics[width=1.22cm]{../thesis/logo.png}};
-    \node[anchor=north east,align=right,text=white] at ($(current page.north east)+(-0.65,-0.7)$)
-      {\small University of Rwanda\\\small Kigali, Rwanda};
-    \node[anchor=west,align=left,text=white] at ($(current page.west)+(0.72,0.82)$)
-      {{\fontsize{25}{29}\selectfont\bfseries Fractional-Order HIV}\\[3pt]
-       {\fontsize{25}{29}\selectfont\bfseries SITA Dashboard}\\[7pt]
-       {\large Social behaviour interventions, memory effects, and live simulation}\\[14pt]
+    \node[anchor=center] at (current page.center)
+      {\includegraphics[width=\paperwidth,height=\paperheight]{ai_cover_background.png}};
+    \fill[Navy,opacity=0.22] (current page.south west) rectangle (current page.north east);
+    \node[anchor=north west] at ($(current page.north west)+(0.62,-0.48)$)
+      {\includegraphics[width=1.18cm]{../thesis/logo.png}};
+    \node[anchor=north east,align=right,text=white] at ($(current page.north east)+(-0.65,-0.60)$)
+      {\small University of Rwanda\\\small College of Science and Technology};
+    \node[anchor=west,align=left,text=white] at ($(current page.west)+(0.72,0.70)$)
+      {{\fontsize{27}{31}\selectfont\bfseries Fractional-Order}\\[2pt]
+       {\fontsize{27}{31}\selectfont\bfseries HIV SITA Model}\\[7pt]
+       {\large Social behaviour interventions and memory effects}\\[12pt]
        {\normalsize\bfseries NDACYAYISABA Lambert}\\[2pt]
-       {\small Supervisor: Dr. MUHIRWA Jean Pierre}};
-    \node[anchor=south west,align=left,text=white] at ($(current page.south west)+(0.72,0.98)$)
-      {\small Live dashboard: \texttt{\appurl}};
+       {\small Supervisor: Dr. MUHIRWA Jean Pierre}\\[2pt]
+       {\small Kigali, Rwanda}};
+    \draw[Gold,line width=2.2pt] ($(current page.west)+(0.72,-1.38)$) -- ++(4.4,0);
+    \draw[Teal,line width=2.2pt] ($(current page.west)+(5.22,-1.38)$) -- ++(3.6,0);
   \end{tikzpicture}
 \end{frame}
 
 % 2
 \begin{frame}{Background / Motivation}
   \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.56\textwidth}
-      \sectiontag{Why this topic matters}
+    \begin{column}{0.58\textwidth}
+      \tagline{Rwanda-aware public-health motivation}
       \begin{itemize}
-        \item HIV/AIDS remains shaped by biological, behavioural, and social factors.
-        \item Rwanda has made strong progress in testing, treatment, and viral suppression, but prevention and adherence remain important.
-        \item Public-health behaviour has memory: awareness, stigma reduction, testing history, and adherence patterns can influence future dynamics.
+        \item HIV transmission is shaped by biology, treatment access, and social behaviour.
+        \item Awareness, safer behaviour, testing, treatment-seeking, and adherence can change long-term outcomes.
+        \item In Rwanda, continued prevention and adherence support remain important alongside treatment progress.
       \end{itemize}
-      \vspace{0.25cm}
-      \softbox{SoftBlue}{\textbf{Presentation focus:} the dashboard makes the mathematical model visible, testable, and easier to defend through live simulation.}
+      \vspace{0.18cm}
+      \keybox{SoftTeal}{\textbf{Why mathematics?} A model gives a controlled way to compare intervention strategies and understand possible long-term behaviour.}
     \end{column}
-    \begin{column}{0.39\textwidth}
-      \vspace{0.15cm}
-      \metriccard{URBlue}{Rwanda context}{HIV prevention}
-      \vspace{0.18cm}
-      \metriccard{RwandaGreen}{Mathematical lens}{Fractional memory}
-      \vspace{0.18cm}
-      \metriccard{URGold}{Output}{Interactive dashboard}
+    \begin{column}{0.37\textwidth}
+      \compactcard{Blue}{Context}{HIV in Rwanda}\\[0.16cm]
+      \compactcard{Teal}{Mechanism}{Social behaviour}\\[0.16cm]
+      \compactcard{Gold}{Method}{Fractional memory}\\[0.16cm]
+      \compactcard{Red}{Output}{Simulation evidence}
     \end{column}
   \end{columns}
 \end{frame}
@@ -153,47 +140,53 @@
 % 3
 \begin{frame}{Problem Statement}
   \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.47\textwidth}
-      \sectiontag{Gap}
+    \begin{column}{0.48\textwidth}
+      \tagline{Limitations in ordinary modelling}
       \begin{itemize}
-        \item Ordinary HIV models often depend only on the present state.
-        \item Social behaviour is frequently treated as fixed or simplified.
-        \item Many mathematical reports stop at equations and static graphs.
+        \item Ordinary models usually depend only on the present state.
+        \item HIV-related behaviour may depend on past awareness, stigma, testing history, and adherence.
+        \item Social behaviour is often simplified into fixed rates.
       \end{itemize}
     \end{column}
-    \begin{column}{0.47\textwidth}
-      \sectiontag{This project responds by}
+    \begin{column}{0.48\textwidth}
+      \tagline{Need addressed by this project}
       \begin{itemize}
-        \item Formulating a fractional-order SITA model.
-        \item Adding bounded social behaviour interventions.
-        \item Building a working dashboard for simulation, scenario comparison, sensitivity analysis, and exports.
+        \item Include memory using a Caputo fractional derivative.
+        \item Represent behavioural interventions through effective rates.
+        \item Use numerical simulation to compare scenarios clearly.
       \end{itemize}
     \end{column}
   \end{columns}
-  \vspace{0.45cm}
-  \softbox{SoftGold}{\textbf{Central question:} How do fractional memory and social behaviour interventions affect simulated HIV dynamics in a Rwanda-aware academic dashboard?}
+  \vspace{0.42cm}
+  \keybox{SoftGold}{\textbf{Research focus:} How do fractional memory and social behaviour interventions affect simulated HIV dynamics in a SITA framework?}
 \end{frame}
 
 % 4
 \begin{frame}{Objectives}
   \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.58\textwidth}
-      \sectiontag{Main objective}
-      To formulate, analyse, and computationally simulate a fractional-order SITA model of HIV transmission incorporating social behaviour interventions.
-      \vspace{0.35cm}
-      \sectiontag{Specific objectives}
-      \begin{itemize}
-        \item Construct the SITA model with Caputo fractional derivative.
-        \item Derive the disease-free equilibrium and reproduction number.
-        \item Analyse positivity, boundedness, and threshold behaviour.
-        \item Implement a numerical ABM-type solver and dashboard.
-        \item Compare intervention scenarios, memory effects, and sensitivity indices.
-      \end{itemize}
+    \begin{column}{0.50\textwidth}
+      \tagline{Main objective}
+      To formulate, analyse, and simulate a fractional-order SITA HIV transmission model incorporating social behaviour interventions.
+      \vspace{0.28cm}
+      \tagline{Specific objectives}
+      \begin{enumerate}
+        \item Formulate the SITA model with Caputo derivative.
+        \item Derive threshold quantities including $\Rzero$.
+        \item Establish core analytical properties.
+        \item Implement a numerical simulation scheme.
+        \item Compare interventions, memory effects, and sensitivity.
+      \end{enumerate}
     \end{column}
-    \begin{column}{0.37\textwidth}
-      \includegraphics[width=0.92\linewidth]{../thesis/dashboardSensitivityChapter6Figure.png}
-      \vspace{0.2cm}
-      {\scriptsize\color{Muted}Dashboard evidence is the central presentation artifact.}
+    \begin{column}{0.45\textwidth}
+      \begin{tikzpicture}[node distance=0.58cm]
+        \node[draw=Blue,fill=SoftBlue,rounded corners=3pt,text width=4.6cm,minimum height=0.82cm,align=center] (a) {\bfseries Model formulation};
+        \node[draw=Teal,fill=SoftTeal,rounded corners=3pt,text width=4.6cm,minimum height=0.82cm,align=center,below=of a] (b) {\bfseries Mathematical analysis};
+        \node[draw=Gold,fill=SoftGold,rounded corners=3pt,text width=4.6cm,minimum height=0.82cm,align=center,below=of b] (c) {\bfseries Numerical simulation};
+        \node[draw=Red,fill=white,rounded corners=3pt,text width=4.6cm,minimum height=0.82cm,align=center,below=of c] (d) {\bfseries Results interpretation};
+        \draw[-{Latex},line width=1pt] (a)--(b);
+        \draw[-{Latex},line width=1pt] (b)--(c);
+        \draw[-{Latex},line width=1pt] (c)--(d);
+      \end{tikzpicture}
     \end{column}
   \end{columns}
 \end{frame}
@@ -202,31 +195,30 @@
 \begin{frame}{Model Diagram: SITA}
   \begin{center}
   \begin{tikzpicture}[
-    node distance=1.42cm,
+    node distance=1.28cm,
     comp/.style={draw,rounded corners=4pt,minimum width=2.05cm,minimum height=1.02cm,align=center,font=\bfseries},
-    arrow/.style={-{Latex[length=3mm]},line width=1pt,DeepInk},
+    arrow/.style={-{Latex[length=3mm]},line width=1pt,Ink},
     lab/.style={font=\scriptsize,align=center,Muted}
   ]
-    \node[comp,fill=SoftBlue,draw=URBlue] (S) {$S(t)$\\{\scriptsize Susceptible}};
-    \node[comp,fill=white,draw=AlertRed,right=of S] (I) {$I(t)$\\{\scriptsize Infected}};
-    \node[comp,fill=SoftGold,draw=URGold,right=of I] (T) {$T(t)$\\{\scriptsize Treated}};
-    \node[comp,fill=white,draw=RwandaGreen,right=of T] (A) {$A(t)$\\{\scriptsize AIDS stage}};
-
+    \node[comp,fill=SoftBlue,draw=Blue] (S) {$S(t)$\\{\scriptsize Susceptible}};
+    \node[comp,fill=white,draw=Red,right=of S] (I) {$I(t)$\\{\scriptsize Infected}};
+    \node[comp,fill=SoftGold,draw=Gold,right=of I] (T) {$T(t)$\\{\scriptsize Treated}};
+    \node[comp,fill=SoftTeal,draw=Teal,right=of T] (A) {$A(t)$\\{\scriptsize AIDS stage}};
     \draw[arrow] (S) -- node[lab,above] {effective\\transmission} (I);
-    \draw[arrow] (I) -- node[lab,above] {testing and\\treatment seeking} (T);
+    \draw[arrow] (I) -- node[lab,above] {testing and\\treatment} (T);
     \draw[arrow] (I) to[bend left=25] node[lab,above] {progression} (A);
     \draw[arrow] (T) -- node[lab,above] {reduced\\progression} (A);
-    \draw[arrow] ($(S.west)+(-0.75,0)$) -- node[lab,above] {recruitment} (S);
-    \draw[arrow] (A) -- ($(A.east)+(0.75,0)$) node[lab,right] {mortality};
+    \draw[arrow] ($(S.west)+(-0.7,0)$) -- node[lab,above] {recruitment} (S);
+    \draw[arrow] (A) -- ($(A.east)+(0.7,0)$) node[lab,right] {mortality};
   \end{tikzpicture}
   \end{center}
   \vspace{0.25cm}
   \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.5\textwidth}
-      \softbox{SoftBlue}{\textbf{Intervention effects:} $u_1$ awareness, $u_2$ safer behaviour, $u_3$ testing, $u_4$ adherence.}
+    \begin{column}{0.49\textwidth}
+      \keybox{SoftBlue}{\textbf{State variables:} $S(t)$ susceptible, $I(t)$ infected, $T(t)$ treated, $A(t)$ AIDS-stage population.}
     \end{column}
-    \begin{column}{0.45\textwidth}
-      \softbox{SoftGold}{\textbf{Dashboard role:} each slider changes the effective rates before running the simulation.}
+    \begin{column}{0.47\textwidth}
+      \keybox{SoftGold}{\textbf{Controls:} $u_1$ awareness, $u_2$ safer behaviour, $u_3$ testing, $u_4$ adherence.}
     \end{column}
   \end{columns}
 \end{frame}
@@ -235,7 +227,7 @@
 \begin{frame}{Fractional-Order Model}
   \begin{columns}[T,onlytextwidth]
     \begin{column}{0.58\textwidth}
-      \sectiontag{Caputo fractional dynamics}
+      \tagline{Caputo memory form}
       \[
         \CaputoD{t}{q}X(t)=F(t,X(t)),\qquad 0<q\leq1
       \]
@@ -249,113 +241,110 @@
       \]
     \end{column}
     \begin{column}{0.37\textwidth}
-      \sectiontag{Intervention-adjusted rates}
+      \tagline{Intervention-adjusted rates}
       \[
         \beff=\beta_0(1-u_1)(1-u_2)
       \]
       \[
-        \taueff=\tau(1+u_3),\qquad
+        \taueff=\tau(1+u_3)
+      \]
+      \[
         \rhoeff=\rho(1-u_4)
       \]
-      \vspace{0.2cm}
-      \softbox{SoftBlue}{When $q=1$, the model becomes ordinary. When $q<1$, the model carries memory of past states.}
+      \keybox{SoftTeal}{When $q=1$, the model is ordinary. When $q<1$, past states influence current change.}
     \end{column}
   \end{columns}
 \end{frame}
 
 % 7
-\begin{frame}{Numerical Scheme + Dashboard}
+\begin{frame}{Numerical Scheme + Implementation}
   \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.43\textwidth}
-      \sectiontag{Computational implementation}
+    \begin{column}{0.47\textwidth}
+      \tagline{Numerical idea}
       \begin{itemize}
-        \item ABM-type predictor-corrector solver for Caputo fractional equations.
-        \item Real-time dashboard controls for parameters, initial conditions, intervention levels, and simulation horizon.
-        \item Automatic outputs: trajectories, $\Rzero$, scenario tables, memory comparison, sensitivity ranking, and exports.
+        \item Time interval is divided into discrete steps.
+        \item A predictor estimates the next state.
+        \item A corrector updates the state using fractional-memory weights.
+        \item The same engine is used for baseline, memory, intervention, and sensitivity experiments.
       \end{itemize}
-      \vspace{0.2cm}
-      \softbox{SoftGold}{\textbf{Live system:} \texttt{\appurl}}
     \end{column}
-    \begin{column}{0.53\textwidth}
-      \includegraphics[width=0.96\linewidth]{../thesis/dashboardBaselineFigure.png}
-      \vspace{0.08cm}
-      {\scriptsize\color{Muted}Dashboard baseline trajectory view.}
-    \end{column}
-  \end{columns}
-\end{frame}
-
-% 8
-\begin{frame}{Simulation Results}
-  \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.49\textwidth}
-      \includegraphics[width=0.95\linewidth]{../thesis/combinedInterventionsChart.png}
-      \vspace{0.08cm}
-      {\scriptsize\color{Muted}Combined interventions reduce the epidemic burden more strongly than isolated controls.}
-    \end{column}
-    \begin{column}{0.49\textwidth}
-      \includegraphics[width=0.95\linewidth]{../thesis/memoryChart.png}
-      \vspace{0.08cm}
-      {\scriptsize\color{Muted}Changing $q$ shows the visible effect of fractional memory on $I(t)$.}
+    \begin{column}{0.48\textwidth}
+      \begin{tikzpicture}[node distance=0.45cm]
+        \node[draw=Blue,fill=SoftBlue,rounded corners=3pt,text width=5.0cm,align=center,minimum height=0.72cm] (p) {Inputs: parameters, initial conditions, $q$, controls};
+        \node[draw=Teal,fill=SoftTeal,rounded corners=3pt,text width=5.0cm,align=center,minimum height=0.72cm,below=of p] (s) {Fractional ABM-type solver};
+        \node[draw=Gold,fill=SoftGold,rounded corners=3pt,text width=5.0cm,align=center,minimum height=0.72cm,below=of s] (r) {Outputs: trajectories, $\Rzero$, scenarios, sensitivity};
+        \node[draw=Red,fill=white,rounded corners=3pt,text width=5.0cm,align=center,minimum height=0.72cm,below=of r] (d) {Interactive visualization for presentation and analysis};
+        \draw[-{Latex},line width=1pt] (p)--(s);
+        \draw[-{Latex},line width=1pt] (s)--(r);
+        \draw[-{Latex},line width=1pt] (r)--(d);
+      \end{tikzpicture}
     \end{column}
   \end{columns}
   \vspace{0.25cm}
-  \softbox{SoftBlue}{\textbf{Interpretation:} prevention, testing, treatment uptake, and adherence work best together; lower $q$ values show that past behaviour and treatment history can affect long-term trajectories.}
+  \keybox{SoftGold}{\textbf{Important distinction:} the slides explain the research; the live dashboard is used only during the demo to show moving simulation graphs.}
+\end{frame}
+
+% 8
+\begin{frame}{Simulation Results: Intervention Comparison}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.59\textwidth}
+      \includegraphics[width=\linewidth]{../thesis/combinedInterventionsChart.png}
+    \end{column}
+    \begin{column}{0.36\textwidth}
+      \tagline{Main interpretation}
+      \begin{itemize}
+        \item Single interventions help, but each targets only one mechanism.
+        \item Combined intervention acts on transmission, treatment uptake, and progression.
+        \item The combined strategy gives stronger simulated control than isolated changes.
+      \end{itemize}
+      \keybox{SoftTeal}{\textbf{Public-health meaning:} prevention and treatment support should work together.}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 % 9
-\begin{frame}{Live Demo Plan}
+\begin{frame}{Simulation Results: Fractional Memory}
   \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.52\textwidth}
-      \sectiontag{Demo choreography}
-      \begin{enumerate}
-        \item Open \texttt{\appurl}.
-        \item Show the moving SITA graph: $S(t)$, $I(t)$, $T(t)$, $A(t)$.
-        \item Switch from no intervention to combined intervention.
-        \item Compare $q=1$ ordinary model with $q<1$ fractional memory.
-        \item Open sensitivity and scenario tabs to defend the dashboard evidence.
-      \end{enumerate}
+    \begin{column}{0.59\textwidth}
+      \includegraphics[width=\linewidth]{../thesis/memoryChart.png}
     \end{column}
-    \begin{column}{0.42\textwidth}
-      \sectiontag{What examiners should see}
+    \begin{column}{0.36\textwidth}
+      \tagline{Why $q$ matters}
       \begin{itemize}
-        \item The thesis equations are implemented.
-        \item Graphs move because the model is being simulated.
-        \item The dashboard produces chapter-ready figures and tables.
-        \item The work is reproducible and deployed online.
+        \item $q=1$ represents the ordinary model.
+        \item Smaller $q$ values strengthen the memory effect.
+        \item Different $q$ values produce visibly different trajectories.
       \end{itemize}
-      \vspace{0.25cm}
-      \softbox{SoftGold}{\textbf{Key phrase:} ``My main contribution is not only the model, but a working dashboard that allows the model to be explored live.''}
+      \keybox{SoftGold}{\textbf{Defense point:} fractional calculus is not decorative; it changes the simulated dynamics.}
     \end{column}
   \end{columns}
 \end{frame}
 
 % 10
-\begin{frame}{Conclusion + Recommendations}
+\begin{frame}{Live Demo, Conclusion + Recommendations}
   \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.5\textwidth}
-      \sectiontag{Conclusion}
-      \begin{itemize}
-        \item A fractional-order SITA HIV model was formulated and implemented.
-        \item Social behaviour interventions were incorporated through effective rates.
-        \item The dashboard connects theory, computation, scenario analysis, memory effects, and sensitivity results.
-      \end{itemize}
+    \begin{column}{0.48\textwidth}
+      \tagline{Live demo plan}
+      \begin{enumerate}
+        \item Open the deployed simulator.
+        \item Run the moving SITA graph.
+        \item Compare no intervention with combined intervention.
+        \item Compare $q=1$ with $q<1$.
+        \item Show scenario and sensitivity views briefly.
+      \end{enumerate}
     \end{column}
-    \begin{column}{0.45\textwidth}
-      \sectiontag{Recommendations}
+    \begin{column}{0.48\textwidth}
+      \tagline{Conclusion}
       \begin{itemize}
-        \item Continue integrating prevention and treatment-support interventions.
-        \item Use Rwanda-specific data in future calibration studies.
-        \item Extend the dashboard with uncertainty analysis and richer intervention scenarios.
+        \item The SITA HIV model was extended using fractional memory.
+        \item Behavioural interventions were represented through effective rates.
+        \item Numerical simulations support the value of combined intervention strategies.
+        \item Future work should calibrate parameters with Rwanda-specific data.
       \end{itemize}
     \end{column}
   \end{columns}
-  \vspace{0.32cm}
-  \softbox{SoftBlue}{\textbf{Final message:} the project transforms a fractional HIV model into an interactive Rwanda-aware simulation tool for academic analysis and communication.}
-  \vspace{0.18cm}
-  \begin{center}
-    {\large\bfseries Thank you}\\
-    {\small Live dashboard: \texttt{\appurl}}
-  \end{center}
+  \vspace{0.25cm}
+  \keybox{SoftTeal}{\textbf{Final message:} this project connects mathematical analysis, numerical simulation, and a working interactive tool for explaining HIV intervention dynamics.}
 \end{frame}
 
 \end{document}
