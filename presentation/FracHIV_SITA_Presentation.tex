@@ -30,7 +30,7 @@
 
 \setbeamertemplate{navigation symbols}{}
 \setbeamercolor{normal text}{fg=Ink,bg=white}
-\setbeamerfont{frametitle}{series=\bfseries,size=\Large}
+\setbeamerfont{frametitle}{series=\bfseries,size=\large}
 \setbeamertemplate{itemize item}{\color{Teal}\scriptsize$\blacktriangleright$}
 \setbeamertemplate{enumerate item}{\color{Teal}\insertenumlabel.}
 
@@ -58,7 +58,7 @@
   }
 }
 
-\newcommand{\tagline}[1]{{\small\bfseries\color{Gold}#1}\par\vspace{0.12cm}}
+\newcommand{\tagline}[1]{{\small\bfseries\color{Gold}#1}\par\vspace{0.10cm}}
 \newcommand{\keybox}[2]{%
   \begin{tikzpicture}
     \node[
@@ -193,10 +193,11 @@
 
 % 5
 \begin{frame}{Model Diagram: SITA}
+  \vspace{-0.06cm}
   \begin{center}
   \begin{tikzpicture}[
-    node distance=1.28cm,
-    comp/.style={draw,rounded corners=4pt,minimum width=2.05cm,minimum height=1.02cm,align=center,font=\bfseries},
+    node distance=1.05cm,
+    comp/.style={draw,rounded corners=4pt,minimum width=1.98cm,minimum height=0.92cm,align=center,font=\bfseries},
     arrow/.style={-{Latex[length=3mm]},line width=1pt,Ink},
     lab/.style={font=\scriptsize,align=center,Muted}
   ]
@@ -212,7 +213,7 @@
     \draw[arrow] (A) -- ($(A.east)+(0.7,0)$) node[lab,right] {mortality};
   \end{tikzpicture}
   \end{center}
-  \vspace{0.25cm}
+  \vspace{0.10cm}
   \begin{columns}[T,onlytextwidth]
     \begin{column}{0.49\textwidth}
       \keybox{SoftBlue}{\textbf{State variables:} $S(t)$ susceptible, $I(t)$ infected, $T(t)$ treated, $A(t)$ AIDS-stage population.}
@@ -225,8 +226,9 @@
 
 % 6
 \begin{frame}{Fractional-Order Model}
+  \small
   \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.58\textwidth}
+    \begin{column}{0.60\textwidth}
       \tagline{Caputo memory form}
       \[
         \CaputoD{t}{q}X(t)=F(t,X(t)),\qquad 0<q\leq1
@@ -240,7 +242,7 @@
       \end{aligned}
       \]
     \end{column}
-    \begin{column}{0.37\textwidth}
+    \begin{column}{0.36\textwidth}
       \tagline{Intervention-adjusted rates}
       \[
         \beff=\beta_0(1-u_1)(1-u_2)
@@ -258,6 +260,7 @@
 
 % 7
 \begin{frame}{Numerical Scheme + Implementation}
+  \small
   \begin{columns}[T,onlytextwidth]
     \begin{column}{0.47\textwidth}
       \tagline{Numerical idea}
@@ -269,19 +272,19 @@
       \end{itemize}
     \end{column}
     \begin{column}{0.48\textwidth}
-      \begin{tikzpicture}[node distance=0.45cm]
-        \node[draw=Blue,fill=SoftBlue,rounded corners=3pt,text width=5.0cm,align=center,minimum height=0.72cm] (p) {Inputs: parameters, initial conditions, $q$, controls};
-        \node[draw=Teal,fill=SoftTeal,rounded corners=3pt,text width=5.0cm,align=center,minimum height=0.72cm,below=of p] (s) {Fractional ABM-type solver};
-        \node[draw=Gold,fill=SoftGold,rounded corners=3pt,text width=5.0cm,align=center,minimum height=0.72cm,below=of s] (r) {Outputs: trajectories, $\Rzero$, scenarios, sensitivity};
-        \node[draw=Red,fill=white,rounded corners=3pt,text width=5.0cm,align=center,minimum height=0.72cm,below=of r] (d) {Interactive visualization for presentation and analysis};
+      \begin{tikzpicture}[node distance=0.38cm]
+        \node[draw=Blue,fill=SoftBlue,rounded corners=3pt,text width=5.05cm,align=left,minimum height=0.78cm,inner sep=5pt] (p) {\textbf{Inputs}\\parameters, initial conditions, $q$, controls};
+        \node[draw=Teal,fill=SoftTeal,rounded corners=3pt,text width=5.05cm,align=left,minimum height=0.78cm,inner sep=5pt,below=of p] (s) {\textbf{Solver}\\fractional Adams--Bashforth--Moulton type};
+        \node[draw=Gold,fill=SoftGold,rounded corners=3pt,text width=5.05cm,align=left,minimum height=0.78cm,inner sep=5pt,below=of s] (r) {\textbf{Outputs}\\trajectories, $\Rzero$, scenarios, sensitivity};
+        \node[draw=Red,fill=white,rounded corners=3pt,text width=5.05cm,align=left,minimum height=0.78cm,inner sep=5pt,below=of r] (d) {\textbf{Presentation}\\moving visualizations during the live demo};
         \draw[-{Latex},line width=1pt] (p)--(s);
         \draw[-{Latex},line width=1pt] (s)--(r);
         \draw[-{Latex},line width=1pt] (r)--(d);
       \end{tikzpicture}
     \end{column}
   \end{columns}
-  \vspace{0.25cm}
-  \keybox{SoftGold}{\textbf{Important distinction:} the slides explain the research; the live simulator is used only during the demo to show moving graphs.}
+  \vspace{0.16cm}
+  \keybox{SoftGold}{\textbf{Presentation link:} the mathematical model is explained in the slides; moving graphs are shown separately during the live demonstration.}
 \end{frame}
 
 % 8
