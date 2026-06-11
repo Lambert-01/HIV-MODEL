@@ -29,7 +29,7 @@ def _downsample(arr, target=DOWNSAMPLE_TARGET):
     return arr[idx]
 
 
-def _animation_frame_indices(length, target=96):
+def _animation_frame_indices(length, target=64):
     """Backend animation timeline used by the dashboard frontend."""
     length = int(length or 0)
     if length <= 1:
@@ -48,7 +48,7 @@ def _animation_frame_indices(length, target=96):
 def build_animation_payload(time_values, params=None):
     """Return animation metadata prepared in Python and consumed by Plotly UI."""
     frames = _animation_frame_indices(len(time_values))
-    duration_ms = 3600
+    duration_ms = 1800
     return {
         "source": "python-engine",
         "duration_ms": duration_ms,

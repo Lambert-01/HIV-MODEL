@@ -7,6 +7,12 @@ const DEFAULTS = {
   u1: 0.40, u2: 0.50, u3: 0.60, u4: 0.70
 };
 
+const RUN_MODE_STEPS = {
+  fast: 0.5,
+  balanced: 0.2,
+  detail: 0.1
+};
+
 const SLIDER_IDS = ["q", "Lambda", "beta0", "mu", "tau", "delta", "rho", "eta", "d", "u1", "u2", "u3", "u4"];
 let scenarioPresets = {};
 let lastPayload = null;
@@ -39,6 +45,13 @@ function syncSliderLabels() {
   updateLivePanels();
 }
 
+function applyRunMode(mode = document.getElementById("runMode")?.value || "balanced") {
+  const step = RUN_MODE_STEPS[mode];
+  const stepInput = document.getElementById("step");
+  if (stepInput && step) stepInput.value = step;
+  syncSliderLabels();
+}
+
 function applyScenario(key) {
   const preset = scenarioPresets[key];
   if (!preset) return;
@@ -53,6 +66,8 @@ function resetDefaults() {
     const el = document.getElementById(id);
     if (el) el.value = value;
   });
+  const runMode = document.getElementById("runMode");
+  if (runMode) runMode.value = "balanced";
   syncSliderLabels();
   showToast("Parameters reset to defaults.", "success");
 }
@@ -728,6 +743,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   document.getElementById("runSimulation")?.addEventListener("click", runSimulation);
   document.getElementById("resetDefaults")?.addEventListener("click", resetDefaults);
+  document.getElementById("runMode")?.addEventListener("change", (event) => applyRunMode(event.target.value));
   document.getElementById("downloadCsv")?.addEventListener("click", downloadCsv);
   document.getElementById("downloadParams")?.addEventListener("click", downloadParams);
   document.getElementById("exportCsvBtn")?.addEventListener("click", downloadCsv);

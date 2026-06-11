@@ -252,6 +252,8 @@
 
 .field-item { display: flex; flex-direction: column; gap: 5px; }
 
+.field-item-wide { grid-column: 1 / -1; }
+
 .field-label {
   color: var(--text-muted);
   font-size: 0.7rem;

@@ -83,6 +83,14 @@
             <label class="field-label">Step h</label>
             <input id="step" type="number" class="ctrl-input" value="0.2" min="0.01" step="0.01">
           </div>
+          <div class="field-item field-item-wide">
+            <label class="field-label">Run mode</label>
+            <select id="runMode" class="ctrl-select">
+              <option value="fast">Fast demo · h = 0.50</option>
+              <option value="balanced" selected>Balanced · h = 0.20</option>
+              <option value="detail">High detail · h = 0.10</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
