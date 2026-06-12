@@ -103,13 +103,16 @@
       {\includegraphics[width=1.18cm]{../thesis/logo.png}};
     \node[anchor=north east,align=right,text=white] at ($(current page.north east)+(-0.65,-0.60)$)
       {\small University of Rwanda\\\small College of Science and Technology};
+    \fill[black,opacity=0.20,rounded corners=8pt]
+      ($(current page.west)+(0.52,1.72)$) rectangle ($(current page.west)+(8.90,-1.72)$);
     \node[anchor=west,align=left,text=white] at ($(current page.west)+(0.72,0.70)$)
       {{\fontsize{27}{31}\selectfont\bfseries Fractional-Order}\\[2pt]
        {\fontsize{27}{31}\selectfont\bfseries HIV SITA Model}\\[7pt]
        {\large Social behaviour interventions and memory effects}\\[12pt]
        {\normalsize\bfseries NDACYAYISABA Lambert}\\[2pt]
        {\small Supervisor: Dr. MUHIRWA Jean Pierre}\\[2pt]
-       {\small Kigali, Rwanda}};
+       {\small Kigali, Rwanda}\\[5pt]
+       {\small Dashboard: \texttt{https://hiv-model.onrender.com/}}};
     \draw[Gold,line width=2.2pt] ($(current page.west)+(0.72,-1.38)$) -- ++(4.4,0);
     \draw[Teal,line width=2.2pt] ($(current page.west)+(5.22,-1.38)$) -- ++(3.6,0);
   \end{tikzpicture}
@@ -368,11 +371,12 @@
     \begin{column}{0.48\textwidth}
       \tagline{Live demo plan}
       \begin{enumerate}
-        \item Open the deployed simulator.
+        \item Open the deployed simulator:\\
+          \href{https://hiv-model.onrender.com/}{\texttt{https://hiv-model.onrender.com/}}
         \item Run the moving SITA graph.
         \item Compare no intervention with combined intervention.
         \item Compare $q=1$ with $q<1$.
-        \item Show scenario and sensitivity views briefly.
+        \item Move from dashboard results to conclusion and recommendations.
       \end{enumerate}
     \end{column}
     \begin{column}{0.48\textwidth}
@@ -386,7 +390,7 @@
     \end{column}
   \end{columns}
   \vspace{0.25cm}
-  \keybox{SoftTeal}{\textbf{Final message:} this project connects mathematical analysis, numerical simulation, and a working interactive tool for explaining HIV intervention dynamics.}
+  \keybox{SoftTeal}{\textbf{Final message:} this project connects mathematical analysis, numerical simulation, and a working interactive dashboard: \href{https://hiv-model.onrender.com/}{\texttt{hiv-model.onrender.com}}.}
 \end{frame}
 
 \end{document}

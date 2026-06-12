@@ -214,7 +214,7 @@ def build_slides() -> list[Slide]:
         textbox(8.8, 0.48, 3.9, 0.55, ["University of Rwanda", "College of Science and Technology"], size=12, color=COLORS["white"], align="r"),
         textbox(0.75, 2.12, 7.3, 1.45, ["Fractional-Order", "HIV SITA Model"], size=32, color=COLORS["white"], bold=True),
         textbox(0.78, 3.67, 7.0, 0.55, ["Social behaviour interventions and simulation-based analysis"], size=17, color=COLORS["white"]),
-        textbox(0.78, 4.58, 5.5, 0.9, ["NDACYAYISABA Lambert", "Supervisor: Dr. MUHIRWA Jean Pierre", "Kigali, Rwanda"], size=14, color=COLORS["white"], bold=False),
+        textbox(0.78, 4.52, 6.4, 1.1, ["NDACYAYISABA Lambert", "Supervisor: Dr. MUHIRWA Jean Pierre", "Kigali, Rwanda", "Dashboard: https://hiv-model.onrender.com/"], size=13, color=COLORS["white"], bold=False),
         textbox(0.78, 5.75, 4.0, 0.04, [""], fill=COLORS["gold"]),
         textbox(4.86, 5.75, 3.2, 0.04, [""], fill=COLORS["teal"]),
     ], rels=[rel1, rel2]))
@@ -375,11 +375,11 @@ def build_slides() -> list[Slide]:
         "Live Demo, Conclusion + Recommendations",
         "Live demo plan",
         [
-            "Open the deployed simulator.",
+            "Open the deployed simulator: https://hiv-model.onrender.com/",
             "Run the moving SITA graph.",
             "Compare no intervention with combined intervention.",
             "Compare q = 1 with q < 1.",
-            "Show scenario and sensitivity views briefly.",
+            "Move from dashboard results to conclusion and recommendations.",
         ],
         "Conclusion",
         [
@@ -388,7 +388,7 @@ def build_slides() -> list[Slide]:
             "Numerical simulations support combined intervention strategies.",
             "Future work should calibrate parameters with Rwanda-specific data.",
         ],
-        "Final message: this project connects mathematical analysis, numerical simulation, and a working interactive tool for explaining HIV intervention dynamics.",
+        "Final message: this project connects mathematical analysis, numerical simulation, and the working dashboard at https://hiv-model.onrender.com/.",
     ))
 
     return slides
