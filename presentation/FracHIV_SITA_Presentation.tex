@@ -53,7 +53,7 @@
       {\scriptsize Fractional-Order HIV SITA Model \hspace{0.4em}|\hspace{0.4em} University of Rwanda}
     \end{beamercolorbox}
     \begin{beamercolorbox}[wd=.26\paperwidth,ht=2.8ex,dp=1.1ex,rightskip=0.58cm plus 1fil]{normal text}
-      \hfill{\scriptsize \insertframenumber/10}
+      \hfill{\scriptsize \insertframenumber/\inserttotalframenumber}
     \end{beamercolorbox}
   }
 }
@@ -288,6 +288,25 @@
 \end{frame}
 
 % 8
+\begin{frame}{Baseline Simulation Result}
+  \scriptsize
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.59\textwidth}
+      \includegraphics[width=\linewidth,height=0.63\textheight,keepaspectratio]{../thesis/mainChartlinear.png}
+    \end{column}
+    \begin{column}{0.36\textwidth}
+      \tagline{Computed baseline}
+      \begin{itemize}
+        \item $\Rzero=0.430<1$, below the epidemic threshold.
+        \item Peak infected population is 150 at $t=0$ years.
+        \item Final values after 50 years: $I=3.1$, $T=94.3$, $A=3.6$.
+      \end{itemize}
+      \keybox{SoftTeal}{\textbf{Interpretation:} the baseline intervention-adjusted configuration moves toward disease-free behaviour.}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% 9
 \begin{frame}{Simulation Results: Intervention Comparison}
   \begin{columns}[T,onlytextwidth]
     \begin{column}{0.59\textwidth}
@@ -305,7 +324,7 @@
   \end{columns}
 \end{frame}
 
-% 9
+% 10
 \begin{frame}{Simulation Results: Fractional Memory}
   \begin{columns}[T,onlytextwidth]
     \begin{column}{0.59\textwidth}
@@ -323,7 +342,27 @@
   \end{columns}
 \end{frame}
 
-% 10
+% 11
+\begin{frame}{Dashboard and Sensitivity Evidence}
+  \scriptsize
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.59\textwidth}
+      \includegraphics[width=\linewidth,height=0.62\textheight,keepaspectratio]{../thesis/sensitivityChart.png}
+    \end{column}
+    \begin{column}{0.36\textwidth}
+      \tagline{Main evidence}
+      \begin{itemize}
+        \item Transmission-related quantities dominate $\Rzero$ sensitivity.
+        \item Safer behaviour and awareness strongly reduce $\Rzero$.
+        \item Dashboard outputs support thesis discussion and live defense.
+      \end{itemize}
+      \vspace{0.05cm}
+      \includegraphics[width=\linewidth,height=0.24\textheight,keepaspectratio]{../thesis/dashboardBaselineFigure.png}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% 12
 \begin{frame}{Live Demo, Conclusion + Recommendations}
   \begin{columns}[T,onlytextwidth]
     \begin{column}{0.48\textwidth}

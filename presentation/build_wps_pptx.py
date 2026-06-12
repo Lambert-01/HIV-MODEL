@@ -281,8 +281,8 @@ def build_slides() -> list[Slide]:
         textbox(2.48, 1.48, 1.25, 0.35, ["effective transmission"], size=10, color=COLORS["muted"], align="c"),
         textbox(5.14, 1.48, 1.25, 0.35, ["testing and treatment"], size=10, color=COLORS["muted"], align="c"),
         textbox(7.72, 3.04, 1.4, 0.35, ["reduced progression"], size=10, color=COLORS["muted"], align="c"),
-        textbox(1.0, 4.68, 5.3, 0.9, ["State variables", "S susceptible, I infected, T treated, A AIDS-stage population."], size=17, fill=COLORS["soft_blue"], border=COLORS["blue"]),
-        textbox(6.95, 4.68, 5.15, 0.9, ["Controls", "u1 awareness, u2 safer behaviour, u3 testing, u4 adherence."], size=17, fill=COLORS["soft_gold"], border=COLORS["gold"]),
+        textbox(1.0, 4.62, 5.3, 1.05, ["State variables", "S susceptible, I infected, T treated, A AIDS-stage population."], size=15, fill=COLORS["soft_blue"], border=COLORS["blue"]),
+        textbox(6.95, 4.62, 5.15, 1.05, ["Controls", "u1 awareness, u2 safer behaviour, u3 testing, u4 adherence."], size=15, fill=COLORS["soft_gold"], border=COLORS["gold"]),
     ]))
 
     slides.append(Slide("Fractional-Order Model", shapes=title_bar("Fractional-Order Model") + [
@@ -311,15 +311,28 @@ def build_slides() -> list[Slide]:
             "A corrector updates the state using fractional-memory weights.",
             "The same engine is used for baseline, memory, intervention, and sensitivity experiments.",
         ], size=18, bullet=True),
-        textbox(6.95, 1.32, 4.7, 0.65, ["Inputs", "parameters, initial conditions, q, controls"], size=15, fill=COLORS["soft_blue"], border=COLORS["blue"]),
-        textbox(6.95, 2.25, 4.7, 0.65, ["Solver", "fractional ABM-type numerical method"], size=15, fill=COLORS["soft_teal"], border=COLORS["teal"]),
-        textbox(6.95, 3.18, 4.7, 0.65, ["Outputs", "trajectories, R0, scenarios, sensitivity"], size=15, fill=COLORS["soft_gold"], border=COLORS["gold"]),
-        textbox(6.95, 4.11, 4.7, 0.65, ["Presentation", "moving graphs during the live demo"], size=15, fill=COLORS["white"], border=COLORS["red"]),
-        connector(9.3, 1.97, 9.3, 2.25, COLORS["muted"]),
-        connector(9.3, 2.90, 9.3, 3.18, COLORS["muted"]),
-        connector(9.3, 3.83, 9.3, 4.11, COLORS["muted"]),
+        textbox(6.95, 1.28, 4.7, 0.82, ["Inputs", "parameters, initial conditions, q, controls"], size=14, fill=COLORS["soft_blue"], border=COLORS["blue"]),
+        textbox(6.95, 2.28, 4.7, 0.82, ["Solver", "fractional ABM-type numerical method"], size=14, fill=COLORS["soft_teal"], border=COLORS["teal"]),
+        textbox(6.95, 3.28, 4.7, 0.82, ["Outputs", "trajectories, R0, scenarios, sensitivity"], size=14, fill=COLORS["soft_gold"], border=COLORS["gold"]),
+        textbox(6.95, 4.28, 4.7, 0.82, ["Presentation", "moving graphs during the live demo"], size=14, fill=COLORS["white"], border=COLORS["red"]),
+        connector(9.3, 2.10, 9.3, 2.28, COLORS["muted"]),
+        connector(9.3, 3.10, 9.3, 3.28, COLORS["muted"]),
+        connector(9.3, 4.10, 9.3, 4.28, COLORS["muted"]),
         textbox(0.98, 5.65, 10.85, 0.72, ["Presentation link: the mathematical model is explained in the slides; moving graphs are shown separately during the live demonstration."], size=16, fill=COLORS["soft_gold"], border=COLORS["gold"]),
     ]))
+
+    pic, rel = picture(ROOT.parent / "thesis" / "mainChartlinear.png", 0.70, 1.38, 6.9, 4.65, "rId2")
+    slides.append(Slide("Baseline Simulation Result", shapes=title_bar("Baseline Simulation Result") + [
+        pic,
+        textbox(8.05, 1.35, 3.9, 0.35, ["Computed baseline"], size=15, color=COLORS["gold"], bold=True),
+        textbox(8.10, 1.78, 3.9, 1.35, [
+            "R0 = 0.430, below the epidemic threshold.",
+            "Peak infected population is 150 at t = 0 years.",
+            "Final values after 50 years: I = 3.1, T = 94.3, A = 3.6.",
+        ], size=15, bullet=True),
+        textbox(8.05, 3.62, 4.0, 1.12, ["Interpretation", "The baseline intervention-adjusted configuration leads toward disease-free behaviour in the simulation."], size=14, fill=COLORS["soft_teal"], border=COLORS["teal"]),
+        textbox(8.05, 5.08, 4.0, 0.76, ["Defense point", "These numbers come from the Python simulation engine and match the dashboard summary table."], size=13, fill=COLORS["soft_gold"], border=COLORS["gold"]),
+    ], rels=[rel]))
 
     pic, rel = picture(ROOT.parent / "thesis" / "combinedInterventionsChart.png", 0.72, 1.42, 6.8, 4.6, "rId2")
     slides.append(Slide("Simulation Results: Intervention Comparison", shapes=title_bar("Simulation Results: Intervention Comparison") + [
@@ -344,6 +357,19 @@ def build_slides() -> list[Slide]:
         ], size=16, bullet=True),
         textbox(8.05, 4.38, 3.95, 1.0, ["Defense point", "Fractional calculus is not decorative; it changes the simulated dynamics."], size=15, fill=COLORS["soft_gold"], border=COLORS["gold"]),
     ], rels=[rel]))
+
+    pic, rel = picture(ROOT.parent / "thesis" / "sensitivityChart.png", 0.72, 1.42, 6.8, 4.6, "rId2")
+    dash, rel_dash = picture(ROOT.parent / "thesis" / "dashboardBaselineFigure.png", 8.10, 4.12, 3.7, 1.78, "rId3")
+    slides.append(Slide("Dashboard and Sensitivity Evidence", shapes=title_bar("Dashboard and Sensitivity Evidence") + [
+        pic,
+        textbox(8.05, 1.45, 3.9, 0.35, ["Main evidence"], size=15, color=COLORS["gold"], bold=True),
+        textbox(8.10, 1.88, 3.85, 1.75, [
+            "Transmission-related quantities dominate R0 sensitivity.",
+            "Safer behaviour and awareness reduce R0 strongly.",
+            "Dashboard outputs support thesis discussion and live defense.",
+        ], size=15, bullet=True),
+        dash,
+    ], rels=[rel, rel_dash]))
 
     slides.append(two_col_slide(
         "Live Demo, Conclusion + Recommendations",
