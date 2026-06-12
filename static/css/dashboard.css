@@ -972,6 +972,7 @@
 }
 
 #baselineInterpretation,
+#demoBaselineInterpretation,
 #thesisTextBox,
 #stabilityText,
 #dfeText,
@@ -986,15 +987,31 @@
 }
 
 #baselineInterpretation,
+#demoBaselineInterpretation,
 #thesisTextBox {
   background: rgba(0, 212, 255, 0.055);
   border-left: 3px solid var(--primary);
   border-radius: 8px;
 }
 
+#baselineInterpretation p,
+#demoBaselineInterpretation p {
+  margin-bottom: 0.75rem;
+}
+
+#baselineInterpretation p:last-child,
+#demoBaselineInterpretation p:last-child {
+  margin-bottom: 0;
+}
+
 #baselineInterpretation strong,
+#demoBaselineInterpretation strong,
 #thesisTextBox strong {
   color: var(--secondary);
+}
+
+.summary-card {
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.13);
 }
 
 /* ── Sensitivity Interpretation Box ── */

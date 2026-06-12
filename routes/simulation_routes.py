@@ -91,6 +91,43 @@ def _ranked_keys(values, keys):
     return [index for index, _key in ranked]
 
 
+def build_baseline_interpretation(summary, r0, status, stability_text):
+    """Build the dashboard interpretation from Python-computed outputs."""
+    peak = summary["peak_infected"]
+    time_peak = summary["time_peak"]
+    final_i = summary["final_infected"]
+    final_t = summary["final_treated"]
+    final_a = summary["final_aids"]
+    final_n = summary["final_population"]
+    q = summary["memory_order"]
+    bound = summary["bounded_limit"]
+    bound_ok = summary["bounded_ok"]
+
+    memory_text = (
+        "The simulation uses a fractional memory model, so previous states influence the current trajectory."
+        if q < 0.999
+        else "The simulation is equivalent to the classical ordinary-order model because q is approximately 1."
+    )
+    bound_text = ""
+    if bound is not None:
+        bound_text = (
+            f" The final total population is {final_n:.1f}, and the feasible-bound check "
+            f"{'is satisfied' if bound_ok else 'requires attention'} against {bound:.1f}."
+        )
+
+    return {
+        "headline": (
+            f"The infected population reaches a peak of {peak:.0f} at t={time_peak:.1f} years."
+        ),
+        "body": (
+            f"At the end of the simulation, the computed values are I={final_i:.1f}, "
+            f"T={final_t:.1f}, A={final_a:.1f}, and N={final_n:.1f}. "
+            f"The reproduction number is R0={r0:.3f}, giving a {status.lower()} status. "
+            f"{stability_text} {memory_text}{bound_text}"
+        ),
+    }
+
+
 def run_engine(payload, downsample=True):
     errors = validate_payload(payload)
     if errors:
@@ -162,6 +199,12 @@ def run_engine(payload, downsample=True):
         "initial_conditions": initial,
         "simulation": simulation,
     }
+    result["baseline_interpretation"] = build_baseline_interpretation(
+        result["summary"],
+        r0,
+        result["epidemic_status"],
+        result["stability_text"],
+    )
     result["animation"] = build_animation_payload(result["time_series"]["time"], params)
     return result, []
 

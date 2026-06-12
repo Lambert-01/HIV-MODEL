@@ -152,10 +152,7 @@ function updateCards(result) {
 
 function updateResultsTable(result) {
   const s = result.summary;
-  const ts = result.time_series;
-  const tbody = document.getElementById("resultsTableBody");
-  if (!tbody) return;
-  tbody.innerHTML = [
+  const rowsHtml = [
     ["Susceptible (S)", s.final_susceptible, "—"],
     ["Infected (I)", s.final_infected, s.peak_infected.toFixed(0)],
     ["Treated (T)", s.final_treated, "—"],
@@ -167,6 +164,10 @@ function updateResultsTable(result) {
       <td>${Number(final).toFixed(1)}</td>
       <td>${peak}</td>
     </tr>`).join("");
+  ["resultsTableBody", "demoResultsTableBody"].forEach((id) => {
+    const tbody = document.getElementById(id);
+    if (tbody) tbody.innerHTML = rowsHtml;
+  });
 }
 
 function effectiveRates(params) {
@@ -280,15 +281,18 @@ function renderLastRunStatus() {
 
 function updateInterpretation(result) {
   const s = result.summary;
+  const interp = result.baseline_interpretation || {};
   const text = `
-    The infected population reaches a peak of <strong>${s.peak_infected.toFixed(0)}</strong>
-    at <strong>t=${s.time_peak.toFixed(1)} years</strong>. Final values are
-    <strong>I=${s.final_infected.toFixed(0)}</strong>,
-    <strong>T=${s.final_treated.toFixed(0)}</strong>, and
-    <strong>A=${s.final_aids.toFixed(0)}</strong>. ${result.stability_text}
+    <p><strong>${interp.headline || `The infected population reaches a peak of ${s.peak_infected.toFixed(0)} at t=${s.time_peak.toFixed(1)} years.`}</strong></p>
+    <p>${interp.body || `Final values are I=${s.final_infected.toFixed(1)}, T=${s.final_treated.toFixed(1)}, A=${s.final_aids.toFixed(1)}, and N=${s.final_population.toFixed(1)}. ${result.stability_text}`}</p>
   `;
-  const baseline = document.getElementById("baselineInterpretation");
-  if (baseline) baseline.innerHTML = text;
+  ["baselineInterpretation", "demoBaselineInterpretation"].forEach((id) => {
+    const baseline = document.getElementById(id);
+    if (baseline) {
+      baseline.classList.remove("text-muted");
+      baseline.innerHTML = text;
+    }
+  });
   const thesis = document.getElementById("thesisTextBox");
   if (thesis) {
     thesis.innerHTML = `Under the selected parameter configuration, the fractional-order SITA model produced <strong>R0 = ${result.r0.toFixed(3)}</strong>, indicating a <strong>${result.epidemic_status.toLowerCase()}</strong> epidemic status. The simulation shows peak infected population <strong>${s.peak_infected.toFixed(0)}</strong> at <strong>${s.time_peak.toFixed(1)} years</strong> and final infected population <strong>${s.final_infected.toFixed(0)}</strong>. These results support interpretation of intervention-adjusted transmission, treatment uptake, AIDS progression, and fractional memory effects.`;
@@ -516,7 +520,6 @@ async function runSimulation() {
     renderPopulation(result);
     renderStackedAndPercentage(result);
     renderAnimatedPhase(result);
-    renderDemoMotionStudio(result);
     renderVectorFieldPhase("phaseITChart", result, result.parameters);
     renderPhaseVariant("phaseIAChart", result, "I", "A", "I(t)", "A(t)");
     renderPhaseVariant("phaseSIChart", result, "S", "I", "S(t)", "I(t)");

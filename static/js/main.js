@@ -14,16 +14,6 @@ const GRAPH_FORMULAS = {
     formula: String.raw`\({}^{C}D_t^qS=\Lambda-\lambda S-\mu S,\quad {}^{C}D_t^qI=\lambda S-(\tau_{\mathrm{eff}}+\delta+\mu)I,\quad {}^{C}D_t^qT=\tau_{\mathrm{eff}}I-(\rho_{\mathrm{eff}}+\mu)T,\quad {}^{C}D_t^qA=\delta I+\rho_{\mathrm{eff}}T-(\mu+d)A\)`,
     meaning: "This system generates the S(t), I(t), T(t), and A(t) curves."
   },
-  demoMotionLineChart: {
-    title: "Animated SITA Trajectories",
-    formula: String.raw`\({}^{C}D_t^qX(t)=F(t,X(t)),\quad X(t)=(S(t),I(t),T(t),A(t))\)`,
-    meaning: "This live-demo figure replays the four SITA trajectories from the Python simulation engine."
-  },
-  demoMotionRankChart: {
-    title: "Final Compartment Ranking",
-    formula: String.raw`\(S(t_{\mathrm{end}}),\ I(t_{\mathrm{end}}),\ T(t_{\mathrm{end}}),\ A(t_{\mathrm{end}})\)`,
-    meaning: "This bar race ranks the final compartment sizes after the simulated intervention period."
-  },
   infectedChart: {
     title: "Infected Focus I(t)",
     formula: String.raw`\({}^{C}D_t^qI=\lambda(t)S-(\tau_{\mathrm{eff}}+\delta+\mu)I\)`,
