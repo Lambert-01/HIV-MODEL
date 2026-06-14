@@ -212,11 +212,12 @@ def build_slides() -> list[Slide]:
         bg,
         logo,
         textbox(8.8, 0.48, 3.9, 0.55, ["University of Rwanda", "College of Science and Technology"], size=12, color=COLORS["white"], align="r"),
-        textbox(0.75, 2.12, 7.3, 1.45, ["Fractional-Order", "HIV SITA Model"], size=32, color=COLORS["white"], bold=True),
-        textbox(0.78, 3.67, 7.0, 0.55, ["Social behaviour interventions and simulation-based analysis"], size=17, color=COLORS["white"]),
-        textbox(0.78, 4.52, 6.4, 1.1, ["NDACYAYISABA Lambert", "Supervisor: Dr. MUHIRWA Jean Pierre", "Kigali, Rwanda", "Dashboard: https://hiv-model.onrender.com/"], size=13, color=COLORS["white"], bold=False),
-        textbox(0.78, 5.75, 4.0, 0.04, [""], fill=COLORS["gold"]),
-        textbox(4.86, 5.75, 3.2, 0.04, [""], fill=COLORS["teal"]),
+        textbox(0.58, 1.82, 7.45, 3.7, [""], fill=COLORS["navy"]),
+        textbox(0.82, 2.08, 7.0, 1.42, ["Fractional-Order", "HIV SITA Model"], size=32, color=COLORS["white"], bold=True),
+        textbox(0.86, 3.62, 6.85, 0.55, ["Social Behaviour Interventions and Memory Effects"], size=17, color=COLORS["white"]),
+        textbox(0.86, 4.45, 5.8, 0.82, ["NDACYAYISABA Lambert", "Supervisor: Dr. MUHIRWA Jean Pierre", "Kigali, Rwanda"], size=13, color=COLORS["white"], bold=False),
+        textbox(0.86, 5.48, 3.75, 0.04, [""], fill=COLORS["gold"]),
+        textbox(4.72, 5.48, 3.0, 0.04, [""], fill=COLORS["teal"]),
     ], rels=[rel1, rel2]))
 
     slides.append(Slide("Background / Motivation", shapes=title_bar("Background / Motivation") + [
@@ -371,24 +372,36 @@ def build_slides() -> list[Slide]:
         dash,
     ], rels=[rel, rel_dash]))
 
-    slides.append(two_col_slide(
-        "Live Demo, Conclusion + Recommendations",
-        "Live demo plan",
-        [
-            "Open the deployed simulator: https://hiv-model.onrender.com/",
-            "Run the moving SITA graph.",
+    dash, rel_dash = picture(ROOT.parent / "thesis" / "dashboardBaselineFigure.png", 7.20, 1.55, 4.7, 2.55, "rId2")
+    slides.append(Slide("Live Dashboard Demonstration", shapes=title_bar("Live Dashboard Demonstration") + [
+        textbox(0.72, 1.35, 5.55, 0.35, ["Open during the defense"], size=15, color=COLORS["gold"], bold=True),
+        textbox(0.82, 1.82, 5.5, 0.8, ["Dashboard link", "https://hiv-model.onrender.com/"], size=18, fill=COLORS["soft_blue"], border=COLORS["blue"]),
+        textbox(0.84, 3.05, 5.6, 1.8, [
+            "Run the baseline simulation.",
+            "Show the final state summary and interpretation.",
             "Compare no intervention with combined intervention.",
-            "Compare q = 1 with q < 1.",
-            "Move from dashboard results to conclusion and recommendations.",
-        ],
+            "Change q to show the fractional memory effect.",
+        ], size=16, bullet=True),
+        dash,
+        textbox(7.22, 4.55, 4.7, 0.9, ["After the demo", "Return to the next slide for conclusion and recommendations."], size=15, fill=COLORS["soft_gold"], border=COLORS["gold"]),
+    ], rels=[rel_dash]))
+
+    slides.append(two_col_slide(
+        "Conclusion + Recommendations",
         "Conclusion",
         [
             "The SITA HIV model was extended using fractional memory.",
             "Behavioural interventions were represented through effective rates.",
             "Numerical simulations support combined intervention strategies.",
-            "Future work should calibrate parameters with Rwanda-specific data.",
         ],
-        "Final message: this project connects mathematical analysis, numerical simulation, and the working dashboard at https://hiv-model.onrender.com/.",
+        "Recommendations",
+        [
+            "Calibrate parameters with Rwanda-specific data.",
+            "Extend the model using age, gender, or stochastic structure.",
+            "Compare other fractional operators.",
+            "Improve the dashboard into an educational decision-support tool.",
+        ],
+        "Final message: the work connects mathematical analysis, numerical simulation, and a working dashboard for communicating HIV intervention dynamics.",
     ))
 
     return slides

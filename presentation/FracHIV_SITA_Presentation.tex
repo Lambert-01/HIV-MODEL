@@ -103,18 +103,17 @@
       {\includegraphics[width=1.18cm]{../thesis/logo.png}};
     \node[anchor=north east,align=right,text=white] at ($(current page.north east)+(-0.65,-0.60)$)
       {\small University of Rwanda\\\small College of Science and Technology};
-    \fill[black,opacity=0.20,rounded corners=8pt]
-      ($(current page.west)+(0.52,1.72)$) rectangle ($(current page.west)+(8.90,-1.72)$);
-    \node[anchor=west,align=left,text=white] at ($(current page.west)+(0.72,0.70)$)
-      {{\fontsize{27}{31}\selectfont\bfseries Fractional-Order}\\[2pt]
-       {\fontsize{27}{31}\selectfont\bfseries HIV SITA Model}\\[7pt]
-       {\large Social behaviour interventions and memory effects}\\[12pt]
+    \fill[black,opacity=0.24,rounded corners=8pt]
+      ($(current page.west)+(0.50,1.58)$) rectangle ($(current page.west)+(8.45,-1.52)$);
+    \node[anchor=west,align=left,text=white] at ($(current page.west)+(0.78,0.56)$)
+      {{\fontsize{28}{32}\selectfont\bfseries Fractional-Order}\\[2pt]
+       {\fontsize{28}{32}\selectfont\bfseries HIV SITA Model}\\[8pt]
+       {\large Social Behaviour Interventions and Memory Effects}\\[13pt]
        {\normalsize\bfseries NDACYAYISABA Lambert}\\[2pt]
        {\small Supervisor: Dr. MUHIRWA Jean Pierre}\\[2pt]
-       {\small Kigali, Rwanda}\\[5pt]
-       {\small Dashboard: \texttt{https://hiv-model.onrender.com/}}};
-    \draw[Gold,line width=2.2pt] ($(current page.west)+(0.72,-1.38)$) -- ++(4.4,0);
-    \draw[Teal,line width=2.2pt] ($(current page.west)+(5.22,-1.38)$) -- ++(3.6,0);
+       {\small Kigali, Rwanda}};
+    \draw[Gold,line width=2.2pt] ($(current page.west)+(0.78,-1.24)$) -- ++(4.0,0);
+    \draw[Teal,line width=2.2pt] ($(current page.west)+(4.88,-1.24)$) -- ++(3.25,0);
   \end{tikzpicture}
 \end{frame}
 
@@ -366,31 +365,52 @@
 \end{frame}
 
 % 12
-\begin{frame}{Live Demo, Conclusion + Recommendations}
+\begin{frame}{Live Dashboard Demonstration}
+  \scriptsize
   \begin{columns}[T,onlytextwidth]
     \begin{column}{0.48\textwidth}
-      \tagline{Live demo plan}
+      \tagline{Open during the defense}
+      \keybox{SoftBlue}{\textbf{Dashboard link}\\
+      \href{https://hiv-model.onrender.com/}{\texttt{https://hiv-model.onrender.com/}}}
+      \vspace{0.18cm}
       \begin{enumerate}
-        \item Open the deployed simulator:\\
-          \href{https://hiv-model.onrender.com/}{\texttt{https://hiv-model.onrender.com/}}
-        \item Run the moving SITA graph.
+        \item Run the baseline simulation.
+        \item Show the final state summary and interpretation.
         \item Compare no intervention with combined intervention.
-        \item Compare $q=1$ with $q<1$.
-        \item Move from dashboard results to conclusion and recommendations.
+        \item Change $q$ to show the fractional memory effect.
       \end{enumerate}
     \end{column}
+    \begin{column}{0.48\textwidth}
+      \includegraphics[width=\linewidth,height=0.48\textheight,keepaspectratio]{../thesis/dashboardBaselineFigure.png}
+      \vspace{0.12cm}
+      \keybox{SoftGold}{\textbf{After the demo:} return to the next slide for conclusion and recommendations.}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% 13
+\begin{frame}{Conclusion + Recommendations}
+  \begin{columns}[T,onlytextwidth]
     \begin{column}{0.48\textwidth}
       \tagline{Conclusion}
       \begin{itemize}
         \item The SITA HIV model was extended using fractional memory.
         \item Behavioural interventions were represented through effective rates.
         \item Numerical simulations support the value of combined intervention strategies.
-        \item Future work should calibrate parameters with Rwanda-specific data.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \tagline{Recommendations}
+      \begin{itemize}
+        \item Calibrate parameters with Rwanda-specific data.
+        \item Extend the model using age, gender, or stochastic structure.
+        \item Compare other fractional operators.
+        \item Improve the dashboard into an educational decision-support tool.
       \end{itemize}
     \end{column}
   \end{columns}
   \vspace{0.25cm}
-  \keybox{SoftTeal}{\textbf{Final message:} this project connects mathematical analysis, numerical simulation, and a working interactive dashboard: \href{https://hiv-model.onrender.com/}{\texttt{hiv-model.onrender.com}}.}
+  \keybox{SoftTeal}{\textbf{Final message:} the work connects mathematical analysis, numerical simulation, and a working dashboard for communicating HIV intervention dynamics.}
 \end{frame}
 
 \end{document}
