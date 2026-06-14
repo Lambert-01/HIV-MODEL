@@ -89,32 +89,86 @@
 \subtitle{Social Behaviour Interventions and Simulation-Based Analysis}
 \author{NDACYAYISABA Lambert}
 \institute{University of Rwanda -- College of Science and Technology\\Supervisor: Dr. MUHIRWA Jean Pierre}
-\date{Kigali, Rwanda}
+
 
 \begin{document}
 
-% 1
+% 1 — COVER PAGE
 \begin{frame}[plain]
-  \begin{tikzpicture}[remember picture,overlay]
-    \node[anchor=south west,inner sep=0pt,outer sep=0pt] at (current page.south west)
-      {\includegraphics[width=\paperwidth,height=\paperheight]{ai_cover_background.png}};
-    \fill[Navy,opacity=0.22] (current page.south west) rectangle (current page.north east);
-    \node[anchor=north west] at ($(current page.north west)+(0.62,-0.48)$)
-      {\includegraphics[width=1.18cm]{../thesis/logo.png}};
-    \node[anchor=north east,align=right,text=white] at ($(current page.north east)+(-0.65,-0.60)$)
-      {\small University of Rwanda\\\small College of Science and Technology};
-    \fill[black,opacity=0.24,rounded corners=8pt]
-      ($(current page.west)+(0.50,1.58)$) rectangle ($(current page.west)+(8.45,-1.52)$);
-    \node[anchor=west,align=left,text=white] at ($(current page.west)+(0.78,0.56)$)
-      {{\fontsize{28}{32}\selectfont\bfseries Fractional-Order}\\[2pt]
-       {\fontsize{28}{32}\selectfont\bfseries HIV SITA Model}\\[8pt]
-       {\large Social Behaviour Interventions and Memory Effects}\\[13pt]
-       {\normalsize\bfseries NDACYAYISABA Lambert}\\[2pt]
-       {\small Supervisor: Dr. MUHIRWA Jean Pierre}\\[2pt]
-       {\small Kigali, Rwanda}};
-    \draw[Gold,line width=2.2pt] ($(current page.west)+(0.78,-1.24)$) -- ++(4.0,0);
-    \draw[Teal,line width=2.2pt] ($(current page.west)+(4.88,-1.24)$) -- ++(3.25,0);
-  \end{tikzpicture}
+\begin{tikzpicture}[remember picture,overlay]
+
+  %% background + overlay
+  \node[anchor=south west,inner sep=0pt] at (current page.south west)
+    {\includegraphics[width=\paperwidth,height=\paperheight]{ai_cover_background.png}};
+  \fill[Navy,opacity=0.83] (current page.south west) rectangle (current page.north east);
+
+  %% thin gold top stripe
+  \fill[Gold]
+    (current page.north west) rectangle ($(current page.north east)+(0,-0.07)$);
+
+  %% teal left accent bar
+  \fill[Teal]
+    (current page.north west) rectangle ($(current page.south west)+(0.06,0)$);
+
+  %% bottom bar
+  \fill[Blue!85!black,opacity=0.97]
+    (current page.south west) rectangle ($(current page.south east)+(0,0.70)$);
+  \fill[Gold]
+    ($(current page.south west)+(0,0.70)$) rectangle ($(current page.south east)+(0,0.76)$);
+
+  %% ── TOP LEFT: logo + institution ──────────────────────────────────
+  \node[anchor=north west] at ($(current page.north west)+(0.52,-0.18)$)
+    {\includegraphics[height=1.05cm]{../thesis/logo.png}};
+
+  \node[anchor=west,align=left,text=white]
+    at ($(current page.north west)+(1.80,-0.62)$)
+    {{\small\bfseries UNIVERSITY OF RWANDA}\\[-1pt]
+     {\scriptsize\color{Gold!85!white}
+      College of Science and Technology
+      \enspace$\cdot$\enspace
+      Department of Applied Mathematics}};
+
+  %% ── CENTRE: title block ────────────────────────────────────────────
+  \node[anchor=center,align=center,text=white]
+    at ($(current page.center)+(0,0.55)$)
+    {{\fontsize{23}{29}\selectfont\bfseries A Fractional-Order HIV\,SITA}\\[6pt]
+     {\fontsize{23}{29}\selectfont\bfseries Transmission Model}};
+
+  %% gold + teal divider under title
+  \draw[Gold,line width=2.4pt]
+    ($(current page.center)+(-3.30, 0.00-1.00)$) --
+    ($(current page.center)+(-0.10, 0.00-1.00)$);
+  \draw[Teal,line width=2.4pt]
+    ($(current page.center)+( 0.10, 0.00-1.00)$) --
+    ($(current page.center)+( 3.30, 0.00-1.00)$);
+
+  %% ── LEFT: author / supervisor info ────────────────────────────────
+  \node[anchor=north west,align=left,text=white]
+    at ($(current page.south west)+(0.52, 3.20)$)
+    {{\normalsize\bfseries NDACYAYISABA Lambert}\\[3pt]
+     {\scriptsize\color{Gold!80!white}
+      Reg.~222008909
+      \enspace$\cdot$\enspace
+      B.Sc.\ Applied Mathematics}\\[5pt]
+     {\small Supervisor:\enspace Dr.\ MUHIRWA Jean Pierre}};
+
+  %% ── BOTTOM RIGHT: report label ─────────────────────────────────────
+  \node[anchor=south east,align=right,text=white]
+    at ($(current page.south east)+(-0.52, 0.85)$)
+    {{\scriptsize\color{Gold!80!white}\bfseries Final Year Project Report}\\[-1pt]
+     {\scriptsize Academic Year 2025--2026}};
+
+  %% bottom bar centre text
+  \node[anchor=center,text=white]
+    at ($(current page.south)+(0,0.34)$)
+    {{\scriptsize
+      University of Rwanda
+      \enspace$\cdot$\enspace
+      Kigali, Rwanda
+      \enspace$\cdot$\enspace
+      May 2026}};
+
+\end{tikzpicture}
 \end{frame}
 
 % 2
