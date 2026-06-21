@@ -8,8 +8,8 @@
   <!-- Bootstrap 5 -->
   <link href="{{ url_for('static', filename='vendor/bootstrap/5.3.3/dist/css/bootstrap.min.css') }}" rel="stylesheet">
 
-  <!-- Font Awesome 6 (CDN — real webfonts) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
+  <!-- Font Awesome 6 (local copy for defense/offline reliability) -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/fontawesome/6.5.0/css/all.min.css') }}">
 
   <!-- KaTeX (math rendering) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">

@@ -50,7 +50,7 @@
   \leavevmode
   \hbox{
     \begin{beamercolorbox}[wd=.74\paperwidth,ht=2.8ex,dp=1.1ex,leftskip=0.58cm]{normal text}
-      {\scriptsize Fractional-Order HIV SITA Model \hspace{0.4em}|\hspace{0.4em} University of Rwanda}
+      {\tiny A Fractional-Order Compartmental Model of HIV Transmission with Social Behaviour Interventions \hspace{0.4em}|\hspace{0.4em} University of Rwanda}
     \end{beamercolorbox}
     \begin{beamercolorbox}[wd=.26\paperwidth,ht=2.8ex,dp=1.1ex,rightskip=0.58cm plus 1fil]{normal text}
       \hfill{\scriptsize \insertframenumber/\inserttotalframenumber}
@@ -85,8 +85,8 @@
   \end{tikzpicture}
 }
 
-\title{Fractional-Order HIV SITA Model}
-\subtitle{Social Behaviour Interventions and Simulation-Based Analysis}
+\title{A Fractional-Order Compartmental Model of HIV Transmission with Social Behaviour Interventions}
+\subtitle{Fractional SITA Dynamics, Social Behaviour Interventions, and Dashboard Simulation}
 \author{NDACYAYISABA Lambert}
 \institute{University of Rwanda -- College of Science and Technology\\Supervisor: Dr. MUHIRWA Jean Pierre}
 
@@ -131,8 +131,9 @@
   %% ── CENTRE: title block ────────────────────────────────────────────
   \node[anchor=center,align=center,text=white]
     at ($(current page.center)+(0,0.55)$)
-    {{\fontsize{23}{29}\selectfont\bfseries A Fractional-Order HIV\,SITA}\\[6pt]
-     {\fontsize{23}{29}\selectfont\bfseries Transmission Model}};
+    {{\fontsize{20}{25}\selectfont\bfseries A Fractional-Order Compartmental Model}\\[5pt]
+     {\fontsize{20}{25}\selectfont\bfseries of HIV Transmission}\\[5pt]
+     {\fontsize{20}{25}\selectfont\bfseries with Social Behaviour Interventions}};
 
   %% gold + teal divider under title
   \draw[Gold,line width=2.4pt]
@@ -222,26 +223,22 @@
   \begin{columns}[T,onlytextwidth]
     \begin{column}{0.50\textwidth}
       \tagline{Main objective}
-      To formulate, analyse, and simulate a fractional-order SITA HIV transmission model incorporating social behaviour interventions.
+      To formulate, analyse, and computationally simulate a fractional-order SITA model of HIV transmission incorporating social behaviour interventions.
       \vspace{0.28cm}
       \tagline{Specific objectives}
       \begin{enumerate}
-        \item Formulate the SITA model with Caputo derivative.
-        \item Derive threshold quantities including $\Rzero$.
-        \item Establish core analytical properties.
-        \item Implement a numerical simulation scheme.
-        \item Compare interventions, memory effects, and sensitivity.
+        \item Formulate a fractional-order SITA HIV model using the Caputo derivative and social behaviour interventions.
+        \item Analyse positivity, boundedness, disease-free equilibrium, $\Rzero$, and fractional stability.
+        \item Implement simulations and a Python dashboard to study memory effects, interventions, sensitivity, and epidemic trajectories.
       \end{enumerate}
     \end{column}
     \begin{column}{0.45\textwidth}
       \begin{tikzpicture}[node distance=0.58cm]
-        \node[draw=Blue,fill=SoftBlue,rounded corners=3pt,text width=4.6cm,minimum height=0.82cm,align=center] (a) {\bfseries Model formulation};
-        \node[draw=Teal,fill=SoftTeal,rounded corners=3pt,text width=4.6cm,minimum height=0.82cm,align=center,below=of a] (b) {\bfseries Mathematical analysis};
-        \node[draw=Gold,fill=SoftGold,rounded corners=3pt,text width=4.6cm,minimum height=0.82cm,align=center,below=of b] (c) {\bfseries Numerical simulation};
-        \node[draw=Red,fill=white,rounded corners=3pt,text width=4.6cm,minimum height=0.82cm,align=center,below=of c] (d) {\bfseries Results interpretation};
+        \node[draw=Blue,fill=SoftBlue,rounded corners=3pt,text width=4.6cm,minimum height=0.82cm,align=center] (a) {\bfseries 1. Model formulation};
+        \node[draw=Teal,fill=SoftTeal,rounded corners=3pt,text width=4.6cm,minimum height=0.82cm,align=center,below=of a] (b) {\bfseries 2. Model analysis};
+        \node[draw=Gold,fill=SoftGold,rounded corners=3pt,text width=4.6cm,minimum height=0.82cm,align=center,below=of b] (c) {\bfseries 3. Simulation dashboard};
         \draw[-{Latex},line width=1pt] (a)--(b);
         \draw[-{Latex},line width=1pt] (b)--(c);
-        \draw[-{Latex},line width=1pt] (c)--(d);
       \end{tikzpicture}
     \end{column}
   \end{columns}

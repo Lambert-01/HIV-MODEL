@@ -213,8 +213,8 @@ def build_slides() -> list[Slide]:
         logo,
         textbox(8.8, 0.48, 3.9, 0.55, ["University of Rwanda", "College of Science and Technology"], size=12, color=COLORS["white"], align="r"),
         textbox(0.58, 1.82, 7.45, 3.7, [""], fill=COLORS["navy"]),
-        textbox(0.82, 2.08, 7.0, 1.42, ["Fractional-Order", "HIV SITA Model"], size=32, color=COLORS["white"], bold=True),
-        textbox(0.86, 3.62, 6.85, 0.55, ["Social Behaviour Interventions and Memory Effects"], size=17, color=COLORS["white"]),
+        textbox(0.82, 1.92, 7.05, 1.78, ["A Fractional-Order Compartmental Model", "of HIV Transmission", "with Social Behaviour Interventions"], size=25, color=COLORS["white"], bold=True),
+        textbox(0.86, 3.80, 6.85, 0.45, ["Fractional SITA dynamics and dashboard simulation"], size=15, color=COLORS["white"]),
         textbox(0.86, 4.45, 5.8, 0.82, ["NDACYAYISABA Lambert", "Supervisor: Dr. MUHIRWA Jean Pierre", "Kigali, Rwanda"], size=13, color=COLORS["white"], bold=False),
         textbox(0.86, 5.48, 3.75, 0.04, [""], fill=COLORS["gold"]),
         textbox(4.72, 5.48, 3.0, 0.04, [""], fill=COLORS["teal"]),
@@ -253,22 +253,18 @@ def build_slides() -> list[Slide]:
 
     slides.append(Slide("Objectives", shapes=title_bar("Objectives") + [
         textbox(0.75, 1.32, 5.7, 0.38, ["Main objective"], size=15, color=COLORS["gold"], bold=True),
-        textbox(0.78, 1.78, 5.75, 0.95, ["To formulate, analyse, and simulate a fractional-order SITA HIV transmission model incorporating social behaviour interventions."], size=18),
+        textbox(0.78, 1.78, 5.75, 0.95, ["To formulate, analyse, and computationally simulate a fractional-order SITA model of HIV transmission incorporating social behaviour interventions."], size=17),
         textbox(0.75, 3.05, 5.7, 0.38, ["Specific objectives"], size=15, color=COLORS["gold"], bold=True),
         textbox(0.84, 3.48, 5.8, 2.15, [
-            "Formulate the SITA model with Caputo derivative.",
-            "Derive threshold quantities including R0.",
-            "Establish core analytical properties.",
-            "Implement a numerical simulation scheme.",
-            "Compare interventions, memory effects, and sensitivity.",
-        ], size=16, bullet=True),
-        textbox(7.25, 1.45, 3.8, 0.55, ["Model formulation"], size=17, bold=True, fill=COLORS["soft_blue"], border=COLORS["blue"], align="c"),
-        textbox(7.25, 2.35, 3.8, 0.55, ["Mathematical analysis"], size=17, bold=True, fill=COLORS["soft_teal"], border=COLORS["teal"], align="c"),
-        textbox(7.25, 3.25, 3.8, 0.55, ["Numerical simulation"], size=17, bold=True, fill=COLORS["soft_gold"], border=COLORS["gold"], align="c"),
-        textbox(7.25, 4.15, 3.8, 0.55, ["Results interpretation"], size=17, bold=True, fill=COLORS["white"], border=COLORS["red"], align="c"),
-        connector(9.15, 2.00, 9.15, 2.35, COLORS["muted"]),
-        connector(9.15, 2.90, 9.15, 3.25, COLORS["muted"]),
-        connector(9.15, 3.80, 9.15, 4.15, COLORS["muted"]),
+            "Formulate a fractional-order SITA HIV model using the Caputo derivative and social behaviour interventions.",
+            "Analyse positivity, boundedness, disease-free equilibrium, R0, and fractional stability.",
+            "Implement simulations and a Python dashboard to study memory effects, interventions, sensitivity, and epidemic trajectories.",
+        ], size=15, bullet=True),
+        textbox(7.25, 1.65, 3.8, 0.65, ["1. Model formulation"], size=16, bold=True, fill=COLORS["soft_blue"], border=COLORS["blue"], align="c"),
+        textbox(7.25, 2.75, 3.8, 0.65, ["2. Model analysis"], size=16, bold=True, fill=COLORS["soft_teal"], border=COLORS["teal"], align="c"),
+        textbox(7.25, 3.85, 3.8, 0.65, ["3. Simulation dashboard"], size=16, bold=True, fill=COLORS["soft_gold"], border=COLORS["gold"], align="c"),
+        connector(9.15, 2.30, 9.15, 2.75, COLORS["muted"]),
+        connector(9.15, 3.40, 9.15, 3.85, COLORS["muted"]),
     ]))
 
     slides.append(Slide("Model Diagram: SITA", shapes=title_bar("Model Diagram: SITA") + [
@@ -490,7 +486,7 @@ def core_props() -> str:
 <cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties"
 xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/"
 xmlns:dcmitype="http://purl.org/dc/dcmitype/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-<dc:title>Fractional-Order HIV SITA Model</dc:title><dc:creator>NDACYAYISABA Lambert</dc:creator>
+<dc:title>A Fractional-Order Compartmental Model of HIV Transmission with Social Behaviour Interventions</dc:title><dc:creator>NDACYAYISABA Lambert</dc:creator>
 <cp:lastModifiedBy>Codex</cp:lastModifiedBy><dcterms:created xsi:type="dcterms:W3CDTF">2026-06-11T00:00:00Z</dcterms:created>
 <dcterms:modified xsi:type="dcterms:W3CDTF">2026-06-11T00:00:00Z</dcterms:modified></cp:coreProperties>'''
 
