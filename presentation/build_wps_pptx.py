@@ -235,36 +235,20 @@ def build_slides() -> list[Slide]:
     ]))
 
     slides.append(two_col_slide(
-        "Problem Statement",
+        "Problem Statement + Literature Gap",
         "Limitations in ordinary modelling",
         [
             "Ordinary models usually depend only on the present state.",
             "HIV-related behaviour may depend on past awareness, stigma, testing history, and adherence.",
             "Social behaviour is often simplified into fixed rates.",
         ],
-        "Need addressed by this project",
+        "Literature gap",
         [
-            "Include memory using a Caputo fractional derivative.",
-            "Represent behavioural interventions through effective rates.",
-            "Use numerical simulation to compare scenarios clearly.",
+            "Classical HIV models use ODE compartments such as SICA/SITA.",
+            "Fractional models use Caputo derivatives for memory effects.",
+            "Few works combine fractional HIV dynamics, behaviour controls, and an interactive dashboard.",
         ],
-        "Research focus: How do fractional memory and social behaviour interventions affect simulated HIV dynamics in a SITA framework?",
-    ))
-
-    slides.append(two_col_slide(
-        "Literature Review and Research Gap",
-        "What existing studies show",
-        [
-            "Classical HIV models commonly use ordinary differential equations and treatment compartments such as SICA/SITA.",
-            "Previous studies show that social behaviour, testing, safer sexual practices, stigma, and adherence influence HIV transmission.",
-            "Fractional-order epidemic models use Caputo derivatives to capture memory and hereditary effects.",
-        ],
-        "Research gap",
-        [
-            "Existing work does not commonly combine fractional HIV dynamics.",
-            "It also does not commonly combine social behaviour intervention functions with an interactive simulation dashboard.",
-        ],
-        "Gap addressed: a fractional-order SITA model that connects memory effects, social behaviour interventions, numerical simulation, and dashboard exploration.",
+        "Research focus: a fractional-order SITA model that connects memory effects, social behaviour interventions, numerical simulation, and dashboard exploration.",
     ))
 
     slides.append(Slide("Objectives", shapes=title_bar("Objectives") + [
@@ -298,22 +282,26 @@ def build_slides() -> list[Slide]:
         textbox(6.95, 4.62, 5.15, 1.05, ["Controls", "u1 awareness, u2 safer behaviour, u3 testing, u4 adherence."], size=15, fill=COLORS["soft_gold"], border=COLORS["gold"]),
     ]))
 
-    slides.append(Slide("Fractional-Order Model", shapes=title_bar("Fractional-Order Model") + [
-        textbox(0.72, 1.35, 5.8, 0.35, ["Caputo memory form"], size=15, color=COLORS["gold"], bold=True),
-        textbox(0.76, 1.82, 5.8, 0.62, ["D_C^q X(t) = F(t, X(t)),    0 < q <= 1"], size=24, bold=True),
-        textbox(0.82, 2.78, 6.15, 1.9, [
+    slides.append(Slide("Fractional-Order Model and Analysis Evidence", shapes=title_bar("Fractional-Order Model and Analysis Evidence") + [
+        textbox(0.72, 1.22, 5.8, 0.35, ["Objective 1: model formulation"], size=15, color=COLORS["gold"], bold=True),
+        textbox(0.76, 1.66, 5.8, 0.48, ["D_C^q X(t) = F(t, X(t)),    0 < q <= 1"], size=20, bold=True),
+        textbox(0.82, 2.33, 6.15, 1.55, [
             "D_C^q S = Lambda - beta_eff S(I + eta T) - mu S",
             "D_C^q I = beta_eff S(I + eta T) - (tau_eff + delta + mu)I",
             "D_C^q T = tau_eff I - (rho_eff + mu)T",
             "D_C^q A = delta I + rho_eff T - (d + mu)A",
-        ], size=16),
-        textbox(7.45, 1.55, 4.6, 1.45, [
+        ], size=14),
+        textbox(0.82, 4.08, 6.15, 1.08, [
             "Intervention-adjusted rates",
             "beta_eff = beta0(1-u1)(1-u2)",
             "tau_eff = tau(1+u3)",
             "rho_eff = rho(1-u4)",
-        ], size=16, fill=COLORS["soft_gold"], border=COLORS["gold"]),
-        textbox(7.45, 3.8, 4.6, 1.05, ["Meaning of q", "q = 1 gives the ordinary model. q < 1 carries memory of past states."], size=16, fill=COLORS["soft_teal"], border=COLORS["teal"]),
+        ], size=13, fill=COLORS["soft_gold"], border=COLORS["gold"]),
+        textbox(7.35, 1.25, 4.75, 0.35, ["Objective 2: analysis completed"], size=15, color=COLORS["gold"], bold=True),
+        textbox(7.35, 1.72, 4.75, 0.74, ["Positivity", "Boundary derivatives are nonnegative, so S, I, T, A stay nonnegative."], size=12, fill=COLORS["soft_blue"], border=COLORS["blue"]),
+        textbox(7.35, 2.62, 4.75, 0.74, ["Boundedness", "D_C^q N = Lambda - mu N - dA <= Lambda - mu N."], size=12, fill=COLORS["soft_teal"], border=COLORS["teal"]),
+        textbox(7.35, 3.52, 4.75, 0.78, ["DFE and R0", "E0=(Lambda/mu,0,0,0); R0 is obtained by next-generation method."], size=12, fill=COLORS["soft_gold"], border=COLORS["gold"]),
+        textbox(7.35, 4.48, 4.75, 0.78, ["Fractional stability", "DFE stability uses |arg(lambda_i)| > q*pi/2 when R0 < 1."], size=12, fill=COLORS["soft_teal"], border=COLORS["teal"]),
     ]))
 
     slides.append(Slide("Numerical Scheme + Implementation", shapes=title_bar("Numerical Scheme + Implementation") + [
