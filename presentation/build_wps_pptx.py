@@ -251,6 +251,22 @@ def build_slides() -> list[Slide]:
         "Research focus: How do fractional memory and social behaviour interventions affect simulated HIV dynamics in a SITA framework?",
     ))
 
+    slides.append(two_col_slide(
+        "Literature Review and Research Gap",
+        "What existing studies show",
+        [
+            "Classical HIV models commonly use ordinary differential equations and treatment compartments such as SICA/SITA.",
+            "Previous studies show that social behaviour, testing, safer sexual practices, stigma, and adherence influence HIV transmission.",
+            "Fractional-order epidemic models use Caputo derivatives to capture memory and hereditary effects.",
+        ],
+        "Research gap",
+        [
+            "Existing work does not commonly combine fractional HIV dynamics.",
+            "It also does not commonly combine social behaviour intervention functions with an interactive simulation dashboard.",
+        ],
+        "Gap addressed: a fractional-order SITA model that connects memory effects, social behaviour interventions, numerical simulation, and dashboard exploration.",
+    ))
+
     slides.append(Slide("Objectives", shapes=title_bar("Objectives") + [
         textbox(0.75, 1.32, 5.7, 0.38, ["Main objective"], size=15, color=COLORS["gold"], bold=True),
         textbox(0.78, 1.78, 5.75, 0.95, ["To formulate, analyse, and computationally simulate a fractional-order SITA model of HIV transmission incorporating social behaviour interventions."], size=17),
