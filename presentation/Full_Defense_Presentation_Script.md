@@ -287,7 +287,7 @@ Say calmly:
 
 The live dashboard may be affected by the computer or network environment. For that reason, I included dashboard screenshots and simulation results directly in the slides. The Python backend has already been used to generate these results, and I can continue explaining from the prepared figures.
 
-Then continue with Slide 13.
+Then continue with Slide 14.
 
 ## Questions You Should Be Ready For
 

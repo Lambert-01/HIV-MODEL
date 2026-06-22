@@ -25,7 +25,11 @@ HIV transmission is not governed only by biological processes. It is also affect
 
 Classical models often use ordinary derivatives, so the future state depends mainly on the current state. However, HIV-related behaviour can have memory: past awareness campaigns, testing habits, adherence history, and stigma reduction can influence present outcomes. The problem is to formulate and simulate a model that includes this memory effect together with social behaviour interventions.
 
-## 4. Objectives
+## 4. Literature Review and Research Gap
+
+The report contains a full literature review and mathematical preliminaries chapter. In the defense, I summarize only the research gap. Classical HIV models commonly use ordinary differential equations and treatment compartments such as SICA/SITA. Previous studies show that social behaviour, testing, safer sexual practices, stigma, and adherence influence HIV transmission. Fractional-order epidemic models use Caputo derivatives to capture memory and hereditary effects. The research gap is that existing work does not commonly combine fractional HIV dynamics, social behaviour intervention functions, and an interactive simulation dashboard in one framework.
+
+## 5. Objectives
 
 The report has three objectives:
 
@@ -33,35 +37,35 @@ The report has three objectives:
 2. Analyse positivity, boundedness, disease-free equilibrium, R0, and fractional stability.
 3. Implement simulations and a Python dashboard to study memory effects, interventions, sensitivity, and epidemic trajectories.
 
-## 5. Model Diagram: SITA
+## 6. Model Diagram: SITA
 
 The model divides the population into four compartments: susceptible S, infected I, treated T, and AIDS-stage A. Susceptible individuals become infected through intervention-adjusted transmission. Infected individuals may enter treatment through testing and treatment-seeking. Infected and treated individuals may progress to AIDS, but adherence reduces progression from treatment to AIDS.
 
-## 6. Fractional-Order Model
+## 7. Fractional-Order Model
 
 The model uses the Caputo derivative of order q. When q equals 1, the system becomes an ordinary differential equation model. When q is less than 1, the system includes memory of previous states. The controls u1, u2, u3, and u4 modify transmission, treatment uptake, and AIDS progression.
 
-## 7. Numerical Scheme + Implementation
+## 8. Numerical Scheme + Implementation
 
 The system is solved using an Adams-Bashforth-Moulton predictor-corrector scheme for fractional differential equations. The Python engine receives initial conditions, model parameters, fractional order, and intervention controls. It returns trajectories, R0, final summaries, scenario comparisons, memory results, and sensitivity values.
 
-## 8. Baseline Simulation Result
+## 9. Baseline Simulation Result
 
 This slide shows the baseline trajectory from the model. I explain the movement of S, I, T, and A over time, then connect the graph to the final summary values: peak infected, final infected, final treated, final AIDS-stage population, and total population.
 
-## 9. Simulation Results: Intervention Comparison
+## 10. Simulation Results: Intervention Comparison
 
 The intervention comparison shows that combined interventions perform better than isolated interventions. Awareness and safer behaviour reduce effective transmission, testing improves movement into treatment, and adherence reduces progression toward AIDS. The model supports the idea that combined behavioural and treatment-support interventions are stronger than a single control.
 
-## 10. Simulation Results: Fractional Memory
+## 11. Simulation Results: Fractional Memory
 
 This slide compares different values of q. The case q = 1 is the ordinary model. Values below 1 represent fractional memory. The main point is that changing q changes the trajectory, so memory is mathematically and computationally visible in the model.
 
-## 11. Dashboard and Sensitivity Evidence
+## 12. Dashboard and Sensitivity Evidence
 
 The dashboard is not separate from the thesis; it is the implementation of the model. Sensitivity analysis ranks parameters according to their influence on R0. In the defense, I can use this slide to say that the dashboard helps convert mathematical results into visual evidence.
 
-## 12. Live Dashboard Demonstration
+## 13. Live Dashboard Demonstration
 
 Before opening the dashboard, say:
 "I will now briefly open the dashboard to show that the simulation is generated from the Python model, not manually drawn graphs."
@@ -78,7 +82,7 @@ Demo route:
 
 Do not open every tab. The goal is to prove the tool works, not to tour the whole system.
 
-## 13. Conclusion + Recommendations
+## 14. Conclusion + Recommendations
 
 Conclude with three points:
 
