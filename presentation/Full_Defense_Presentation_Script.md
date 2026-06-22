@@ -60,9 +60,24 @@ Many classical epidemic models use ordinary derivatives. In such models, the fut
 Therefore, the problem is that ordinary models may not fully represent memory effects in HIV dynamics. This study addresses that by using a Caputo fractional-order model and social behaviour intervention controls.
 
 Transition:
-From this problem, the study was guided by three objectives.
+Before the objectives, I briefly show the literature gap addressed by this project.
 
-## Slide 4: Objectives
+## Slide 4: Literature Review and Research Gap
+
+What to say:
+
+The report includes a full literature review and mathematical preliminaries chapter. In the presentation, I summarize only the gap.
+
+Classical HIV models commonly use ordinary differential equations and compartments such as SICA or SITA. Previous studies also show that social behaviour, testing, safer sexual practices, stigma, and adherence influence HIV transmission.
+
+Fractional-order epidemic models use Caputo derivatives to capture memory and hereditary effects. However, existing work does not commonly combine fractional HIV dynamics, social behaviour intervention functions, and an interactive simulation dashboard in one framework.
+
+Therefore, the gap addressed in this study is a fractional-order SITA model that connects memory effects, social behaviour interventions, numerical simulation, and dashboard exploration.
+
+Transition:
+From this gap, the study was guided by three objectives.
+
+## Slide 5: Objectives
 
 What to say:
 
@@ -80,7 +95,7 @@ So the work moves from model formulation, to mathematical analysis, then to comp
 Transition:
 I now describe the structure of the SITA model.
 
-## Slide 5: Model Diagram: SITA
+## Slide 6: Model Diagram: SITA
 
 What to say:
 
@@ -102,7 +117,7 @@ u4 for adherence.
 Transition:
 The next slide shows how this diagram becomes a fractional-order mathematical model.
 
-## Slide 6: Fractional-Order Model
+## Slide 7: Fractional-Order Model
 
 What to say:
 
@@ -120,7 +135,7 @@ These adjusted rates connect the social behaviour part of the study directly to 
 Transition:
 After formulating the model, I used a numerical method to solve it.
 
-## Slide 7: Numerical Scheme + Implementation
+## Slide 8: Numerical Scheme + Implementation
 
 What to say:
 
@@ -133,7 +148,7 @@ This is important because the graphs in the dashboard are not manually drawn. Th
 Transition:
 I now show the baseline simulation result.
 
-## Slide 8: Baseline Simulation Result
+## Slide 9: Baseline Simulation Result
 
 What to say:
 
@@ -146,7 +161,7 @@ The main message here is that the model can produce interpretable epidemic traje
 Transition:
 Next, I compare intervention scenarios.
 
-## Slide 9: Simulation Results: Intervention Comparison
+## Slide 10: Simulation Results: Intervention Comparison
 
 What to say:
 
@@ -161,7 +176,7 @@ Therefore, the simulation supports the public-health idea that combined behaviou
 Transition:
 I now show the effect of the fractional memory order q.
 
-## Slide 10: Simulation Results: Fractional Memory
+## Slide 11: Simulation Results: Fractional Memory
 
 What to say:
 
@@ -174,7 +189,7 @@ The important point is that changing q changes the trajectories. Therefore, the 
 Transition:
 The next slide connects the simulation results to the dashboard and sensitivity evidence.
 
-## Slide 11: Dashboard and Sensitivity Evidence
+## Slide 12: Dashboard and Sensitivity Evidence
 
 What to say:
 
@@ -187,7 +202,7 @@ Sensitivity analysis is important because it shows which parameters have the str
 Transition:
 At this point, I will briefly open the dashboard to demonstrate the live simulation.
 
-## Slide 12: Live Dashboard Demonstration
+## Slide 13: Live Dashboard Demonstration
 
 Before leaving the slide, say:
 
@@ -251,7 +266,7 @@ Step 8: Return to presentation.
 Say:
 This completes the dashboard demonstration. I will now return to the slides for conclusion and recommendations.
 
-## Slide 13: Conclusion + Recommendations
+## Slide 14: Conclusion + Recommendations
 
 What to say:
 
