@@ -195,7 +195,7 @@
 \end{frame}
 
 % 3
-\begin{frame}{Problem Statement}
+\begin{frame}{Problem Statement + Literature Gap}
   \begin{columns}[T,onlytextwidth]
     \begin{column}{0.48\textwidth}
       \tagline{Limitations in ordinary modelling}
@@ -206,45 +206,19 @@
       \end{itemize}
     \end{column}
     \begin{column}{0.48\textwidth}
-      \tagline{Need addressed by this project}
+      \tagline{Literature gap}
       \begin{itemize}
-        \item Include memory using a Caputo fractional derivative.
-        \item Represent behavioural interventions through effective rates.
-        \item Use numerical simulation to compare scenarios clearly.
+        \item Classical HIV models use ODE compartments such as SICA/SITA.
+        \item Fractional models use Caputo derivatives for memory effects.
+        \item Few works combine fractional HIV dynamics, behaviour controls, and an interactive dashboard.
       \end{itemize}
     \end{column}
   \end{columns}
-  \vspace{0.42cm}
-  \keybox{SoftGold}{\textbf{Research focus:} How do fractional memory and social behaviour interventions affect simulated HIV dynamics in a SITA framework?}
+  \vspace{0.34cm}
+  \keybox{SoftGold}{\textbf{Research focus:} a fractional-order SITA model that connects memory effects, social behaviour interventions, numerical simulation, and dashboard exploration.}
 \end{frame}
 
 % 4
-\begin{frame}{Literature Review and Research Gap}
-  \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.52\textwidth}
-      \tagline{What existing studies show}
-      \begin{itemize}
-        \item Classical HIV models commonly use ordinary differential equations and treatment compartments such as SICA/SITA.
-        \item Previous studies show that social behaviour, testing, safer sexual practices, stigma, and adherence influence HIV transmission.
-        \item Fractional-order epidemic models use Caputo derivatives to capture memory and hereditary effects.
-      \end{itemize}
-    \end{column}
-    \begin{column}{0.43\textwidth}
-      \tagline{Research gap}
-      Existing work does not commonly combine:
-      \vspace{0.12cm}
-      \begin{itemize}
-        \item fractional HIV dynamics,
-        \item social behaviour intervention functions,
-        \item and an interactive simulation dashboard.
-      \end{itemize}
-    \end{column}
-  \end{columns}
-  \vspace{0.24cm}
-  \keybox{SoftGold}{\textbf{Gap addressed:} a fractional-order SITA model that connects memory effects, social behaviour interventions, numerical simulation, and dashboard exploration.}
-\end{frame}
-
-% 5
 \begin{frame}{Objectives}
   \begin{columns}[T,onlytextwidth]
     \begin{column}{0.50\textwidth}
@@ -304,11 +278,11 @@
 \end{frame}
 
 % 6
-\begin{frame}{Fractional-Order Model}
-  \small
+\begin{frame}{Fractional-Order Model and Analysis Evidence}
+  \scriptsize
   \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.60\textwidth}
-      \tagline{Caputo memory form}
+    \begin{column}{0.56\textwidth}
+      \tagline{Objective 1: model formulation}
       \[
         \CaputoD{t}{q}X(t)=F(t,X(t)),\qquad 0<q\leq1
       \]
@@ -320,19 +294,22 @@
         \CaputoD{t}{q}A &= \delta I+\rhoeff T-(d+\mu)A.
       \end{aligned}
       \]
+      \vspace{-0.10cm}
+      \[
+        \beff=\beta_0(1-u_1)(1-u_2),\quad
+        \taueff=\tau(1+u_3),\quad
+        \rhoeff=\rho(1-u_4).
+      \]
     \end{column}
-    \begin{column}{0.36\textwidth}
-      \tagline{Intervention-adjusted rates}
-      \[
-        \beff=\beta_0(1-u_1)(1-u_2)
-      \]
-      \[
-        \taueff=\tau(1+u_3)
-      \]
-      \[
-        \rhoeff=\rho(1-u_4)
-      \]
-      \keybox{SoftTeal}{When $q=1$, the model is ordinary. When $q<1$, past states influence current change.}
+    \begin{column}{0.40\textwidth}
+      \tagline{Objective 2: analysis completed}
+      \keybox{SoftBlue}{\textbf{Positivity:} boundary derivatives are nonnegative, so $S,I,T,A\ge0$.}
+      \vspace{0.06cm}
+      \keybox{SoftTeal}{\textbf{Boundedness:} $\CaputoD{t}{q}N=\Lambda-\mu N-dA\le\Lambda-\mu N$.}
+      \vspace{0.06cm}
+      \keybox{SoftGold}{\textbf{DFE and threshold:} $E_0=(\Lambda/\mu,0,0,0)$ and $\Rzero$ is obtained by the next-generation method.}
+      \vspace{0.06cm}
+      \keybox{SoftTeal}{\textbf{Fractional stability:} DFE stability uses $|\arg(\lambda_i)|>q\pi/2$ when $\Rzero<1$.}
     \end{column}
   \end{columns}
 \end{frame}
