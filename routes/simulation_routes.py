@@ -572,7 +572,21 @@ def sensitivity():
     params = payload.get("parameters", {})
     try:
         values = {key: float(value) for key, value in params.items()}
-        return jsonify({"status": "success", "sensitivity": compute_sensitivity(values)})
+        rows = compute_sensitivity(values)
+        strongest_positive = max(rows, key=lambda row: row["sensitivity"]) if rows else None
+        strongest_negative = min(rows, key=lambda row: row["sensitivity"]) if rows else None
+        strongest_abs = max(rows, key=lambda row: abs(row["sensitivity"])) if rows else None
+        interpretation = ""
+        if strongest_positive and strongest_negative and strongest_abs:
+            interpretation = (
+                f"The current parameter set is most sensitive in absolute value to "
+                f"{strongest_abs['parameter']} ({strongest_abs['sensitivity']:.3f}). "
+                f"The strongest positive index is {strongest_positive['parameter']} "
+                f"({strongest_positive['sensitivity']:.3f}), meaning increases in that quantity raise R0. "
+                f"The strongest negative index is {strongest_negative['parameter']} "
+                f"({strongest_negative['sensitivity']:.3f}), meaning increases in that quantity reduce R0."
+            )
+        return jsonify({"status": "success", "sensitivity": rows, "interpretation": interpretation})
     except Exception as exc:
         return jsonify({"status": "error", "errors": [str(exc)]}), 400
 
