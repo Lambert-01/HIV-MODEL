@@ -88,7 +88,7 @@ def style_axis(ax, title, ylabel):
 
 
 def save(fig, filename):
-    fig.savefig(OUT / filename, dpi=220, bbox_inches="tight", pad_inches=0.16, facecolor="white")
+    fig.savefig(OUT / filename, dpi=220, bbox_inches="tight", pad_inches=0.24, facecolor="white")
     plt.close(fig)
 
 
@@ -181,7 +181,7 @@ def intervention_figure():
         bbox={"boxstyle": "round,pad=0.35", "facecolor": "#E6F7F4", "edgecolor": COLORS["teal"]},
     )
     ax.legend(loc="lower center", bbox_to_anchor=(0.5, -0.58), ncol=3, fontsize=13.2, frameon=False)
-    fig.subplots_adjust(left=0.12, right=0.985, top=0.86, bottom=0.48)
+    fig.subplots_adjust(left=0.14, right=0.985, top=0.86, bottom=0.48)
     save(fig, "presentation_interventions.png")
 
 
