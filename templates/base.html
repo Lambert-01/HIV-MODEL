@@ -23,7 +23,7 @@
   <!-- App CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css', v='defense-return-fix') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
 </head>
 <body>
@@ -95,7 +95,7 @@
   <script src="{{ url_for('static', filename='js/validation.js') }}"></script>
   <script src="{{ url_for('static', filename='js/animation.js') }}"></script>
   <script src="{{ url_for('static', filename='js/charts.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.js', v='defense-return-fix') }}"></script>
   {% block scripts %}{% endblock %}
 </body>
 </html>
