@@ -282,9 +282,11 @@ function renderLastRunStatus() {
 function updateInterpretation(result) {
   const s = result.summary;
   const interp = result.baseline_interpretation || {};
+  const headline = interp.headline || `The infected population reaches a peak of ${s.peak_infected.toFixed(0)} at t=${s.time_peak.toFixed(1)} years.`;
+  const body = interp.body || `Final values are I=${s.final_infected.toFixed(1)}, T=${s.final_treated.toFixed(1)}, A=${s.final_aids.toFixed(1)}, and N=${s.final_population.toFixed(1)}. ${result.stability_text}`;
   const text = `
-    <p><strong>${interp.headline || `The infected population reaches a peak of ${s.peak_infected.toFixed(0)} at t=${s.time_peak.toFixed(1)} years.`}</strong></p>
-    <p>${interp.body || `Final values are I=${s.final_infected.toFixed(1)}, T=${s.final_treated.toFixed(1)}, A=${s.final_aids.toFixed(1)}, and N=${s.final_population.toFixed(1)}. ${result.stability_text}`}</p>
+    <p><strong>${escapeHtml(headline)}</strong></p>
+    <p>${escapeHtml(body)}</p>
   `;
   ["baselineInterpretation", "demoBaselineInterpretation"].forEach((id) => {
     const baseline = document.getElementById(id);
@@ -295,7 +297,7 @@ function updateInterpretation(result) {
   });
   const thesis = document.getElementById("thesisTextBox");
   if (thesis) {
-    thesis.innerHTML = `Under the selected parameter configuration, the fractional-order SITA model produced <strong>R0 = ${result.r0.toFixed(3)}</strong>, indicating a <strong>${result.epidemic_status.toLowerCase()}</strong> epidemic status. The simulation shows peak infected population <strong>${s.peak_infected.toFixed(0)}</strong> at <strong>${s.time_peak.toFixed(1)} years</strong> and final infected population <strong>${s.final_infected.toFixed(0)}</strong>. These results support interpretation of intervention-adjusted transmission, treatment uptake, AIDS progression, and fractional memory effects.`;
+    thesis.innerHTML = `<p><strong>Computed from current run:</strong> ${escapeHtml(headline)}</p><p>${escapeHtml(body)}</p>`;
   }
   const stability = document.getElementById("stabilityText");
   if (stability) stability.textContent = result.stability_text;
@@ -401,10 +403,61 @@ function renderSensitivityRank(values) {
    }).join("");
  }
 
+function renderSensitivityInterpretation(data) {
+  const box = document.getElementById("sensitivityInterpretationText");
+  if (!box) return;
+  box.textContent = data?.interpretation || "Sensitivity interpretation was not available for this run.";
+}
+
 function formatNumber(value, digits = 3) {
   const number = Number(value);
   if (!Number.isFinite(number)) return value;
   return Math.abs(number) >= 100 ? number.toFixed(1) : number.toFixed(digits);
+}
+
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  }[char]));
+}
+
+function renderMemoryInterpretation(results) {
+  const box = document.getElementById("memoryInterpretationText");
+  if (!box) return;
+
+  const rows = (results || []).map((result) => ({
+    q: Number(result.summary?.memory_order),
+    finalI: Number(result.summary?.final_infected),
+    finalT: Number(result.summary?.final_treated),
+    finalA: Number(result.summary?.final_aids),
+    peakI: Number(result.summary?.peak_infected),
+    timePeak: Number(result.summary?.time_peak)
+  })).filter((row) => Number.isFinite(row.q) && Number.isFinite(row.finalI));
+
+  if (!rows.length) {
+    box.textContent = "Memory-effect interpretation was not available for this run.";
+    return;
+  }
+
+  const ordinary = rows.find((row) => Math.abs(row.q - 1) < 1e-6) || rows[0];
+  const strongestMemory = rows.reduce((best, row) => row.q < best.q ? row : best, rows[0]);
+  const highestFinalI = rows.reduce((best, row) => row.finalI > best.finalI ? row : best, rows[0]);
+  const lowestFinalI = rows.reduce((best, row) => row.finalI < best.finalI ? row : best, rows[0]);
+  const highestPeak = rows.reduce((best, row) => row.peakI > best.peakI ? row : best, rows[0]);
+
+  box.textContent = (
+    `Using the current parameter set, the ordinary case q=${ordinary.q.toFixed(2)} ends with ` +
+    `I=${ordinary.finalI.toFixed(1)}, T=${ordinary.finalT.toFixed(1)}, and A=${ordinary.finalA.toFixed(1)}. ` +
+    `The strongest-memory case q=${strongestMemory.q.toFixed(2)} ends with I=${strongestMemory.finalI.toFixed(1)}. ` +
+    `Across the displayed q values, final infected is highest at q=${highestFinalI.q.toFixed(2)} ` +
+    `(${highestFinalI.finalI.toFixed(1)}) and lowest at q=${lowestFinalI.q.toFixed(2)} ` +
+    `(${lowestFinalI.finalI.toFixed(1)}). The largest infected peak appears at q=${highestPeak.q.toFixed(2)} ` +
+    `with peak I=${highestPeak.peakI.toFixed(1)} at t=${highestPeak.timePeak.toFixed(1)} years.`
+  );
 }
 
 function renderGenericTable(tableId, rows, columns) {
@@ -568,6 +621,7 @@ async function loadTabData(tabName) {
       const sensitivity = await postJson("/api/sensitivity", { parameters: lastPayload.parameters });
       renderSensitivityChart(sensitivity.sensitivity);
       renderSensitivityRank(sensitivity.sensitivity);
+      renderSensitivityInterpretation(sensitivity);
       if (typeof hideSkeleton === "function") hideSkeleton("sensitivity");
     } else if (tabName === "memory") {
       const memoryResults = await Promise.all([1, 0.95, 0.85, 0.75].map(async (q) => {
@@ -577,6 +631,7 @@ async function loadTabData(tabName) {
       }));
       renderMemoryChart(memoryResults);
       renderMemoryExtraCharts(memoryResults);
+      renderMemoryInterpretation(memoryResults);
       if (typeof hideSkeleton === "function") hideSkeleton("memory");
     } else if (tabName === "surface") {
       renderSurface(lastPayload.parameters);

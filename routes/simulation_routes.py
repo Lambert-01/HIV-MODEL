@@ -328,12 +328,27 @@ def build_chapter6_payload(payload):
     best_final_i = min(scenario_rows, key=lambda row: row["final_infected"]) if scenario_rows else None
     strongest_positive = max(sensitivity_rows, key=lambda row: row["sensitivity"]) if sensitivity_rows else None
     strongest_negative = min(sensitivity_rows, key=lambda row: row["sensitivity"]) if sensitivity_rows else None
+    ordinary_memory = next((row for row in memory_rows if abs(row["q"] - 1.0) < 1e-9), memory_rows[0])
+    strongest_memory = min(memory_rows, key=lambda row: row["q"])
+    highest_memory_i = max(memory_rows, key=lambda row: row["final_infected"])
+    lowest_memory_i = min(memory_rows, key=lambda row: row["final_infected"])
+    highest_memory_peak = max(memory_rows, key=lambda row: row["peak_infected"])
+
+    if summary["time_peak"] <= 1e-9:
+        peak_sentence = (
+            f"The maximum infected value was the initial value I(0) = {summary['peak_infected']:.0f}; "
+            "after the simulation begins, the infected trajectory declines under the selected controls"
+        )
+    else:
+        peak_sentence = (
+            f"The infected population reached {summary['peak_infected']:.0f} individuals "
+            f"at t = {summary['time_peak']:.1f} years"
+        )
 
     baseline_text = (
         "The baseline fractional-order SITA simulation produced "
         f"R0 = {result['r0']:.3f}, corresponding to a {result['epidemic_status'].lower()} "
-        "epidemic status. The infected population reached "
-        f"{summary['peak_infected']:.0f} individuals at t = {summary['time_peak']:.1f} years, "
+        f"epidemic status. {peak_sentence}, "
         f"with final values I = {summary['final_infected']:.0f}, "
         f"T = {summary['final_treated']:.0f}, and A = {summary['final_aids']:.0f}. "
         f"The effective intervention-adjusted rates were beta_eff = {rates['beta_eff']:.4f}, "
@@ -361,9 +376,13 @@ def build_chapter6_payload(payload):
     )
     memory_text = (
         "The memory comparison evaluates q = 1.00, 0.95, 0.85, and 0.75 under the same "
-        "parameter configuration. Values q < 1 retain fractional memory, so trajectories differ "
-        "from the ordinary q = 1 model and provide computational evidence for the Caputo model's "
-        "memory effect."
+        f"parameter configuration. In this run, the ordinary q = {ordinary_memory['q']:.2f} case "
+        f"ended with I = {ordinary_memory['final_infected']:.1f}, while the strongest-memory "
+        f"case q = {strongest_memory['q']:.2f} ended with I = {strongest_memory['final_infected']:.1f}. "
+        f"Final infected was highest at q = {highest_memory_i['q']:.2f} "
+        f"({highest_memory_i['final_infected']:.1f}) and lowest at q = {lowest_memory_i['q']:.2f} "
+        f"({lowest_memory_i['final_infected']:.1f}). The largest infected peak appeared at "
+        f"q = {highest_memory_peak['q']:.2f} with peak I = {highest_memory_peak['peak_infected']:.1f}."
     )
     sensitivity_text = (
         f"The largest positive normalized sensitivity is {strongest_positive['parameter']} "
