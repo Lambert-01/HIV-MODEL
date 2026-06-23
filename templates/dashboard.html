@@ -539,6 +539,10 @@
              <h6>Sensitivity Index Interpretation</h6>
            </div>
            <div class="interpretation-row">
+             <span class="int-badge">Computed</span>
+             <p class="int-text" id="sensitivityInterpretationText">Run simulation to compute sensitivity interpretation.</p>
+           </div>
+           <div class="interpretation-row">
              <span class="int-badge positive">Positive Index</span>
              <p class="int-text">Increasing this parameter <strong>increases R₀</strong> and <strong>worsens</strong> the epidemic spread.</p>
            </div>
@@ -575,6 +579,16 @@
           <div class="col-lg-4"><div class="chart-card"><div class="chart-card-title">A(t) for Different q</div><div id="memoryAChart" class="chart-body"></div></div></div>
           <div class="col-lg-4"><div class="chart-card"><div class="chart-card-title">I–T Phase for Different q</div><div id="memoryPhaseChart" class="chart-body"></div></div></div>
           <div class="col-12"><div class="chart-card"><div class="chart-card-title">Mittag-Leffler Memory Kernel vs Exponential Decay</div><div id="mittagChart" class="chart-body"></div></div></div>
+        </div>
+        <div class="interpretation-box mt-3">
+          <div class="int-header">
+            <i class="fa fa-circle-info"></i>
+            <h6>Memory Effect Interpretation</h6>
+          </div>
+          <div class="interpretation-row">
+            <span class="int-badge">Computed</span>
+            <p class="int-text" id="memoryInterpretationText">Run simulation to compute memory-effect interpretation.</p>
+          </div>
         </div>
       </div>
     </div>
