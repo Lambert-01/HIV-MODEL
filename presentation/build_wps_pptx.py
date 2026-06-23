@@ -286,11 +286,12 @@ def build_slides() -> list[Slide]:
         textbox(0.72, 1.22, 5.8, 0.35, ["Objective 1: model formulation"], size=15, color=COLORS["gold"], bold=True),
         textbox(0.76, 1.66, 5.8, 0.48, ["D_C^q X(t) = F(t, X(t)),    0 < q <= 1"], size=20, bold=True),
         textbox(0.82, 2.33, 6.15, 1.55, [
-            "D_C^q S = Lambda - beta_eff S(I + eta T) - mu S",
-            "D_C^q I = beta_eff S(I + eta T) - (tau_eff + delta + mu)I",
+            "lambda(t) = beta_eff(I + eta T)/N",
+            "D_C^q S = Lambda - lambda(t)S - mu S",
+            "D_C^q I = lambda(t)S - (tau_eff + delta + mu)I",
             "D_C^q T = tau_eff I - (rho_eff + mu)T",
             "D_C^q A = delta I + rho_eff T - (d + mu)A",
-        ], size=14),
+        ], size=13),
         textbox(0.82, 4.08, 6.15, 1.08, [
             "Intervention-adjusted rates",
             "beta_eff = beta0(1-u1)(1-u2)",

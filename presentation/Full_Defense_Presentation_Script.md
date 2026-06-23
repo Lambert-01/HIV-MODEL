@@ -119,6 +119,7 @@ The model uses the Caputo derivative of order q, where 0 < q <= 1.
 When q = 1, the model becomes the ordinary differential equation model. When q < 1, the model includes memory. This means previous states contribute to the current dynamics.
 
 The intervention-adjusted rates are important:
+lambda of t is the normalized force of infection, beta effective multiplied by I plus eta T, divided by total population N.
 beta_eff is reduced by awareness and safer behaviour.
 tau_eff is increased by testing and treatment-seeking.
 rho_eff is reduced by adherence support.

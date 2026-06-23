@@ -32,7 +32,7 @@ def validate_payload(payload):
             errors.append(f"{key} must be between 0 and 1.")
 
     if not 0 < float(params["q"]) <= 1:
-        errors.append("Fractional order q must satisfy 0 < q <= 1.")
+        errors.append("Fractional order q must satisfy 0 < q <= 1. Use 0.01 for a near-zero value.")
 
     for key in ["Lambda", "beta0", "mu", "tau", "delta", "rho", "d"]:
         if float(params[key]) < 0:

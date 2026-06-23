@@ -41,7 +41,7 @@ The model divides the population into four compartments: susceptible S, infected
 
 ## 6. Fractional-Order Model and Analysis Evidence
 
-The model uses the Caputo derivative of order q. When q equals 1, the system becomes an ordinary differential equation model. When q is less than 1, the system includes memory of previous states. The controls u1, u2, u3, and u4 modify transmission, treatment uptake, and AIDS progression. The slide also confirms the analytical objective: positivity, boundedness, disease-free equilibrium, R0, and fractional stability were treated in the thesis.
+The model uses the Caputo derivative of order q. When q equals 1, the system becomes an ordinary differential equation model. When q is less than 1, the system includes memory of previous states. The force of infection is normalized by total population N, and the controls u1, u2, u3, and u4 modify transmission, treatment uptake, and AIDS progression. The slide also confirms the analytical objective: positivity, boundedness, disease-free equilibrium, R0, and fractional stability were treated in the thesis.
 
 ## 7. Numerical Scheme + Implementation
 
