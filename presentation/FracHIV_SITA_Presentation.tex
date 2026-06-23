@@ -97,10 +97,18 @@
 \begin{frame}[plain]
 \begin{tikzpicture}[remember picture,overlay]
 
-  %% background + overlay
-  \node[anchor=south west,inner sep=0pt] at (current page.south west)
-    {\includegraphics[width=\paperwidth,height=\paperheight]{ai_cover_background.png}};
-  \fill[Navy,opacity=0.83] (current page.south west) rectangle (current page.north east);
+  %% clean academic background, no generated image
+  \fill[Navy] (current page.south west) rectangle (current page.north east);
+  \foreach \x in {0.7,2.2,...,15.0}{
+    \draw[white,opacity=0.035,line width=0.5pt] ($(current page.south west)+(\x,0)$) -- ($(current page.north west)+(\x,0)$);
+  }
+  \foreach \y in {0.8,2.0,...,8.0}{
+    \draw[white,opacity=0.035,line width=0.5pt] ($(current page.south west)+(0,\y)$) -- ($(current page.south east)+(0,\y)$);
+  }
+  \node[anchor=north east,align=right,text=white,opacity=0.10]
+    at ($(current page.north east)+(-0.55,-1.15)$)
+    {{\fontsize{34}{38}\selectfont $\CaputoD{t}{q}X(t)=F(t,X(t))$}\\[4pt]
+     {\fontsize{20}{23}\selectfont $\Rzero=\dfrac{\beff}{\taueff+\delta+\mu}\left(1+\dfrac{\eta\taueff}{\rhoeff+\mu}\right)$}};
 
   %% thin gold top stripe
   \fill[Gold]
@@ -158,6 +166,10 @@
     at ($(current page.south east)+(-0.52, 0.85)$)
     {{\scriptsize\color{Gold!80!white}\bfseries Final Year Project Report}\\[-1pt]
      {\scriptsize Academic Year 2025--2026}};
+
+  \node[anchor=south west,align=left,text=white]
+    at ($(current page.south west)+(0.52,0.86)$)
+    {{\scriptsize\color{Gold!85!white}Presentation content follows the submitted final-year project report}};
 
   %% bottom bar centre text
   \node[anchor=center,text=white]
@@ -349,76 +361,53 @@
 % 8
 \begin{frame}{Baseline Simulation Result}
   \scriptsize
-  \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.59\textwidth}
-      \includegraphics[width=\linewidth,height=0.63\textheight,keepaspectratio]{../thesis/mainChartlinear.png}
-    \end{column}
-    \begin{column}{0.36\textwidth}
-      \tagline{Computed baseline}
-      \begin{itemize}
-        \item $\Rzero=0.430<1$, below the epidemic threshold.
-        \item Peak infected population is 150 at $t=0$ years.
-        \item Final values after 50 years: $I=3.1$, $T=94.3$, $A=3.6$.
-      \end{itemize}
-      \keybox{SoftTeal}{\textbf{Interpretation:} the baseline intervention-adjusted configuration moves toward disease-free behaviour.}
-    \end{column}
-  \end{columns}
+  \vspace{-0.12cm}
+  \begin{center}
+    \includegraphics[width=\textwidth,height=0.67\paperheight,keepaspectratio]{slide_images/presentation_baseline.png}
+  \end{center}
+  \vspace{-0.18cm}
+  \keybox{SoftTeal}{{\color{Gold}\Large$\blacktriangleright$}\enspace
+  $\Rzero=0.430<1$. The infected class starts at its maximum $I(0)=150$ and then declines to $I=3.1$, while treatment remains visible at $T=94.3$. The log scale lets the audience see both the large susceptible class and the smaller infected/AIDS curves.\\
+  {\scriptsize\color{Muted}Source: submitted report, Chapter 6 baseline fractional simulation.}}
 \end{frame}
 
 % 9
 \begin{frame}{Simulation Results: Intervention Comparison}
-  \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.59\textwidth}
-      \includegraphics[width=\linewidth]{../thesis/combinedInterventionsChart.png}
-    \end{column}
-    \begin{column}{0.36\textwidth}
-      \tagline{Main interpretation}
-      \begin{itemize}
-        \item Single interventions help, but each targets only one mechanism.
-        \item Combined intervention acts on transmission, treatment uptake, and progression.
-        \item The combined strategy gives stronger simulated control than isolated changes.
-      \end{itemize}
-      \keybox{SoftTeal}{\textbf{Public-health meaning:} prevention and treatment support should work together.}
-    \end{column}
-  \end{columns}
+  \scriptsize
+  \vspace{-0.12cm}
+  \begin{center}
+    \includegraphics[width=\textwidth,height=0.67\paperheight,keepaspectratio]{slide_images/presentation_interventions.png}
+  \end{center}
+  \vspace{-0.18cm}
+  \keybox{SoftTeal}{{\color{Gold}\Large$\blacktriangleright$}\enspace
+  Curves lower on the graph indicate fewer infected individuals. Single controls improve outcomes, but combined strategies reduce transmission, improve treatment movement, and slow AIDS progression together.\\
+  {\scriptsize\color{Muted}Source: submitted report, Chapter 6 intervention comparison.}}
 \end{frame}
 
 % 10
 \begin{frame}{Simulation Results: Fractional Memory}
-  \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.59\textwidth}
-      \includegraphics[width=\linewidth]{../thesis/memoryChart.png}
-    \end{column}
-    \begin{column}{0.36\textwidth}
-      \tagline{Why $q$ matters}
-      \begin{itemize}
-        \item $q=1$ represents the ordinary model.
-        \item Smaller $q$ values strengthen the memory effect.
-        \item Different $q$ values produce visibly different trajectories.
-      \end{itemize}
-      \keybox{SoftGold}{\textbf{Defense point:} fractional calculus is not decorative; it changes the simulated dynamics.}
-    \end{column}
-  \end{columns}
+  \scriptsize
+  \vspace{-0.12cm}
+  \begin{center}
+    \includegraphics[width=\textwidth,height=0.67\paperheight,keepaspectratio]{slide_images/presentation_memory.png}
+  \end{center}
+  \vspace{-0.18cm}
+  \keybox{SoftGold}{{\color{Teal}\Large$\blacktriangleright$}\enspace
+  $q=1$ is the ordinary model. Values $q<1$ introduce memory, so past states continue to influence the present trajectory. The separation between the curves shows the computational effect of fractional memory.\\
+  {\scriptsize\color{Muted}Source: submitted report, Chapter 6 fractional-memory comparison.}}
 \end{frame}
 
 % 11
 \begin{frame}{Dashboard and Sensitivity Evidence}
   \scriptsize
-  \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.59\textwidth}
-      \includegraphics[width=\linewidth,height=0.62\textheight,keepaspectratio]{../thesis/sensitivityChart.png}
-    \end{column}
-    \begin{column}{0.36\textwidth}
-      \tagline{Main evidence}
-      \begin{itemize}
-        \item Transmission-related quantities dominate $\Rzero$ sensitivity.
-        \item Safer behaviour and awareness strongly reduce $\Rzero$.
-        \item Dashboard outputs support thesis discussion and live defense.
-      \end{itemize}
-      \vspace{0.05cm}
-      \includegraphics[width=\linewidth,height=0.24\textheight,keepaspectratio]{../thesis/dashboardBaselineFigure.png}
-    \end{column}
-  \end{columns}
+  \vspace{-0.12cm}
+  \begin{center}
+    \includegraphics[width=\textwidth,height=0.62\paperheight,keepaspectratio]{slide_images/presentation_sensitivity.png}
+  \end{center}
+  \vspace{-0.18cm}
+  \keybox{SoftTeal}{{\color{Gold}\Large$\blacktriangleright$}\enspace
+  Normalized index: $\Upsilon_p^{\Rzero}=\dfrac{\partial \Rzero}{\partial p}\dfrac{p}{\Rzero}$. Positive bars increase $\Rzero$; negative bars reduce $\Rzero$. Transmission raises epidemic potential, while behaviour controls push $\Rzero$ downward.\\
+  {\scriptsize\color{Muted}Source: submitted report, Chapter 6 sensitivity analysis.}}
 \end{frame}
 
 % 12
@@ -439,8 +428,6 @@
     \end{column}
     \begin{column}{0.48\textwidth}
       \includegraphics[width=\linewidth,height=0.48\textheight,keepaspectratio]{../thesis/dashboardBaselineFigure.png}
-      \vspace{0.12cm}
-      \keybox{SoftGold}{\textbf{After the demo:} return to the next slide for conclusion and recommendations.}
     \end{column}
   \end{columns}
 \end{frame}

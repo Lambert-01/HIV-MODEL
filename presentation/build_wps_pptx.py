@@ -206,19 +206,23 @@ def two_col_slide(title: str, left_tag: str, left: list[str], right_tag: str, ri
 def build_slides() -> list[Slide]:
     slides: list[Slide] = []
 
-    bg, rel1 = picture(ROOT / "ai_cover_background.png", 0, 0, SLIDE_W, SLIDE_H, "rId2")
-    logo, rel2 = picture(ROOT.parent / "thesis" / "logo.png", 0.55, 0.42, 0.8, 0.8, "rId3")
+    logo, rel2 = picture(ROOT.parent / "thesis" / "logo.png", 0.55, 0.42, 0.8, 0.8, "rId2")
     slides.append(Slide("Title", shapes=[
-        bg,
+        textbox(0, 0, SLIDE_W, SLIDE_H, [""], fill=COLORS["navy"]),
+        textbox(7.35, 1.05, 5.2, 1.35, [
+            "D_C^q X(t)=F(t,X(t))",
+            "R0 = beta_eff/(tau_eff+delta+mu) x [1+eta tau_eff/(rho_eff+mu)]",
+        ], size=14, color="D8E2EB", align="r"),
         logo,
         textbox(8.8, 0.48, 3.9, 0.55, ["University of Rwanda", "College of Science and Technology"], size=12, color=COLORS["white"], align="r"),
         textbox(0.58, 1.82, 7.45, 3.7, [""], fill=COLORS["navy"]),
         textbox(0.82, 1.92, 7.05, 1.78, ["A Fractional-Order Compartmental Model", "of HIV Transmission", "with Social Behaviour Interventions"], size=25, color=COLORS["white"], bold=True),
         textbox(0.86, 3.80, 6.85, 0.45, ["Fractional SITA dynamics and dashboard simulation"], size=15, color=COLORS["white"]),
         textbox(0.86, 4.45, 5.8, 0.82, ["NDACYAYISABA Lambert", "Supervisor: Dr. MUHIRWA Jean Pierre", "Kigali, Rwanda"], size=13, color=COLORS["white"], bold=False),
+        textbox(0.86, 5.18, 6.0, 0.32, ["Presentation content follows the submitted final-year project report"], size=11, color=COLORS["gold"]),
         textbox(0.86, 5.48, 3.75, 0.04, [""], fill=COLORS["gold"]),
         textbox(4.72, 5.48, 3.0, 0.04, [""], fill=COLORS["teal"]),
-    ], rels=[rel1, rel2]))
+    ], rels=[rel2]))
 
     slides.append(Slide("Background / Motivation", shapes=title_bar("Background / Motivation") + [
         textbox(0.72, 1.38, 6.2, 0.35, ["Rwanda-aware public-health motivation"], size=15, color=COLORS["gold"], bold=True),
@@ -323,55 +327,37 @@ def build_slides() -> list[Slide]:
         textbox(0.98, 5.65, 10.85, 0.72, ["Presentation link: the mathematical model is explained in the slides; moving graphs are shown separately during the live demonstration."], size=16, fill=COLORS["soft_gold"], border=COLORS["gold"]),
     ]))
 
-    pic, rel = picture(ROOT.parent / "thesis" / "mainChartlinear.png", 0.70, 1.38, 6.9, 4.65, "rId2")
+    pic, rel = picture(ROOT / "slide_images" / "presentation_baseline.png", 0.32, 1.18, 12.72, 4.30, "rId2")
     slides.append(Slide("Baseline Simulation Result", shapes=title_bar("Baseline Simulation Result") + [
         pic,
-        textbox(8.05, 1.35, 3.9, 0.35, ["Computed baseline"], size=15, color=COLORS["gold"], bold=True),
-        textbox(8.10, 1.78, 3.9, 1.35, [
-            "R0 = 0.430, below the epidemic threshold.",
-            "Peak infected population is 150 at t = 0 years.",
-            "Final values after 50 years: I = 3.1, T = 94.3, A = 3.6.",
-        ], size=15, bullet=True),
-        textbox(8.05, 3.62, 4.0, 1.12, ["Interpretation", "The baseline intervention-adjusted configuration leads toward disease-free behaviour in the simulation."], size=14, fill=COLORS["soft_teal"], border=COLORS["teal"]),
-        textbox(8.05, 5.08, 4.0, 0.76, ["Defense point", "These numbers come from the Python simulation engine and match the dashboard summary table."], size=13, fill=COLORS["soft_gold"], border=COLORS["gold"]),
+        textbox(0.64, 5.82, 12.05, 0.68, [
+            "▶ R0 = 0.430 < 1. The infected class starts at I(0)=150 and declines to I=3.1; treatment remains visible at T=94.3. Source: submitted report, Chapter 6 baseline simulation."
+        ], size=14, fill=COLORS["soft_teal"], border=COLORS["teal"]),
     ], rels=[rel]))
 
-    pic, rel = picture(ROOT.parent / "thesis" / "combinedInterventionsChart.png", 0.72, 1.42, 6.8, 4.6, "rId2")
+    pic, rel = picture(ROOT / "slide_images" / "presentation_interventions.png", 0.42, 1.18, 12.50, 4.08, "rId2")
     slides.append(Slide("Simulation Results: Intervention Comparison", shapes=title_bar("Simulation Results: Intervention Comparison") + [
         pic,
-        textbox(8.05, 1.45, 3.9, 0.35, ["Main interpretation"], size=15, color=COLORS["gold"], bold=True),
-        textbox(8.10, 1.88, 3.85, 2.1, [
-            "Single interventions help, but each targets only one mechanism.",
-            "Combined intervention acts on transmission, treatment uptake, and progression.",
-            "The combined strategy gives stronger simulated control than isolated changes.",
-        ], size=16, bullet=True),
-        textbox(8.05, 4.52, 3.95, 0.95, ["Public-health meaning", "Prevention and treatment support should work together."], size=15, fill=COLORS["soft_teal"], border=COLORS["teal"]),
+        textbox(0.64, 5.82, 12.05, 0.68, [
+            "▶ Lower curves mean fewer infected individuals. Combined strategies act on transmission, treatment movement, and AIDS progression together. Source: submitted report, Chapter 6 intervention comparison."
+        ], size=14, fill=COLORS["soft_teal"], border=COLORS["teal"]),
     ], rels=[rel]))
 
-    pic, rel = picture(ROOT.parent / "thesis" / "memoryChart.png", 0.72, 1.42, 6.8, 4.6, "rId2")
+    pic, rel = picture(ROOT / "slide_images" / "presentation_memory.png", 0.38, 1.18, 12.58, 4.29, "rId2")
     slides.append(Slide("Simulation Results: Fractional Memory", shapes=title_bar("Simulation Results: Fractional Memory") + [
         pic,
-        textbox(8.05, 1.45, 3.9, 0.35, ["Why q matters"], size=15, color=COLORS["gold"], bold=True),
-        textbox(8.10, 1.88, 3.85, 1.85, [
-            "q = 1 represents the ordinary model.",
-            "Smaller q values strengthen the memory effect.",
-            "Different q values produce visibly different trajectories.",
-        ], size=16, bullet=True),
-        textbox(8.05, 4.38, 3.95, 1.0, ["Defense point", "Fractional calculus is not decorative; it changes the simulated dynamics."], size=15, fill=COLORS["soft_gold"], border=COLORS["gold"]),
+        textbox(0.64, 5.82, 12.05, 0.68, [
+            "▶ q = 1 is the ordinary model; q < 1 introduces memory. The curve separation shows the computational effect of fractional memory. Source: submitted report, Chapter 6 memory comparison."
+        ], size=14, fill=COLORS["soft_gold"], border=COLORS["gold"]),
     ], rels=[rel]))
 
-    pic, rel = picture(ROOT.parent / "thesis" / "sensitivityChart.png", 0.72, 1.42, 6.8, 4.6, "rId2")
-    dash, rel_dash = picture(ROOT.parent / "thesis" / "dashboardBaselineFigure.png", 8.10, 4.12, 3.7, 1.78, "rId3")
+    pic, rel = picture(ROOT / "slide_images" / "presentation_sensitivity.png", 0.64, 1.12, 12.05, 4.58, "rId2")
     slides.append(Slide("Dashboard and Sensitivity Evidence", shapes=title_bar("Dashboard and Sensitivity Evidence") + [
         pic,
-        textbox(8.05, 1.45, 3.9, 0.35, ["Main evidence"], size=15, color=COLORS["gold"], bold=True),
-        textbox(8.10, 1.88, 3.85, 1.75, [
-            "Transmission-related quantities dominate R0 sensitivity.",
-            "Safer behaviour and awareness reduce R0 strongly.",
-            "Dashboard outputs support thesis discussion and live defense.",
-        ], size=15, bullet=True),
-        dash,
-    ], rels=[rel, rel_dash]))
+        textbox(0.64, 5.92, 12.05, 0.60, [
+            "▶ Sensitivity index: U_p^R0=(partial R0/partial p)(p/R0). Positive bars increase R0; negative bars reduce R0. Source: submitted report, Chapter 6 sensitivity analysis."
+        ], size=14, fill=COLORS["soft_teal"], border=COLORS["teal"]),
+    ], rels=[rel]))
 
     dash, rel_dash = picture(ROOT.parent / "thesis" / "dashboardBaselineFigure.png", 7.20, 1.55, 4.7, 2.55, "rId2")
     slides.append(Slide("Live Dashboard Demonstration", shapes=title_bar("Live Dashboard Demonstration") + [
@@ -384,7 +370,6 @@ def build_slides() -> list[Slide]:
             "Change q to show the fractional memory effect.",
         ], size=16, bullet=True),
         dash,
-        textbox(7.22, 4.55, 4.7, 0.9, ["After the demo", "Return to the next slide for conclusion and recommendations."], size=15, fill=COLORS["soft_gold"], border=COLORS["gold"]),
     ], rels=[rel_dash]))
 
     slides.append(two_col_slide(
