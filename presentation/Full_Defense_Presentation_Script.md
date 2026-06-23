@@ -51,20 +51,13 @@ The motivation of this study is to build a model that can include both disease p
 Transition:
 This leads to the specific problem addressed in the research.
 
-## Slide 3: Problem Statement
+## Slide 3: Problem Statement + Literature Gap
 
 What to say:
 
 Many classical epidemic models use ordinary derivatives. In such models, the future state depends mainly on the current state. However, HIV-related behaviour may not work like that. Previous awareness campaigns, testing habits, stigma reduction, and treatment adherence can continue influencing current transmission.
 
 Therefore, the problem is that ordinary models may not fully represent memory effects in HIV dynamics. This study addresses that by using a Caputo fractional-order model and social behaviour intervention controls.
-
-Transition:
-Before the objectives, I briefly show the literature gap addressed by this project.
-
-## Slide 4: Literature Review and Research Gap
-
-What to say:
 
 The report includes a full literature review and mathematical preliminaries chapter. In the presentation, I summarize only the gap.
 
@@ -77,7 +70,7 @@ Therefore, the gap addressed in this study is a fractional-order SITA model that
 Transition:
 From this gap, the study was guided by three objectives.
 
-## Slide 5: Objectives
+## Slide 4: Objectives
 
 What to say:
 
@@ -95,7 +88,7 @@ So the work moves from model formulation, to mathematical analysis, then to comp
 Transition:
 I now describe the structure of the SITA model.
 
-## Slide 6: Model Diagram: SITA
+## Slide 5: Model Diagram: SITA
 
 What to say:
 
@@ -117,7 +110,7 @@ u4 for adherence.
 Transition:
 The next slide shows how this diagram becomes a fractional-order mathematical model.
 
-## Slide 7: Fractional-Order Model
+## Slide 6: Fractional-Order Model and Analysis Evidence
 
 What to say:
 
@@ -132,10 +125,12 @@ rho_eff is reduced by adherence support.
 
 These adjusted rates connect the social behaviour part of the study directly to the mathematical equations.
 
+This slide also shows that the second objective was tackled. Positivity is proved by checking nonnegative boundary derivatives. Boundedness follows from the total population inequality. The disease-free equilibrium is E0 = (Lambda/mu, 0, 0, 0), R0 is obtained using the next-generation approach, and fractional stability uses the condition |arg(lambda_i)| > q*pi/2 when R0 < 1.
+
 Transition:
 After formulating the model, I used a numerical method to solve it.
 
-## Slide 8: Numerical Scheme + Implementation
+## Slide 7: Numerical Scheme + Implementation
 
 What to say:
 
@@ -148,7 +143,7 @@ This is important because the graphs in the dashboard are not manually drawn. Th
 Transition:
 I now show the baseline simulation result.
 
-## Slide 9: Baseline Simulation Result
+## Slide 8: Baseline Simulation Result
 
 What to say:
 
@@ -161,7 +156,7 @@ The main message here is that the model can produce interpretable epidemic traje
 Transition:
 Next, I compare intervention scenarios.
 
-## Slide 10: Simulation Results: Intervention Comparison
+## Slide 9: Simulation Results: Intervention Comparison
 
 What to say:
 
@@ -176,7 +171,7 @@ Therefore, the simulation supports the public-health idea that combined behaviou
 Transition:
 I now show the effect of the fractional memory order q.
 
-## Slide 11: Simulation Results: Fractional Memory
+## Slide 10: Simulation Results: Fractional Memory
 
 What to say:
 
@@ -189,7 +184,7 @@ The important point is that changing q changes the trajectories. Therefore, the 
 Transition:
 The next slide connects the simulation results to the dashboard and sensitivity evidence.
 
-## Slide 12: Dashboard and Sensitivity Evidence
+## Slide 11: Dashboard and Sensitivity Evidence
 
 What to say:
 
@@ -202,7 +197,7 @@ Sensitivity analysis is important because it shows which parameters have the str
 Transition:
 At this point, I will briefly open the dashboard to demonstrate the live simulation.
 
-## Slide 13: Live Dashboard Demonstration
+## Slide 12: Live Dashboard Demonstration
 
 Before leaving the slide, say:
 
@@ -266,7 +261,7 @@ Step 8: Return to presentation.
 Say:
 This completes the dashboard demonstration. I will now return to the slides for conclusion and recommendations.
 
-## Slide 14: Conclusion + Recommendations
+## Slide 13: Conclusion + Recommendations
 
 What to say:
 
@@ -287,7 +282,7 @@ Say calmly:
 
 The live dashboard may be affected by the computer or network environment. For that reason, I included dashboard screenshots and simulation results directly in the slides. The Python backend has already been used to generate these results, and I can continue explaining from the prepared figures.
 
-Then continue with Slide 14.
+Then continue with Slide 13.
 
 ## Questions You Should Be Ready For
 
