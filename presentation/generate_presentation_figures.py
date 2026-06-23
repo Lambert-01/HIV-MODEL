@@ -165,7 +165,7 @@ def intervention_figure():
     ax.set_yscale("log")
     ax.set_xlim(0, 50)
     ax.set_ylim(1, 1200)
-    style_axis(ax, "Intervention comparison: infected trajectory I(t)", "Infected population (log scale)")
+    style_axis(ax, "Intervention comparison: infected trajectory I(t)", "I(t) population (log)")
     ax.xaxis.labelpad = 18
     ax.yaxis.labelpad = 10
     ax.text(
