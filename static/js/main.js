@@ -215,17 +215,59 @@ function enhanceChartHeaders() {
       });
     });
 
-    title.querySelector('[data-chart-action="expand"]')?.addEventListener("click", (event) => {
+    const expandBtn = title.querySelector('[data-chart-action="expand"]');
+    expandBtn?.addEventListener("click", (event) => {
       event.stopPropagation();
-      card?.classList.toggle("chart-expanded");
-      setTimeout(() => {
-        if (chart && window.Plotly) Plotly.Plots.resize(chart);
-      }, 120);
+      setChartExpanded(card, chart, !card?.classList.contains("chart-expanded"));
     });
   });
 }
 
 document.addEventListener("DOMContentLoaded", enhanceChartHeaders);
+
+function resizeChartLater(chart, delay = 120) {
+  setTimeout(() => {
+    if (chart && window.Plotly) Plotly.Plots.resize(chart);
+  }, delay);
+}
+
+function setChartExpanded(card, chart, expanded) {
+  if (!card) return;
+
+  document.querySelectorAll(".chart-card.chart-expanded").forEach((openCard) => {
+    if (openCard !== card) {
+      const openChart = openCard.querySelector(".chart-body[id]");
+      setChartExpanded(openCard, openChart, false);
+    }
+  });
+
+  card.classList.toggle("chart-expanded", expanded);
+  document.body.classList.toggle("dashboard-chart-expanded", expanded);
+
+  const expandBtn = card.querySelector('[data-chart-action="expand"]');
+  const icon = expandBtn?.querySelector("i");
+  expandBtn?.classList.toggle("active", expanded);
+  if (expandBtn) {
+    expandBtn.title = expanded ? "Return to dashboard" : "Expand chart";
+    expandBtn.setAttribute("aria-label", expanded ? "Return to dashboard" : "Expand chart");
+  }
+  if (icon) {
+    icon.className = expanded
+      ? "fa fa-down-left-and-up-right-to-center"
+      : "fa fa-up-right-and-down-left-from-center";
+  }
+
+  resizeChartLater(chart, 80);
+  resizeChartLater(chart, 260);
+}
+
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") return;
+  const card = document.querySelector(".chart-card.chart-expanded");
+  if (!card) return;
+  const chart = card.querySelector(".chart-body[id]");
+  setChartExpanded(card, chart, false);
+});
 
 /* ── Skeleton helpers ── */
 function showSkeleton(tabName) {
