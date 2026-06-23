@@ -149,7 +149,7 @@ def intervention_figure():
         "combined_intervention": "Combined",
         "strong_combined": "Strong combined",
     }
-    fig, ax = plt.subplots(figsize=(13.4, 5.65))
+    fig, ax = plt.subplots(figsize=(13.4, 6.05))
     for key, color in zip(selected, palette):
         payload = copy_payload()
         payload["parameters"].update({k: v for k, v in SCENARIOS[key].items() if k in {"q", "u1", "u2", "u3", "u4"}})
@@ -166,6 +166,8 @@ def intervention_figure():
     ax.set_xlim(0, 50)
     ax.set_ylim(1, 1200)
     style_axis(ax, "Intervention comparison: infected trajectory I(t)", "Infected population (log scale)")
+    ax.xaxis.labelpad = 18
+    ax.yaxis.labelpad = 10
     ax.text(
         0.985,
         0.92,
@@ -178,8 +180,8 @@ def intervention_figure():
         color=COLORS["teal"],
         bbox={"boxstyle": "round,pad=0.35", "facecolor": "#E6F7F4", "edgecolor": COLORS["teal"]},
     )
-    ax.legend(loc="lower center", bbox_to_anchor=(0.5, -0.34), ncol=3, fontsize=13.4, frameon=False)
-    fig.subplots_adjust(left=0.105, right=0.985, top=0.86, bottom=0.36)
+    ax.legend(loc="lower center", bbox_to_anchor=(0.5, -0.58), ncol=3, fontsize=13.2, frameon=False)
+    fig.subplots_adjust(left=0.12, right=0.985, top=0.86, bottom=0.48)
     save(fig, "presentation_interventions.png")
 
 
