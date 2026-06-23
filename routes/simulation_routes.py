@@ -91,7 +91,7 @@ def _ranked_keys(values, keys):
     return [index for index, _key in ranked]
 
 
-def build_baseline_interpretation(summary, r0, status, stability_text):
+def build_baseline_interpretation(summary, r0, status, stability_text, initial, rates):
     """Build the dashboard interpretation from Python-computed outputs."""
     peak = summary["peak_infected"]
     time_peak = summary["time_peak"]
@@ -102,11 +102,25 @@ def build_baseline_interpretation(summary, r0, status, stability_text):
     q = summary["memory_order"]
     bound = summary["bounded_limit"]
     bound_ok = summary["bounded_ok"]
+    initial_i = float(initial["I0"])
+    i_change = final_i - initial_i
+    i_change_pct = (i_change / initial_i * 100.0) if initial_i > 0 else 0.0
+
+    if time_peak <= 1e-9:
+        headline = (
+            f"The maximum infected value is the initial condition I(0)={peak:.0f}; "
+            "after simulation begins, the infected trajectory declines under the selected controls."
+        )
+    else:
+        headline = (
+            f"The infected population rises to a peak of {peak:.0f} at t={time_peak:.1f} years "
+            "before declining under the selected controls."
+        )
 
     memory_text = (
-        "The simulation uses a fractional memory model, so previous states influence the current trajectory."
+        f" Because q={q:.2f}<1, the simulation uses a fractional memory model, so previous states influence the current trajectory."
         if q < 0.999
-        else "The simulation is equivalent to the classical ordinary-order model because q is approximately 1."
+        else " Because q is approximately 1, the simulation is equivalent to the classical ordinary-order model."
     )
     bound_text = ""
     if bound is not None:
@@ -116,14 +130,15 @@ def build_baseline_interpretation(summary, r0, status, stability_text):
         )
 
     return {
-        "headline": (
-            f"The infected population reaches a peak of {peak:.0f} at t={time_peak:.1f} years."
-        ),
+        "headline": headline,
         "body": (
             f"At the end of the simulation, the computed values are I={final_i:.1f}, "
             f"T={final_t:.1f}, A={final_a:.1f}, and N={final_n:.1f}. "
-            f"The reproduction number is R0={r0:.3f}, giving a {status.lower()} status. "
-            f"{stability_text} {memory_text}{bound_text}"
+            f"Infected individuals changed from I(0)={initial_i:.1f} to I(final)={final_i:.1f} "
+            f"({i_change_pct:+.1f}%). The reproduction number is R0={r0:.3f}, giving a "
+            f"{status.lower()} status. The effective rates used by the engine are "
+            f"beta_eff={rates['beta_eff']:.5f}, tau_eff={rates['tau_eff']:.5f}, "
+            f"and rho_eff={rates['rho_eff']:.5f}. {stability_text}{memory_text}{bound_text}"
         ),
     }
 
@@ -204,6 +219,8 @@ def run_engine(payload, downsample=True):
         r0,
         result["epidemic_status"],
         result["stability_text"],
+        initial,
+        rates,
     )
     result["animation"] = build_animation_payload(result["time_series"]["time"], params)
     return result, []
