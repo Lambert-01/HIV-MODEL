@@ -137,11 +137,10 @@ def intervention_figure():
         "no_intervention",
         "awareness_only",
         "testing_boost",
-        "adherence_support",
         "combined_intervention",
         "strong_combined",
     ]
-    palette = ["#52606C", "#007E70", "#004A80", "#CC9900", "#B44146", "#00A6D6"]
+    palette = ["#52606C", "#007E70", "#004A80", "#B44146", "#00A6D6"]
     short_labels = {
         "no_intervention": "No intervention",
         "awareness_only": "Awareness",
@@ -150,7 +149,7 @@ def intervention_figure():
         "combined_intervention": "Combined",
         "strong_combined": "Strong combined",
     }
-    fig, ax = plt.subplots(figsize=(13.2, 6.15))
+    fig, ax = plt.subplots(figsize=(13.4, 5.65))
     for key, color in zip(selected, palette):
         payload = copy_payload()
         payload["parameters"].update({k: v for k, v in SCENARIOS[key].items() if k in {"q", "u1", "u2", "u3", "u4"}})
@@ -159,9 +158,9 @@ def intervention_figure():
         ax.plot(
             t,
             result["time_series"]["I"],
-            label=f"{short_labels[key]} (R0={result['r0']:.2f})",
+            label=f"{short_labels[key]}  R0={result['r0']:.2f}",
             color=color,
-            linewidth=3.8,
+            linewidth=4.2,
         )
     ax.set_yscale("log")
     ax.set_xlim(0, 50)
@@ -174,13 +173,13 @@ def intervention_figure():
         transform=ax.transAxes,
         ha="right",
         va="top",
-        fontsize=16,
+        fontsize=15,
         fontweight="bold",
         color=COLORS["teal"],
         bbox={"boxstyle": "round,pad=0.35", "facecolor": "#E6F7F4", "edgecolor": COLORS["teal"]},
     )
-    ax.legend(loc="lower center", bbox_to_anchor=(0.5, -0.62), ncol=3, fontsize=12.3, frameon=False)
-    fig.subplots_adjust(left=0.115, right=0.985, top=0.86, bottom=0.52)
+    ax.legend(loc="lower center", bbox_to_anchor=(0.5, -0.34), ncol=3, fontsize=13.4, frameon=False)
+    fig.subplots_adjust(left=0.105, right=0.985, top=0.86, bottom=0.36)
     save(fig, "presentation_interventions.png")
 
 

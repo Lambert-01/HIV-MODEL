@@ -286,7 +286,7 @@ def build_slides() -> list[Slide]:
         textbox(6.95, 4.62, 5.15, 1.05, ["Controls", "u1 awareness, u2 safer behaviour, u3 testing, u4 adherence."], size=15, fill=COLORS["soft_gold"], border=COLORS["gold"]),
     ]))
 
-    slides.append(Slide("Fractional-Order Model and Analysis Evidence", shapes=title_bar("Fractional-Order Model and Analysis Evidence") + [
+    slides.append(Slide("Fractional-Order SITA Model", shapes=title_bar("Fractional-Order SITA Model") + [
         textbox(0.72, 1.22, 5.8, 0.35, ["Objective 1: model formulation"], size=15, color=COLORS["gold"], bold=True),
         textbox(0.76, 1.66, 5.8, 0.48, ["D_C^q X(t) = F(t, X(t)),    0 < q <= 1"], size=20, bold=True),
         textbox(0.82, 2.33, 6.15, 1.55, [
@@ -302,11 +302,37 @@ def build_slides() -> list[Slide]:
             "tau_eff = tau(1+u3)",
             "rho_eff = rho(1-u4)",
         ], size=13, fill=COLORS["soft_gold"], border=COLORS["gold"]),
-        textbox(7.35, 1.25, 4.75, 0.35, ["Objective 2: analysis completed"], size=15, color=COLORS["gold"], bold=True),
-        textbox(7.35, 1.72, 4.75, 0.74, ["Positivity", "Boundary derivatives are nonnegative, so S, I, T, A stay nonnegative."], size=12, fill=COLORS["soft_blue"], border=COLORS["blue"]),
-        textbox(7.35, 2.62, 4.75, 0.74, ["Boundedness", "D_C^q N = Lambda - mu N - dA <= Lambda - mu N."], size=12, fill=COLORS["soft_teal"], border=COLORS["teal"]),
-        textbox(7.35, 3.52, 4.75, 0.78, ["DFE and R0", "E0=(Lambda/mu,0,0,0); R0 is obtained by next-generation method."], size=12, fill=COLORS["soft_gold"], border=COLORS["gold"]),
-        textbox(7.35, 4.48, 4.75, 0.78, ["Fractional stability", "DFE stability uses |arg(lambda_i)| > q*pi/2 when R0 < 1."], size=12, fill=COLORS["soft_teal"], border=COLORS["teal"]),
+        textbox(7.35, 1.25, 4.75, 0.35, ["Meaning of interventions"], size=15, color=COLORS["gold"], bold=True),
+        textbox(7.35, 1.72, 4.75, 0.74, ["u1 and u2", "Reduce effective transmission through awareness and safer behaviour."], size=12, fill=COLORS["soft_gold"], border=COLORS["gold"]),
+        textbox(7.35, 2.62, 4.75, 0.74, ["u3", "Increases testing/treatment movement from infected to treated."], size=12, fill=COLORS["soft_teal"], border=COLORS["teal"]),
+        textbox(7.35, 3.52, 4.75, 0.78, ["u4", "Reduces progression from treatment to AIDS stage through adherence support."], size=12, fill=COLORS["soft_blue"], border=COLORS["blue"]),
+        textbox(7.35, 4.48, 4.75, 0.78, ["q", "q=1 is ordinary; q<1 means previous states influence the present trajectory."], size=12, fill=COLORS["soft_gold"], border=COLORS["gold"]),
+    ]))
+
+    slides.append(Slide("Objective 2: Mathematical Analysis Evidence", shapes=title_bar("Objective 2: Mathematical Analysis Evidence") + [
+        textbox(0.72, 1.18, 5.55, 0.34, ["Positivity proof"], size=14, color=COLORS["gold"], bold=True),
+        textbox(0.78, 1.58, 5.85, 0.96, [
+            "S=0: D_C^q S = Lambda >= 0;    I=0: D_C^q I = lambda(t)S >= 0",
+            "T=0: D_C^q T = tau_eff I >= 0; A=0: D_C^q A = delta I + rho_eff T >= 0",
+        ], size=12, fill=COLORS["soft_blue"], border=COLORS["blue"]),
+        textbox(0.78, 2.72, 5.85, 0.66, ["Therefore the vector field points inward on the boundary, so R_+^4 is positively invariant."], size=12, fill=COLORS["soft_blue"], border=COLORS["blue"]),
+        textbox(0.72, 3.62, 5.55, 0.34, ["Boundedness proof"], size=14, color=COLORS["gold"], bold=True),
+        textbox(0.78, 4.02, 5.85, 1.04, [
+            "N = S + I + T + A",
+            "D_C^q N = Lambda - mu N - dA <= Lambda - mu N",
+            "By fractional comparison, limsup N(t) <= Lambda/mu.",
+        ], size=12, fill=COLORS["soft_teal"], border=COLORS["teal"]),
+        textbox(6.95, 1.18, 5.45, 0.34, ["Disease-free equilibrium and threshold"], size=14, color=COLORS["gold"], bold=True),
+        textbox(7.00, 1.58, 5.55, 0.88, [
+            "E0 = (Lambda/mu, 0, 0, 0),     R0 = rho(FV^-1)",
+            "F contains new infections; V contains transition/removal terms.",
+        ], size=12, fill=COLORS["soft_gold"], border=COLORS["gold"]),
+        textbox(6.95, 2.86, 5.45, 0.34, ["Fractional stability condition"], size=14, color=COLORS["gold"], bold=True),
+        textbox(7.00, 3.26, 5.55, 0.86, [
+            "|arg(lambda_i)| > q*pi/2 for every eigenvalue lambda_i.",
+            "When R0 < 1 and this condition holds, E0 is locally asymptotically stable.",
+        ], size=12, fill=COLORS["soft_teal"], border=COLORS["teal"]),
+        textbox(7.00, 4.54, 5.55, 0.64, ["Defense line", "Objective 2 is fulfilled by positivity, boundedness, DFE/R0 threshold analysis, and fractional stability."], size=12, fill=COLORS["white"], border=COLORS["blue"]),
     ]))
 
     slides.append(Slide("Numerical Scheme + Implementation", shapes=title_bar("Numerical Scheme + Implementation") + [

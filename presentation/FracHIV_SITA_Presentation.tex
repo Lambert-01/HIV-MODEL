@@ -290,10 +290,10 @@
 \end{frame}
 
 % 6
-\begin{frame}{Fractional-Order Model and Analysis Evidence}
+\begin{frame}{Fractional-Order SITA Model}
   \scriptsize
   \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.56\textwidth}
+    \begin{column}{0.57\textwidth}
       \tagline{Objective 1: model formulation}
       \[
         \CaputoD{t}{q}X(t)=F(t,X(t)),\qquad 0<q\leq1
@@ -316,20 +316,63 @@
       \end{aligned}
       \]
     \end{column}
-    \begin{column}{0.40\textwidth}
-      \tagline{Objective 2: analysis completed}
-      \keybox{SoftBlue}{\textbf{Positivity:} boundary derivatives are nonnegative, so $S,I,T,A\ge0$.}
-      \vspace{0.06cm}
-      \keybox{SoftTeal}{\textbf{Boundedness:} $\CaputoD{t}{q}N=\Lambda-\mu N-dA\le\Lambda-\mu N$.}
-      \vspace{0.06cm}
-      \keybox{SoftGold}{\textbf{DFE and threshold:} $E_0=(\Lambda/\mu,0,0,0)$ and $\Rzero$ is obtained by the next-generation method.}
-      \vspace{0.06cm}
-      \keybox{SoftTeal}{\textbf{Fractional stability:} DFE stability uses $|\arg(\lambda_i)|>q\pi/2$ when $\Rzero<1$.}
+    \begin{column}{0.39\textwidth}
+      \tagline{Meaning of interventions}
+      \keybox{SoftGold}{$u_1,u_2$ reduce effective transmission through awareness and safer behaviour.}
+      \vspace{0.12cm}
+      \keybox{SoftTeal}{$u_3$ increases testing/treatment movement from infected to treated.}
+      \vspace{0.12cm}
+      \keybox{SoftBlue}{$u_4$ reduces progression from treatment to AIDS stage through adherence support.}
+      \vspace{0.12cm}
+      \keybox{SoftGold}{When $q=1$ the model becomes ordinary; when $q<1$ previous states influence the present trajectory.}
     \end{column}
   \end{columns}
 \end{frame}
 
 % 7
+\begin{frame}{Objective 2: Mathematical Analysis Evidence}
+  \scriptsize
+  \vspace{-0.06cm}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.49\textwidth}
+      \tagline{Positivity proof}
+      \[
+      \begin{array}{ll}
+      S=0:\; \CaputoD{t}{q}S=\Lambda\ge0, &
+      I=0:\; \CaputoD{t}{q}I=\lambda(t)S\ge0,\\[2pt]
+      T=0:\; \CaputoD{t}{q}T=\taueff I\ge0, &
+      A=0:\; \CaputoD{t}{q}A=\delta I+\rhoeff T\ge0.
+      \end{array}
+      \]
+      \keybox{SoftBlue}{Therefore the vector field points inward on the boundary, so the nonnegative region $\mathbb{R}_+^4$ is positively invariant.}
+      \vspace{0.14cm}
+      \tagline{Boundedness proof}
+      \[
+        N=S+I+T+A,\qquad
+        \CaputoD{t}{q}N=\Lambda-\mu N-dA\le \Lambda-\mu N.
+      \]
+      \[
+        \limsup_{t\to\infty}N(t)\le \frac{\Lambda}{\mu}.
+      \]
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \tagline{Disease-free equilibrium and threshold}
+      \[
+        E_0=\left(\frac{\Lambda}{\mu},0,0,0\right),\qquad
+        \Rzero=\rho(FV^{-1}).
+      \]
+      \keybox{SoftGold}{$F$ contains new-infection terms and $V$ contains transition/removal terms of the infected subsystem. Thus $\Rzero$ is obtained by the next-generation matrix method.}
+      \vspace{0.14cm}
+      \tagline{Fractional stability condition}
+      \[
+        |\arg(\lambda_i)|>\frac{q\pi}{2}\quad\text{for every eigenvalue }\lambda_i.
+      \]
+      \keybox{SoftTeal}{When $\Rzero<1$ and the eigenvalues satisfy this Matignon condition, the disease-free equilibrium is locally asymptotically stable.}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% 8
 \begin{frame}{Numerical Scheme + Implementation}
   \footnotesize
   \begin{columns}[T,onlytextwidth]
