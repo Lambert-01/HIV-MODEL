@@ -615,6 +615,7 @@ def memory_compare():
     payload = request.get_json(silent=True) or {}
     q_values = payload.get("q_values", [1.0, 0.95, 0.85, 0.75])
     results = []
+    summaries = []
     for q in q_values:
         p = dict(payload)
         if "parameters" in p:
@@ -623,8 +624,34 @@ def memory_compare():
         result, errors = run_engine(p)
         if errors:
             return jsonify({"status": "error", "errors": errors}), 400
+        summary = result["summary"]
         results.append({"q": q, "time": result["time_series"]["time"], "I": result["time_series"]["I"]})
-    return jsonify({"status": "success", "curves": results})
+        summaries.append(
+            {
+                "q": float(q),
+                "peak_infected": summary["peak_infected"],
+                "time_peak": summary["time_peak"],
+                "final_infected": summary["final_infected"],
+                "final_treated": summary["final_treated"],
+                "final_aids": summary["final_aids"],
+            }
+        )
+
+    interpretation = ""
+    if summaries:
+        ordinary = next((row for row in summaries if abs(row["q"] - 1.0) < 1e-9), summaries[0])
+        strongest_memory = min(summaries, key=lambda row: row["q"])
+        highest_final_i = max(summaries, key=lambda row: row["final_infected"])
+        lowest_final_i = min(summaries, key=lambda row: row["final_infected"])
+        interpretation = (
+            f"Under the current parameter set, q={ordinary['q']:.2f} ends with "
+            f"I={ordinary['final_infected']:.1f}, while q={strongest_memory['q']:.2f} ends with "
+            f"I={strongest_memory['final_infected']:.1f}. Final infected is highest at "
+            f"q={highest_final_i['q']:.2f} ({highest_final_i['final_infected']:.1f}) and lowest at "
+            f"q={lowest_final_i['q']:.2f} ({lowest_final_i['final_infected']:.1f})."
+        )
+
+    return jsonify({"status": "success", "curves": results, "summaries": summaries, "interpretation": interpretation})
 
 
 @simulation_bp.post("/api/chapter6")
