@@ -706,6 +706,8 @@
   display: inline-flex;
   gap: 6px;
   margin-left: auto;
+  position: relative;
+  z-index: 3;
 }
 
 .chart-animation-toolbar {
@@ -919,13 +921,35 @@
 
 .chart-card.chart-expanded {
   background: #07111f;
+  display: flex;
+  flex-direction: column;
   inset: 18px;
+  overflow: auto;
   position: fixed;
   z-index: 3000;
 }
 
+.dashboard-chart-expanded {
+  overflow: hidden;
+}
+
+.chart-card.chart-expanded .chart-card-title {
+  background: rgba(7, 17, 31, 0.96);
+  flex: 0 0 auto;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
 .chart-card.chart-expanded .chart-body {
+  flex: 1 1 auto;
   min-height: calc(100vh - 110px);
+}
+
+.chart-card.chart-expanded [data-chart-action="expand"] {
+  background: rgba(0, 212, 255, 0.22);
+  border-color: rgba(0, 212, 255, 0.62);
+  box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.12);
 }
 
 .chart-body {
