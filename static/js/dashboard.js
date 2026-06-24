@@ -644,7 +644,7 @@ async function downloadEndpoint(url, payload, filename, contentType = "text/plai
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
-    if (!response.ok) throw new Error("Export failed.");
+    if (!response.ok) throw new Error("Download failed.");
     const blob = await response.blob();
     const objectUrl = URL.createObjectURL(blob);
     const link = document.createElement("a");
