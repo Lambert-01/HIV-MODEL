@@ -350,7 +350,11 @@ def build_slides() -> list[Slide]:
         connector(9.3, 2.10, 9.3, 2.28, COLORS["muted"]),
         connector(9.3, 3.10, 9.3, 3.28, COLORS["muted"]),
         connector(9.3, 4.10, 9.3, 4.28, COLORS["muted"]),
-        textbox(0.98, 5.65, 10.85, 0.72, ["Presentation link: the mathematical model is explained in the slides; moving graphs are shown separately during the live demonstration."], size=16, fill=COLORS["soft_gold"], border=COLORS["gold"]),
+        textbox(0.98, 5.55, 10.85, 0.92, [
+            "Dashboard access for the live demo",
+            "Hosted: https://hiv-model.onrender.com/dashboard",
+            "Local backup: http://127.0.0.1:5000/dashboard",
+        ], size=14, fill=COLORS["soft_gold"], border=COLORS["gold"]),
     ]))
 
     pic, rel = picture(ROOT / "slide_images" / "presentation_baseline.png", 0.32, 1.18, 12.72, 4.30, "rId2")
