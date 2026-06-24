@@ -185,6 +185,7 @@ function enhanceChartHeaders() {
       <span class="chart-title-main">${original}</span>
       <span class="chart-actions">
         <button class="chart-action-btn" type="button" data-chart-action="formula" title="Show formula behind this graph"><i class="fa fa-square-root-variable"></i></button>
+        <button class="chart-action-btn" type="button" data-chart-action="reset-view" title="Reset zoom and graph view"><i class="fa fa-rotate-left"></i></button>
         <button class="chart-action-btn" type="button" data-chart-action="download" title="Export chart as PNG"><i class="fa fa-download"></i></button>
         <button class="chart-action-btn" type="button" data-chart-action="expand" title="Expand chart"><i class="fa fa-up-right-and-down-left-from-center"></i></button>
       </span>`;
@@ -203,6 +204,11 @@ function enhanceChartHeaders() {
       event.stopPropagation();
       card?.classList.toggle("formula-open");
       title.querySelector('[data-chart-action="formula"]')?.classList.toggle("active", card?.classList.contains("formula-open"));
+    });
+
+    title.querySelector('[data-chart-action="reset-view"]')?.addEventListener("click", (event) => {
+      event.stopPropagation();
+      resetChartView(chart);
     });
 
     title.querySelector('[data-chart-action="download"]')?.addEventListener("click", (event) => {
@@ -231,6 +237,50 @@ function resizeChartLater(chart, delay = 120) {
   }, delay);
 }
 
+function resetChartView(chart) {
+  if (!chart?.id || !window.Plotly) return;
+
+  if (typeof resetChartAnimation === "function") {
+    resetChartAnimation(chart.id);
+  }
+
+  const relayout = {
+    "xaxis.autorange": true,
+    "yaxis.autorange": true,
+    "xaxis2.autorange": true,
+    "yaxis2.autorange": true,
+    "xaxis3.autorange": true,
+    "yaxis3.autorange": true,
+    "xaxis4.autorange": true,
+    "yaxis4.autorange": true,
+    "scene.xaxis.autorange": true,
+    "scene.yaxis.autorange": true,
+    "scene.zaxis.autorange": true,
+    "scene.camera": null
+  };
+
+  Plotly.relayout(chart.id, relayout)
+    .catch(() => Plotly.react(chart.id, chart.data || [], chart.layout || {}))
+    .finally(() => resizeChartLater(chart, 60));
+}
+
+function ensureExpandedCloseButton(card, chart) {
+  let closeBtn = card.querySelector(".chart-expanded-close");
+  if (!closeBtn) {
+    closeBtn = document.createElement("button");
+    closeBtn.type = "button";
+    closeBtn.className = "chart-expanded-close";
+    closeBtn.setAttribute("aria-label", "Return to dashboard");
+    closeBtn.title = "Return to dashboard";
+    closeBtn.innerHTML = '<i class="fa fa-xmark"></i>';
+    card.appendChild(closeBtn);
+  }
+  closeBtn.onclick = (event) => {
+    event.stopPropagation();
+    setChartExpanded(card, chart, false);
+  };
+}
+
 function setChartExpanded(card, chart, expanded) {
   if (!card) return;
 
@@ -243,6 +293,7 @@ function setChartExpanded(card, chart, expanded) {
 
   card.classList.toggle("chart-expanded", expanded);
   document.body.classList.toggle("dashboard-chart-expanded", expanded);
+  if (expanded) ensureExpandedCloseButton(card, chart);
 
   const expandBtn = card.querySelector('[data-chart-action="expand"]');
   const icon = expandBtn?.querySelector("i");
