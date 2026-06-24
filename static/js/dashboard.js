@@ -725,12 +725,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("runMode")?.addEventListener("change", (event) => applyRunMode(event.target.value));
   document.getElementById("downloadCsv")?.addEventListener("click", downloadCsv);
   document.getElementById("downloadParams")?.addEventListener("click", downloadParams);
-  document.getElementById("exportCsvBtn")?.addEventListener("click", downloadCsv);
-  document.getElementById("exportJsonBtn")?.addEventListener("click", () => { downloadParams(); flashExportBtn("exportJsonBtn"); });
-  document.getElementById("exportReportBtn")?.addEventListener("click", () => { downloadServerReport(); flashExportBtn("exportReportBtn"); });
-  document.getElementById("exportScenarioCsvBtn")?.addEventListener("click", () => { downloadScenarioCsv(); flashExportBtn("exportScenarioCsvBtn"); });
-  document.getElementById("exportSensitivityCsvBtn")?.addEventListener("click", () => { downloadSensitivityCsv(); flashExportBtn("exportSensitivityCsvBtn"); });
-  document.getElementById("copyThesisTextBtn")?.addEventListener("click", copyThesisText);
   document.getElementById("downloadChapter6Text")?.addEventListener("click", downloadChapter6Text);
   document.getElementById("downloadThesisTables")?.addEventListener("click", downloadThesisTables);
 
