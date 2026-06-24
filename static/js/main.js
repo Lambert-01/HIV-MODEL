@@ -118,36 +118,6 @@ const GRAPH_FORMULAS = {
     title: "Mittag-Leffler Memory Kernel",
     formula: String.raw`\(E_q(-\mu t^q)=\sum_{k=0}^{\infty}\dfrac{(-\mu t^q)^k}{\Gamma(qk+1)},\quad q=1:\ e^{-\mu t}\)`,
     meaning: "This graph explains why fractional memory decays more slowly than the ordinary exponential case."
-  },
-  surfaceChart: {
-    title: "R0 Surface",
-    formula: String.raw`\(\mathcal{R}_0(u_1,u_2)=\dfrac{\beta_0(1-u_1)(1-u_2)}{\tau_{\mathrm{eff}}+\delta+\mu}\left(1+\dfrac{\eta\tau_{\mathrm{eff}}}{\rho_{\mathrm{eff}}+\mu}\right)\)`,
-    meaning: "The 3D surface varies awareness u1 and safer behaviour u2 while computing R0."
-  },
-  r0HeatmapChart: {
-    title: "R0 Heatmap",
-    formula: String.raw`\(\mathcal{R}_0=f(u_1,u_2)\)`,
-    meaning: "The heatmap uses the R0 formula across a grid of awareness and safer-behaviour values."
-  },
-  finalInfectedHeatmapChart: {
-    title: "Final Infected Heatmap",
-    formula: String.raw`\(I_{\mathrm{final}}(u_1,u_2)\approx I_{\mathrm{base}}\dfrac{\mathcal{R}_0(u_1,u_2)}{\mathcal{R}_{0,\mathrm{base}}}\)`,
-    meaning: "This exploratory heatmap estimates final infection changes using the R0 ratio."
-  },
-  finalAidsHeatmapChart: {
-    title: "Final AIDS Heatmap",
-    formula: String.raw`\(A_{\mathrm{final}}(u_3,u_4)\approx A_{\mathrm{base}}(1-0.35u_3)(1-0.55u_4)\)`,
-    meaning: "This exploratory heatmap summarizes how testing and adherence reduce AIDS-stage burden."
-  },
-  waterfallChart: {
-    title: "R0 Intervention Waterfall",
-    formula: String.raw`\Delta\mathcal{R}_0=\mathcal{R}_0(\text{after control})-\mathcal{R}_0(\text{before control})`,
-    meaning: "The waterfall graph decomposes how each intervention changes R0."
-  },
-  reliabilityChart: {
-    title: "Step-Size Reliability",
-    formula: String.raw`\(e_h=|I_h(t_{\mathrm{end}})-I_{h_{\mathrm{ref}}}(t_{\mathrm{end}})|\)`,
-    meaning: "This graph compares final and peak infected values across numerical step sizes."
   }
 };
 
@@ -395,13 +365,12 @@ document.addEventListener("click", (event) => {
       interventions: "Interventions", r0: "R\u2080 & Stability",
       "scenario-explorer": "Scenario Explorer", "scenario-comparison": "Scenario Comparison",
       phase: "Phase Analysis", sensitivity: "Sensitivity",
-      memory: "Memory Effect", surface: "Surfaces & Heatmaps",
-      export: "Export", chapter6: "Chapter 6 Results", reliability: "Numerical Reliability",
+      memory: "Memory Effect", chapter6: "Chapter 6 Results",
       demo: "Defense Demo", overview: "Overview"
     };
     document.title = `FracHIV-SITA Lab | ${titleMap[tab.dataset.tab] || tab.dataset.tab}`;
     // Lazy-load secondary tab data on first open
-    const lazyTabs = ["scenario-comparison", "scenario-explorer", "sensitivity", "memory", "surface", "phase", "chapter6", "reliability"];
+    const lazyTabs = ["scenario-comparison", "scenario-explorer", "sensitivity", "memory", "phase", "chapter6"];
     if (lazyTabs.includes(tab.dataset.tab) && typeof loadTabData === "function") {
       loadTabData(tab.dataset.tab);
     }
