@@ -633,17 +633,10 @@ async function loadTabData(tabName) {
       renderMemoryExtraCharts(memoryResults);
       renderMemoryInterpretation(memoryResults);
       if (typeof hideSkeleton === "function") hideSkeleton("memory");
-    } else if (tabName === "surface") {
-      renderSurface(lastPayload.parameters);
-      renderHeatmapsAndWaterfall(lastPayload.parameters, lastResult);
     } else if (tabName === "chapter6") {
       const chapter6 = await postJson("/api/chapter6", lastPayload);
       renderChapter6(chapter6);
       if (typeof hideSkeleton === "function") hideSkeleton("chapter6");
-    } else if (tabName === "reliability") {
-      const reliability = await postJson("/api/reliability", { ...lastPayload, step_values: [0.2, 0.1, 0.05] });
-      renderReliability(reliability);
-      if (typeof hideSkeleton === "function") hideSkeleton("reliability");
     } else if (tabName === "phase") {
       if (lastResult) {
         renderVectorFieldPhase("phaseITChart", lastResult, lastResult.parameters);
