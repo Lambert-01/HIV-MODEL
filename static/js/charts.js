@@ -48,7 +48,7 @@ const plotLayout = {
 
 const plotConfig = {
   responsive: true,
-  displayModeBar: false,
+  displayModeBar: true,
   displaylogo: false,
   scrollZoom: true,
   modeBarButtonsToRemove: ["select2d", "lasso2d"],
