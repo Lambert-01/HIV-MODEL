@@ -259,7 +259,7 @@ function resetChartView(chart) {
     "scene.camera": null
   };
 
-  Plotly.relayout(chart.id, relayout)
+  Promise.resolve(Plotly.relayout(chart.id, relayout))
     .catch(() => Plotly.react(chart.id, chart.data || [], chart.layout || {}))
     .finally(() => resizeChartLater(chart, 60));
 }
