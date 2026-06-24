@@ -625,7 +625,7 @@
 C D_t^q I = lambda*S - (tau_eff + delta + mu)*I
 C D_t^q T = tau_eff*I - (rho_eff + mu)*T
 C D_t^q A = delta*I + rho_eff*T - (mu + d)*A</code>
-              <p>Generates the baseline SITA trajectories, final state table, phase plots, memory curves, and reliability comparisons.</p>
+              <p>Generates the baseline SITA trajectories, final state table, phase plots, and memory curves.</p>
             </div>
             <div class="formula-card">
               <span>Force of infection</span>
@@ -637,7 +637,7 @@ C D_t^q A = delta*I + rho_eff*T - (mu + d)*A</code>
               <code class="formula-lines">beta_eff = beta0(1-u1)(1-u2)
 tau_eff  = tau(1+u3)
 rho_eff  = rho(1-u4)</code>
-              <p>Used by the single-intervention, combined-intervention, scenario comparison, surface, and heatmap graphs.</p>
+              <p>Used by the single-intervention, combined-intervention, and scenario comparison graphs.</p>
             </div>
             <div class="formula-card">
               <span>Threshold and sensitivity</span>
@@ -645,7 +645,7 @@ rho_eff  = rho(1-u4)</code>
      * (1 + eta*tau_eff/(rho_eff + mu))
 
 Sensitivity(p) = (dR0/dp) * p/R0</code>
-              <p>Used by the R0 gauge, stability interpretation, R0 surface, waterfall, and sensitivity ranking.</p>
+              <p>Used by the R0 gauge, stability interpretation, and sensitivity ranking.</p>
             </div>
           </div>
         </div>
@@ -814,7 +814,7 @@ lambda(t) = beta_eff*(I + eta*T)/N</code>
             <code class="formula-lines">beta_eff = beta0(1-u1)(1-u2)
 tau_eff  = tau(1+u3)
 rho_eff  = rho(1-u4)</code>
-            <p>Used by intervention controls, scenario comparison, R0 surface, heatmaps, and waterfall analysis.</p>
+            <p>Used by intervention controls, scenario comparison, and the R0 calculation.</p>
           </div>
           <div class="formula-card">
             <span>Threshold, DFE and boundedness</span>
@@ -822,7 +822,7 @@ rho_eff  = rho(1-u4)</code>
 R0 = beta_eff/(tau_eff + delta + mu)
      * (1 + eta*tau_eff/(rho_eff + mu))
 N(t) <= max{N(0), Lambda/mu}</code>
-            <p>Used by the R0 gauge, stability panel, feasible-bound graph, and reliability interpretation.</p>
+            <p>Used by the R0 gauge, stability panel, and feasible-bound graph.</p>
           </div>
           <div class="formula-card">
             <span>Fractional stability and sensitivity</span>
