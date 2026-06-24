@@ -156,7 +156,7 @@ function enhanceChartHeaders() {
       <span class="chart-actions">
         <button class="chart-action-btn" type="button" data-chart-action="formula" title="Show formula behind this graph"><i class="fa fa-square-root-variable"></i></button>
         <button class="chart-action-btn" type="button" data-chart-action="reset-view" title="Reset zoom and graph view"><i class="fa fa-rotate-left"></i></button>
-        <button class="chart-action-btn" type="button" data-chart-action="download" title="Export chart as PNG"><i class="fa fa-download"></i></button>
+        <button class="chart-action-btn" type="button" data-chart-action="download" title="Download chart as PNG"><i class="fa fa-download"></i></button>
         <button class="chart-action-btn" type="button" data-chart-action="expand" title="Expand chart"><i class="fa fa-up-right-and-down-left-from-center"></i></button>
       </span>`;
 
