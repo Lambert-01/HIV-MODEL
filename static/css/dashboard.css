@@ -1041,8 +1041,7 @@
 #boundText,
 #stabilityThresholdText,
 #interventionMeaningText,
-#memoryModeText,
-#reliabilityText {
+#memoryModeText {
   color: #e2e8f0 !important;
   font-size: 0.94rem;
   line-height: 1.75;
