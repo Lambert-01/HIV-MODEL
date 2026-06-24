@@ -689,6 +689,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  min-width: 0;
 }
 
 .chart-card-title i {
@@ -700,9 +701,13 @@
   align-items: center;
   display: inline-flex;
   gap: 8px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .chart-actions {
+  flex: 0 0 auto;
   display: inline-flex;
   gap: 6px;
   margin-left: auto;
@@ -923,8 +928,10 @@
   background: #07111f;
   display: flex;
   flex-direction: column;
-  inset: 18px;
-  overflow: auto;
+  inset: 12px;
+  max-height: calc(100dvh - 24px);
+  max-width: calc(100vw - 24px);
+  overflow: hidden;
   position: fixed;
   z-index: 3000;
 }
@@ -943,13 +950,44 @@
 
 .chart-card.chart-expanded .chart-body {
   flex: 1 1 auto;
-  min-height: calc(100vh - 110px);
+  min-height: 0;
+  height: calc(100dvh - 104px);
+  overflow: hidden;
+  padding: 12px;
 }
 
 .chart-card.chart-expanded [data-chart-action="expand"] {
   background: rgba(0, 212, 255, 0.22);
   border-color: rgba(0, 212, 255, 0.62);
   box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.12);
+}
+
+.chart-expanded-close {
+  align-items: center;
+  background: rgba(7, 17, 31, 0.96);
+  border: 1px solid rgba(0, 212, 255, 0.42);
+  border-radius: 999px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.36);
+  color: var(--primary);
+  cursor: pointer;
+  display: none;
+  height: 40px;
+  justify-content: center;
+  position: fixed;
+  right: 18px;
+  top: 18px;
+  width: 40px;
+  z-index: 3010;
+}
+
+.chart-card.chart-expanded .chart-expanded-close {
+  display: inline-flex;
+}
+
+.chart-expanded-close:hover {
+  background: rgba(0, 212, 255, 0.16);
+  border-color: rgba(0, 212, 255, 0.72);
+  color: var(--text-main);
 }
 
 .chart-body {
