@@ -294,10 +294,6 @@ function updateInterpretation(result) {
       baseline.innerHTML = text;
     }
   });
-  const thesis = document.getElementById("thesisTextBox");
-  if (thesis) {
-    thesis.innerHTML = `<p><strong>Computed from current run:</strong> ${escapeHtml(headline)}</p><p>${escapeHtml(body)}</p>`;
-  }
   const stability = document.getElementById("stabilityText");
   if (stability) stability.textContent = result.stability_text;
   const dfe = document.getElementById("dfeText");
