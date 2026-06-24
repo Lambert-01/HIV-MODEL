@@ -201,6 +201,12 @@ function enhanceChartHeaders() {
 
 document.addEventListener("DOMContentLoaded", enhanceChartHeaders);
 
+document.addEventListener("DOMContentLoaded", () => {
+  ["surface", "reliability", "export"].forEach((name) => {
+    document.querySelectorAll(`[data-tab="${name}"], #tab-${name}`).forEach((element) => element.remove());
+  });
+});
+
 function resizeChartLater(chart, delay = 120) {
   setTimeout(() => {
     if (chart && window.Plotly) Plotly.Plots.resize(chart);
