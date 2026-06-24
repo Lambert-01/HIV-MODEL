@@ -658,36 +658,6 @@ async function downloadEndpoint(url, payload, filename, contentType = "text/plai
   }
 }
 
-async function downloadCsv() {
-  const payload = lastPayload || buildPayload();
-  try {
-    const response = await fetch("/api/export/csv", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-    if (!response.ok) throw new Error("CSV export failed.");
-    const blob = await response.blob();
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url; link.download = "fractional_hiv_simulation.csv"; link.click();
-    URL.revokeObjectURL(url);
-    showToast("CSV downloaded.", "success");
-  } catch (e) { showToast(e.message, "error"); }
-}
-
-function downloadParams() {
-  const payload = lastPayload || buildPayload();
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "fractional_hiv_parameters.json";
-  link.click();
-  URL.revokeObjectURL(url);
-  showToast("Parameters JSON downloaded.", "success");
-}
-
 function downloadChapter6Text() {
   downloadEndpoint("/api/export/chapter6.txt", lastPayload || buildPayload(), "chapter6_results_text.txt", "text/plain");
 }
@@ -719,8 +689,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("runSimulation")?.addEventListener("click", runSimulation);
   document.getElementById("resetDefaults")?.addEventListener("click", resetDefaults);
   document.getElementById("runMode")?.addEventListener("change", (event) => applyRunMode(event.target.value));
-  document.getElementById("downloadCsv")?.addEventListener("click", downloadCsv);
-  document.getElementById("downloadParams")?.addEventListener("click", downloadParams);
   document.getElementById("downloadChapter6Text")?.addEventListener("click", downloadChapter6Text);
   document.getElementById("downloadThesisTables")?.addEventListener("click", downloadThesisTables);
 
