@@ -662,15 +662,6 @@ async function downloadEndpoint(url, payload, filename, contentType = "text/plai
   }
 }
 
-function flashExportBtn(btnId) {
-  const btn = document.getElementById(btnId);
-  if (!btn) return;
-  const orig = btn.innerHTML;
-  btn.innerHTML = '<i class="fa fa-circle-check me-2"></i>Downloaded!';
-  btn.classList.add("btn-export-ok");
-  setTimeout(() => { btn.innerHTML = orig; btn.classList.remove("btn-export-ok"); }, 2000);
-}
-
 async function downloadCsv() {
   const payload = lastPayload || buildPayload();
   try {
@@ -685,7 +676,6 @@ async function downloadCsv() {
     const link = document.createElement("a");
     link.href = url; link.download = "fractional_hiv_simulation.csv"; link.click();
     URL.revokeObjectURL(url);
-    flashExportBtn("exportCsvBtn");
     showToast("CSV downloaded.", "success");
   } catch (e) { showToast(e.message, "error"); }
 }
@@ -702,56 +692,12 @@ function downloadParams() {
   showToast("Parameters JSON downloaded.", "success");
 }
 
-function downloadReport() {
-  if (!lastScenarioData) { showToast("Run simulation first.", "error"); return; }
-  const lines = ["FracHIV-SITA Lab — Scenario Comparison Report", "=".repeat(50), ""];
-  lastScenarioData.comparisons.forEach((row) => {
-    lines.push(`Scenario: ${row.name}`);
-    lines.push(`  R0: ${row.r0.toFixed(4)}`);
-    lines.push(`  Peak Infected: ${row.peak_infected.toFixed(0)}`);
-    lines.push(`  Final Infected: ${row.final_infected.toFixed(0)}`);
-    lines.push(`  Final AIDS: ${row.final_aids.toFixed(0)}`);
-    lines.push(`  Final Treated: ${row.final_treated.toFixed(0)}`);
-    lines.push("");
-  });
-  const blob = new Blob([lines.join("\n")], { type: "text/plain" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "scenario_report.txt";
-  link.click();
-  URL.revokeObjectURL(url);
-  showToast("Report downloaded.", "success");
-}
-
-function downloadServerReport() {
-  downloadEndpoint("/api/export/report", lastPayload || buildPayload(), "fractional_hiv_report.txt");
-}
-
-function downloadScenarioCsv() {
-  downloadEndpoint("/api/export/scenarios.csv", { base_payload: lastPayload || buildPayload() }, "fractional_hiv_scenarios.csv", "text/csv");
-}
-
-function downloadSensitivityCsv() {
-  downloadEndpoint("/api/export/sensitivity.csv", lastPayload || buildPayload(), "fractional_hiv_sensitivity.csv", "text/csv");
-}
-
 function downloadChapter6Text() {
   downloadEndpoint("/api/export/chapter6.txt", lastPayload || buildPayload(), "chapter6_results_text.txt", "text/plain");
 }
 
 function downloadThesisTables() {
   downloadEndpoint("/api/export/thesis-tables.csv", lastPayload || buildPayload(), "chapter6_thesis_tables.csv", "text/csv");
-}
-
-async function copyThesisText() {
-  const text = document.getElementById("thesisTextBox")?.textContent || "";
-  if (!text || text.includes("Run simulation")) {
-    showToast("Run simulation first.", "error");
-    return;
-  }
-  await navigator.clipboard.writeText(text);
-  showToast("Thesis text copied.", "success");
 }
 
 async function loadScenarios() {
