@@ -19,7 +19,6 @@ let lastPayload = null;
 let lastResult = null;
 let lastScenarioData = null;
 let lastChapter6Data = null;
-let lastReliabilityData = null;
 let lastRunAt = null;
 let lastRunSummary = null;
 
@@ -524,20 +523,6 @@ function renderChapter6(data) {
   ]);
 }
 
-function renderReliability(data) {
-  lastReliabilityData = data;
-  const text = document.getElementById("reliabilityText");
-  if (text) text.textContent = data.interpretation;
-  renderGenericTable("reliabilityTable", data.rows, [
-    { key: "step", label: "h", format: (v) => Number(v).toFixed(2) },
-    { key: "steps", label: "Grid", format: (v) => Number(v).toFixed(0) },
-    { key: "peak_infected", label: "Peak I", format: (v) => Number(v).toFixed(1) },
-    { key: "final_infected", label: "Final I", format: (v) => Number(v).toFixed(1) },
-    { key: "final_infected_abs_error", label: "|Delta Final I|" }
-  ]);
-  if (typeof renderReliabilityChart === "function") renderReliabilityChart(data.rows);
-}
-
 // Track which tabs have been loaded for the current simulation
 const tabLoaded = {};
 
@@ -759,10 +744,6 @@ function downloadThesisTables() {
   downloadEndpoint("/api/export/thesis-tables.csv", lastPayload || buildPayload(), "chapter6_thesis_tables.csv", "text/csv");
 }
 
-function downloadReliabilityCsv() {
-  downloadEndpoint("/api/export/reliability.csv", { ...(lastPayload || buildPayload()), step_values: [0.2, 0.1, 0.05] }, "numerical_reliability.csv", "text/csv");
-}
-
 async function copyThesisText() {
   const text = document.getElementById("thesisTextBox")?.textContent || "";
   if (!text || text.includes("Run simulation")) {
@@ -806,7 +787,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("copyThesisTextBtn")?.addEventListener("click", copyThesisText);
   document.getElementById("downloadChapter6Text")?.addEventListener("click", downloadChapter6Text);
   document.getElementById("downloadThesisTables")?.addEventListener("click", downloadThesisTables);
-  document.getElementById("downloadReliabilityCsv")?.addEventListener("click", downloadReliabilityCsv);
 
   // Scenario preset buttons
   document.querySelectorAll(".btn-preset").forEach((btn) => {
