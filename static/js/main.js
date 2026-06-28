@@ -202,7 +202,7 @@ function enhanceChartHeaders() {
 document.addEventListener("DOMContentLoaded", enhanceChartHeaders);
 
 document.addEventListener("DOMContentLoaded", () => {
-  ["surface", "reliability", "export"].forEach((name) => {
+  ["parameters", "interventions", "r0", "scenario-explorer", "phase", "chapter6", "overview", "surface", "reliability", "export"].forEach((name) => {
     document.querySelectorAll(`[data-tab="${name}"], #tab-${name}`).forEach((element) => element.remove());
   });
 });
