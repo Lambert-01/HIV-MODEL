@@ -660,6 +660,7 @@ async function loadTabData(tabName) {
 async function startDefenseMode() {
   showToast("Defense Mode started: baseline, scenarios, memory, and sensitivity will be prepared.", "success");
   if (!lastResult) await runSimulation();
+  if (!lastResult) return;
   if (typeof activateDashboardTab === "function") activateDashboardTab("demo");
   await loadTabData("scenario-comparison");
   await loadTabData("memory");
