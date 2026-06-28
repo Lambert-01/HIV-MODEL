@@ -13,7 +13,9 @@ function validatePayload(payload) {
   if (p.q <= 0 || p.q > 1) errors.push("Fractional order q must satisfy 0 < q <= 1. Use 0.01 for a near-zero value.");
   if (s.years <= 0) errors.push("Simulation years must be greater than 0.");
   if (s.step <= 0) errors.push("Time step must be positive.");
-  if (Math.floor(s.years / s.step) + 1 > 2500) errors.push("Too many simulation steps. Increase the time step.");
+  if (Math.floor(s.years / s.step) + 1 > 5000) {
+    errors.push("Simulation failed. Please reduce years or choose a faster run mode with a larger step size.");
+  }
 
   return errors;
 }
