@@ -1,8 +1,10 @@
 /* ── Loading Overlay ── */
-function setBusy(isBusy) {
+function setBusy(isBusy, message = "Running fractional simulation...") {
   const overlay = document.getElementById("loadingOverlay");
+  const loadingText = overlay?.querySelector(".loading-text");
   const pill = document.getElementById("status-pill");
   if (overlay) overlay.classList.toggle("d-none", !isBusy);
+  if (loadingText && isBusy) loadingText.textContent = message;
   if (pill) {
     if (isBusy) {
       pill.textContent = "Running";
