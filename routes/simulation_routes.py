@@ -173,6 +173,12 @@ def run_engine(payload, downsample=True):
         return None, errors
 
     clean = coerce_payload(payload)
+    key = _cache_key(clean, downsample)
+    cached = _cache_get(key)
+    if cached is not None:
+        cached["cache_hit"] = True
+        return cached, []
+
     initial = clean["initial_conditions"]
     params = clean["parameters"]
     simulation = clean["simulation"]
@@ -207,6 +213,7 @@ def run_engine(payload, downsample=True):
 
     result = {
         "status": "success",
+        "cache_hit": False,
         "r0": r0,
         "epidemic_status": epidemic_status(r0),
         "effective_rates": rates,
@@ -247,6 +254,7 @@ def run_engine(payload, downsample=True):
         rates,
     )
     result["animation"] = build_animation_payload(result["time_series"]["time"], params)
+    _cache_set(key, result)
     return result, []
 
 
