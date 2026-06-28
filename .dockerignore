@@ -1,0 +1,17 @@
+.git
+.pytest_cache
+__pycache__
+*.pyc
+.venv
+.venv311
+.venv313
+outputs
+presentation/*.aux
+presentation/*.log
+presentation/*.nav
+presentation/*.out
+presentation/*.snm
+presentation/*.toc
+thesis/*.aux
+thesis/*.log
+thesis/*.out
