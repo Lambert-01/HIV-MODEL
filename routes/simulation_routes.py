@@ -1,3 +1,7 @@
+import copy
+import json
+from collections import OrderedDict
+
 import numpy as np
 from flask import Blueprint, jsonify, request
 
@@ -18,6 +22,26 @@ from model.validation import coerce_payload, validate_payload
 
 
 simulation_bp = Blueprint("simulation", __name__)
+SIMULATION_CACHE_LIMIT = 64
+_simulation_cache = OrderedDict()
+
+
+def _cache_key(clean_payload, downsample):
+    return json.dumps({"payload": clean_payload, "downsample": downsample}, sort_keys=True, separators=(",", ":"))
+
+
+def _cache_get(key):
+    if key not in _simulation_cache:
+        return None
+    _simulation_cache.move_to_end(key)
+    return copy.deepcopy(_simulation_cache[key])
+
+
+def _cache_set(key, value):
+    _simulation_cache[key] = copy.deepcopy(value)
+    _simulation_cache.move_to_end(key)
+    while len(_simulation_cache) > SIMULATION_CACHE_LIMIT:
+        _simulation_cache.popitem(last=False)
 
 
 def _downsample(arr, target=DOWNSAMPLE_TARGET):
