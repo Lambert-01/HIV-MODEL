@@ -608,9 +608,23 @@
   padding-bottom: 14px;
 }
 
+[data-tab="parameters"],
+[data-tab="interventions"],
+[data-tab="r0"],
+[data-tab="scenario-explorer"],
+[data-tab="phase"],
+[data-tab="chapter6"],
+[data-tab="overview"],
 [data-tab="surface"],
 [data-tab="reliability"],
 [data-tab="export"],
+#tab-parameters,
+#tab-interventions,
+#tab-r0,
+#tab-scenario-explorer,
+#tab-phase,
+#tab-chapter6,
+#tab-overview,
 #tab-surface,
 #tab-reliability,
 #tab-export {
