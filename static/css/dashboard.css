@@ -602,7 +602,7 @@
   align-items: stretch;
   display: grid;
   gap: 10px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   margin-bottom: 18px;
   border-bottom: 1px solid var(--border);
   padding-bottom: 14px;
