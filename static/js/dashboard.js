@@ -273,7 +273,9 @@ function updateLastRunStatus(result, payload) {
   lastRunSummary = {
     q: payload.parameters.q,
     beta0: payload.parameters.beta0,
-    r0: result.r0
+    r0: result.r0,
+    elapsedMs: result.elapsed_ms,
+    cacheHit: Boolean(result.cache_hit)
   };
   renderLastRunStatus();
 }
@@ -285,7 +287,7 @@ function renderLastRunStatus() {
   const age = seconds < 5 ? "just now" : seconds < 60 ? `${seconds} seconds ago` : `${Math.floor(seconds / 60)} minutes ago`;
   bar.innerHTML = `
     <i class="fa fa-clock-rotate-left"></i>
-    <span>Last run: q=${lastRunSummary.q.toFixed(2)} · beta0=${lastRunSummary.beta0.toFixed(2)} · R0=${lastRunSummary.r0.toFixed(3)} · ${age}</span>
+    <span>Generated from Python engine: q=${lastRunSummary.q.toFixed(2)} · beta0=${lastRunSummary.beta0.toFixed(2)} · R0=${lastRunSummary.r0.toFixed(3)} · ${lastRunSummary.cacheHit ? "cached result" : `${Number(lastRunSummary.elapsedMs || 0).toFixed(0)} ms`} · ${age}</span>
   `;
 }
 
