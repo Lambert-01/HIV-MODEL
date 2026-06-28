@@ -352,35 +352,41 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ── Tab switching ── */
+function activateDashboardTab(tabName) {
+  const tab = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
+  const panel = document.getElementById(`tab-${tabName}`);
+  if (!panel) return false;
+  document.querySelectorAll(".tab-btn").forEach((t) => t.classList.remove("active"));
+  document.querySelectorAll(".tab-panel").forEach((p) => p.classList.remove("active"));
+  tab?.classList.add("active");
+  panel.classList.add("active");
+  window.dispatchEvent(new Event("resize"));
+  setTimeout(() => {
+    if (typeof flushPendingPlots === "function") flushPendingPlots();
+  }, 80);
+
+  const titleMap = {
+    baseline: "Baseline Simulation",
+    "scenario-comparison": "Scenario Comparison",
+    sensitivity: "Sensitivity",
+    memory: "Memory Effect",
+    demo: "Defense Demo"
+  };
+  document.title = `FracHIV-SITA Lab | ${titleMap[tabName] || tabName}`;
+
+  const lazyTabs = ["scenario-comparison", "sensitivity", "memory"];
+  if (lazyTabs.includes(tabName) && typeof loadTabData === "function") {
+    loadTabData(tabName);
+  }
+  return true;
+}
+
+window.activateDashboardTab = activateDashboardTab;
+
 document.addEventListener("click", (event) => {
   const tab = event.target.closest(".tab-btn");
   if (!tab || !tab.dataset.tab) return;
-  document.querySelectorAll(".tab-btn").forEach((t) => t.classList.remove("active"));
-  document.querySelectorAll(".tab-panel").forEach((p) => p.classList.remove("active"));
-  tab.classList.add("active");
-  const panel = document.getElementById(`tab-${tab.dataset.tab}`);
-  if (panel) {
-    panel.classList.add("active");
-    window.dispatchEvent(new Event("resize"));
-    setTimeout(() => {
-      if (typeof flushPendingPlots === "function") flushPendingPlots();
-    }, 80);
-    // Dynamic page title
-    const titleMap = {
-      baseline: "Baseline Simulation", parameters: "Model Parameters",
-      interventions: "Interventions", r0: "R\u2080 & Stability",
-      "scenario-explorer": "Scenario Explorer", "scenario-comparison": "Scenario Comparison",
-      phase: "Phase Analysis", sensitivity: "Sensitivity",
-      memory: "Memory Effect", chapter6: "Chapter 6 Results",
-      demo: "Defense Demo", overview: "Overview"
-    };
-    document.title = `FracHIV-SITA Lab | ${titleMap[tab.dataset.tab] || tab.dataset.tab}`;
-    // Lazy-load secondary tab data on first open
-    const lazyTabs = ["scenario-comparison", "scenario-explorer", "sensitivity", "memory", "phase", "chapter6"];
-    if (lazyTabs.includes(tab.dataset.tab) && typeof loadTabData === "function") {
-      loadTabData(tab.dataset.tab);
-    }
-  }
+  activateDashboardTab(tab.dataset.tab);
 });
 
 /* ── Mobile sidebar toggle ── */
