@@ -71,6 +71,17 @@ function resetDefaults() {
   showToast("Parameters reset to defaults.", "success");
 }
 
+function friendlyErrorMessage(error) {
+  const message = error?.message || "Simulation failed.";
+  if (/too many simulation steps|too large|timeout|time.?out/i.test(message)) {
+    return "Simulation failed. Please reduce years or choose a faster run mode with a larger step size.";
+  }
+  if (/network|fetch|failed to fetch/i.test(message)) {
+    return "Connection failed. Please check the server and try again.";
+  }
+  return message;
+}
+
 let lastPeakInfected = null;
 
 function updateCards(result) {
@@ -533,7 +544,7 @@ async function runSimulation() {
   // Reset lazy-load flags so secondary tabs re-run with new params
   Object.keys(tabLoaded).forEach((k) => delete tabLoaded[k]);
 
-  setBusy(true);
+  setBusy(true, "Running fractional simulation...");
   const statusPill = document.getElementById("status-pill");
   if (statusPill) statusPill.textContent = "Running...";
   try {
@@ -563,7 +574,7 @@ async function runSimulation() {
     if (typeof flushPendingPlots === "function") flushPendingPlots();
     showToast(`Simulation ready. R\u2080 = ${result.r0.toFixed(3)} \u2014 ${result.epidemic_status}`, "success");
   } catch (error) {
-    showToast(error.message, "error");
+    showToast(friendlyErrorMessage(error), "error");
   } finally {
     setBusy(false);
     if (statusPill && statusPill.textContent === "Running...") statusPill.textContent = "Ready";
@@ -576,6 +587,12 @@ async function loadTabData(tabName) {
   tabLoaded[tabName] = true;
 
   const statusPill = document.getElementById("status-pill");
+  const loadingMessages = {
+    "scenario-comparison": "Computing scenario comparison...",
+    sensitivity: "Generating sensitivity results...",
+    memory: "Computing fractional memory comparison..."
+  };
+  setBusy(true, loadingMessages[tabName] || "Loading dashboard results...");
   if (statusPill) statusPill.textContent = "Loading...";
 
   // Show skeleton for tabs that have one
@@ -628,13 +645,25 @@ async function loadTabData(tabName) {
     }
     if (typeof flushPendingPlots === "function") flushPendingPlots();
   } catch (error) {
-    showToast(`${tabName}: ${error.message}`, "error");
+    showToast(`${tabName}: ${friendlyErrorMessage(error)}`, "error");
     delete tabLoaded[tabName];
     if (tabName === "scenario-comparison" || tabName === "scenario-explorer") delete tabLoaded["_scenario"];
     if (typeof showSkeleton === "function") showSkeleton(tabName); // keep skeleton on error
   } finally {
+    setBusy(false);
     if (statusPill) statusPill.textContent = "Ready";
   }
+}
+
+async function startDefenseMode() {
+  showToast("Defense Mode started: baseline, scenarios, memory, and sensitivity will be prepared.", "success");
+  if (!lastResult) await runSimulation();
+  if (typeof activateDashboardTab === "function") activateDashboardTab("demo");
+  await loadTabData("scenario-comparison");
+  await loadTabData("memory");
+  await loadTabData("sensitivity");
+  if (typeof activateDashboardTab === "function") activateDashboardTab("demo");
+  showToast("Defense Mode is ready. Use Baseline → Scenarios → Memory → Sensitivity → Defense.", "success");
 }
 
 async function downloadEndpoint(url, payload, filename, contentType = "text/plain") {
@@ -687,6 +716,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   document.getElementById("runSimulation")?.addEventListener("click", runSimulation);
+  document.getElementById("defenseModeBtn")?.addEventListener("click", startDefenseMode);
   document.getElementById("resetDefaults")?.addEventListener("click", resetDefaults);
   document.getElementById("runMode")?.addEventListener("change", (event) => applyRunMode(event.target.value));
   document.getElementById("downloadChapter6Text")?.addEventListener("click", downloadChapter6Text);
