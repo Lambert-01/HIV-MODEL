@@ -1,5 +1,6 @@
 import copy
 import json
+import time
 from collections import OrderedDict
 
 import numpy as np
@@ -168,6 +169,7 @@ def build_baseline_interpretation(summary, r0, status, stability_text, initial, 
 
 
 def run_engine(payload, downsample=True):
+    started_at = time.perf_counter()
     errors = validate_payload(payload)
     if errors:
         return None, errors
@@ -214,6 +216,7 @@ def run_engine(payload, downsample=True):
     result = {
         "status": "success",
         "cache_hit": False,
+        "elapsed_ms": round((time.perf_counter() - started_at) * 1000, 2),
         "r0": r0,
         "epidemic_status": epidemic_status(r0),
         "effective_rates": rates,
